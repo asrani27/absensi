@@ -70,7 +70,7 @@ crossorigin=""></script>
     var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
     var mymap = L.map('mapid').setView(latlng, 16)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(mymap);
 

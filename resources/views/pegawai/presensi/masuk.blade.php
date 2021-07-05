@@ -69,10 +69,14 @@ crossorigin=""></script>
     navigator.geolocation.getCurrentPosition(function(location) {
     var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
-    var mymap = L.map('mapid').setView(latlng, 16)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(mymap);
+    var mymap = L.map('mapid').setView(latlng, 18);
+    googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    }).addTo(mymap);
+    // L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+    //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    //     }).addTo(mymap);
 
     var marker = L.marker(latlng).addTo(mymap);
     });
