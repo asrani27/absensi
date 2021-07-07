@@ -9,6 +9,10 @@ use App\Http\Controllers\PresensiController;
 Route::get('/', function(){
     return view('welcome');
 });
+
+Route::get('/login', function(){
+    return view('welcome');
+})->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
