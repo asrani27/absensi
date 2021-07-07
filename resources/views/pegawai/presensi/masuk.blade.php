@@ -50,6 +50,7 @@ crossorigin=""/>
                          
               <button type=button value="Ambil Foto" class="btn btn-primary btn-block" onClick="take_snapshot()"><i class="fa fa-camera"></i></button>
                                           
+              <input type="file" id="file"  name="file" value="take foto">
               <input type="hidden" id="namafoto"  name="namafoto" value="">
                 
               <div id="results"></div>
