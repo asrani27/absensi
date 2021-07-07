@@ -12,8 +12,6 @@ crossorigin=""/>
   <strong>PRESENSI</strong>
 @endsection
 @section('content')
-<div class="row">
-    <div class="col-lg-12">
         <div class="card card-widget">
             <div class="card-header">
                 <div class="user-block">
@@ -23,15 +21,13 @@ crossorigin=""/>
                 </div>
               </div>    
         </div>
-    </div>
-</div>
 
 <div class="row">
     <div class="col-lg-12">
         <div id="mapid"></div>
         <div class="card">
         <div class="card-body">
-            <div class="form-group row">
+            {{-- <div class="form-group row">
               <label class="col-sm-2 col-form-label">Latitude</label>
               <div class="col-sm-10">
                 <input type="text" class="form-control form-control-sm"placeholder="Latitude">
@@ -42,7 +38,7 @@ crossorigin=""/>
               <div class="col-sm-10">
                 <input type="text" class="form-control form-control-sm" placeholder="Longitude">
               </div>
-            </div>
+            </div> --}}
             <div class="form-group row">
               <label class="col-sm-2 col-form-label">Jarak Dengan Pusat Presensi</label>
               <div class="col-sm-10">
@@ -69,14 +65,11 @@ crossorigin=""></script>
     navigator.geolocation.getCurrentPosition(function(location) {
     var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
-    var mymap = L.map('mapid').setView(latlng, 18);
+    var mymap = L.map('mapid').setView(latlng, 16);
     googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
         maxZoom: 20,
         subdomains:['mt0','mt1','mt2','mt3']
     }).addTo(mymap);
-    // L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
-    //     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    //     }).addTo(mymap);
 
     var marker = L.marker(latlng).addTo(mymap);
     });

@@ -11,7 +11,11 @@ class LoginController extends Controller
     public function login(Request $req)
     {
         if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
-            return redirect('/home/pegawai');
+            if(Auth::user()->hasRole('pegawai')){
+                return redirect('/home/pegawai');
+            }elseif(Auth::user()->hasRole('admin')){
+                return redirect('/home/admin');
+            }
         } else {
             toastr()->error('Username / Password Tidak Ditemukan');
             $req->flash();
