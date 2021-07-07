@@ -82,7 +82,7 @@ crossorigin=""></script>
         maxZoom: 20,
         subdomains:['mt0','mt1','mt2','mt3']
     }).addTo(map);
-
+  
     L.marker([latlng.lat,latlng.lng]).addTo(map);  
 
     var theMarker = {};

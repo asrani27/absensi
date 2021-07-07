@@ -46,6 +46,14 @@ crossorigin=""/>
               </div>
             </div>
             <div class="form-group row">
+              
+                         
+              <button type=button value="Ambil Foto" class="btn btn-primary btn-block" onClick="take_snapshot()"><i class="fa fa-camera"></i></button>
+                                          
+              <input type="hidden" id="namafoto"  name="namafoto" value="">
+                
+              <div id="results"></div>
+              
                 <button type="submit" class="btn btn-block btn-success">PRESENSI MASUK</button>
                 <a href="/home/pegawai" class="btn btn-block btn-secondary">KEMBALI</a>
             </div>
@@ -56,6 +64,20 @@ crossorigin=""/>
 @endsection
 
 @push('js')
+
+
+<script type="text/javascript" src="{{url('webcam/webcam.min.js')}}"></script>
+	
+	<script language="JavaScript">
+		Webcam.set({
+			width: 340,
+			height: 240,
+			image_format: 'jpeg',
+			jpeg_quality: 90
+		});
+		Webcam.attach( '#my_camera' );
+	</script>
+
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 crossorigin=""></script>
@@ -72,6 +94,7 @@ crossorigin=""></script>
     }).addTo(mymap);
 
     var marker = L.marker(latlng).addTo(mymap);
+  L.marker([-3.3306707031651324,114.58215594291688]).addTo(mymap);
     });
 </script>
 @endpush
