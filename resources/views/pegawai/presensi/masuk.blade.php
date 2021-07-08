@@ -26,6 +26,7 @@ input[type="file"] {
 .button-wrap {
   position: relative;
 }
+
 </style>
 @endpush
 @section('title')
@@ -64,7 +65,7 @@ input[type="file"] {
             <div class="form-group row">
               <label class="col-sm-2 col-form-label">Jarak Dengan Pusat Presensi</label>
               <div class="col-sm-10">
-                <input type="text" id="jarak" class="form-control form-control-sm" placeholder="10 Meter" readonly>
+                <input type="text" id="jarak" name="jarak" class="form-control form-control-sm" readonly>
               </div>
             </div>
             
@@ -125,7 +126,7 @@ $(document).ready(function () {
       }
       distance = calculateDistance(latlng,latlng2);
       var km = latlng.distanceTo(latlng2).toFixed(0)/1000;
-      document.getElementById("jarak").value = km + ' Meter';
+      document.getElementById("jarak").value = km;
       console.log(distance,km);
     });
 
