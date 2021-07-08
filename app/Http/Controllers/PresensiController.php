@@ -21,7 +21,14 @@ class PresensiController extends Controller
     public function masuk()
     {
         $skpd = Skpd::find($this->skpd()->skpd_id);
-        return view('pegawai.presensi.masuk',compact('skpd'));
+        $lat        = (float)$skpd->lat;
+        $long       = (float)$skpd->long;
+        $radius     = (float)$skpd->radius;
+        $latlong2 = [
+            'lat' => $lat,
+            'lng' => $long
+        ];
+        return view('pegawai.presensi.masuk',compact('skpd','latlong2'));
     }
     
     public function pulang()
@@ -41,7 +48,8 @@ class PresensiController extends Controller
             toastr()->error('Maaf Anda Di luar jangkauan radius presensi');
             return back();
         }else{
-            $check = Presensi::where('nip', $req->nip)->where('jam_masuk', 'like', '%'.Carbon::today()->format('Y-m-d').'%')->first();
+            $check = Presensi::where('nip', $attr['nip'])->where('jam_masuk', 'like', '%'.Carbon::today()->format('Y-m-d').'%')->first();
+            
             if($check == null)
             {
                 Presensi::create($attr);

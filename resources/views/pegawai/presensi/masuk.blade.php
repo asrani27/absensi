@@ -107,8 +107,9 @@ $(document).ready(function () {
           subdomains:['mt0','mt1','mt2','mt3']
       }).addTo(mymap);
 
+      var latlng2 = {!!json_encode($latlong2)!!}
       var marker = L.marker(latlng).addTo(mymap);
-      latlng2 = [-3.3306707031651324,114.58215594291688];
+      
       L.marker(latlng2).addTo(mymap);
       
       function calculateDistance(latA, latB) {
