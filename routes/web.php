@@ -10,6 +10,11 @@ Route::get('/', function(){
     return view('welcome');
 });
 
+Route::get('/logout', function(){
+    Auth::logout();
+    return redirect('/');
+});
+
 Route::get('/login', function(){
     return view('welcome');
 })->name('login');
