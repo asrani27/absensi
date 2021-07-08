@@ -20,9 +20,9 @@ class HomeController extends Controller
 
     public function admin()
     {
-        $user    = Auth::user()->skpd;
-        $lat     = (float)$user->lat;
-        $long    = (float)$user->long;
+        $user       = Auth::user()->skpd;
+        $lat        = (float)$user->lat;
+        $long       = (float)$user->long;
         $radius     = (float)$user->radius;
         $latlong = [
             'lat' => $lat,
