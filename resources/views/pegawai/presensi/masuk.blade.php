@@ -37,7 +37,7 @@ input[type="file"] {
                 <div class="user-block">
                   <img class="img-circle" src="/theme/dist/img/user1-128x128.jpg" alt="User Image">
                   <span class="username"><a href="#">{{Auth::user()->name}}</a></span>
-                  <span class="description">Jabatan</span>
+                  <span class="description">{{$skpd->nama}}</span>
                 </div>
               </div>    
         </div>
@@ -59,10 +59,12 @@ input[type="file"] {
                 <input type="text" class="form-control form-control-sm" placeholder="Longitude">
               </div>
             </div> --}}
+            <form method="post" action="/pegawai/presensi/masuk">
+              @csrf
             <div class="form-group row">
               <label class="col-sm-2 col-form-label">Jarak Dengan Pusat Presensi</label>
               <div class="col-sm-10">
-                <input type="text" id="jarak" class="form-control form-control-sm" placeholder="10 Meter">
+                <input type="text" id="jarak" class="form-control form-control-sm" placeholder="10 Meter" readonly>
               </div>
             </div>
             
@@ -76,6 +78,7 @@ input[type="file"] {
                 <button type="submit" class="btn btn-block btn-success">PRESENSI MASUK</button>
                 <a href="/home/pegawai" class="btn btn-block btn-secondary">KEMBALI</a>
             </div>
+            </form>
           </div>
         </div>
     </div>

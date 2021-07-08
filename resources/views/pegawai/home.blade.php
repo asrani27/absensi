@@ -14,7 +14,7 @@
                 <div class="user-block">
                   <img class="img-circle" src="/theme/dist/img/user1-128x128.jpg" alt="User Image">
                   <span class="username"><a href="#">{{Auth::user()->name}}</a></span>
-                  <span class="description">Jabatan</span>
+                  <span class="description">{{$skpd->nama}}</span>
                 </div>
               </div>    
         </div>
