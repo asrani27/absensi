@@ -144,8 +144,14 @@ class PresensiController extends Controller
                       return back();
                 }else{
                     //Update Data
-                      toastr()->info('Anda Sudah Melakukan Presensi Masuk');
-                      return back();
+                      if($check->jam_masuk == null){
+                        $check->update(['jam_masuk' => $jam_masuk]);
+                        toastr()->success('Presensi Masuk Berhasil Diupdate');
+                        return back();
+                      }else{
+                        toastr()->info('Anda Sudah Melakukan Presensi Masuk');
+                        return back();
+                      }
                 }
             }else{
                 //Presensi Pulang
