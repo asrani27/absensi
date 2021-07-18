@@ -11,15 +11,6 @@
     </li>
 
     <li class="nav-item">
-    <a href="/pegawai/riwayat" class="nav-link">
-        <i class="nav-icon fas fa-th"></i>
-        <p>
-        Riwayat
-        </p>
-    </a>
-    </li>
-
-    <li class="nav-item">
     <a href="https://tpp.banjarmasinkota.go.id" class="nav-link">
         <i class="nav-icon fas fa-money-bill"></i>
         <p>

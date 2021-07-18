@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
+use App\Http\Controllers\QrcodeController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\LiburNasionalController;
@@ -49,6 +50,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::post('pegawai/{id}/editlokasi', [PegawaiController::class, 'updateLokasi']);
         Route::post('pegawai/{id}/lokasi', [PegawaiController::class, 'storeLokasi']);
         Route::resource('pegawai', PegawaiController::class);
+        Route::get('qrcode/generate', [QrcodeController::class, 'generateQrcode']);
+        Route::resource('qrcode', QrcodeController::class);
     });
 });
 
