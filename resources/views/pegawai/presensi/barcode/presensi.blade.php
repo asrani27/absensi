@@ -8,6 +8,7 @@ crossorigin=""/>
 <style>
     #mapid { height: 10px; }
 </style>
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 @endpush
 @section('title')
   <strong>PRESENSI</strong>
@@ -62,6 +63,7 @@ crossorigin=""/>
                     @csrf
                 <div class="form-group row">
                     <div class="col-12">
+                        <video id="preview"></video>
                         <button type="submit" class="btn btn-block bg-gradient-success">SCAN BARCODE</button>
                     </div>
                 </div>
@@ -71,30 +73,27 @@ crossorigin=""/>
         <div id="mapid"></div>
     </div>
 </div>
-        {{-- <div class="row">
-            <div class="col-lg-6 col-6">
-                <a href="/pegawai/presensi/masuk">
-                <div class="info-box bg-gradient-success">
-                <div class="info-box-content text-center">
-                    <span class="info-box-text"><i class="far fa-calendar"></i><br/><strong>PRESENSI MASUK</strong></span>              
-                </div>
-                </div>
-                </a> 
-            </div>
-            <div class="col-lg-6 col-6">
-                <a href="/pegawai/presensi/pulang">
-                <div class="info-box bg-gradient-danger">
-                <div class="info-box-content text-center">
-                    <span class="info-box-text"><i class="far fa-calendar"></i><br/><strong>PRESENSI PULANG</strong></span>               
-                </div>
-                </div>
-                </a>
-            </div>
-        </div> --}}
         
 @endsection 
 
 @push('js')
+
+<script type="text/javascript">
+    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+    scanner.addListener('scan', function (content) {
+      alert(content);
+    });
+    Instascan.Camera.getCameras().then(function (cameras) {
+      if (cameras.length > 0) {
+        scanner.start(cameras[2]);
+      } else {
+        console.error('No cameras found.');
+      }
+    }).catch(function (e) {
+        alert(e+'oke');
+  //        console.error(e);
+    });
+  </script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 crossorigin=""></script>
