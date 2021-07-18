@@ -61,17 +61,8 @@ crossorigin=""/>
                 <form method="post" action="/pegawai/presensi/masuk">
                     @csrf
                 <div class="form-group row">
-                    <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile" accept="image/*" capture>
-                    <label class="custom-file-label" for="customFile"></label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-6">
-                        <button type="submit" class="btn btn-block bg-gradient-success">MASUK</button>
-                    </div>
-                    <div class="col-6">
-                        <button type="submit" class="btn btn-block bg-gradient-danger">PULANG</button>
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-block bg-gradient-success">SCAN BARCODE</button>
                     </div>
                 </div>
                 </form>
