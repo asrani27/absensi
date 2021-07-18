@@ -6,7 +6,7 @@
 integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
 crossorigin=""/>
 <style>
-    #mapid { height: 180px; }
+    #mapid { height: 10px; }
 </style>
 @endpush
 @section('title')
@@ -45,87 +45,38 @@ crossorigin=""/>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="/home/pegawai" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Get my location</a>
+                    <a href="/pegawai/presensi/radius" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Get my location</a>
+                    <a href="/home/pegawai" class='btn btn-xs btn-secondary btn-block'><i class=""></i> Kembali</a>
                   </li>
                 </ul>
             </div>    
         </div>
     </div>
 </div>
-<div class="row">
 
-    @if (Auth::user()->pegawai->lokasi == null)
-    <div class="col-12 col-sm-6 col-md-3">
-    <div class="alert alert-danger alert-dismissible">
-      <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-      Hubungi Admin SKPD anda untuk setting lokasi presensi
-    </div>
-    </div>
-    @else
-        
-    <div class="col-12 col-sm-6 col-md-3">
-      <a href="/pegawai/presensi/radius" style="color:black">
-        <div class="info-box">
-          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-camera"></i></span>
-          <div class="info-box-content">
-            <span class="info-box-text">PRESENSI RADIUS</span>
-            <span class="info-box-number">
-              Jarak + Photo
-              <small></small>
-            </span>
-          </div>
-          <!-- /.info-box-content -->
-        </div>
-        <!-- /.info-box -->
-      </a>
-    </div>
-      <!-- /.col -->
-    <div class="col-12 col-sm-6 col-md-3">
-      <a href="/pegawai/presensi/barcode" style="color:black">
-      <div class="info-box mb-3">
-        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-qrcode"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">PRESENSI BARCODE</span>
-          <span class="info-box-number">Scan Barcode</span>
-        </div>
-        <!-- /.info-box-content -->
-      </div>
-      </a>
-      <!-- /.info-box -->
-    </div>
-    <!-- fix for small devices only -->
-    <div class="clearfix hidden-md-up"></div>
-
-    <div class="col-12 col-sm-6 col-md-3">
-      <div class="info-box mb-3">
-        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">PRESENSI MANUAL</span>
-          <span class="info-box-number">Oleh Admin SKPD</span>
-        </div>
-        <!-- /.info-box-content -->
-      </div>
-      <!-- /.info-box -->
-    </div>
-    @endif
-    <!-- /.col -->
-    <div class="col-12 col-sm-6 col-md-3">
-        <div class="info-box mb-3">
-            <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-chart-bar"></i></span>
-
-            <div class="info-box-content">
-            <span class="info-box-text">HISTORY PRESENSI</span>
-            <span class="info-box-number">Rekaman presensi</span>
-            </div>
-            <!-- /.info-box-content -->
-        </div>
-    <!-- /.info-box -->
-    </div>
-</div>
 <div class="row">
     <div class="col-lg-12">
+        <div class="card">
+            <div class="card-body">
+                <form method="post" action="/pegawai/presensi/masuk">
+                    @csrf
+                <div class="form-group row">
+                    <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile" accept="image/*" capture>
+                    <label class="custom-file-label" for="customFile">Foto</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-block bg-gradient-success">MASUK</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="submit" class="btn btn-block bg-gradient-danger">PULANG</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
         <div id="mapid"></div>
     </div>
 </div>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Lokasi;
 use GuzzleHttp\Client;
@@ -44,6 +45,7 @@ class PegawaiController extends Controller
                     $p->skpd_id = $this->skpd()->id;
                     $p->is_aktif = $item->is_aktif;
                     $p->save();
+                            
                 }else{
     
                 }
@@ -61,6 +63,7 @@ class PegawaiController extends Controller
     public function createuser()
     {
         $pegawai = Pegawai::where('skpd_id', $this->skpd()->id)->get();
+        $rolePegawai = Role::where('name','pegawai')->first();
         DB::beginTransaction();
         try {
             foreach($pegawai as $item)
@@ -78,6 +81,9 @@ class PegawaiController extends Controller
                     $item->update([
                         'user_id' => $user_id,
                     ]);
+                    
+                    //Create Role
+                    $u->roles()->attach($rolePegawai);
                 }else{
                     $item->update([
                         'user_id' => $check->id,

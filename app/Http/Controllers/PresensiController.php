@@ -66,6 +66,22 @@ class PresensiController extends Controller
     
     public function radius()
     {
-        
+        $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/']);
+        $response = $client->request('get', Auth::user()->username);
+        $data =  json_decode((string) $response->getBody())->data;
+        $skpd = Skpd::find($data->skpd_id);
+        if(Auth::user()->pegawai->lokasi == null){
+            $latlong2 = null;
+        }else{
+            $lokasi = Auth::user()->pegawai->lokasi;
+            $lat        = (float)$skpd->lat;
+            $long       = (float)$skpd->long;
+            $radius     = (float)$skpd->radius;
+            $latlong2 = [
+                'lat' => $lat,
+                'lng' => $long
+            ];
+        }
+        return view('pegawai.presensi.radius.presensi',compact('skpd','latlong2'));
     }
 }
