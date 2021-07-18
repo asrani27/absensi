@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JamController;
 use App\Http\Controllers\HomeController;
@@ -29,6 +30,9 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/presensi/masuk', [PresensiController::class, 'masuk']);
     Route::post('/pegawai/presensi/masuk', [PresensiController::class, 'storeMasuk']);
     Route::get('/pegawai/presensi/pulang', [PresensiController::class, 'pulang']);
+    Route::prefix('pegawai/presensi')->group(function () {
+        Route::get('radius', [PresensiController::class, 'radius']);
+    });
 });
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {

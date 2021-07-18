@@ -15,7 +15,20 @@ class HomeController extends Controller
         $response = $client->request('get', Auth::user()->username);
         $data =  json_decode((string) $response->getBody())->data;
         $skpd = Skpd::find($data->skpd_id);
-        return view('pegawai.home',compact('skpd'));
+        if(Auth::user()->pegawai->lokasi == null){
+            $latlong2 = null;
+        }else{
+            $lokasi = Auth::user()->pegawai->lokasi;
+            $lat        = (float)$skpd->lat;
+            $long       = (float)$skpd->long;
+            $radius     = (float)$skpd->radius;
+            $latlong2 = [
+                'lat' => $lat,
+                'lng' => $long
+            ];
+        }
+        
+        return view('pegawai.home',compact('skpd','latlong2'));
     }
 
     public function admin()

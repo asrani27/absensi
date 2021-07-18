@@ -70,7 +70,7 @@ class PegawaiController extends Controller
                     $u = new User;
                     $u->name = $item->nama;
                     $u->username = $item->nip;
-                    $u->password = bcrypt($item->tanggal_lahir);
+                    $u->password = bcrypt(Carbon::parse($item->tanggal_lahir)->format('dmY'));
                     $u->save();
 
                     $user_id = $u->id;
@@ -97,7 +97,7 @@ class PegawaiController extends Controller
     public function resetpass($id)
     {
         $p = Pegawai::find($id);
-        User::where('id', $p->user_id)->first()->update(['password' => bcrypt($p->tanggal_lahir)]);
+        User::where('id', $p->user_id)->first()->update(['password' => bcrypt(Carbon::parse($p->tanggal_lahir)->format('dmY'))]);
         toastr()->success('Password Baru : '. Carbon::parse($p->tanggal_lahir)->format('dmY'));
         return back();
     }

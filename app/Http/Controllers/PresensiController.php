@@ -63,4 +63,9 @@ class PresensiController extends Controller
             }
         }
     }
+    
+    public function radius()
+    {
+        
+    }
 }
