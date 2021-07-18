@@ -12,7 +12,8 @@
     <div class="col-12">
         <a href="/admin/qrcode/generate" class="btn btn-sm bg-gradient-purple"><i class="fa fa-qrcode"></i> Generate QrCode</a><br/><br/>
         
-    {{-- {!! QrCode::size(250)->generate('codingdriver.com'); !!} --}}
+        {!! QrCode::size(250)->generate('absensi.banjarmasinkota.go.id'); !!}
+        <br/><br/>
         <div class="card">
         <div class="card-header">
             <h3 class="card-title">Data QR Code</h3>

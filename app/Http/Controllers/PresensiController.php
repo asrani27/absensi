@@ -112,14 +112,15 @@ class PresensiController extends Controller
                 'lng' => $long
             ];
         }
-        return view('pegawai.presensi.barcode.presensi',compact('skpd','latlong2'));
+        //return view('pegawai.presensi.barcode.presensi',compact('skpd','latlong2'));
+        return view('pegawai.presensi.barcode.scan',compact('skpd','latlong2'));
     }
 
     public function pegawai()
     {
         return Auth::user()->pegawai;
     }
-    
+
     public function storeRadius(Request $req)
     {
         $radius = $this->pegawai()->lokasi->radius;
