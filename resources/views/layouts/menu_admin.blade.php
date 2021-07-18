@@ -38,7 +38,7 @@
     <a href="/admin/cuti" class="nav-link {{Request::is('admin/cuti') ? 'active' : ''}}">
         <i class="nav-icon fas fa-calendar"></i>
         <p>
-        Cuti Pegawai
+        Cuti/TL/Izin/Sakit
         </p>
     </a>
     </li>

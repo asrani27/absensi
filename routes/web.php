@@ -3,11 +3,13 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JamController;
+use App\Http\Controllers\CutiController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\QrcodeController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\LiburNasionalController;
@@ -35,6 +37,10 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
         Route::get('radius', [PresensiController::class, 'radius']);
         Route::post('radius', [PresensiController::class, 'storeRadius']);
         Route::get('barcode', [PresensiController::class, 'barcode']);
+        Route::get('manual ', [PresensiController::class, 'manual']);
+        Route::post('manual', [PresensiController::class, 'storeManual']);
+        Route::get('history', [HistoryController::class, 'index']);
+        Route::get('history/search', [HistoryController::class, 'search']);
     });
 });
 
@@ -52,6 +58,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::resource('pegawai', PegawaiController::class);
         Route::get('qrcode/generate', [QrcodeController::class, 'generateQrcode']);
         Route::resource('qrcode', QrcodeController::class);
+        Route::resource('cuti', CutiController::class);
     });
 });
 

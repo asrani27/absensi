@@ -116,9 +116,34 @@ class PresensiController extends Controller
         //return view('pegawai.presensi.barcode.scan',compact('skpd','latlong2'));
     }
 
+    public function manual()
+    {
+        $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/']);
+        $response = $client->request('get', Auth::user()->username);
+        $data =  json_decode((string) $response->getBody())->data;
+        $skpd = Skpd::find($data->skpd_id);
+        return view('pegawai.presensi.manual.presensi',compact('skpd'));
+    }
+
     public function pegawai()
     {
         return Auth::user()->pegawai;
+    }
+
+    public function storeManual(Request $req)
+    {
+        $check = Presensi::where('nip', Auth::user()->username)->where('tanggal', Carbon::today()->format('Y-m-d'))->first();
+        if($check == null){
+            $attr['nip'] = Auth::user()->username;
+            $attr['tanggal'] = Carbon::today()->format('Y-m-d');
+            $attr['keterangan'] = $req->keterangan;
+
+            Presensi::create($attr);
+            toastr()->success('Berhasil Di Kirim Ke Admin');
+        }else{
+            toastr()->error('Anda Sudah Mengirim data pada tanggal ini');
+        }
+        return back();
     }
 
     public function storeRadius(Request $req)
