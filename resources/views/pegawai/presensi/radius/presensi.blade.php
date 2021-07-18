@@ -46,7 +46,7 @@ crossorigin=""/>
                   </li>
                   <li class="nav-item">
                     <a href="/pegawai/presensi/radius" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Get my location</a>
-                    <a href="/home/pegawai" class='btn btn-xs btn-secondary btn-block'><i class=""></i> Kembali</a>
+                    {{-- <a href="/home/pegawai" class='btn btn-xs btn-secondary btn-block'><i class=""></i> Kembali</a> --}}
                   </li>
                 </ul>
             </div>    
@@ -58,7 +58,7 @@ crossorigin=""/>
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="/pegawai/presensi/masuk">
+                <form method="post" action="/pegawai/presensi/radius">
                     @csrf
                 <div class="form-group row">
                     <div class="custom-file">
@@ -66,12 +66,21 @@ crossorigin=""/>
                     <label class="custom-file-label" for="customFile"></label>
                     </div>
                 </div>
+                <input type="hidden" name="datajarak" id="datajarak">
+                <div class="form-group row">
+                    <div class="col-6 text-center">
+                        <strong>{{$jam_masuk == null ? '00:00:00': $jam_masuk}}</strong>
+                    </div>
+                    <div class="col-6 text-center">
+                        <strong>{{$jam_pulang == null ? '00:00:00': $jam_pulang}}</strong>
+                    </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <button type="submit" class="btn btn-block bg-gradient-success">MASUK</button>
+                        <button type="submit" class="btn btn-block bg-gradient-success" name="button" value="masuk">MASUK</button>
                     </div>
                     <div class="col-6">
-                        <button type="submit" class="btn btn-block bg-gradient-danger">PULANG</button>
+                        <button type="submit" class="btn btn-block bg-gradient-danger" name="button" value="pulang">PULANG</button>
                     </div>
                 </div>
                 </form>
@@ -140,6 +149,7 @@ crossorigin=""></script>
 
       var km = latlng.distanceTo(latlng2).toFixed(0);
       document.getElementById("jarak").innerHTML = km + ' Meter';
+      document.getElementById("datajarak").value = km;
       console.log(distance,km);
     });
 </script>

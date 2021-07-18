@@ -82,7 +82,16 @@ class PresensiController extends Controller
                 'lng' => $long
             ];
         }
-        return view('pegawai.presensi.radius.presensi',compact('skpd','latlong2'));
+
+        $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', Carbon::today()->format('Y-m-d'))->first();
+        if($check == null){
+            $jam_masuk = '00:00:00';
+            $jam_pulang = '00:00:00';
+        }else{
+            $jam_masuk = $check->jam_masuk;
+            $jam_pulang = $check->jam_pulang;
+        }
+        return view('pegawai.presensi.radius.presensi',compact('skpd','latlong2','jam_masuk','jam_pulang'));
     }
 
     public function barcode()
@@ -104,5 +113,62 @@ class PresensiController extends Controller
             ];
         }
         return view('pegawai.presensi.barcode.presensi',compact('skpd','latlong2'));
+    }
+
+    public function pegawai()
+    {
+        return Auth::user()->pegawai;
+    }
+    
+    public function storeRadius(Request $req)
+    {
+        $radius = $this->pegawai()->lokasi->radius;
+        if((int)$req->datajarak > (int)$radius){
+            toastr()->error('Anda Berada Di Luar Jangkauan Lokasi Presensi');
+            return back();
+        }else{
+            if($req->button == 'masuk'){    
+                //Presensi Masuk
+                $date      = Carbon::now();
+                $tanggal   = $date->format('Y-m-d');
+                $jam_masuk = $date->format('H:i:s');
+
+                $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
+                if($check == null){
+                      $attr['nip'] = $this->pegawai()->nip;
+                      $attr['tanggal'] = $tanggal;
+                      $attr['jam_masuk'] = $jam_masuk;
+                      Presensi::create($attr);
+                      toastr()->success('Presensi Masuk Berhasil Disimpan');
+                      return back();
+                }else{
+                    //Update Data
+                      toastr()->info('Anda Sudah Melakukan Presensi Masuk');
+                      return back();
+                }
+            }else{
+                //Presensi Pulang
+                $date      = Carbon::now();
+                $tanggal   = $date->format('Y-m-d');
+                $jam_pulang= $date->format('H:i:s');
+
+                $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
+                if($check == null){
+                      $attr['nip'] = $this->pegawai()->nip;
+                      $attr['tanggal'] = $tanggal;
+                      $attr['jam_pulang'] = $jam_pulang;
+                      Presensi::create($attr);
+                      toastr()->success('Presensi Pulang Berhasil Disimpan');
+                      return back();
+                }else{
+                    //Update Data
+                    $check->update([
+                        'jam_pulang' => $jam_pulang,
+                    ]);
+                    toastr()->success('Presensi Pulang Berhasil DiUpdate');
+                    return back();
+                }
+            }
+        }
     }
 }

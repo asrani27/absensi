@@ -32,6 +32,7 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/presensi/pulang', [PresensiController::class, 'pulang']);
     Route::prefix('pegawai/presensi')->group(function () {
         Route::get('radius', [PresensiController::class, 'radius']);
+        Route::post('radius', [PresensiController::class, 'storeRadius']);
         Route::get('barcode', [PresensiController::class, 'barcode']);
     });
 });
