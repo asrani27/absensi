@@ -31,4 +31,9 @@ class HomeController extends Controller
         
         return view('admin.home',compact('latlong','lat','long','radius'));
     }
+
+    public function superadmin()
+    {    
+        return view('superadmin.home');
+    }
 }

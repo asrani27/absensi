@@ -52,4 +52,8 @@ class User extends Authenticatable
         return $this->hasOne(Skpd::class, 'user_id');
     }
 
+    public function pegawai()
+    {
+        return $this->hasOne(Pegawai::class, 'user_id');
+    }
 }

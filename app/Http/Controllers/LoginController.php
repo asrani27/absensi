@@ -15,6 +15,8 @@ class LoginController extends Controller
                 return redirect('/home/pegawai');
             }elseif(Auth::user()->hasRole('admin')){
                 return redirect('/home/admin');
+            }elseif(Auth::user()->hasRole('superadmin')){
+                return redirect('/home/superadmin');
             }
         } else {
             toastr()->error('Username / Password Tidak Ditemukan');
