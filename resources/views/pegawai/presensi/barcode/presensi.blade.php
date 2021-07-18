@@ -63,7 +63,7 @@ crossorigin=""/>
                     @csrf
                 <div class="form-group row">
                     <div class="col-12">
-                        <video id="preview" width="80%" height="200" controls></video>
+                        <video id="preview" width="100%" height="200" controls></video>
                         <button type="submit" class="btn btn-block bg-gradient-success">SCAN BARCODE</button>
                     </div>
                 </div>
