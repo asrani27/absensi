@@ -64,7 +64,7 @@ crossorigin=""/>
     @else
         
     <div class="col-12 col-sm-6 col-md-3">
-      <a href="#" style="color:black">
+      <a href="#" style="color:black" value="23">
         <div class="info-box">
           <span class="info-box-icon bg-info elevation-1"><i class="fas fa-camera"></i></span>
           <div class="info-box-content">
