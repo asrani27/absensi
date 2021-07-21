@@ -7,6 +7,12 @@ integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/k
 crossorigin=""/>
 <style>
     #mapid { height: 10px; }
+    #preview
+{
+    transform: rotateY(180deg);
+    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
+    -moz-transform:rotateY(180deg); /* Firefox */
+}
 </style>
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 @endpush
@@ -59,15 +65,15 @@ crossorigin=""/>
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="/pegawai/presensi/masuk">
+              <video id="preview" width="100%" height="200" controls></video>
+                {{-- <form method="post" action="/pegawai/presensi/masuk">
                     @csrf
                 <div class="form-group row">
                     <div class="col-12">
-                        <video id="preview" width="100%" height="200" controls></video>
                         <button type="submit" class="btn btn-block bg-gradient-success">SCAN BARCODE</button>
                     </div>
                 </div>
-                </form>
+                </form> --}}
             </div>
         </div>
         <div id="mapid"></div>
