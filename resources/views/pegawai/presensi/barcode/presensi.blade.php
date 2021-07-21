@@ -67,14 +67,14 @@ crossorigin=""/>
         <div class="card">
             <div class="card-body">
               <video id="preview" width="100%" height="200" controls></video>
-                {{-- <form method="post" action="/pegawai/presensi/masuk">
+                <form method="post" name="myForm" id="myForm" action="/pegawai/presensi/barcode/scan">
                     @csrf
-                <div class="form-group row">
-                    <div class="col-12">
-                        <button type="submit" class="btn btn-block bg-gradient-success">SCAN BARCODE</button>
+                    <div class="form-group row">
+                        <div class="col-12">
+                          
+                        </div>
                     </div>
-                </div>
-                </form> --}}
+                </form>
             </div>
         </div>
         <div id="mapid"></div>
@@ -91,11 +91,9 @@ crossorigin=""/>
       mirror:false 
     });
     scanner.addListener('scan', function (content) {
-      // function submitform(){
-      //     alert('test');
-      //     document.forms["myForm"].submit();
-      // }
-      alert('auto submit');
+      
+          document.forms["myForm"].submit();
+      
     });
     Instascan.Camera.getCameras().then(function (cameras) {
       if (cameras.length > 0) {

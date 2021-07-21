@@ -130,6 +130,11 @@ class PresensiController extends Controller
         return Auth::user()->pegawai;
     }
 
+    public function scanBarcode()
+    {
+        dd(Auth::user()->id);
+    }
+
     public function storeManual(Request $req)
     {
         $check = Presensi::where('nip', Auth::user()->username)->where('tanggal', Carbon::today()->format('Y-m-d'))->first();
