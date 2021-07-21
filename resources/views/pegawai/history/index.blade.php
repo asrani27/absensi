@@ -61,8 +61,7 @@
         <div class="card-body table-responsive p-0">
             <table class="table table-hover text-nowrap table-sm">
             <thead>
-                <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif"">
-                <th>#</th>
+                <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
                 <th>Tgl</th>
                 <th>Hari</th>
                 <th>Jam Masuk</th>
@@ -79,7 +78,6 @@
                     @else
                     <tr style="background-color: #dff0d8;font-size:10px; font-family:Arial, Helvetica, sans-serif">    
                     @endif
-                    <td>{{$no++}}</td>
                     <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d')}}</td>
                     <td>{{\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l')}}</td>
                     <td>{{$item->jam_masuk}}</td>
