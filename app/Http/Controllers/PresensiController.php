@@ -130,9 +130,20 @@ class PresensiController extends Controller
         return Auth::user()->pegawai;
     }
 
-    public function scanBarcode()
+    public function scanBarcode(Request $req)
     {
-        dd(Auth::user()->id);
+        $today = Carbon::now()->format('Y-m-d');
+        $time  = Carbon::now()->format('H:i:s');
+
+        $check = Presensi::where('tanggal', $today)->first();
+        if($check == null){
+            toastr()->error('Tidak Ada Data');
+        }else{
+            //Presensi Masuk
+            toastr()->success('Presensi Berhasil Di Simpan');
+            $check->update(['jam_masuk' => $time]);
+        }
+        return back();
     }
 
     public function storeManual(Request $req)

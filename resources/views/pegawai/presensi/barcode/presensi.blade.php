@@ -91,9 +91,7 @@ crossorigin=""/>
       mirror:false 
     });
     scanner.addListener('scan', function (content) {
-      
-          document.forms["myForm"].submit();
-      
+      document.forms["myForm"].submit();
     });
     Instascan.Camera.getCameras().then(function (cameras) {
       if (cameras.length > 0) {
