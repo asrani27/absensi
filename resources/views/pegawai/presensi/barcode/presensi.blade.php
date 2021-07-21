@@ -95,7 +95,7 @@ crossorigin=""/>
       document.getElementById('loadingGif').style.display = "block";
     });
     Instascan.Camera.getCameras().then(function (cameras) {
-      alert(cameras.length);
+      alert(cameras.length, cameras[1]);
       if (cameras.length > 0) {
         scanner.start(cameras[1]);
       } else {
