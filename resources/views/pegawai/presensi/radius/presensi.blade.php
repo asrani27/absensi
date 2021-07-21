@@ -62,7 +62,7 @@ crossorigin=""/>
                     @csrf
                 <div class="form-group row">
                     <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile" accept="image/*" capture>
+                    <input type="file" class="custom-file-input" id="customFile" accept="image/*">
                     <label class="custom-file-label" for="customFile"></label>
                     </div>
                 </div>

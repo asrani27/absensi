@@ -92,6 +92,7 @@ crossorigin=""/>
     });
     scanner.addListener('scan', function (content) {
       document.forms["myForm"].submit();
+      document.getElementById('loadingGif').style.display = "block";
     });
     Instascan.Camera.getCameras().then(function (cameras) {
       if (cameras.length > 0) {
