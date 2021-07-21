@@ -11,6 +11,7 @@ use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\QrcodeController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PegawaiController;
+use App\Http\Controllers\GenerateController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\LiburNasionalController;
 use App\Http\Controllers\JenisKeteranganController;
@@ -68,6 +69,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::resource('jam', JamController::class);
         Route::resource('libur', LiburNasionalController::class);
         Route::resource('jenis', JenisKeteranganController::class);
+        Route::get('generatetanggal', [GenerateController::class, 'index']);
+        Route::get('generatetanggal/{bulan}', [GenerateController::class, 'generate']);
     });
 });
 

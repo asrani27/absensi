@@ -39,6 +39,15 @@
     </li>
     
     <li class="nav-item">
+    <a href="/superadmin/generatetanggal" class="nav-link {{ Request::is('superadmin/generatetanggal') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-th"></i>
+        <p>
+            Generate Presensi
+        </p>
+    </a>
+    </li>
+
+    <li class="nav-item">
     <a href="/logout" class="nav-link">
         <i class="nav-icon fas fa-sign-out-alt"></i>
         <p>
