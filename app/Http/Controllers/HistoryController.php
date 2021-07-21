@@ -19,7 +19,7 @@ class HistoryController extends Controller
         $bulan = request()->get('bulan');
         $tahun = request()->get('tahun');
 
-        $data = Presensi::where('nip', Auth::user()->username)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+        $data = Presensi::where('nip', Auth::user()->username)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderBy('tanggal','ASC')->get();
         request()->flash();
         return view('pegawai.history.index',compact('data'));
     }
