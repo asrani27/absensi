@@ -8,9 +8,11 @@ crossorigin=""/>
 <style>
     #mapid { height: 10px; }
     #preview{
-      transform: rotateY(180deg);
-    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
-    -moz-transform:rotateY(180deg); /* Firefox */
+      -o-transform : scaleX(-1);
+      -moz-transform : scaleX(-1);
+      -webkit-transform : scaleX(-1);
+      -ms-transform: scaleX(-1);
+      transform : scaleX(-1);
 }
 </style>
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
