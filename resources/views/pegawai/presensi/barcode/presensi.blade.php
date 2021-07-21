@@ -7,11 +7,10 @@ integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/k
 crossorigin=""/>
 <style>
     #mapid { height: 10px; }
-    #preview
-{
-    transform: rotateY(180deg);
-    -webkit-transform:rotateY(180deg); /* Safari and Chrome */
-    -moz-transform:rotateY(180deg); /* Firefox */
+    #preview{
+            -moz-transform: scale(-1, 1);
+            -webkit-transform: scale(-1, 1); -o-transform: scale(-1, 1);
+            transform: scale(-1, 1); filter: FlipH;
 }
 </style>
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
