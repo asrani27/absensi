@@ -91,7 +91,11 @@ crossorigin=""/>
       mirror:false 
     });
     scanner.addListener('scan', function (content) {
-      alert(content);
+      // function submitform(){
+      //     alert('test');
+      //     document.forms["myForm"].submit();
+      // }
+      alert('auto submit');
     });
     Instascan.Camera.getCameras().then(function (cameras) {
       if (cameras.length > 0) {

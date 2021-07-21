@@ -12,8 +12,7 @@
     <div class="col-12">
         <a href="/admin/qrcode/generate" class="btn btn-sm bg-gradient-purple"><i class="fa fa-qrcode"></i> Generate QrCode</a><br/><br/>
         
-        {!! QrCode::size(250)->generate('absensi.banjarmasinkota.go.id'); !!}
-        <br/><br/>
+        {{-- {!! QrCode::size(250)->generate('absensi.banjarmasinkota.go.id'); !!} --}}
         <div class="card">
         <div class="card-header">
             <h3 class="card-title">Data QR Code</h3>
@@ -25,6 +24,7 @@
                 <tr>
                 <th>#</th>
                 <th>Tanggal</th>
+                <th>Aksi</th>
                 </tr>
             </thead>
             @php
@@ -35,6 +35,9 @@
                 <tr>
                 <td>{{$no++}}</td>
                 <td>{{$item->tanggal}}</td>
+                <td>
+                    <a href="/admin/qrcode/tampil/{{$item->id}}" class="btn btn-sm btn-info">Tampilkan QR</a>
+                </td>
                 </tr>
             @endforeach
             </tbody>

@@ -58,6 +58,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::post('pegawai/{id}/lokasi', [PegawaiController::class, 'storeLokasi']);
         Route::resource('pegawai', PegawaiController::class);
         Route::get('qrcode/generate', [QrcodeController::class, 'generateQrcode']);
+        Route::get('qrcode/tampil/{id}', [QrcodeController::class, 'tampilQr']);
         Route::resource('qrcode', QrcodeController::class);
         Route::resource('cuti', CutiController::class);
     });

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Qr;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -17,13 +18,39 @@ class QrcodeController extends Controller
     }
 
     public function generateQrcode()
-    {
-        $key = Auth::user()->skpd->kode_skpd.Carbon::today()->format('d-m-Y');
+    {        
+        $year   = Carbon::today()->format('Y-m');
+
+        $start  = Carbon::parse($year)->startOfMonth();
+        $end    = Carbon::parse($year)->endOfMonth();
+        $period = CarbonPeriod::create($start, $end);
         
-        QrCode::size(500)
-            ->format('png')
-            ->generate('asrandev.com', public_path('public/qr/qrcode.png'));
+        foreach($period as $date)
+        {
+            $dates[] = $date->format('Y-m-d');
+        }
+
+        foreach($dates as $d)
+        {
+            $check = Qr::where('tanggal', $d)->where('skpd_id', Auth::user()->skpd->id)->first();
+            if($check == null){
+                $q = new Qr;
+                $q->tanggal = $d;
+                $q->qrcode = Auth::user()->skpd->kode_skpd.$d;
+                $q->skpd_id = Auth::user()->skpd->id;
+                $q->save();
+            }else{
+
+            }
+        }
+        toastr()->success('Berhasil Di Generate');
         return back();
+    }
+
+    public function tampilQr($id)
+    {
+        $data = Qr::find($id)->qrcode;
+        return view('admin.qrcode.tampil',compact('data'));
     }
 
     public function create()
