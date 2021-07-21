@@ -7,13 +7,13 @@ integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/k
 crossorigin=""/>
 <style>
     #mapid { height: 10px; }
-    #preview{
+    /* #preview{
       -o-transform : scaleX(-1);
       -moz-transform : scaleX(-1);
       -webkit-transform : scaleX(-1);
       -ms-transform: scaleX(-1);
       transform : scaleX(-1);
-}
+} */
 </style>
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 @endpush
