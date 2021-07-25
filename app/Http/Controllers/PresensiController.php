@@ -271,4 +271,9 @@ class PresensiController extends Controller
             }
         }
     }
+
+    public function testing()
+    {
+        return view('pegawai.presensi.testing');
+    }
 }
