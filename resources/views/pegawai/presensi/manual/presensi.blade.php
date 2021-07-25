@@ -1,20 +1,5 @@
 
 <!doctype html>
-<!--
-Copyright 2021 Google Inc. All Rights Reserved.
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
--->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -40,8 +25,8 @@ limitations under the License.
     
     <link rel="icon" href="../images/favicon.ico">
     
-    <link rel="stylesheet" href="../styles/main.css">
-    <link rel="stylesheet" href="grab-frame-take-photo.css">
+    <link rel="stylesheet" href="https://googlechrome.github.io/samples/styles/main.css">
+    <link rel="stylesheet" href="https://googlechrome.github.io/samples/image-capture/grab-frame-take-photo.css">
     
   </head>
 
@@ -90,13 +75,6 @@ limitations under the License.
   };
 </script>
 
-<h3>Live Output</h3>
-<div id="output" class="output">
-  <div id="content"></div>
-  <div id="status"></div>
-  <pre id="log"></pre>
-</div>
-
 
 <script>
   if (/Chrome\/(\d+\.\d+.\d+.\d+)/.test(navigator.userAgent)){
@@ -113,7 +91,8 @@ limitations under the License.
 
   
     
-      <script>var imageCapture;
+<script>
+      var imageCapture;
 
 function onGetUserMediaButtonClick() {
   navigator.mediaDevices.getUserMedia({video: true})
