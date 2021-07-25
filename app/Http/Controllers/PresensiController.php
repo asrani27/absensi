@@ -177,13 +177,12 @@ class PresensiController extends Controller
         $today = Carbon::now()->format('Y-m-d');
         $time  = Carbon::now()->format('H:i:s');
         
-        $check = Presensi::where('tanggal', $today)->first();
+        $check = Presensi::where('tanggal', $today)->where('nip', Auth::user()->username)->first();
         if($check == null){
             toastr()->error('Tidak Ada Data');
         }else{
             if($req->jenis == 'masuk'){
                 //presensi masuk
-                dd($check, $check->jam_masuk);
                 if($check->jam_masuk != null){
                     toastr()->error('Anda Sudah melakukan presensi masuk');
                 }else{
