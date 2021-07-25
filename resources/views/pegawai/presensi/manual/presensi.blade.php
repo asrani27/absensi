@@ -46,17 +46,6 @@ limitations under the License.
   </head>
 
   <body>
-    
-    <h1>Image Capture / Grab Frame - Take Photo Sample</h1>
-    <p class="availability">
-      Available in <a target="_blank" href="https://www.chromestatus.com/feature/4843864737185792">Chrome 56+</a> |
-      <a target="_blank" href="https://github.com/googlechrome/samples/blob/gh-pages/image-capture/grab-frame-take-photo.html">View on GitHub</a> |
-      <a  href="index.html">Browse Samples</a>
-    </p>
-    <h3>Background</h3>
-<p>The ImageCapture Web API allows web developers to capture images from camera
-in the form of a Blob with <code>takePhoto()</code> or as a ImageBitmap with
-<code>grabFrame()</code>.</p>
 
 <div id='results'>
   <div>
@@ -175,13 +164,6 @@ document.querySelector('video').addEventListener('play', function() {
 });
 </script>
     
-  
-
-  
- 
-
-
-
 <script>
   document.querySelector('#getUserMediaButton').addEventListener('click', onGetUserMediaButtonClick);
   document.querySelector('#grabFrameButton').addEventListener('click', onGrabFrameButtonClick);
