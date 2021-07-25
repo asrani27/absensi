@@ -183,6 +183,7 @@ class PresensiController extends Controller
         }else{
             if($req->jenis == 'masuk'){
                 //presensi masuk
+                dd($check, $check->jam_masuk);
                 if($check->jam_masuk != null){
                     toastr()->error('Anda Sudah melakukan presensi masuk');
                 }else{
