@@ -176,14 +176,24 @@ class PresensiController extends Controller
     {
         $today = Carbon::now()->format('Y-m-d');
         $time  = Carbon::now()->format('H:i:s');
-        dd($req->all());
+        
         $check = Presensi::where('tanggal', $today)->first();
         if($check == null){
             toastr()->error('Tidak Ada Data');
         }else{
-            //Presensi Masuk
-            toastr()->success('Presensi Berhasil Di Simpan');
-            $check->update(['jam_masuk' => $time]);
+            if($req->jenis == 'masuk'){
+                //presensi masuk
+                if($check->jam_masuk != null){
+                    toastr()->error('Anda Sudah melakukan presensi masuk');
+                }else{
+                    toastr()->success('Presensi Berhasil Di Simpan');
+                    $check->update(['jam_masuk' => $time]);
+                }
+            }else{
+                //presensi pulang
+                toastr()->success('Presensi Pulang Berhasil Di Simpan');
+                $check->update(['jam_pulang' => $time]);
+            }
         }
         return back();
     }
