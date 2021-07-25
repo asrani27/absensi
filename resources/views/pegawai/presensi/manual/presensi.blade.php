@@ -1,5 +1,20 @@
 
 <!doctype html>
+<!--
+Copyright 2021 Google Inc. All Rights Reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -25,12 +40,24 @@
     
     <link rel="icon" href="../images/favicon.ico">
     
-    <link rel="stylesheet" href="https://googlechrome.github.io/samples/styles/main.css">
-    <link rel="stylesheet" href="https://googlechrome.github.io/samples/image-capture/grab-frame-take-photo.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="grab-frame-take-photo.css">
     
   </head>
 
   <body>
+    
+    <h1>Image Capture / Grab Frame - Take Photo Sample</h1>
+    <p class="availability">
+      Available in <a target="_blank" href="https://www.chromestatus.com/feature/4843864737185792">Chrome 56+</a> |
+      <a target="_blank" href="https://github.com/googlechrome/samples/blob/gh-pages/image-capture/grab-frame-take-photo.html">View on GitHub</a> |
+      <a  href="index.html">Browse Samples</a>
+    </p>
+    <h3>Background</h3>
+<p>The ImageCapture Web API allows web developers to capture images from camera
+in the form of a Blob with <code>takePhoto()</code> or as a ImageBitmap with
+<code>grabFrame()</code>.</p>
+
 <div id='results'>
   <div>
     <video autoplay></video>
@@ -97,9 +124,7 @@
 
   
     
-<script>
-
-var imageCapture;
+      <script>var imageCapture;
 
 function onGetUserMediaButtonClick() {
   navigator.mediaDevices.getUserMedia({video: true})
@@ -149,13 +174,84 @@ document.querySelector('video').addEventListener('play', function() {
   document.querySelector('#takePhotoButton').disabled = false;
 });
 </script>
+    
   
+
+  
+    <h3>JavaScript Snippet</h3>
+  
+
+  
+    <figure class="highlight"><pre><code class="language-js" data-lang="js"><span class="kd">var</span> <span class="nx">imageCapture</span><span class="p">;</span>
+
+<span class="kd">function</span> <span class="nx">onGetUserMediaButtonClick</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nb">navigator</span><span class="p">.</span><span class="nx">mediaDevices</span><span class="p">.</span><span class="nx">getUserMedia</span><span class="p">({</span><span class="na">video</span><span class="p">:</span> <span class="kc">true</span><span class="p">})</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">mediaStream</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">video</span><span class="dl">'</span><span class="p">).</span><span class="nx">srcObject</span> <span class="o">=</span> <span class="nx">mediaStream</span><span class="p">;</span>
+
+    <span class="kd">const</span> <span class="nx">track</span> <span class="o">=</span> <span class="nx">mediaStream</span><span class="p">.</span><span class="nx">getVideoTracks</span><span class="p">()[</span><span class="mi">0</span><span class="p">];</span>
+    <span class="nx">imageCapture</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ImageCapture</span><span class="p">(</span><span class="nx">track</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="nx">ChromeSamples</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onGrabFrameButtonClick</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">imageCapture</span><span class="p">.</span><span class="nx">grabFrame</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">imageBitmap</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">#grabFrameCanvas</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">drawCanvas</span><span class="p">(</span><span class="nx">canvas</span><span class="p">,</span> <span class="nx">imageBitmap</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="nx">ChromeSamples</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="kd">function</span> <span class="nx">onTakePhotoButtonClick</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">imageCapture</span><span class="p">.</span><span class="nx">takePhoto</span><span class="p">()</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">blob</span> <span class="o">=&gt;</span> <span class="nx">createImageBitmap</span><span class="p">(</span><span class="nx">blob</span><span class="p">))</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">imageBitmap</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">canvas</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">#takePhotoCanvas</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">drawCanvas</span><span class="p">(</span><span class="nx">canvas</span><span class="p">,</span> <span class="nx">imageBitmap</span><span class="p">);</span>
+  <span class="p">})</span>
+  <span class="p">.</span><span class="k">catch</span><span class="p">(</span><span class="nx">error</span> <span class="o">=&gt;</span> <span class="nx">ChromeSamples</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">error</span><span class="p">));</span>
+<span class="p">}</span>
+
+<span class="cm">/* Utils */</span>
+
+<span class="kd">function</span> <span class="nx">drawCanvas</span><span class="p">(</span><span class="nx">canvas</span><span class="p">,</span> <span class="nx">img</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">=</span> <span class="nx">getComputedStyle</span><span class="p">(</span><span class="nx">canvas</span><span class="p">).</span><span class="nx">width</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1">px</span><span class="dl">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">=</span> <span class="nx">getComputedStyle</span><span class="p">(</span><span class="nx">canvas</span><span class="p">).</span><span class="nx">height</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="dl">'</span><span class="s1">px</span><span class="dl">'</span><span class="p">)[</span><span class="mi">0</span><span class="p">];</span>
+  <span class="kd">let</span> <span class="nx">ratio</span>  <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">min</span><span class="p">(</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">/</span> <span class="nx">img</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">/</span> <span class="nx">img</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+  <span class="kd">let</span> <span class="nx">x</span> <span class="o">=</span> <span class="p">(</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span> <span class="o">-</span> <span class="nx">img</span><span class="p">.</span><span class="nx">width</span> <span class="o">*</span> <span class="nx">ratio</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="kd">let</span> <span class="nx">y</span> <span class="o">=</span> <span class="p">(</span><span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span> <span class="o">-</span> <span class="nx">img</span><span class="p">.</span><span class="nx">height</span> <span class="o">*</span> <span class="nx">ratio</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="dl">'</span><span class="s1">2d</span><span class="dl">'</span><span class="p">).</span><span class="nx">clearRect</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">canvas</span><span class="p">.</span><span class="nx">height</span><span class="p">);</span>
+  <span class="nx">canvas</span><span class="p">.</span><span class="nx">getContext</span><span class="p">(</span><span class="dl">'</span><span class="s1">2d</span><span class="dl">'</span><span class="p">).</span><span class="nx">drawImage</span><span class="p">(</span><span class="nx">img</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">img</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span> <span class="nx">img</span><span class="p">.</span><span class="nx">height</span><span class="p">,</span>
+      <span class="nx">x</span><span class="p">,</span> <span class="nx">y</span><span class="p">,</span> <span class="nx">img</span><span class="p">.</span><span class="nx">width</span> <span class="o">*</span> <span class="nx">ratio</span><span class="p">,</span> <span class="nx">img</span><span class="p">.</span><span class="nx">height</span> <span class="o">*</span> <span class="nx">ratio</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">video</span><span class="dl">'</span><span class="p">).</span><span class="nx">addEventListener</span><span class="p">(</span><span class="dl">'</span><span class="s1">play</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">#grabFrameButton</span><span class="dl">'</span><span class="p">).</span><span class="nx">disabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="nb">document</span><span class="p">.</span><span class="nx">querySelector</span><span class="p">(</span><span class="dl">'</span><span class="s1">#takePhotoButton</span><span class="dl">'</span><span class="p">).</span><span class="nx">disabled</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">});</span></code></pre></figure>
+  
+
+
+
 <script>
   document.querySelector('#getUserMediaButton').addEventListener('click', onGetUserMediaButtonClick);
   document.querySelector('#grabFrameButton').addEventListener('click', onGrabFrameButtonClick);
   document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
 </script>
 
+    
+    <script>
+      /* jshint ignore:start */
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-53563471-1', 'auto');
+      ga('send', 'pageview');
+      /* jshint ignore:end */
+    </script>
   </body>
 </html>
 
