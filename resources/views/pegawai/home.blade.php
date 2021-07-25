@@ -45,7 +45,7 @@ crossorigin=""/>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="/home/pegawai" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Get my location</a>
+                    <a href="/home/pegawai" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Dapatkan Lokasi Saya</a>
                   </li>
                 </ul>
             </div>    
@@ -193,7 +193,21 @@ crossorigin=""></script>
 
       var km = latlng.distanceTo(latlng2).toFixed(0);
       document.getElementById("jarak").innerHTML = km + ' Meter';
-      console.log(distance,km);
+      
+      // if(km > 0){
+      // }else{
+      // document.getElementById("jarak").innerHTML = 'Nyalakan GPS Anda';
+      // }
+      // console.log(distance,km);
     });
+
+// $(document).ready(function(){
+//   var cookieValue = document.getElementById("jarak").value;    
+//   console.log(cookieValue);
+//   if(typeof cookieValue === 'undefined'){
+//       document.getElementById("jarak").innerHTML = 'Nyalakan GPS Anda';
+//   }else{
+//   }
+// });
 </script>
 @endpush

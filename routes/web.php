@@ -38,6 +38,8 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
         Route::get('radius', [PresensiController::class, 'radius']);
         Route::post('radius', [PresensiController::class, 'storeRadius']);
         Route::get('barcode', [PresensiController::class, 'barcode']);
+        Route::get('barcode/front', [PresensiController::class, 'frontCamera']);
+        Route::get('barcode/back', [PresensiController::class, 'backCamera']);
         Route::post('barcode/scan', [PresensiController::class, 'scanBarcode']);
         Route::get('manual ', [PresensiController::class, 'manual']);
         Route::post('manual', [PresensiController::class, 'storeManual']);

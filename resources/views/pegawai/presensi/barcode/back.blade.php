@@ -7,7 +7,15 @@ integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/k
 crossorigin=""/>
 <style>
     #mapid { height: 10px; }
+    /* #preview{
+      -o-transform : scaleX(-1);
+      -moz-transform : scaleX(-1);
+      -webkit-transform : scaleX(-1);
+      -ms-transform: scaleX(-1);
+      transform : scaleX(-1);
+} */
 </style>
+<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 @endpush
 @section('title')
   <strong>PRESENSI</strong>
@@ -45,8 +53,8 @@ crossorigin=""/>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="/pegawai/presensi/radius" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Dapatkan Lokasi Saya</a>
-                    {{-- <a href="/home/pegawai" class='btn btn-xs btn-secondary btn-block'><i class=""></i> Kembali</a> --}}
+                    <a href="/pegawai/presensi/barcode" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Dapatkan Lokasi Saya</a>
+                    <a href="/home/pegawai" class='btn btn-xs btn-secondary btn-block'><i class=""></i> Kembali</a>
                   </li>
                 </ul>
             </div>    
@@ -58,62 +66,53 @@ crossorigin=""/>
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="/pegawai/presensi/radius">
+              <video id="preview" width="100%" height="200" controls></video>
+                <form method="post" name="myForm" id="myForm" action="/pegawai/presensi/barcode/scan">
                     @csrf
-                <div class="form-group row">
-                    <input type="file" name="file" class="form-control">
-                    {{-- <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile" accept="image/*">
-                    <label class="custom-file-label" for="customFile"></label>
-                    </div> --}}
-                </div>
-                <input type="hidden" name="datajarak" id="datajarak">
-                <div class="form-group row">
-                    <div class="col-6 text-center">
-                        <strong>{{$jam_masuk == null ? '00:00:00': $jam_masuk}}</strong>
+                    <div class="form-group row">
+                        <div class="col-12">
+                          <div class="form-group row">
+                              <div class="col-6">
+                                  <a href="/pegawai/presensi/barcode/front" class="btn btn-block bg-gradient-secondary" name="button" value="masuk">Front Cam</a>
+                              </div>
+                              <div class="col-6">
+                                <a href="/pegawai/presensi/barcode/back" class="btn btn-block bg-gradient-success" name="button" value="masuk">Back Cam</a>
+                              </div>
+                          </div>
+                        </div>
                     </div>
-                    <div class="col-6 text-center">
-                        <strong>{{$jam_pulang == null ? '00:00:00': $jam_pulang}}</strong>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-6">
-                        <button type="submit" class="btn btn-block bg-gradient-success" name="button" value="masuk">MASUK</button>
-                    </div>
-                    <div class="col-6">
-                        <button type="submit" class="btn btn-block bg-gradient-danger" name="button" value="pulang">PULANG</button>
-                    </div>
-                </div>
                 </form>
             </div>
         </div>
         <div id="mapid"></div>
     </div>
 </div>
-        {{-- <div class="row">
-            <div class="col-lg-6 col-6">
-                <a href="/pegawai/presensi/masuk">
-                <div class="info-box bg-gradient-success">
-                <div class="info-box-content text-center">
-                    <span class="info-box-text"><i class="far fa-calendar"></i><br/><strong>PRESENSI MASUK</strong></span>              
-                </div>
-                </div>
-                </a> 
-            </div>
-            <div class="col-lg-6 col-6">
-                <a href="/pegawai/presensi/pulang">
-                <div class="info-box bg-gradient-danger">
-                <div class="info-box-content text-center">
-                    <span class="info-box-text"><i class="far fa-calendar"></i><br/><strong>PRESENSI PULANG</strong></span>               
-                </div>
-                </div>
-                </a>
-            </div>
-        </div> --}}
         
 @endsection 
 
 @push('js')
+
+<script type="text/javascript">
+    let scanner = new Instascan.Scanner({ 
+      video: document.getElementById('preview'),
+      mirror:false 
+    });
+    scanner.addListener('scan', function (content) {
+      document.forms["myForm"].submit();
+      document.getElementById('loadingGif').style.display = "block";
+    });
+    Instascan.Camera.getCameras().then(function (cameras) {
+      
+      if (cameras.length > 0) {
+        scanner.start(cameras[1]);
+      } else {
+        console.error('No cameras found.');
+      }
+    }).catch(function (e) {
+        alert(e+'oke');
+  //        console.error(e);
+    });
+  </script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 crossorigin=""></script>
@@ -150,7 +149,6 @@ crossorigin=""></script>
 
       var km = latlng.distanceTo(latlng2).toFixed(0);
       document.getElementById("jarak").innerHTML = km + ' Meter';
-      document.getElementById("datajarak").value = km;
       console.log(distance,km);
     });
 </script>
