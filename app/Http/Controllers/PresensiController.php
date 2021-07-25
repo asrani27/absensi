@@ -176,7 +176,7 @@ class PresensiController extends Controller
     {
         $today = Carbon::now()->format('Y-m-d');
         $time  = Carbon::now()->format('H:i:s');
-
+        dd($req->all());
         $check = Presensi::where('tanggal', $today)->first();
         if($check == null){
             toastr()->error('Tidak Ada Data');

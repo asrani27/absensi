@@ -74,6 +74,11 @@ crossorigin=""/>
               <video id="preview" width="100%" height="200" controls></video>
                 <form method="post" name="myForm" id="myForm" action="/pegawai/presensi/barcode/scan">
                     @csrf
+                    @if (strtotime('now') < strtotime('12:00pm'))
+                      <input type="hidden" name="jenis" value="masuk">
+                    @else
+                      <input type="hidden" name="jenis" value="pulang">
+                    @endif
                     <div class="form-group row">
                         <div class="col-12">
                           <div class="form-group row">
