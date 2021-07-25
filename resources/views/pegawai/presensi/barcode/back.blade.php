@@ -65,7 +65,12 @@ crossorigin=""/>
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
-            <div class="card-body">
+            <div class="card-body text-center">
+                @if (strtotime('now') < strtotime('12:00pm'))
+                    <span class="badge badge-warning">Anda Berada Di Scan Masuk</span>
+                @else
+                    <span class="badge badge-warning">Anda Berada Di Scan Pulang</span>
+                @endif
               <video id="preview" width="100%" height="200" controls></video>
                 <form method="post" name="myForm" id="myForm" action="/pegawai/presensi/barcode/scan">
                     @csrf
