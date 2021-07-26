@@ -25,18 +25,18 @@ self.addEventListener("install", event => {
 });
 
 // Clear cache on activate
-self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys().then(cacheNames => {
-            return Promise.all(
-                cacheNames
-                    .filter(cacheName => (cacheName.startsWith("pwa-")))
-                    .filter(cacheName => (cacheName !== staticCacheName))
-                    .map(cacheName => caches.delete(cacheName))
-            );
-        })
-    );
-});
+// self.addEventListener('activate', event => {
+//     event.waitUntil(
+//         caches.keys().then(cacheNames => {
+//             return Promise.all(
+//                 cacheNames
+//                     .filter(cacheName => (cacheName.startsWith("pwa-")))
+//                     .filter(cacheName => (cacheName !== staticCacheName))
+//                     .map(cacheName => caches.delete(cacheName))
+//             );
+//         })
+//     );
+// });
 
 // Serve from Cache
 // self.addEventListener("fetch", event => {
