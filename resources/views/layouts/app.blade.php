@@ -12,6 +12,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
   <title>PRESENSI</title>
   @include('layouts.css')
+  @laravelPWA
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
