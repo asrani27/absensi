@@ -126,11 +126,11 @@ in the form of a Blob with <code>takePhoto()</code> or as a ImageBitmap with
 
   
     
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
 var imageCapture;
 $(document).ready(function(){
-  
   navigator.mediaDevices.getUserMedia({video: true})
   .then(mediaStream => {
     document.querySelector('video').srcObject = mediaStream;
