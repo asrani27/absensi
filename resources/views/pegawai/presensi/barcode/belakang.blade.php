@@ -41,22 +41,24 @@ crossorigin=""/>
 @push('js')
 
 <script type="text/javascript">
-    
-    scanner = new Instascan.Scanner({ video: video, scanPeriod: 4, mirror:false })
-                .then(handleSuccess)
-                .catch(handleError);
-             //Start scanning
-             scanner.addListener('scan', foundCode);
-
-             Instascan.Camera.getCameras().then(function (cameras) {
-                 if (cameras.length > 0) {
-                     scanner.start(cameras[0]);
-                 }
-                 else {
-            
-                 }
-             }).catch (function (e) {
-             
-             });
+let scanner = new Instascan.Scanner({ 
+      video: document.getElementById('video'),
+      mirror:false 
+    });
+    scanner.addListener('scan', function (content) {
+      document.forms["myForm"].submit();
+      document.getElementById('loadingGif').style.display = "block";
+    });
+    Instascan.Camera.getCameras().then(function (cameras) {
+      
+      if (cameras.length > 0) {
+        scanner.start(cameras[0]);
+      } else {
+        console.error('No cameras found.');
+      }
+    }).catch(function (e) {
+        alert(e+'oke');
+  //        console.error(e);
+    });
   </script>
 @endpush
