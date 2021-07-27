@@ -240,11 +240,15 @@ class PresensiController extends Controller
                 }else{
                     //Update Data
                       if($check->jam_masuk == null){
-                        $check->update([
-                            'jam_masuk' => $jam_masuk,
-                            'photo_masuk' => $req->photo,
-                        ]);
-                        toastr()->success('Presensi Masuk Berhasil Diupdate');
+                        if($req->photo == null){
+                            toastr()->error('Take Photo Terlebih Dahulu');
+                        }else{
+                            $check->update([
+                                'jam_masuk' => $jam_masuk,
+                                'photo_masuk' => $req->photo,
+                            ]);
+                            toastr()->success('Presensi Masuk Berhasil Disimpan');
+                        }
                         return back();
                       }else{
                         toastr()->info('Anda Sudah Melakukan Presensi Masuk');
@@ -267,11 +271,15 @@ class PresensiController extends Controller
                       return back();
                 }else{
                     //Update Data
-                    $check->update([
-                        'jam_pulang' => $jam_pulang,
-                        'photo_pulang' => $req->photo,
-                    ]);
-                    toastr()->success('Presensi Pulang Berhasil DiUpdate');
+                    if($req->photo == null){
+                        toastr()->error('Take Photo Terlebih Dahulu');
+                    }else{
+                        $check->update([
+                            'jam_pulang' => $jam_pulang,
+                            'photo_pulang' => $req->photo,
+                        ]);
+                        toastr()->success('Presensi Pulang Berhasil DiUpdate');
+                    }
                     return back();
                 }
             }
