@@ -52,11 +52,13 @@ class PresensiController extends Controller
             
             if($check == null)
             {
+                $attr['photo_masuk'] = $req->photo;
                 Presensi::create($attr);
                 toastr()->success('Berhasil Disimpan');
                 return redirect('/pegawai/presensi/masuk');
             }
             else{
+                $attr['photo_pulang'] = $req->photo;
                 $check->update($attr);
                 toastr()->success('Berhasil Diupdate');
                 return redirect('/pegawai/presensi/masuk');
