@@ -104,6 +104,8 @@ in the form of a Blob with <code>takePhoto()</code> or as a ImageBitmap with
 <h3>Live Output</h3>
 <div id="output" class="output">
   <div id="content"></div>
+  <div id="imageBitmap"></div>
+  <div id="canvas"></div>
   <div id="status"></div>
   <pre id="log"></pre>
 </div>
@@ -142,6 +144,8 @@ function onGrabFrameButtonClick() {
   .then(imageBitmap => {
     const canvas = document.querySelector('#grabFrameCanvas');
     drawCanvas(canvas, imageBitmap);
+    document.getElementById("imageBitmap").innerHTML = imageBitmap;
+    document.getElementById("canvasgrab").innerHTML = canvas;
   })
   .catch(error => ChromeSamples.log(error));
 }
