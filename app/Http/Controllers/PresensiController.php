@@ -240,7 +240,10 @@ class PresensiController extends Controller
                 }else{
                     //Update Data
                       if($check->jam_masuk == null){
-                        $check->update(['jam_masuk' => $jam_masuk]);
+                        $check->update([
+                            'jam_masuk' => $jam_masuk,
+                            'photo_masuk' => $req->photo,
+                        ]);
                         toastr()->success('Presensi Masuk Berhasil Diupdate');
                         return back();
                       }else{
@@ -266,6 +269,7 @@ class PresensiController extends Controller
                     //Update Data
                     $check->update([
                         'jam_pulang' => $jam_pulang,
+                        'photo_pulang' => $req->photo,
                     ]);
                     toastr()->success('Presensi Pulang Berhasil DiUpdate');
                     return back();
