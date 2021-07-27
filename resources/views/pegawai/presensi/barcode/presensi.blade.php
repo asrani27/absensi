@@ -109,6 +109,7 @@ crossorigin=""/>
       mirror:false 
     });
     scanner.addListener('scan', function (content) {
+      alert(content);
       document.forms["myForm"].submit();
       document.getElementById('loadingGif').style.display = "block";
     });
