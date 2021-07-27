@@ -64,8 +64,9 @@
                 <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
                 <th>Tgl</th>
                 <th>Hari</th>
-                <th>Jam Masuk</th>
-                <th>Jam Pulang</th>
+                <th class="text-center">Jam Masuk</th>
+                <th class="text-center">Jam Pulang</th>
+                <th></th>
                 </tr>
             </thead>
             @php
@@ -80,8 +81,20 @@
                     @endif
                     <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d')}}</td>
                     <td>{{\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l')}}</td>
-                    <td>{{$item->jam_masuk}}</td>
-                    <td>{{$item->jam_pulang}}</td>
+                    <td class="text-center">{{$item->jam_masuk}}<br/>
+                        @if ($item->photo_masuk == null)
+                        
+                        @else
+                            <img src="{{$item->photo_masuk}}" width="75px" height="25px">
+                        @endif    
+                    </td>
+                    <td class="text-center">{{$item->jam_pulang}}<br/>
+                        @if ($item->photo_pulang == null)
+                        
+                        @else
+                            <img src="{{$item->photo_pulang}}" width="75px" height="25px">
+                        @endif    
+                    </td>
                     <td></td>
                     </tr>
                 @endforeach
