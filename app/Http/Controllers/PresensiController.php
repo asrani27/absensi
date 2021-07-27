@@ -182,28 +182,32 @@ class PresensiController extends Controller
             toastr()->error('Qrcode Tidak Ada Dalam Database');
             return back();
         }else{    
-            dd($checkQr);
-            $today = Carbon::now()->format('Y-m-d');
-            $time  = Carbon::now()->format('H:i:s');
-            $check = Presensi::where('tanggal', $today)->where('nip', Auth::user()->username)->first();
-            if($check == null){
-                toastr()->error('Tidak Ada Data');
+            if($checkQr->tanggal != Carbon::now()->format('Y-m-d')){
+                toastr()->error('Qrcode Ini Telah Kadaluwarsa');
+                return back();
             }else{
-                if($req->jenis == 'masuk'){
-                    //presensi masuk
-                    if($check->jam_masuk != null){
-                        toastr()->error('Anda Sudah melakukan presensi masuk');
-                    }else{
-                        toastr()->success('Presensi Berhasil Di Simpan');
-                        $check->update(['jam_masuk' => $time]);
-                    }
+                $today = Carbon::now()->format('Y-m-d');
+                $time  = Carbon::now()->format('H:i:s');
+                $check = Presensi::where('tanggal', $today)->where('nip', Auth::user()->username)->first();
+                if($check == null){
+                    toastr()->error('Tidak Ada Data');
                 }else{
-                    //presensi pulang
-                    toastr()->success('Presensi Pulang Berhasil Di Simpan');
-                    $check->update(['jam_pulang' => $time]);
+                    if($req->jenis == 'masuk'){
+                        //presensi masuk
+                        if($check->jam_masuk != null){
+                            toastr()->error('Anda Sudah melakukan presensi masuk');
+                        }else{
+                            toastr()->success('Presensi Berhasil Di Simpan');
+                            $check->update(['jam_masuk' => $time]);
+                        }
+                    }else{
+                        //presensi pulang
+                        toastr()->success('Presensi Pulang Berhasil Di Simpan');
+                        $check->update(['jam_pulang' => $time]);
+                    }
                 }
+                return back();
             }
-            return back();
         }
     }
 
