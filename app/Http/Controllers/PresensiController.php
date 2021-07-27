@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Qr;
 use Carbon\Carbon;
 use App\Models\Skpd;
 use GuzzleHttp\Client;
