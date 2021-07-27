@@ -68,8 +68,11 @@ in the form of a Blob with <code>takePhoto()</code> or as a ImageBitmap with
     <button id='grabFrameButton' disabled>Grab Frame</button>
   </div>
   <div>
-    <canvas id='takePhotoCanvas'></canvas>
-    <button id='takePhotoButton' disabled>Take Photo</button>
+    <form action="/savephoto" method="POST">
+      @csrf
+      <input type="text" id="photo" value="" name="photo">
+      <button type="submit">Save Photo</button>
+    </form>
   </div>
 </div>
 
@@ -160,6 +163,7 @@ function onGrabFrameButtonClick() {
     var canvase = document.getElementById('grabFrameCanvas');
     var dataURL = canvase.toDataURL();
     document.getElementById("imageBitmap").innerHTML = dataURL;
+    document.getElementById("photo").value = dataURL;
     console.log(canvase);
   })
   .catch(error => ChromeSamples.log(error));
@@ -191,7 +195,7 @@ function drawCanvas(canvas, img) {
 
 document.querySelector('video').addEventListener('play', function() {
   document.querySelector('#grabFrameButton').disabled = false;
-  document.querySelector('#takePhotoButton').disabled = false;
+//  document.querySelector('#takePhotoButton').disabled = false;
 });
 </script>
     
@@ -258,7 +262,7 @@ document.querySelector('video').addEventListener('play', function() {
 <script>
   // document.querySelector('#getUserMediaButton').addEventListener('click', onGetUserMediaButtonClick);
   document.querySelector('#grabFrameButton').addEventListener('click', onGrabFrameButtonClick);
-  document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
+ // document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
 </script>
 
     

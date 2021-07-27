@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
         Route::get('history', [HistoryController::class, 'index']);
         Route::get('history/search', [HistoryController::class, 'search']);
     });
+    Route::post('savephoto ', [PresensiController::class, 'savephoto']);
 });
 
 Route::group(['middleware' => ['auth', 'role:admin']], function () {

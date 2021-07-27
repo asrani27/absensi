@@ -276,4 +276,19 @@ class PresensiController extends Controller
     {
         return view('pegawai.presensi.testing');
     }
+
+    public function savephoto(Request $req)
+    {
+        if(!empty($_POST['photo'])){
+              $encoded_data = $_POST['photo'];
+              $binary_data = base64_decode( $encoded_data );
+              
+              // save to server (beware of permissions // set ke 775 atau 777)
+              $namafoto = Carbon::now()->format('Ymd-His').".png";
+              $result = file_put_contents('storage/'.$namafoto, $binary_data );
+              if (!$result) die("Could not save image!  Check file permissions.");
+          }
+          return back();
+          
+    }
 }
