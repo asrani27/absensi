@@ -128,6 +128,7 @@ crossorigin=""/>
     <!-- /.info-box -->
     </div>
 </div>
+<a href="/pegawai/presensi/testing">Test</a>
 <div class="row">
     <div class="col-lg-12">
         <div id="mapid"></div>
