@@ -91,7 +91,7 @@ class PresensiController extends Controller
             $jam_masuk = $check->jam_masuk;
             $jam_pulang = $check->jam_pulang;
         }
-        return view('pegawai.presensi.radius.presensi',compact('skpd','latlong2','jam_masuk','jam_pulang'));
+        return view('pegawai.presensi.radius.presensi2',compact('skpd','latlong2','jam_masuk','jam_pulang'));
     }
 
     public function barcode()
@@ -279,15 +279,13 @@ class PresensiController extends Controller
 
     public function savephoto(Request $req)
     {
-        if(!empty($_POST['photo'])){
-              $encoded_data = $_POST['photo'];
-              $binary_data = base64_decode( $encoded_data );
+            $image = $req->image;  // your base64 encoded
+            $image = str_replace('data:image/png;base64,', '', $image);
+            $image = str_replace(' ', '+', $image);
               
               // save to server (beware of permissions // set ke 775 atau 777)
               $namafoto = Carbon::now()->format('Ymd-His').".png";
-              $result = file_put_contents('storage/'.$namafoto, $binary_data );
-              if (!$result) die("Could not save image!  Check file permissions.");
-          }
+              $result = file_put_contents('storage/'.$namafoto, base64_decode($image));
           return back();
           
     }
