@@ -222,7 +222,13 @@ class PresensiController extends Controller
             Presensi::create($attr);
             toastr()->success('Berhasil Di Kirim Ke Admin');
         }else{
-            toastr()->error('Anda Sudah Mengirim data pada tanggal ini');
+            if($check->jam_masuk == null){
+                $check->update([
+                    'keterangan' => $req->keterangan,
+                ]);
+            }else{
+                toastr()->error('Anda Sudah Mengirim data pada tanggal ini');
+            }
         }
         return back();
     }
