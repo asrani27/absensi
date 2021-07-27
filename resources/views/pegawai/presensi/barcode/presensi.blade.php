@@ -80,6 +80,7 @@ crossorigin=""/>
                     @else
                       <input type="hidden" name="jenis" value="pulang">
                     @endif
+                    <input type="hidden" name="qrcode" id="qrcode">
                     {{-- <div class="form-group row">
                         <div class="col-12">
                           <div class="form-group row">
@@ -109,7 +110,7 @@ crossorigin=""/>
       mirror:false 
     });
     scanner.addListener('scan', function (content) {
-      alert(content);
+      document.getElementById('qrcode').value = content;
       document.forms["myForm"].submit();
       document.getElementById('loadingGif').style.display = "block";
     });

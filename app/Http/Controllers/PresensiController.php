@@ -176,28 +176,34 @@ class PresensiController extends Controller
 
     public function scanBarcode(Request $req)
     {
-        $today = Carbon::now()->format('Y-m-d');
-        $time  = Carbon::now()->format('H:i:s');
-        
-        $check = Presensi::where('tanggal', $today)->where('nip', Auth::user()->username)->first();
-        if($check == null){
-            toastr()->error('Tidak Ada Data');
-        }else{
-            if($req->jenis == 'masuk'){
-                //presensi masuk
-                if($check->jam_masuk != null){
-                    toastr()->error('Anda Sudah melakukan presensi masuk');
-                }else{
-                    toastr()->success('Presensi Berhasil Di Simpan');
-                    $check->update(['jam_masuk' => $time]);
-                }
+        $checkQr = Qr::where('qrcode', $req->qrcode)->where('skpd_id', $this->pegawai()->skpd_id)->first();
+        if($checkQr == null){
+            toastr()->error('Qrcode Tidak Ada Dalam Database');
+            return back();
+        }else{    
+            dd($checkQr);
+            $today = Carbon::now()->format('Y-m-d');
+            $time  = Carbon::now()->format('H:i:s');
+            $check = Presensi::where('tanggal', $today)->where('nip', Auth::user()->username)->first();
+            if($check == null){
+                toastr()->error('Tidak Ada Data');
             }else{
-                //presensi pulang
-                toastr()->success('Presensi Pulang Berhasil Di Simpan');
-                $check->update(['jam_pulang' => $time]);
+                if($req->jenis == 'masuk'){
+                    //presensi masuk
+                    if($check->jam_masuk != null){
+                        toastr()->error('Anda Sudah melakukan presensi masuk');
+                    }else{
+                        toastr()->success('Presensi Berhasil Di Simpan');
+                        $check->update(['jam_masuk' => $time]);
+                    }
+                }else{
+                    //presensi pulang
+                    toastr()->success('Presensi Pulang Berhasil Di Simpan');
+                    $check->update(['jam_pulang' => $time]);
+                }
             }
+            return back();
         }
-        return back();
     }
 
     public function storeManual(Request $req)
