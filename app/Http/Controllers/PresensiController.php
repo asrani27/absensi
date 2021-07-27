@@ -112,7 +112,7 @@ class PresensiController extends Controller
                 'lng' => $long
             ];
         }
-        return view('pegawai.presensi.barcode.presensi',compact('skpd','latlong2'));
+        return view('pegawai.presensi.barcode.belakang',compact('skpd','latlong2'));
         //return view('pegawai.presensi.barcode.scan',compact('skpd','latlong2'));
     }
 

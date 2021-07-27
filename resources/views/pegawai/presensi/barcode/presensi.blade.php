@@ -71,7 +71,7 @@ crossorigin=""/>
               @else
                   <span class="badge badge-warning">Anda Berada Di Scan Pulang</span>
               @endif
-              <video id="preview" width="100%" height="200" controls></video>
+              <video id="preview" width="100%" height="200" playsinline></video>
                 <form method="post" name="myForm" id="myForm" action="/pegawai/presensi/barcode/scan">
                     @csrf
                     @if (strtotime('now') < strtotime('12:00pm'))
