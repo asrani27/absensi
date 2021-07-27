@@ -64,7 +64,7 @@ crossorigin=""/>
                 <div class="form-group row">
                     
                     <video autoplay></video>
-                    <button id='grabFrameButton'>Take Photo</button>
+                    <button class="btn btn-block btn-info" id='grabFrameButton'>Take Photo</button>
                     <canvas id='grabFrameCanvas'></canvas>
                 </div>
                 <form method="post" action="/pegawai/presensi/radius">
