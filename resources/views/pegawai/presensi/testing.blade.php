@@ -256,7 +256,7 @@ document.querySelector('video').addEventListener('play', function() {
 
 
 <script>
-  document.querySelector('#getUserMediaButton').addEventListener('click', onGetUserMediaButtonClick);
+  // document.querySelector('#getUserMediaButton').addEventListener('click', onGetUserMediaButtonClick);
   document.querySelector('#grabFrameButton').addEventListener('click', onGrabFrameButtonClick);
   document.querySelector('#takePhotoButton').addEventListener('click', onTakePhotoButtonClick);
 </script>
