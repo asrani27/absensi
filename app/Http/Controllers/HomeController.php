@@ -27,7 +27,7 @@ class HomeController extends Controller
                 'lng' => $long
             ];
         }
-        
+        //dd(Auth::user()->pegawai);
         return view('pegawai.home',compact('skpd','latlong2'));
     }
 

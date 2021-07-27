@@ -53,8 +53,14 @@ crossorigin=""/>
     </div>
 </div>
 <div class="row">
-
     @if (Auth::user()->pegawai->lokasi == null)
+    <div class="col-12 col-sm-6 col-md-3">
+    <div class="alert alert-danger alert-dismissible">
+      <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+      Hubungi Admin SKPD anda untuk setting lokasi presensi
+    </div>
+    </div>
+    @elseif(Auth::user()->pegawai->lokasi == null)
     <div class="col-12 col-sm-6 col-md-3">
     <div class="alert alert-danger alert-dismissible">
       <h5><i class="icon fas fa-ban"></i> Alert!</h5>

@@ -167,7 +167,10 @@ class PresensiController extends Controller
         $response = $client->request('get', Auth::user()->username);
         $data =  json_decode((string) $response->getBody())->data;
         $skpd = Skpd::find($data->skpd_id);
-        return view('pegawai.presensi.manual.presensi',compact('skpd'));
+
+        $presensi = Presensi::where('tanggal', Carbon::now()->format('Y-m-d'))->where('nip', $this->pegawai()->nip)->first();
+        
+        return view('pegawai.presensi.manual.presensi',compact('skpd','presensi'));
     }
 
     public function pegawai()
@@ -226,6 +229,7 @@ class PresensiController extends Controller
                 $check->update([
                     'keterangan' => $req->keterangan,
                 ]);
+                toastr()->success('Berhasil Di Kirim Ke Admin');
             }else{
                 toastr()->error('Anda Sudah Mengirim data pada tanggal ini');
             }

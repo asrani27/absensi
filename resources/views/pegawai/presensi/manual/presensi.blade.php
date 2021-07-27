@@ -46,9 +46,9 @@
                 <form method="post" action="/pegawai/presensi/manual">
                     @csrf
                     <div class="form-group row">
-                        <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="customFile">
-                        <label class="custom-file-label" for="customFile">Dokumen Pendukung</label>
+                        <label class="col-sm-2 col-form-label">Dokumen Pendukung</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" name="file">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -64,7 +64,37 @@
             </div>
         </div>
     </div>
-</div>        
+</div> 
+
+@if ($presensi->keterangan != null)
+<div class="row">
+  <div class="col-lg-12">
+      <div class="card">
+          <div class="card-body">
+              <div class="form-group row">
+                  <label class="col-sm-2 col-form-label"></label>
+                  <div class="col-sm-10">
+                      <span class="badge badge-warning">Data Yang Di Kirim ke Admin :</span>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">File Pendukung</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{$presensi->file}}" readonly>
+                  </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Keterangan</label>
+                  <div class="col-sm-10">
+                      <input type="text" class="form-control" value="{{$presensi->keterangan}}" readonly>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div> 
+@endif
+
 @endsection 
 
 @push('js')
