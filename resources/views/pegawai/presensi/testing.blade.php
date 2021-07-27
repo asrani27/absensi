@@ -126,9 +126,11 @@ in the form of a Blob with <code>takePhoto()</code> or as a ImageBitmap with
 
   
     
-      <script>var imageCapture;
+<script>
 
-function onGetUserMediaButtonClick() {
+var imageCapture;
+$(document).ready(function(){
+  
   navigator.mediaDevices.getUserMedia({video: true})
   .then(mediaStream => {
     document.querySelector('video').srcObject = mediaStream;
@@ -137,15 +139,28 @@ function onGetUserMediaButtonClick() {
     imageCapture = new ImageCapture(track);
   })
   .catch(error => ChromeSamples.log(error));
-}
+});
+
+// function onGetUserMediaButtonClick() {
+//   navigator.mediaDevices.getUserMedia({video: true})
+//   .then(mediaStream => {
+//     document.querySelector('video').srcObject = mediaStream;
+
+//     const track = mediaStream.getVideoTracks()[0];
+//     imageCapture = new ImageCapture(track);
+//   })
+//   .catch(error => ChromeSamples.log(error));
+// }
 
 function onGrabFrameButtonClick() {
   imageCapture.grabFrame()
   .then(imageBitmap => {
     const canvas = document.querySelector('#grabFrameCanvas');
     drawCanvas(canvas, imageBitmap);
-    document.getElementById("imageBitmap").innerHTML = imageBitmap;
-    document.getElementById("canvasgrab").innerHTML = canvas;
+    var canvase = document.getElementById('grabFrameCanvas');
+    var dataURL = canvase.toDataURL();
+    document.getElementById("imageBitmap").innerHTML = dataURL;
+    console.log(canvase);
   })
   .catch(error => ChromeSamples.log(error));
 }
@@ -158,6 +173,7 @@ function onTakePhotoButtonClick() {
     drawCanvas(canvas, imageBitmap);
   })
   .catch(error => ChromeSamples.log(error));
+  
 }
 
 /* Utils */
