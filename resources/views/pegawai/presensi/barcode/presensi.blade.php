@@ -15,7 +15,8 @@ crossorigin=""/>
       transform : scaleX(-1);
 } */
 </style>
-<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+<script src="/instascan/instascan.min.js"></script>
+{{-- <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script> --}}
 @endpush
 @section('title')
   <strong>PRESENSI</strong>
