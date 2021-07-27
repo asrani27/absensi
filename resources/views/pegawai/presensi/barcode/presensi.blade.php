@@ -80,7 +80,7 @@ crossorigin=""/>
                     @else
                       <input type="hidden" name="jenis" value="pulang">
                     @endif
-                    <div class="form-group row">
+                    {{-- <div class="form-group row">
                         <div class="col-12">
                           <div class="form-group row">
                               <div class="col-6">
@@ -91,7 +91,7 @@ crossorigin=""/>
                               </div>
                           </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </form>
             </div>
         </div>
