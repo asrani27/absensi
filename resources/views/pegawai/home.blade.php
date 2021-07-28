@@ -172,16 +172,17 @@ crossorigin=""></script>
     navigator.geolocation.getCurrentPosition(function(location) {
       var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
 
-      var mymap = L.map('mapid').setView(latlng, 16);
+      var mymap = L.map('mapid').setView(latlng, 14);
       googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
           maxZoom: 20,
           subdomains:['mt0','mt1','mt2','mt3']
       }).addTo(mymap);
 
       var latlng2 = {!!json_encode($latlong2)!!}
+      
+      L.marker(latlng2).addTo(mymap).bindPopup('Lokasi Presensi').openPopup();
       var marker = L.marker(latlng).addTo(mymap).bindPopup('Lokasi Saya').openPopup();
       
-      L.marker(latlng2).addTo(mymap);
       
       function calculateDistance(latA, latB) {
           if (latA !== undefined && latB !== undefined) {
