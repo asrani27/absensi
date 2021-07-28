@@ -180,9 +180,9 @@ crossorigin=""></script>
 
       var latlng2 = {!!json_encode($latlong2)!!}
       
-      L.marker(latlng2).addTo(mymap).bindPopup('Lokasi Presensi').openPopup();
       var marker = L.marker(latlng).addTo(mymap).bindPopup('Lokasi Saya').openPopup();
       
+      L.marker(latlng2).addTo(mymap).bindPopup('Lokasi Presensi').openPopup();
       
       function calculateDistance(latA, latB) {
           if (latA !== undefined && latB !== undefined) {
