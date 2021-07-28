@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\Skpd;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     public function pegawai()
     {
+        $agent = new Agent();
+        $os = $agent->isAndroidOS();
+
         $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/']);
         $response = $client->request('get', Auth::user()->username);
         $data =  json_decode((string) $response->getBody())->data;
@@ -28,7 +32,7 @@ class HomeController extends Controller
             ];
         }
         //dd(Auth::user()->pegawai);
-        return view('pegawai.home',compact('skpd','latlong2'));
+        return view('pegawai.home',compact('skpd','latlong2','os'));
     }
 
     public function admin()

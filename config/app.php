@@ -47,6 +47,7 @@ return [
          */
         Yoeunes\Toastr\ToastrServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Jenssegers\Agent\AgentServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -110,7 +111,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-
+        'Agent' => Jenssegers\Agent\Facades\Agent::class,
     ],
 
 ];
