@@ -179,7 +179,7 @@ crossorigin=""></script>
       }).addTo(mymap);
 
       var latlng2 = {!!json_encode($latlong2)!!}
-      var marker = L.marker(latlng).addTo(mymap);
+      var marker = L.marker(latlng).addTo(mymap).bindPopup('Lokasi Saya').openPopup();
       
       L.marker(latlng2).addTo(mymap);
       
