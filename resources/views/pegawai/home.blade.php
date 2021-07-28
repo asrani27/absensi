@@ -161,9 +161,6 @@ crossorigin=""/>
             </div>
         </div> --}}
 OS : {{$os}}
-{{(new \Jenssegers\Agent\Agent())->isMobile()}}
-{{(new \Jenssegers\Agent\Agent())->isAndroid()}}
-{{(new \Jenssegers\Agent\Agent())->isSafari()}}
 @endsection 
 
 @push('js')

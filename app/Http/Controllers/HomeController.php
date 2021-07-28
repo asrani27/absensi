@@ -13,8 +13,8 @@ class HomeController extends Controller
     public function pegawai()
     {
         $agent = new Agent();
-        $os = $agent->isAndroidOS();
-
+        $os = $agent->isSafari();
+        dd($os);
         $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/']);
         $response = $client->request('get', Auth::user()->username);
         $data =  json_decode((string) $response->getBody())->data;
