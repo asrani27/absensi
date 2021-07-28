@@ -10,7 +10,7 @@ class LokasiController extends Controller
 {
     public function index()
     {
-        $data = Lokasi::orderBy('id','DESC')->get();
+        $data = Lokasi::orderBy('id','DESC')->where('skpd_id', Auth::user()->skpd->id)->get();
         return view('admin.lokasi.index',compact('data'));
     }
     

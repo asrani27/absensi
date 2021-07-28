@@ -202,20 +202,7 @@ crossorigin=""></script>
       var km = latlng.distanceTo(latlng2).toFixed(0);
       document.getElementById("jarak").innerHTML = km + ' Meter';
       
-      // if(km > 0){
-      // }else{
-      // document.getElementById("jarak").innerHTML = 'Nyalakan GPS Anda';
-      // }
-      // console.log(distance,km);
     });
-
-// $(document).ready(function(){
-//   var cookieValue = document.getElementById("jarak").value;    
-//   console.log(cookieValue);
-//   if(typeof cookieValue === 'undefined'){
-//       document.getElementById("jarak").innerHTML = 'Nyalakan GPS Anda';
-//   }else{
-//   }
-// });
+    
 </script>
 @endpush
