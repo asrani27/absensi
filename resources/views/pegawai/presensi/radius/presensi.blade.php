@@ -61,7 +61,8 @@ crossorigin=""/>
                 <form method="post" action="/pegawai/presensi/radius">
                     @csrf
                 <div class="form-group row">
-                    <input type="file" name="file" class="form-control">
+                    <input type="file" name="photo" class="form-control">
+                    <input type="hidden" name="browser" class="form-control" value="{{$os}}">
                 </div>
                 <input type="hidden" name="datajarak" id="datajarak">
                 <div class="form-group row">
