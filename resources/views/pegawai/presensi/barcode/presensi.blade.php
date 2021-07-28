@@ -162,7 +162,7 @@ crossorigin=""></script>
 
       var km = latlng.distanceTo(latlng2).toFixed(0);
       document.getElementById("jarak").innerHTML = km + ' Meter';
-      console.log(distance,km);
+      console.log(distance,km,latlng2);
     });
 </script>
 @endpush
