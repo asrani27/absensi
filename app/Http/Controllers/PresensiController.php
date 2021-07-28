@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Skpd;
 use GuzzleHttp\Client;
 use App\Models\Presensi;
+use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -94,7 +95,14 @@ class PresensiController extends Controller
             $jam_masuk = $check->jam_masuk;
             $jam_pulang = $check->jam_pulang;
         }
-        return view('pegawai.presensi.radius.presensi2',compact('skpd','latlong2','jam_masuk','jam_pulang'));
+        
+        $agent = new Agent();
+        $os = $agent->browser();
+        if($os == 'Safari'){
+            return view('pegawai.presensi.radius.presensi',compact('skpd','latlong2','jam_masuk','jam_pulang'));
+        }else{
+            return view('pegawai.presensi.radius.presensi2',compact('skpd','latlong2','jam_masuk','jam_pulang'));
+        }
     }
 
     public function barcode()

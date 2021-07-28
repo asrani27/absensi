@@ -62,10 +62,6 @@ crossorigin=""/>
                     @csrf
                 <div class="form-group row">
                     <input type="file" name="file" class="form-control">
-                    {{-- <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="customFile" accept="image/*">
-                    <label class="custom-file-label" for="customFile"></label>
-                    </div> --}}
                 </div>
                 <input type="hidden" name="datajarak" id="datajarak">
                 <div class="form-group row">
