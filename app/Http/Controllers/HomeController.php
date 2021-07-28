@@ -14,7 +14,7 @@ class HomeController extends Controller
     {
         $agent = new Agent();
         $os = $agent->isSafari();
-        dd($os);
+        dd($os, $agent->device(), $agent->browser(),$agent->isPhone());
         $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/']);
         $response = $client->request('get', Auth::user()->username);
         $data =  json_decode((string) $response->getBody())->data;
