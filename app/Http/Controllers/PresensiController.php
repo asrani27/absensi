@@ -82,8 +82,8 @@ class PresensiController extends Controller
             $long       = (float)$skpd->long;
             $radius     = (float)$skpd->radius;
             $latlong2 = [
-                'lat' => $lat,
-                'lng' => $long
+                'lat' => $lokasi->lat,
+                'lng' => $lokasi->long
             ];
         }
 
@@ -119,8 +119,8 @@ class PresensiController extends Controller
             $long       = (float)$skpd->long;
             $radius     = (float)$skpd->radius;
             $latlong2 = [
-                'lat' => $lat,
-                'lng' => $long
+                'lat' => $lokasi->lat,
+                'lng' => $lokasi->long
             ];
         }
         return view('pegawai.presensi.barcode.presensi',compact('skpd','latlong2'));
@@ -141,8 +141,8 @@ class PresensiController extends Controller
             $long       = (float)$skpd->long;
             $radius     = (float)$skpd->radius;
             $latlong2 = [
-                'lat' => $lat,
-                'lng' => $long
+                'lat' => $lokasi->lat,
+                'lng' => $lokasi->long
             ];
         }
         return view('pegawai.presensi.barcode.front',compact('skpd','latlong2'));
@@ -162,8 +162,8 @@ class PresensiController extends Controller
             $long       = (float)$skpd->long;
             $radius     = (float)$skpd->radius;
             $latlong2 = [
-                'lat' => $lat,
-                'lng' => $long
+                'lat' => $lokasi->lat,
+                'lng' => $lokasi->long
             ];
         }
         return view('pegawai.presensi.barcode.back',compact('skpd','latlong2'));   

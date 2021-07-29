@@ -23,14 +23,16 @@ class HomeController extends Controller
             $latlong2 = null;
         }else{
             $lokasi = Auth::user()->pegawai->lokasi;
-            $lat        = (float)$skpd->lat;
-            $long       = (float)$skpd->long;
-            $radius     = (float)$skpd->radius;
+            // $lat        = (float)$skpd->lat;
+            // $long       = (float)$skpd->long;
+            // $radius     = (float)$skpd->radius;
             $latlong2 = [
-                'lat' => $lat,
-                'lng' => $long
+                'lat' => $lokasi->lat,
+                'lng' => $lokasi->long
             ];
         }
+        
+        
         //dd(Auth::user()->pegawai);
         return view('pegawai.home',compact('skpd','latlong2','os'));
     }
