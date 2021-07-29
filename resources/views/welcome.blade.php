@@ -30,6 +30,7 @@
 <div class="login-box">
     
   <!-- /.login-logo -->
+  <button type="button" id="install-button">Install APP</button>
   <div class="card">
     <div class="card-body login-card-body">
         
@@ -84,5 +85,56 @@
 
 @toastr_js
 @toastr_render
+<script>
+let installButton = document.getElementById('install-button');
+let prompt;
+
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  prompt = e;
+});
+
+let installed = false;
+installButton.addEventListener('click', async function(){
+  prompt.prompt();
+  let result = await prompt.userChoice;
+  if (result&&result.outcome === 'accepted') {
+     installed = true;
+  }
+})
+
+window.addEventListener('appinstalled', async function(e) {
+   installButton.style.display = "none";
+});
+
+let installable = true;
+if (!('serviceWorker' in navigator)){
+  installable = false;
+}
+
+//check when the page is loaded if it matches one of the PWA display modes
+window.addEventListener('DOMContentLoaded', function(){
+   if (navigator.standalone || window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: fullscreen)').matches || window.matchMedia('(display-mode: minimal-ui)').matches) {
+     installed = true;
+    }
+});
+
+//but also add a listener. After app installation on desktop, the app will open in their own window right away.
+window.addEventListener('DOMContentLoaded', function(){
+   window.matchMedia('(display-mode: standalone)').addListener(function(e){
+     if (e.matches) { installed = true;}
+   });
+   window.matchMedia('(display-mode: fullscreen)').addListener(function(e){
+     if (e.matches) { installed = true;}
+   });
+   window.matchMedia('(display-mode: minimal-ui)').addListener(function(e){
+     if (e.matches) { installed = true; }
+   });
+   
+   if(installed) installButton.style.display = "none";
+
+ });
+ 
+</script>
 </body>
 </html>
