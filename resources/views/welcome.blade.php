@@ -30,7 +30,7 @@
 <div class="login-box">
     
   <!-- /.login-logo -->
-  <button type="button" id="install-button">Install APP</button>
+  <button type="button" class="btn btn-info btn-lg btn-block" id="install-button"><strong><i class="fas fa-file-download"></i> Install APP</strong></button><br/>
   <div class="card">
     <div class="card-body login-card-body">
         
