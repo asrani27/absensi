@@ -58,7 +58,7 @@ crossorigin=""/>
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="/pegawai/presensi/radius">
+                <form method="post" action="/pegawai/presensi/radius" enctype="multipart/form-data">
                     @csrf
                 <div class="form-group row">
                     <input type="file" name="photo" class="form-control">
