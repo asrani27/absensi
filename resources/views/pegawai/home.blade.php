@@ -160,7 +160,7 @@ crossorigin=""/>
                 </a>
             </div>
         </div> --}}
-OS : {{$os}}
+{{-- OS : {{$os}} --}}
 @endsection 
 
 @push('js')
