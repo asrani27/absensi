@@ -43,7 +43,7 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="/pegawai/presensi/manual">
+                <form method="post" action="/pegawai/presensi/manual" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Dokumen Pendukung</label>

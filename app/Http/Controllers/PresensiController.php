@@ -10,6 +10,7 @@ use App\Models\Presensi;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PresensiController extends Controller
 {
@@ -233,10 +234,35 @@ class PresensiController extends Controller
             Presensi::create($attr);
             toastr()->success('Berhasil Di Kirim Ke Admin');
         }else{
-            if($check->jam_masuk == null){
-                $check->update([
-                    'keterangan' => $req->keterangan,
+            if($check->jam_masuk == null || $check->jam_keluar == null){
+                
+                $validator = Validator::make($req->all(), [
+                    'file' => 'mimes:pdf,docx,png,jpg,jpeg|max:8048'
                 ]);
+                
+                if ($validator->fails()) {        
+                    toastr()->error('File Harus Berupa pdf/docx/png/jpg/jpeg');    
+                    return back();
+                }
+                
+                if($req->hasFile('file'))
+                {
+                    $filename = $req->file->getClientOriginalName();
+                    $filename = date('d-m-Y-').rand(1,9999).$filename;
+                                
+                    $req->file->storeAs('/public/'.Auth::user()->username.'/presensi/manual',$filename);
+                }  
+
+                if($req->file == null){
+                    $check->update([
+                        'keterangan' => $req->keterangan,
+                    ]);
+                }else{
+                    $check->update([
+                        'file' => $filename,
+                        'keterangan' => $req->keterangan,
+                    ]);
+                }
                 toastr()->success('Berhasil Di Kirim Ke Admin');
             }else{
                 toastr()->error('Anda Sudah Mengirim data pada tanggal ini');
@@ -265,14 +291,32 @@ class PresensiController extends Controller
                           $attr['tanggal'] = $tanggal;
                           $attr['jam_masuk'] = $jam_masuk;
                           Presensi::create($attr);
+                          
                           toastr()->success('Presensi Masuk Berhasil Disimpan');
                           return back();
                     }else{
                         //Update Data
                           if($check->jam_masuk == null){
-                            $check->update([
-                                'jam_masuk' => $jam_masuk,
-                            ]);
+                              
+                            if($req->hasFile('file'))
+                            {
+                                $filename = $req->file->getClientOriginalName();
+                                $filename = date('d-m-Y-').rand(1,9999).$filename;
+                                            
+                                $req->file->storeAs('/public/'.Auth::user()->username.'/presensi/radius/masuk',$filename);
+                            }  
+
+                            if($req->file == null){
+                                $check->update([
+                                    'jam_masuk' => $jam_masuk,
+                                ]);
+                            }else{
+                                $check->update([
+                                    'file_masuk' => $filename,
+                                    'jam_masuk' => $jam_masuk,
+                                ]);
+                            }
+
                             toastr()->success('Presensi Masuk Berhasil Disimpan');
                           }else{
                             toastr()->info('Anda Sudah Melakukan Presensi Masuk');
@@ -295,9 +339,27 @@ class PresensiController extends Controller
                           return back();
                     }else{
                         //Update Data
-                        $check->update([
-                            'jam_pulang' => $jam_pulang,
-                        ]);
+                        if($req->hasFile('file'))
+                        {
+                            $filename = $req->file->getClientOriginalName();
+                            $filename = date('d-m-Y-').rand(1,9999).$filename;
+                                        
+                            $req->file->storeAs('/public/'.Auth::user()->username.'/presensi/radius/pulang',$filename);
+                        }  
+
+                        if($req->file == null){
+                            $check->update([
+                                'jam_pulang' => $jam_pulang,
+                            ]);
+                        }else{
+                            $check->update([
+                                'file_pulang' => $filename,
+                                'jam_pulang' => $jam_pulang,
+                            ]);
+                        }
+                        // $check->update([
+                        //     'jam_pulang' => $jam_pulang,
+                        // ]);
                         toastr()->success('Presensi Pulang Berhasil DiUpdate');
                         return back();
                     }
