@@ -302,6 +302,7 @@ class PresensiController extends Controller
                             {
                                 $filename = $req->photo->getClientOriginalName();
                                 $filename = date('d-m-Y-').rand(1,9999).$filename;
+                                dd($filename);
                                             
                                 $req->file->storeAs('/public/'.Auth::user()->username.'/presensi/radius/masuk',$filename);
                             }  
