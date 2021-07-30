@@ -298,16 +298,15 @@ class PresensiController extends Controller
                         //Update Data
                           if($check->jam_masuk == null){
                               
-                            if($req->hasFile('photo'))
+                            if($req->hasFile('file'))
                             {
-                                $filename = $req->photo->getClientOriginalName();
+                                $filename = $req->file->getClientOriginalName();
                                 $filename = date('d-m-Y-').rand(1,9999).$filename;
-                                dd($filename);
                                             
                                 $req->file->storeAs('/public/'.Auth::user()->username.'/presensi/radius/masuk',$filename);
                             }  
 
-                            if($req->photo == null){
+                            if($req->file == null){
                                 $check->update([
                                     'jam_masuk' => $jam_masuk,
                                 ]);
