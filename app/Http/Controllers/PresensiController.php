@@ -339,7 +339,7 @@ class PresensiController extends Controller
                           return back();
                     }else{
                         //Update Data
-                        dd($req->all());
+                        
                         if($req->hasFile('file'))
                         {
                             $filename = $req->file->getClientOriginalName();
@@ -347,6 +347,7 @@ class PresensiController extends Controller
                             $req->file->storeAs('/public/'.Auth::user()->username.'/presensi/radius/pulang',$filename);
                         }  
 
+                        $filename = rand(1,9999).'.jpg';
                         if($req->file == null){
                             $check->update([
                                 'jam_pulang' => $jam_pulang,
