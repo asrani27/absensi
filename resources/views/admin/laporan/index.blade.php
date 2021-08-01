@@ -27,7 +27,45 @@ crossorigin=""/>
         </div>
     </div>
 </div>       
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+    <div class="card-header">
+      Laporan presensi Per Tanggal
+    </div>
+    <div class="card-body">
+      <form method="get" action="/admin/laporan/tanggal" target="_blank">
+        @csrf
+      <div class="row">
+        <div class="col-sm-10">
+            <div class="form-group">
+                <input type="date" name="tanggal" class="form-control" value="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger">Print</button>
+            </div>
+        </div>
+      </div>
+      </form>
+    </div>
+    </div>
+  </div>
+</div>
 
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+    <div class="card-header">
+      Laporan presensi Per Bulan
+    </div>
+    <div class="card-body">
+
+    </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 

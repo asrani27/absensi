@@ -70,6 +70,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::resource('cuti', CutiController::class);
         
         Route::get('laporan', [LaporanAdminController::class, 'index']);
+        Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggal']);
         Route::get('generate/presensi', [AdminController::class, 'generate']);
     });
 });

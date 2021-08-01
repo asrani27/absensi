@@ -23,7 +23,7 @@ crossorigin=""/>
                   <span class="username"><a href="#">{{Auth::user()->name}}</a></span>
                   <span class="description">SELAMAT DATANG DI APLIKASI ADMIN PRESENSI, HARAP SETTING LAT DAN LONG</span>
                 </div>
-              </div>    
+            </div>    
         </div>
     </div>
 </div>       
