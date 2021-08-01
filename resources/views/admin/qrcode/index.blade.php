@@ -36,7 +36,7 @@
                 <td>{{$no++}}</td>
                 <td>{{$item->tanggal}}</td>
                 <td>
-                    <a href="/admin/qrcode/tampil/{{$item->id}}" class="btn btn-sm btn-info">Tampilkan QR</a>
+                    <a href="/admin/qrcode/tampil/{{$item->id}}" class="btn btn-sm btn-info" target="_blank">Tampilkan QR</a>
                 </td>
                 </tr>
             @endforeach
