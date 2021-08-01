@@ -34,6 +34,7 @@ class LaporanAdminController extends Controller
             $item->nip;
         });
         
-        return view('admin.laporan.tanggal',compact('data','skpd','tanggal'));
+        toastr()->error('Dalam Pengembangan');
+        return back();
     }
 }
