@@ -10,7 +10,7 @@
 <br/>
 <div class="row">
     <div class="col-12">
-        <a href="/admin/pegawai/sync" class="btn btn-sm bg-gradient-purple"><i class="fas fa-sync"></i> Sinkronisasi Data</a>
+        <a href="/admin/pegawai/sync" class="btn btn-sm bg-gradient-purple"><i class="fas fa-sync"></i> Tarik Data Pegawai Dari TPP</a>
         <a href="/admin/pegawai/createuser" class="btn btn-sm bg-gradient-green"><i class="fas fa-key"></i> Buat Akun Login</a>
         <br/><br/>
         <div class="card">

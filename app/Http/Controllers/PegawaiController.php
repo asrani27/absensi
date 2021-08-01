@@ -45,8 +45,7 @@ class PegawaiController extends Controller
                     $p->tanggal_lahir = $item->tanggal_lahir;
                     $p->skpd_id = $this->skpd()->id;
                     $p->is_aktif = $item->is_aktif;
-                    $p->save();
-                            
+                    $p->save();                            
                 }else{
     
                 }
