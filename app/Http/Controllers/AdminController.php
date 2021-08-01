@@ -46,4 +46,38 @@ class AdminController extends Controller
         return back();
     }
 
+    public function tampilgenerate()
+    {
+        $button = request()->button;
+        $tanggal = request()->tanggal;
+        
+        if($button == '1'){
+            $data = Presensi::where('skpd_id',Auth::user()->skpd->id)->where('tanggal', $tanggal)->get();
+            request()->flash();
+            return view('admin.home',compact('data'));
+        }else{ 
+            $skpd_id = Auth::user()->skpd->id;
+            $pegawai = Pegawai::where('skpd_id', $skpd_id)->get();
+
+            foreach($pegawai as $item)
+            {
+                $check = Presensi::where('nip', $item->nip)->where('tanggal', $tanggal)->first();
+                if($check == null){
+                    $n = new Presensi;
+                    $n->nip     = $item->nip;
+                    $n->nama     = $item->nama;
+                    $n->tanggal = $tanggal;
+                    $n->skpd_id = $skpd_id;
+                    $n->save();
+                }else{
+                    $check->update([
+                        'nama' => $item->nama
+                    ]);
+                }
+            }
+            request()->flash();
+            toastr()->success('Berhasil Di Generate');
+            return back();
+        }
+    }
 }

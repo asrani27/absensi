@@ -62,6 +62,100 @@ crossorigin=""/>
     </div>
     <div class="card-body">
 
+      <form method="get" action="/admin/laporan/rekap" target="_blank">
+        @csrf
+      <div class="row">
+        <div class="col-sm-5">
+            <div class="form-group">
+              <select class="form-control" name="bulan" required>
+                <option value="">-pilih bulan-</option>
+                <option value="01" {{$bulan == '01' ? 'selected':''}}>Januari</option>
+                <option value="02" {{$bulan == '02' ? 'selected':''}}>Februari</option>
+                <option value="03" {{$bulan == '03' ? 'selected':''}}>Maret</option>
+                <option value="04" {{$bulan == '04' ? 'selected':''}}>April</option>
+                <option value="05" {{$bulan == '05' ? 'selected':''}}>Mei</option>
+                <option value="06" {{$bulan == '06' ? 'selected':''}}>Juni</option>
+                <option value="07" {{$bulan == '07' ? 'selected':''}}>Juli</option>
+                <option value="08" {{$bulan == '08' ? 'selected':''}}>Agustus</option>
+                <option value="09" {{$bulan == '09' ? 'selected':''}}>September</option>
+                <option value="10" {{$bulan == '10' ? 'selected':''}}>Oktober</option>
+                <option value="11" {{$bulan == '11' ? 'selected':''}}>November</option>
+                <option value="12" {{$bulan == '12' ? 'selected':''}}>Desember</option>
+              </select>
+            </div>
+        </div>
+        
+        <div class="col-sm-5">
+          <div class="form-group">
+            <select class="form-control" name="tahun" required>
+              <option value="">-pilih tahun-</option>
+              <option value="2021" {{$tahun == '2021' ? 'selected':''}}>2021</option>
+              <option value="2022" {{$tahun == '2022' ? 'selected':''}}>2022</option>
+              <option value="2023" {{$tahun == '2023' ? 'selected':''}}>2023</option>
+            </select>
+          </div>
+      </div>
+        <div class="col-sm-2">
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger">Print</button>
+            </div>
+        </div>
+      </div>
+      </form>
+
+      <table class="table table-hover text-nowrap table-sm">
+        <thead>
+            <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
+            <th rowspan=2>No</th>
+            <th rowspan=2>NIP</th>
+            <th rowspan=2>Nama</th>
+            <th rowspan=2>Jabatan</th>
+            <th rowspan=2>Jum Hari</th>
+            <th colspan=2 class="text-center">Hadir Di Hari</th>
+            <th colspan=8 class="text-center">Ketidakhadiran*</th>
+            <th colspan=2 >Total Absensi</th>
+            <th rowspan=2>Jam Kerja Pegawai</th>
+            <th rowspan=2>Datang Lambat</th>
+            <th rowspan=2>Pulang Cepat</th>
+            <th rowspan=2>% Hadir</th>
+            <th rowspan=2>Total Hari Kerja</th>
+            </tr>
+            
+            <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
+            <th>Kerja</th>
+            <th>Libur</th>
+            <th>A</th>
+            <th>S</th>
+            <th>TR</th>
+            <th>D</th>
+            <th>I</th>
+            <th>C</th>
+            <th>L</th>
+            <th>O</th>
+            <th>Masuk</th>
+            <th>Keluar</th>
+            </tr>
+        </thead>
+        @php
+            $no =1;
+        @endphp
+        <tbody>
+        {{-- @foreach ($data as $key => $item)
+                <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                <td>{{$no++}}</td>
+                <td>{{$item->nama}}<br/>{{$item->nip}}</td>
+                <td>{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
+                <td>{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
+                <td>{{$item->keterangan}}</td>   
+                <td>
+                    @if ($item->keterangan != null)    
+                    <a href="#" class="btn btn-xs btn-info">Presensi</a>
+                    @endif
+                </td>                 
+                </tr>
+        @endforeach --}}
+        </tbody>
+    </table>
     </div>
     </div>
   </div>

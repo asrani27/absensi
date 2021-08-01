@@ -35,19 +35,23 @@ crossorigin=""/>
                 Data Presensi 
             </div>    
             <div class="card-body">
+                <form method="get" action="/admin/tampilgenerate">
+                    @csrf
                 <div class="row">
                 <div class="col-sm-10">
                     <div class="form-group">
-                        <input type="date" class="form-control" id="inputSuccess" value="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
+                        <input type="date" name="tanggal" class="form-control" id="inputSuccess" value="{{old('tanggal') == null ? \Carbon\Carbon::today()->format('Y-m-d'):old('tanggal')}}">
                     </div>
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Tampilkan</button>
-                        <a href="/admin/generate/presensi" class="btn btn-warning">Generate</a>
+                        <button type="submit" class="btn btn-primary" name="button" value="1">Tampilkan</button>
+                        <button type="submit" class="btn btn-warning" name="button" value="2">Generate</button>
+                        {{-- <a href="/admin/generate/presensi" class="btn btn-warning">Generate</a> --}}
                     </div>
                 </div>
                 </div>
+                </form>
 
                 
             <table class="table table-hover text-nowrap table-sm">
@@ -80,7 +84,7 @@ crossorigin=""/>
                         </tr>
                     @endforeach
                 </tbody>
-                </table>
+            </table>
             </div>    
         </div>
     </div>
