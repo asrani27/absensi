@@ -54,15 +54,15 @@ crossorigin=""/>
                 </form>
 
                 
-            <table class="table table-hover text-nowrap table-sm">
+            <table class="table table-hover table-striped table-bordered text-nowrap table-sm">
                 <thead>
                     <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
-                    <th>#</th>
+                    <th class="text-center">#</th>
                     <th>Nama/NIP</th>
-                    <th>Jam Masuk</th>
-                    <th>Jam Pulang</th>
+                    <th class="text-center">Jam Masuk</th>
+                    <th class="text-center">Jam Pulang</th>
                     <th>Keterangan</th>
-                    <th>Aksi</th>
+                    <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
                 @php
@@ -71,12 +71,12 @@ crossorigin=""/>
                 <tbody>
                 @foreach ($data as $key => $item)
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
-                        <td>{{$no++}}</td>
+                        <td class="text-center">{{$no++}}</td>
                         <td>{{$item->nama}}<br/>{{$item->nip}}</td>
-                        <td>{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
-                        <td>{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
+                        <td class="text-center">{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
+                        <td class="text-center">{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
                         <td>{{$item->keterangan}}</td>   
-                        <td>
+                        <td class="text-center">
                             @if ($item->keterangan != null)    
                             <a href="#" class="btn btn-xs btn-info">Presensi</a>
                             @endif

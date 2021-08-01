@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Lokasi;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
+use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -152,5 +153,25 @@ class PegawaiController extends Controller
         ]);
         toastr()->success('Lokasi Presensi Berhasil Di Update');
         return redirect('/admin/pegawai');
+    }
+
+    public function presensi($id)
+    {
+        $pegawai = Pegawai::find($id);
+        $data = null;
+        
+        return view('admin.pegawai.presensi',compact('pegawai','data'));
+    }
+
+    public function tampilkanPresensi($id)
+    {
+        $bulan = request()->bulan;
+        $tahun = request()->tahun;
+        $pegawai = Pegawai::find($id);
+        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderBy('tanggal','ASC')->get();
+        request()->flash();
+        
+        return view('admin.pegawai.presensi',compact('data','pegawai'));
+        
     }
 }
