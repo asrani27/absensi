@@ -19,11 +19,69 @@ crossorigin=""/>
         <div class="card card-widget">
             <div class="card-header">
                 <div class="user-block">
-                  <img class="img-circle" src="/theme/dist/img/user1-128x128.jpg" alt="User Image">
+                  <img class="img-circle" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/2048px-User_icon_2.svg.png" alt="User Image">
                   <span class="username"><a href="#">{{Auth::user()->name}}</a></span>
                   <span class="description">SELAMAT DATANG DI APLIKASI ADMIN PRESENSI, HARAP SETTING LAT DAN LONG</span>
                 </div>
               </div>    
+        </div>
+    </div>
+</div>       
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                Data Presensi 
+            </div>    
+            <div class="card-body">
+                <div class="row">
+                <div class="col-sm-10">
+                    <div class="form-group">
+                        <input type="date" class="form-control" id="inputSuccess" value="{{\Carbon\Carbon::today()->format('Y-m-d')}}">
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Tampilkan</button>
+                        <a href="/admin/generate/presensi" class="btn btn-warning">Generate</a>
+                    </div>
+                </div>
+                </div>
+
+                
+            <table class="table table-hover text-nowrap table-sm">
+                <thead>
+                    <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
+                    <th>#</th>
+                    <th>Nama/NIP</th>
+                    <th>Jam Masuk</th>
+                    <th>Jam Pulang</th>
+                    <th>Keterangan</th>
+                    <th>Aksi</th>
+                    </tr>
+                </thead>
+                @php
+                    $no =1;
+                @endphp
+                <tbody>
+                @foreach ($data as $key => $item)
+                        <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                        <td>{{$no++}}</td>
+                        <td>{{$item->nama}}<br/>{{$item->nip}}</td>
+                        <td>{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
+                        <td>{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
+                        <td>{{$item->keterangan}}</td>   
+                        <td>
+                            @if ($item->keterangan != null)    
+                            <a href="#" class="btn btn-xs btn-info">Presensi</a>
+                            @endif
+                        </td>                 
+                        </tr>
+                    @endforeach
+                </tbody>
+                </table>
+            </div>    
         </div>
     </div>
 </div>       

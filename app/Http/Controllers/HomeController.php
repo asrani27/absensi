@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Skpd;
 use GuzzleHttp\Client;
-use Illuminate\Http\Request;
+use App\Models\Presensi;
 use Jenssegers\Agent\Agent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -40,15 +42,11 @@ class HomeController extends Controller
     public function admin()
     {
         $user       = Auth::user()->skpd;
-        $lat        = (float)$user->lat;
-        $long       = (float)$user->long;
-        $radius     = (float)$user->radius;
-        $latlong = [
-            'lat' => $lat,
-            'lng' => $long
-        ];
         
-        return view('admin.home',compact('latlong','lat','long','radius'));
+        $today = Carbon::today()->format('Y-m-d');
+        $data  = Presensi::where('tanggal', $today)->where('skpd_id',$user->id)->get();
+
+        return view('admin.home',compact('data'));
     }
 
     public function superadmin()

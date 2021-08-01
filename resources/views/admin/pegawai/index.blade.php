@@ -15,7 +15,18 @@
         <br/><br/>
         <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Data Pegawai Presensi</h3>
+            <h3 class="card-title">Data Pegawai</h3>
+            <div class="card-tools">
+                <form method="get" action="/admin/pegawai/search">
+                <div class="input-group input-group-sm" style="width: 250px;">
+                    <input type="text" name="search" class="form-control float-right" value="{{old('search')}}" placeholder="Nama / NIP">
+
+                    <div class="input-group-append">
+                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                    </div>
+                </div>
+                </form>
+            </div>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
@@ -52,7 +63,8 @@
                         @if ($item->user == null)
                         <a href="/admin/pegawai/{{$item->id}}/createuser" class="btn btn-xs bg-gradient-success">Buat Akun</a>
                         @else
-                            <a href="/admin/pegawai/{{$item->id}}/resetpass" class="btn btn-xs bg-gradient-secondary"><i class="fas fa-key"></i> Reset Password</a>
+                            <a href="/admin/pegawai/{{$item->id}}/presensi" class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
+                            <a href="/admin/pegawai/{{$item->id}}/resetpass" class="btn btn-xs bg-gradient-secondary"><i class="fas fa-key"></i> Reset Pass</a>
                         @endif
                     </td>
                     </tr>

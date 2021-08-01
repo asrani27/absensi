@@ -42,6 +42,15 @@
         </p>
     </a>
     </li>
+    
+    <li class="nav-item">
+    <a href="/admin/laporan" class="nav-link {{Request::is('admin/laporan') ? 'active' : ''}}">
+        <i class="nav-icon fas fa-file"></i>
+        <p>
+        Laporan
+        </p>
+    </a>
+    </li>
     <li class="nav-item">
     <a href="/logout" class="nav-link">
         <i class="nav-icon fas fa-sign-out-alt"></i>

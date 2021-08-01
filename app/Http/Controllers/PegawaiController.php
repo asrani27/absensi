@@ -60,6 +60,20 @@ class PegawaiController extends Controller
         }
     }
 
+    public function search()
+    {
+        $skpd_id = Auth::user()->skpd->id;
+        $search = request()->get('search');
+        $data   = Pegawai::where('skpd_id', $skpd_id)
+        ->where('nama', 'LIKE','%'.$search.'%')
+        ->orWhere(function($query)use ($search, $skpd_id){
+            $query->where('skpd_id', $skpd_id)->where('nip','LIKE','%'.$search.'%');
+        })->paginate(10);
+        $data->appends(['search' => $search])->links();
+        request()->flash();
+        return view('admin.pegawai.index',compact('data'))->withInput(request()->all());
+    }
+
     public function createuser()
     {
         $pegawai = Pegawai::where('skpd_id', $this->skpd()->id)->get();

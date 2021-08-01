@@ -13,6 +13,7 @@ use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\GenerateController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\LaporanAdminController;
 use App\Http\Controllers\LiburNasionalController;
 use App\Http\Controllers\JenisKeteranganController;
 
@@ -54,6 +55,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/updatelocation', [AdminController::class, 'updatelocation']);
     Route::prefix('admin')->group(function () {
         Route::resource('lokasi', LokasiController::class);
+        Route::get('pegawai/search', [PegawaiController::class, 'search']);
         Route::get('pegawai/sync', [PegawaiController::class, 'sync']);
         Route::get('pegawai/createuser', [PegawaiController::class, 'createuser']);
         Route::get('pegawai/{id}/resetpass', [PegawaiController::class, 'resetpass']);
@@ -66,6 +68,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('qrcode/tampil/{id}', [QrcodeController::class, 'tampilQr']);
         Route::resource('qrcode', QrcodeController::class);
         Route::resource('cuti', CutiController::class);
+        
+        Route::get('laporan', [LaporanAdminController::class, 'index']);
+        Route::get('generate/presensi', [AdminController::class, 'generate']);
     });
 });
 
