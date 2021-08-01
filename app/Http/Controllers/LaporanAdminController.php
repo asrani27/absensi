@@ -18,7 +18,7 @@ class LaporanAdminController extends Controller
         $tanggal = request()->tanggal;
         $skpd = Auth::user()->skpd;
 
-        $data = Presensi::where('skpd_id', $skpd->id)->where('tanggal', $tanggal);
-        return view('admin.laporan.tanggal',compact('data','skpd'));
+        $data = Presensi::where('skpd_id', $skpd->id)->where('tanggal', $tanggal)->get();
+        return view('admin.laporan.tanggal',compact('data','skpd','tanggal'));
     }
 }
