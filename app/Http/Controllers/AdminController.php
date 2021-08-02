@@ -72,6 +72,7 @@ class AdminController extends Controller
                 }else{
                     $check->update([
                         'nama' => $item->nama
+                        'skpd_id' => $skpd_id;
                     ]);
                 }
             }
