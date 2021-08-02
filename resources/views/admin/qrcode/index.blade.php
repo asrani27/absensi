@@ -34,7 +34,7 @@
             @foreach ($data as $key => $item)
                 <tr>
                 <td>{{$no++}}</td>
-                <td>{{$item->tanggal}}</td>
+                <td>{{\Carbon\Carbon::parse($item->tanggal)->isoFormat('D MMMM Y')}}</td>
                 <td>
                     <a href="/admin/qrcode/tampil/{{$item->id}}" class="btn btn-sm btn-info" target="_blank">Tampilkan QR</a>
                 </td>
@@ -45,6 +45,7 @@
         </div>
         <!-- /.card-body -->
         </div>
+        {{$data->links()}}
     </div>
 </div>
 

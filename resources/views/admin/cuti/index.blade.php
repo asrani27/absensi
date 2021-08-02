@@ -25,6 +25,8 @@
                 <th>Nama</th>
                 <th>Tgl Mulai</th>
                 <th>Tgl Selesai</th>
+                <th>Jenis</th>
+                <th>Dokumen</th>
                 <th>Keterangan</th>
                 <th>Aksi</th>
                 </tr>
@@ -40,11 +42,13 @@
                     <td>{{$item->nama}}</td>
                     <td>{{\Carbon\Carbon::parse($item->tanggal_mulai)->isoFormat('D MMMM Y')}}</td>
                     <td>{{\Carbon\Carbon::parse($item->tanggal_selesai)->isoFormat('D MMMM Y')}}</td>
+                    <td>{{$item->jenis_keterangan->keterangan}}</td>
+                    <td>{{$item->dokumen}}</td>
                     <td>{{$item->keterangan}}</td>
                     <td>
                         
                     <form action="/admin/cuti/{{$item->id}}" method="post">
-                        <a href="/admin/cuti/{{$item->id}}/edit" class="btn btn-xs btn-success"><i class="fas fa-edit"></i> Edit</a>
+                        {{-- <a href="/admin/cuti/{{$item->id}}/edit" class="btn btn-xs btn-success"><i class="fas fa-edit"></i> Edit</a> --}}
                         @csrf
                         @method('delete')
                         <button type="submit" class="btn btn-xs btn-danger" onclick="return confirm('yakin DI Hapus?');"><i class="fas fa-trash"></i> Delete</button>     

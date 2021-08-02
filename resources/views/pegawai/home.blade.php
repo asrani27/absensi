@@ -57,16 +57,26 @@ crossorigin=""/>
     <div class="col-12 col-sm-6 col-md-3">
     <div class="alert alert-danger alert-dismissible">
       <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-      Hubungi Admin SKPD anda untuk setting lokasi presensi
+      Silahkan Pilih Lokasi Presensi 
+      <form method="post" action="/pegawai/lokasi">
+        @csrf
+        <select name="lokasi_id" class="form-control" required>
+          <option value="">-pilih lokasi-</option>
+          @foreach ($lokasi as $item)
+              <option value="{{$item->id}}">{{$item->nama}}</option>
+          @endforeach
+        </select><br/> 
+        <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Yakin ingin disimpan?')">simpan</button>
+      </form>
     </div>
     </div>
-    {{-- @elseif(Auth::user()->pegawai->lokasi == null)
+    @elseif($cuti != null)
     <div class="col-12 col-sm-6 col-md-3">
-    <div class="alert alert-danger alert-dismissible">
-      <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-      Hubungi Admin SKPD anda untuk setting lokasi presensi
+    <div class="alert alert-info alert-dismissible">
+      <h5><i class="icon fas fa-ban"></i> Info!</h5>
+      Anda Sedang Cuti Mulai : <br/> {{\Carbon\Carbon::parse($cuti->tanggal_mulai)->isoFormat('D MMMM Y')}} - {{\Carbon\Carbon::parse($cuti->tanggal_selesai)->isoFormat('D MMMM Y')}} 
     </div>
-    </div> --}}
+    </div>
     @else
         
     <div class="col-12 col-sm-6 col-md-3">

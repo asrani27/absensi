@@ -454,4 +454,11 @@ class PresensiController extends Controller
           return back();
           
     }
+
+    public function storeLokasi(Request $req)
+    {
+        Auth::user()->pegawai->update(['lokasi_id' => $req->lokasi_id]);
+        toastr()->success('Lokasi Sukses di Update');
+        return back();
+    }
 }

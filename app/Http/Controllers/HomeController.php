@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Cuti;
 use App\Models\Skpd;
+use App\Models\Lokasi;
 use GuzzleHttp\Client;
 use App\Models\Presensi;
 use Jenssegers\Agent\Agent;
@@ -16,7 +18,7 @@ class HomeController extends Controller
     {
         $agent = new Agent();
         $os = $agent->browser();
-        //dd($os, $agent->device(), $agent->browser(),$agent->isPhone());
+        
         $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/']);
         $response = $client->request('get', Auth::user()->username);
         $data =  json_decode((string) $response->getBody())->data;
@@ -25,18 +27,20 @@ class HomeController extends Controller
             $latlong2 = null;
         }else{
             $lokasi = Auth::user()->pegawai->lokasi;
-            // $lat        = (float)$skpd->lat;
-            // $long       = (float)$skpd->long;
-            // $radius     = (float)$skpd->radius;
             $latlong2 = [
                 'lat' => $lokasi->lat,
                 'lng' => $lokasi->long
             ];
         }
         
+        $lokasi = Lokasi::where('skpd_id', Auth::user()->pegawai->skpd_id)->get();
+
+        $today = Carbon::today()->format('Y-m-d');
+        $nip   = Auth::user()->pegawai->nip;
+
+        $cuti = Cuti::where('nip', $nip)->where('tanggal_selesai', '>=', $today)->where('tanggal_mulai', '<=', $today)->first();
         
-        //dd(Auth::user()->pegawai);
-        return view('pegawai.home',compact('skpd','latlong2','os'));
+        return view('pegawai.home',compact('skpd','latlong2','os','lokasi','cuti'));
     }
 
     public function admin()

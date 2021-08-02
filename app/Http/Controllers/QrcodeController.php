@@ -13,7 +13,7 @@ class QrcodeController extends Controller
 {
     public function index()
     {
-        $data = Qr::orderBy('id','DESC')->get();
+        $data = Qr::orderBy('id','DESC')->paginate(10);
         return view('admin.qrcode.index',compact('data'));
     }
 

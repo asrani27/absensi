@@ -33,6 +33,7 @@ Route::post('/login', [LoginController::class, 'login']);
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/presensi/masuk', [PresensiController::class, 'masuk']);
+    Route::post('/pegawai/lokasi', [PresensiController::class, 'storeLokasi']);
     Route::post('/pegawai/presensi/masuk', [PresensiController::class, 'storeMasuk']);
     Route::get('/pegawai/presensi/pulang', [PresensiController::class, 'pulang']);
     Route::prefix('pegawai/presensi')->group(function () {

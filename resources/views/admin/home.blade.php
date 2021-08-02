@@ -59,6 +59,7 @@ crossorigin=""/>
                     <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
                     <th class="text-center">#</th>
                     <th>Nama/NIP</th>
+                    <th class="text-center">Tanggal</th>
                     <th class="text-center">Jam Masuk</th>
                     <th class="text-center">Jam Pulang</th>
                     <th>Keterangan</th>
@@ -73,12 +74,13 @@ crossorigin=""/>
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                         <td class="text-center">{{$no++}}</td>
                         <td>{{$item->nama}}<br/>{{$item->nip}}</td>
+                        <td class="text-center">{{\Carbon\Carbon::parse($item->tanggal)->isoFormat('D MMMM Y')}}</td>
                         <td class="text-center">{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
                         <td class="text-center">{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
                         <td>{{$item->keterangan}}</td>   
                         <td class="text-center">
                             @if ($item->keterangan != null)    
-                            <a href="#" class="btn btn-xs btn-info">Presensi</a>
+                            <button class="btn btn-xs btn-info isi-presensi" data-id="{{$item->id}}">Presensi</button>
                             @endif
                         </td>                 
                         </tr>
@@ -89,77 +91,48 @@ crossorigin=""/>
         </div>
     </div>
 </div>       
-{{-- <div id="mapid"></div>
-<form method="post" action="/admin/updatelocation">
-    @csrf
-    <div class="row">
-        <div class="col-lg-12 col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Latitude</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="lat" name="lat" value="{{$lat}}">
-                    </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Longitude</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="long"  name="long"  value="{{$long}}">
-                    </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Radius Jangkauan</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="radius" placeholder="100 meter" value="{{$radius}}">
-                    </div>
-                    </div>
 
-                    <div class="form-group row">
-                    <label class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                        <button type="submit" class="btn btn-block btn-primary"><strong>UPDATE LOKASI PRESENSI</strong></button>
-                    </div>
-                    </div>
+{{-- <div class="modal fade" id="isipresensi">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-primary">
+          <h4 class="modal-title">Edit Presensi </h4>
+        </div>
+        <form class="form-horizontal" method="post">
+        <div class="modal-body">
+            @csrf
+            <input type="hidden" class="form-control" id="idpresensi" name="idpresensi">
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Jam Masuk</label>
+                <div class="col-sm-8">
+                <input type="time" class="form-control" name="jam_masuk">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-3 control-label">Jam Pulang</label>
+                <div class="col-sm-8">
+                <input type="time" class="form-control" name="jam_pulang">
                 </div>
             </div>
         </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+      </div>
+      <!-- /.modal-content -->
     </div>
-</form> --}}
+    <!-- /.modal-dialog -->
+</div> --}}
 @endsection
 
 @push('js')
-{{-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-crossorigin=""></script>
-
-
-<script>
-    var latlng = {!!json_encode($latlong)!!}
-    
-    var map = L.map('mapid').setView(latlng, 16);
-    googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
-        maxZoom: 20,
-        subdomains:['mt0','mt1','mt2','mt3']
-    }).addTo(map);
-  
-    L.marker([latlng.lat,latlng.lng]).addTo(map);  
-
-    var theMarker = {};
-    console.log(latlng);
-    map.on('click', function(e) {
-        
-        document.getElementById("lat").value = e.latlng.lat;
-        document.getElementById("long").value = e.latlng.lng;
-        
-        if (theMarker != undefined) {
-            map.removeLayer(theMarker);
-        };
-        
-        theMarker = L.marker([e.latlng.lat,e.latlng.lng]).addTo(map);  
-    });
-    
+{{-- <script>
+$(document).on('click', '.isi-presensi', function() {
+    var id_presensi = $(this).data('id');
+    $('#idpresensi').val($(this).data('id'));
+    $('#isipresensi').modal('show');
+});
 </script> --}}
 @endpush
