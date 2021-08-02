@@ -53,7 +53,7 @@ crossorigin=""/>
                 </div>
                 </form>
 
-                
+            <div class=" table-responsive">
             <table class="table table-hover table-striped table-bordered text-nowrap table-sm">
                 <thead>
                     <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
@@ -87,6 +87,7 @@ crossorigin=""/>
                     @endforeach
                 </tbody>
             </table>
+            </div>
             </div>    
         </div>
     </div>

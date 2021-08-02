@@ -7,6 +7,7 @@ use App\Models\Pegawai;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -95,6 +96,25 @@ class AdminController extends Controller
             'jam_pulang' => $req->jam_pulang
         ]); 
         toastr()->success('Presensi Berhasil Di Update');
+        return back();
+    }
+
+    public function gantipassword()
+    {
+        return view('admin.gantipass');
+    }
+
+    public function updatepassword(Request $req)
+    {
+        $passlama = Auth::user()->password;
+        if(Hash::check($req->passlama , $passlama)){
+            Auth::user()->update([
+                'password' => bcrypt($req->passbaru),
+            ]);
+            toastr()->success('Password Berhasil Di Ubah');
+        }else{
+            toastr()->error('Password Lama Tidak Cocok');
+        }
         return back();
     }
 }

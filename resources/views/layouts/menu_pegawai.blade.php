@@ -20,6 +20,14 @@
     </li>
 
     <li class="nav-item">
+    <a href="/pegawai/gantipass" class="nav-link {{Request::is('pegawai/gantipass') ? 'active' : ''}}">
+        <i class="nav-icon fas fa-key"></i>
+        <p>
+        Ganti Password
+        </p>
+    </a>
+    </li>
+    <li class="nav-item">
     <a href="/logout" class="nav-link">
         <i class="nav-icon fas fa-sign-out-alt"></i>
         <p>

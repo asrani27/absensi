@@ -104,7 +104,7 @@ crossorigin=""/>
       </div>
       </form>
 
-      <table class="table table-hover text-nowrap table-sm">
+      <table class="table table-hover table-striped table-bordered text-nowrap table-sm  table-responsive">
         <thead>
             <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
             <th rowspan=2>No</th>
@@ -141,20 +141,32 @@ crossorigin=""/>
             $no =1;
         @endphp
         <tbody>
-        {{-- @foreach ($data as $key => $item)
+        @foreach ($data as $key => $item)
                 <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                 <td>{{$no++}}</td>
-                <td>{{$item->nama}}<br/>{{$item->nip}}</td>
-                <td>{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
-                <td>{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
-                <td>{{$item->keterangan}}</td>   
-                <td>
-                    @if ($item->keterangan != null)    
-                    <a href="#" class="btn btn-xs btn-info">Presensi</a>
-                    @endif
-                </td>                 
+                <td>{{$item->nip}}</td>
+                <td>{{$item->nama}}</td>
+                <td>{{$item->jabatan}}</td>
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>0</td>              
+                <td>100</td>           
+                <td>0</td>              
                 </tr>
-        @endforeach --}}
+        @endforeach
         </tbody>
     </table>
     </div>

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use App\Models\Ringkasan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,9 @@ class LaporanAdminController extends Controller
     {
         $bulan = Carbon::today()->format('m');
         $tahun = Carbon::today()->format('Y');
-        return view('admin.laporan.index',compact('bulan','tahun'));
+
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->get();
+        return view('admin.laporan.index',compact('bulan','tahun','data'));
     }
 
     public function tanggal()
@@ -31,23 +34,39 @@ class LaporanAdminController extends Controller
     {
         $button = request()->button; 
         $skpd = Auth::user()->skpd;
+        $bulan   = request()->bulan;
+        $tahun   = request()->tahun;
         if($button == '1'){
-            $bulan = request()->bulan;
-            $tahun = request()->tahun;
             $pegawai = Presensi::where('skpd_id', $skpd->id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->groupBy(function($item){
                 $item->nip;
             });
             
+            request()->flash();
             toastr()->error('Dalam Pengembangan');
             return back();
         }else{
             
-            $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/']);
-            $response = $client->request('get', Auth::user()->username);
-            $data =  json_decode((string) $response->getBody())->data;
-            dd($data);
             $pegawai = Pegawai::where('skpd_id', $skpd->id)->get();
-            dd($pegawai);
+            foreach($pegawai as $item)
+            {
+                $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+                if($check == null){
+                    $r = new Ringkasan;
+                    $r->nip     = $item->nip;
+                    $r->nama    = $item->nama;
+                    $r->jabatan = $item->jabatan;
+                    $r->skpd_id = $item->skpd_id;
+                    $r->bulan   = $bulan;
+                    $r->tahun   = $tahun;
+                    $r->save();
+                }else{
+
+                }
+            }
+            
+            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->get();
+            request()->flash();
+            return view('admin.laporan.index',compact('bulan','tahun','data'));
         }
     }
 }
