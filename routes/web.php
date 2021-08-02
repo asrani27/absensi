@@ -56,6 +56,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/updatelocation', [AdminController::class, 'updatelocation']);
     Route::prefix('admin')->group(function () {
         Route::resource('lokasi', LokasiController::class);
+        Route::get('presensi/{id}', [AdminController::class, 'editPresensi']);
+        Route::post('presensi/{id}', [AdminController::class, 'updatePresensi']);
         Route::get('pegawai/search', [PegawaiController::class, 'search']);
         Route::get('pegawai/sync', [PegawaiController::class, 'sync']);
         Route::get('pegawai/createuser', [PegawaiController::class, 'createuser']);
