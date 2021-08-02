@@ -71,8 +71,8 @@ class AdminController extends Controller
                     $n->save();
                 }else{
                     $check->update([
-                        'nama' => $item->nama
-                        'skpd_id' => $skpd_id;
+                        'nama' => $item->nama,
+                        'skpd_id' => $skpd_id
                     ]);
                 }
             }
