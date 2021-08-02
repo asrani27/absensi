@@ -34,8 +34,7 @@
             <thead>
                 <tr>
                 <th>#</th>
-                <th>NIP</th>
-                <th>Nama</th>
+                <th>NIP/Nama/Jabatan</th>
                 <th>Tgl Lahir</th>
                 <th>Lokasi Presensi</th>
                 <th>Aksi</th>
@@ -46,10 +45,9 @@
             @endphp
             <tbody>
             @foreach ($data as $key => $item)
-                    <tr>
+                    <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                     <td>{{$no++}}</td>
-                    <td>{{$item->nip}}</td>
-                    <td>{{$item->nama}}</td>
+                    <td>{{$item->nama}}<br/>{{$item->nip}}<br/>{{$item->jabatan}}</td>
                     <td>{{\Carbon\Carbon::parse($item->tanggal_lahir)->format('d-m-Y')}}</td>
                     <td>
                         @if ($item->lokasi == null)
