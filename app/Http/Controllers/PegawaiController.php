@@ -32,7 +32,7 @@ class PegawaiController extends Controller
         $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/skpd/']);
         $response = $client->request('get', $this->skpd()->kode_skpd);
         $data =  json_decode($response->getBody())->data;
-        dd($data);
+        
         DB::beginTransaction();
         try {
             foreach($data as $item)
