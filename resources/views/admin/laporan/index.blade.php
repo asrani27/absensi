@@ -97,7 +97,8 @@ crossorigin=""/>
       </div>
         <div class="col-sm-2">
             <div class="form-group">
-                <button type="submit" class="btn btn-danger">Print</button>
+                <button type="submit" name="button" value="1" class="btn btn-danger">Print</button>
+                <button type="submit" name="button" value="2" class="btn btn-warning">Tampilkan</button>
             </div>
         </div>
       </div>

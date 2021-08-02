@@ -87,13 +87,13 @@ class AdminController extends Controller
         $data = Presensi::find($id);
         return view('admin.presensi.edit',compact('data'));
     }
-
+ 
     public function updatePresensi(Request $req, $id)
     {
         Presensi::find($id)->update([
             'jam_masuk' => $req->jam_masuk,
             'jam_pulang' => $req->jam_pulang
-        ]);
+        ]); 
         toastr()->success('Presensi Berhasil Di Update');
         return back();
     }

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class PegawaiController extends Controller
+
 {
     public function index()
     {
@@ -31,7 +32,7 @@ class PegawaiController extends Controller
         $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/skpd/']);
         $response = $client->request('get', $this->skpd()->kode_skpd);
         $data =  json_decode($response->getBody())->data;
-
+        dd($data);
         DB::beginTransaction();
         try {
             foreach($data as $item)
@@ -42,12 +43,15 @@ class PegawaiController extends Controller
                     $p = new Pegawai;
                     $p->nip = $item->nip;
                     $p->nama = $item->nama;
+                    $p->jabatan = $item->jabatan->nama;
                     $p->tanggal_lahir = $item->tanggal_lahir;
                     $p->skpd_id = $this->skpd()->id;
                     $p->is_aktif = $item->is_aktif;
                     $p->save();                            
                 }else{
-    
+                    $check->update([
+                        'jabatan' => $item->jabatan == null ? null: $item->jabatan->nama
+                    ]);
                 }
             }
             DB::commit();
