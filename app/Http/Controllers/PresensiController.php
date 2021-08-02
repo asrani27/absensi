@@ -10,6 +10,7 @@ use App\Models\Presensi;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class PresensiController extends Controller
@@ -459,6 +460,25 @@ class PresensiController extends Controller
     {
         Auth::user()->pegawai->update(['lokasi_id' => $req->lokasi_id]);
         toastr()->success('Lokasi Sukses di Update');
+        return back();
+    }
+
+    public function gantipassword()
+    {
+        return view('pegawai.gantipass');
+    }
+    
+    public function updatepassword(Request $req)
+    {
+        $passlama = Auth::user()->password;
+        if(Hash::check($req->passlama , $passlama)){
+            Auth::user()->update([
+                'password' => bcrypt($req->passbaru),
+            ]);
+            toastr()->success('Password Berhasil Di Ubah');
+        }else{
+            toastr()->error('Password Lama Tidak Cocok');
+        }
         return back();
     }
 }
