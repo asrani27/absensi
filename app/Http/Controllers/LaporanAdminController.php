@@ -64,7 +64,7 @@ class LaporanAdminController extends Controller
                 }
             }
             
-            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->get();
+            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->get();
             request()->flash();
             return view('admin.laporan.index',compact('bulan','tahun','data'));
         }
