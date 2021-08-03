@@ -299,13 +299,13 @@ class PresensiController extends Controller
                         //Update Data
                           if($check->jam_masuk == null){
                               
-                            if($req->hasFile('file'))
-                            {
-                                $filename = $req->file->getClientOriginalName();
-                                $filename = date('d-m-Y-').rand(1,9999).$filename;
+                            // if($req->hasFile('file'))
+                            // {
+                            //     $filename = $req->file->getClientOriginalName();
+                            //     $filename = date('d-m-Y-').rand(1,9999).$filename;
                                             
-                                $req->file->storeAs('/public/'.Auth::user()->username.'/presensi/radius/masuk',$filename);
-                            }  
+                            //     $req->file->storeAs('/public/'.Auth::user()->username.'/presensi/radius/masuk',$filename);
+                            // }  
 
                             if($req->file == null){
                                 $check->update([
@@ -313,7 +313,7 @@ class PresensiController extends Controller
                                 ]);
                             }else{
                                 $check->update([
-                                    'file_masuk' => $filename,
+                                    // 'file_masuk' => $filename,
                                     'jam_masuk' => $jam_masuk,
                                 ]);
                             }
@@ -341,12 +341,12 @@ class PresensiController extends Controller
                     }else{
                         //Update Data
                         
-                        if($req->hasFile('file'))
-                        {
-                            $filename = $req->file->getClientOriginalName();
-                            $filename = date('d-m-Y-').rand(1,9999).$filename;
-                            $req->file->storeAs('/public/'.Auth::user()->username.'/presensi/radius/pulang',$filename);
-                        }  
+                        // if($req->hasFile('file'))
+                        // {
+                        //     $filename = $req->file->getClientOriginalName();
+                        //     $filename = date('d-m-Y-').rand(1,9999).$filename;
+                        //     $req->file->storeAs('/public/'.Auth::user()->username.'/presensi/radius/pulang',$filename);
+                        // }  
 
                         $filename = rand(1,9999).'.jpg';
                         if($req->file == null){
@@ -355,7 +355,7 @@ class PresensiController extends Controller
                             ]);
                         }else{
                             $check->update([
-                                'file_pulang' => $filename,
+                                // 'file_pulang' => $filename,
                                 'jam_pulang' => $jam_pulang,
                             ]);
                         }
