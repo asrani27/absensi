@@ -89,7 +89,7 @@ crossorigin=""></script>
 <script>
     
     var map = L.map('mapid').setView([-3.327653847548605,114.5884147286779], 16);
-    googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+    googleStreets = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
         maxZoom: 20,
         subdomains:['mt0','mt1','mt2','mt3']
     }).addTo(map);

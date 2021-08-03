@@ -80,7 +80,8 @@ class PegawaiController extends Controller
 
     public function createuser()
     {
-        $pegawai = Pegawai::where('skpd_id', $this->skpd()->id)->get();
+        $pegawai = Pegawai::where('skpd_id', $this->skpd()->id)->where('user_id', null)->get()->take(200);
+        
         $rolePegawai = Role::where('name','pegawai')->first();
         DB::beginTransaction();
         try {
