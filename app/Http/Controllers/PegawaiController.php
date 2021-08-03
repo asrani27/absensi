@@ -42,7 +42,7 @@ class PegawaiController extends Controller
                     $p = new Pegawai;
                     $p->nip = $item->nip;
                     $p->nama = $item->nama == null ? null : $item->nama;
-                    $p->jabatan = $item->jabatan->nama;
+                    $p->jabatan = $item->jabatan == null ? null : $item->jabatan->nama;
                     $p->tanggal_lahir = $item->tanggal_lahir;
                     $p->skpd_id = $this->skpd()->id;
                     $p->is_aktif = $item->is_aktif;
