@@ -17,7 +17,7 @@ class LaporanAdminController extends Controller
         $bulan = Carbon::today()->format('m');
         $tahun = Carbon::today()->format('Y');
 
-        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->get();
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->get();
         return view('admin.laporan.index',compact('bulan','tahun','data'));
     }
 
