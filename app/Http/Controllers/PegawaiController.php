@@ -41,7 +41,7 @@ class PegawaiController extends Controller
                     //simpan data
                     $p = new Pegawai;
                     $p->nip = $item->nip;
-                    $p->nama = $item->nama;
+                    $p->nama = $item->nama == null ? null : $item->nama;
                     $p->jabatan = $item->jabatan->nama;
                     $p->tanggal_lahir = $item->tanggal_lahir;
                     $p->skpd_id = $this->skpd()->id;
@@ -57,7 +57,7 @@ class PegawaiController extends Controller
             toastr()->success('Sinkronisasi Berhasil');
             return back();
         } catch (\Exception $e) {
-            dd($e);
+            
             DB::rollback();
             toastr()->error('Sinkronisasi Gagal');
             return back();
