@@ -368,6 +368,11 @@ class PresensiController extends Controller
                 }
             }
         }else{
+            if($req->datajarak == null){
+                toastr()->error('Nyalakan GPS anda');
+                return back();
+            }
+            
             $radius = $this->pegawai()->lokasi->radius;
             if((int)$req->datajarak > (int)$radius){
                 toastr()->error('Anda Berada Di Luar Jangkauan Lokasi Presensi');
