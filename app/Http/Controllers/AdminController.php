@@ -91,9 +91,23 @@ class AdminController extends Controller
  
     public function updatePresensi(Request $req, $id)
     {
+        if($req->jam_masuk == '00:00'){
+            $jam_masuk = null;
+        }else{
+            $jam_masuk = $req->jam_masuk;
+        }
+        
+        if($req->jam_pulang == '00:00'){
+            $jam_pulang = null;
+        }else{
+            $jam_pulang = $req->jam_pulang;
+        }
+        
+        
         Presensi::find($id)->update([
-            'jam_masuk' => $req->jam_masuk,
-            'jam_pulang' => $req->jam_pulang
+            'jam_masuk' => $jam_masuk.':00',
+            'jam_pulang' => $jam_pulang.':00',
+            'keterangan' => $req->keterangan
         ]); 
         toastr()->success('Presensi Berhasil Di Update');
         return back();
