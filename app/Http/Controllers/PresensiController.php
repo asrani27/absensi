@@ -384,6 +384,7 @@ class PresensiController extends Controller
                           $attr['nip'] = $this->pegawai()->nip;
                           $attr['tanggal'] = $tanggal;
                           $attr['jam_masuk'] = $jam_masuk;
+                          $attr['skpd_id'] = $this->pegawai()->skpd_id;
                           Presensi::create($attr);
                           toastr()->success('Presensi Masuk Berhasil Disimpan');
                           return back();
@@ -416,6 +417,7 @@ class PresensiController extends Controller
                           $attr['nip'] = $this->pegawai()->nip;
                           $attr['tanggal'] = $tanggal;
                           $attr['jam_pulang'] = $jam_pulang;
+                          $attr['skpd_id'] = $this->pegawai()->skpd_id;
                           Presensi::create($attr);
                           toastr()->success('Presensi Pulang Berhasil Disimpan');
                           return back();
