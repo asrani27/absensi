@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @push('css')
-<!-- Timepicker -->
-<script src="/theme/plugins/moment/moment.min.js"></script>
-<link rel="stylesheet" href="/theme/plugins/daterangepicker/daterangepicker.css">
-<link rel="stylesheet" href="/theme/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
 
 @endpush
 @section('title')
@@ -40,7 +36,7 @@
 
                 <div class="col-sm-2">
                 <div class="input-group date" id="timepicker" data-target-input="nearest">
-                  <input type="time" class="form-control datetimepicker-input" name="jam_masuk" max="23:59" value="{{$data->jam_masuk == null ? '00:00' : $data->jam_masuk}}">
+                  <input type="time" class="form-control datetimepicker-input" name="jam_masuk" max="23:59" value="{{$data->jam_masuk == null ? '00:00:00' : $data->jam_masuk}}">
                   <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
                       {{-- <div class="input-group-text"><i class="far fa-clock"></i></div> --}}
                   </div>
@@ -54,7 +50,7 @@
 
                 <div class="col-sm-2">
                 <div class="input-group date" id="timepicker2" data-target-input="nearest">
-                  <input type="time" class="form-control datetimepicker-input" name="jam_pulang" value="{{$data->jam_pulang == null ? '00:00' : $data->jam_pulang}}">
+                  <input type="time" class="form-control datetimepicker-input" name="jam_pulang" value="{{$data->jam_pulang == null ? '00:00:00' : $data->jam_pulang}}">
                   <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
                       {{-- <div class="input-group-text"><i class="far fa-clock"></i></div> --}}
                   </div>
@@ -94,20 +90,4 @@
 
 @push('js')
 
-<!-- Timepicker -->
-<script src="/theme/plugins/moment/moment.min.js"></script>
-<script src="/theme/plugins/daterangepicker/daterangepicker.js"></script>
-<script src="/theme/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
-<script>
-    
-    // //Timepicker
-    // $('#timepicker').datetimepicker({
-    //   format: 'HH:mm:s',
-    //   //format: 'hh:mm',
-    // })
-    // $('#timepicker2').datetimepicker({
-    //   format: 'HH:mm:s',
-    //   //format: 'hh:mm',
-    // })
-</script>
 @endpush
