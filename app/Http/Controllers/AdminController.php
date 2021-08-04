@@ -105,8 +105,8 @@ class AdminController extends Controller
         
         
         Presensi::find($id)->update([
-            'jam_masuk' => $jam_masuk.':00',
-            'jam_pulang' => $jam_pulang.':00',
+            'jam_masuk' => $jam_masuk,
+            'jam_pulang' => $jam_pulang,
             'keterangan' => $req->keterangan
         ]); 
         toastr()->success('Presensi Berhasil Di Update');
