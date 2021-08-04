@@ -60,6 +60,8 @@ class LokasiController extends Controller
 
     public function destroy($id)
     {
-        
+        Lokasi::find($id)->delete();
+        toastr()->success('Berhasil Di hapus');
+        return back();   
     }
 }
