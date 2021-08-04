@@ -36,7 +36,7 @@
 
                 <div class="col-sm-2">
                 <div class="input-group date" id="timepicker" data-target-input="nearest">
-                  <input type="time" class="form-control datetimepicker-input" name="jam_masuk" max="23:59" value="{{$data->jam_masuk == null ? '00:00:00' : $data->jam_masuk}}">
+                  <input type="time" class="form-control datetimepicker-input" name="jam_masuk" value="{{$data->jam_masuk == null ? '00:00:00' : $data->jam_masuk}}">
                   <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
                       {{-- <div class="input-group-text"><i class="far fa-clock"></i></div> --}}
                   </div>
