@@ -19,14 +19,19 @@ class LoginController extends Controller
             return response()->json($data);
         }else{
             if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
-                Auth::user()->update([
-                    'api_token' => Hash::make(Str::random(100))
-                ]);
+                
+                $user = Auth::user();
+                if($user->tokens()->first() == null){
+                    $token = $user->createToken('myapptoken')->plainTextToken;
+                }else{
+                    $user->tokens()->delete();
+                    $token = $user->createToken('myapptoken')->plainTextToken;
+                }
 
                 $data['message_error'] = 200;
                 $data['message']       = 'Data Ditemukan';
                 $data['data']          = Auth::user()->pegawai;
-                $data['api_token']     = Auth::user()->api_token;
+                $data['api_token']     = $token;
                 return response()->json($data);
                 
             } else {
@@ -36,5 +41,10 @@ class LoginController extends Controller
                 return response()->json($data);
             }
         } 
+    }
+
+    public function user()
+    {
+        return Auth::user();
     }
 }
