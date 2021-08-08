@@ -6,6 +6,7 @@ use App\Models\Qr;
 use Carbon\Carbon;
 use App\Models\Skpd;
 use GuzzleHttp\Client;
+use App\Models\Rentang;
 use App\Models\Presensi;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
@@ -274,6 +275,38 @@ class PresensiController extends Controller
 
     public function storeRadius(Request $req)
     {
+        $today = Carbon::now();
+        $hari  = $today->translatedFormat('l');
+        $jam   = $today->format('H:i:s');
+
+        $rentang = Rentang::where('hari', $hari)->first();
+        if($jam < $rentang->jam_masuk_selesai && $jam > $rentang->jam_masuk_mulai){
+            if($req->button == 'pulang'){
+                toastr()->error('Anda Berada Di Jam Masuk');
+                return back();
+            }else{
+                $this->simpanRadius($req);
+                return back();
+            }
+        }elseif($jam < $rentang->jam_pulang_selesai && $jam > $rentang->jam_pulang_mulai){
+            if($req->button == 'masuk'){
+                toastr()->error('Anda Berada Di Jam Pulang');
+                return back();
+            }else{
+                $this->simpanRadius($req);
+                return back();
+            }
+        }else{
+            toastr()->error('Tidak Bisa Absen Karena Di Luar Jam Absen');
+            return back();
+        }
+
+        
+        
+    }
+
+    public function simpanRadius($req)
+    {
         if($req->browser == 'Safari'){
             $radius = $this->pegawai()->lokasi->radius;
             if((int)$req->datajarak > (int)$radius){
@@ -359,9 +392,6 @@ class PresensiController extends Controller
                                 'jam_pulang' => $jam_pulang,
                             ]);
                         }
-                        // $check->update([
-                        //     'jam_pulang' => $jam_pulang,
-                        // ]);
                         toastr()->success('Presensi Pulang Berhasil DiUpdate');
                         return back();
                     }
@@ -372,7 +402,6 @@ class PresensiController extends Controller
                 toastr()->error('Nyalakan GPS anda');
                 return back();
             }
-            
             $radius = $this->pegawai()->lokasi->radius;
             if((int)$req->datajarak > (int)$radius){
                 toastr()->error('Anda Berada Di Luar Jangkauan Lokasi Presensi');
@@ -442,7 +471,7 @@ class PresensiController extends Controller
                 }
             }
         }
-        
+
     }
 
     public function testing()
