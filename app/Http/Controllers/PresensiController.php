@@ -101,6 +101,7 @@ class PresensiController extends Controller
         
         $agent = new Agent();
         $os = $agent->browser();
+        
         if($os == 'Safari'){
             return view('pegawai.presensi.radius.presensi',compact('skpd','latlong2','jam_masuk','jam_pulang','os'));
         }else{

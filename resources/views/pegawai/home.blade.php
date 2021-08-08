@@ -40,13 +40,26 @@ crossorigin=""/>
                   </li>
                   <li class="nav-item">
                     <a href="#" class="nav-link">
+                      Jam Masuk
+                      <span class="float-right text-primary">{{\Carbon\Carbon::parse($rentang->jam_masuk_mulai)->format('H:i')}} - {{\Carbon\Carbon::parse($rentang->jam_masuk_selesai)->format('H:i')}}</span>
+                    </a>
+                  </li>
+                  
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                      Jam Pulang
+                      <span class="float-right text-primary">{{\Carbon\Carbon::parse($rentang->jam_pulang_mulai)->format('H:i')}} - {{\Carbon\Carbon::parse($rentang->jam_pulang_selesai)->format('H:i')}}</span>
+                    </a>
+                  </li>
+                  {{-- <li class="nav-item">
+                    <a href="#" class="nav-link">
                       Jarak Dengan Lokasi
                       <span class="float-right text-primary"><div id="jarak"></div></span>
                     </a>
-                  </li>
-                  <li class="nav-item">
+                  </li> --}}
+                  {{-- <li class="nav-item">
                     <a href="/home/pegawai" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Dapatkan Lokasi Saya</a>
-                  </li>
+                  </li> --}}
                 </ul>
             </div>    
         </div>

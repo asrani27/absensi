@@ -7,6 +7,7 @@ use App\Models\Cuti;
 use App\Models\Skpd;
 use App\Models\Lokasi;
 use GuzzleHttp\Client;
+use App\Models\Rentang;
 use App\Models\Presensi;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
@@ -38,9 +39,13 @@ class HomeController extends Controller
         $today = Carbon::today()->format('Y-m-d');
         $nip   = Auth::user()->pegawai->nip;
 
+        $hari  = Carbon::now()->translatedFormat('l');
+
+        $rentang = Rentang::where('hari', $hari)->first();
+
         $cuti = Cuti::where('nip', $nip)->where('tanggal_selesai', '>=', $today)->where('tanggal_mulai', '<=', $today)->first();
         
-        return view('pegawai.home',compact('skpd','latlong2','os','lokasi','cuti'));
+        return view('pegawai.home',compact('skpd','latlong2','os','lokasi','cuti','rentang'));
     }
 
     public function admin()
