@@ -297,7 +297,7 @@ class PresensiController extends Controller
                 return back();
             }
         }else{
-            toastr()->error('Tidak Bisa Absen Karena Di Luar Jam Absen');
+            toastr()->error('Tidak Bisa Presensi Karena Di Luar Jam Presensi');
             return back();
         }
 
