@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Jam;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -49,14 +50,11 @@ class JamController extends Controller
     }
     
     public function update(Request $request, $id)
-    {
-        
+    {   
         $attr = $request->all();
-
         Jam::find($id)->update($attr);
-
         toastr()->success('Sukses Di Update');
-        return redirect('/superadmin/jam');
+        return redirect('/superadmin/rentang');
     }
 
     public function destroy($id)

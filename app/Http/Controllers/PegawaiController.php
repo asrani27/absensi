@@ -52,6 +52,7 @@ class PegawaiController extends Controller
                     $check->update([
                         'jabatan' => $item->jabatan == null ? null: $item->jabatan->nama,
                         'skpd_id' => $this->skpd()->id,
+                        'tanggal_lahir' => $item->tanggal_lahir,
                     ]);
                 }
             }

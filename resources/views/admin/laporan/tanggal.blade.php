@@ -15,7 +15,7 @@
 
 </head>
 <body>
-    <p style="text-align: center;">{{strtoupper($skpd->nama)}}<br />TANGGAL : {{strtoupper(\Carbon\Carbon::parse($tanggal)->isoFormat('D MMMM Y HH:mm'))}}<br />DATA PRESENSI<br /><br /></p>
+    <p style="text-align: center;">{{strtoupper($skpd->nama)}}<br />TANGGAL : {{strtoupper(\Carbon\Carbon::parse($tanggal)->isoFormat('D MMMM Y'))}}<br />DATA PRESENSI<br /><br /></p>
 <table style="border-collapse: collapse; width: 100%;" border="1">
 <tbody>
 <tr>

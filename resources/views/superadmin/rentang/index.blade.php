@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 @endpush
 @section('title')
-    SETTING JAM
+    SETTING RENTANG JAM PRESENSI
 @endsection
 @section('content')
 <br/>
@@ -13,7 +13,7 @@
         {{-- <a href="/superadmin/jam/create" class="btn btn-sm btn-primary"><i class="fa fa-clock"></i> Tambah Jam</a><br/><br/> --}}
         <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Data Jam Masuk Dan Pulang</h3>
+            <h3 class="card-title">Data Rentang Presensi Masuk Dan Pulang</h3>
         </div>
         <!-- /.card-header -->
         <div class="card-body table-responsive p-0">
@@ -35,12 +35,12 @@
                     <tr>
                     <td>{{$no++}}</td>
                     <td>{{$item->hari}}</td>
-                    <td>{{$item->jam_masuk}}</td>
-                    <td>{{$item->jam_pulang}}</td>
+                    <td>{{$item->jam_masuk_mulai}} - {{$item->jam_masuk_selesai}}</td>
+                    <td>{{$item->jam_pulang_mulai}} - {{$item->jam_pulang_selesai}}</td>
                     <td>
                         
-                    <form action="/superadmin/jam/{{$item->id}}" method="post">
-                        <a href="/superadmin/jam/{{$item->id}}/edit" class="btn btn-xs btn-success"><i class="fas fa-edit"></i> Edit</a>
+                    <form action="/superadmin/rentang/{{$item->id}}" method="post">
+                        <a href="/superadmin/rentang/{{$item->id}}/edit" class="btn btn-xs btn-success"><i class="fas fa-edit"></i> Edit</a>
                         @csrf
                         @method('delete')
                         {{-- <button type="submit" class="btn btn-xs btn-danger" onclick="return confirm('yakin DI Hapus?');"><i class="fas fa-trash"></i> Delete</button>      --}}
