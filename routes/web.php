@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JamController;
 use App\Http\Controllers\CutiController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SkpdController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LokasiController;
@@ -91,6 +92,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::prefix('superadmin')->group(function () {
         Route::resource('jam', JamController::class);
+        Route::get('skpd/{skpd_id}/resetpass', [SkpdController::class, 'resetpass']);
+        Route::get('skpd/{skpd_id}/detail', [SkpdController::class, 'detail']);
+        Route::get('skpd/{skpd_id}/pegawai', [SkpdController::class, 'pegawai']);
+        Route::resource('skpd', SkpdController::class);
         Route::resource('rentang', RentangController::class);
         Route::resource('libur', LiburNasionalController::class);
         Route::resource('jenis', JenisKeteranganController::class);

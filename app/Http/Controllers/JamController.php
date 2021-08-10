@@ -54,7 +54,7 @@ class JamController extends Controller
         $attr = $request->all();
         Jam::find($id)->update($attr);
         toastr()->success('Sukses Di Update');
-        return redirect('/superadmin/rentang');
+        return redirect('/superadmin/jam');
     }
 
     public function destroy($id)
