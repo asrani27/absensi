@@ -28,6 +28,6 @@ class RentangController extends Controller
         Rentang::find($id)->update($attr);
 
         toastr()->success('Sukses Di Update');
-        return redirect('/superadmin/jam');
+        return redirect('/superadmin/rentang');
     }
 }
