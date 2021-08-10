@@ -9,6 +9,14 @@
         </p>
     </a>
     </li>
+    <li class="nav-item">
+        <a href="/superadmin/skpd" class="nav-link {{ Request::is('superadmin/skpd*') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-home"></i>
+            <p>
+            SKPD
+            </p>
+        </a>
+    </li>
 
     <li class="nav-header">SETTING</li>
     <li class="nav-item">
@@ -20,6 +28,15 @@
     </a>
     </li>
     
+    <li class="nav-item">
+    <a href="/superadmin/rentang" class="nav-link {{ Request::is('superadmin/rentang*') ? 'active' : '' }}">
+        <i class="nav-icon fas fa-clock"></i>
+        <p>
+            Rentang Jam Presensi
+        </p>
+    </a>
+    </li>
+
     <li class="nav-item">
     <a href="/superadmin/libur" class="nav-link {{ Request::is('superadmin/profil*') ? 'active' : '' }}">
         <i class="nav-icon fas fa-calendar"></i>
@@ -37,7 +54,7 @@
         </p>
     </a>
     </li>
-    
+{{--     
     <li class="nav-item">
     <a href="/superadmin/generatetanggal" class="nav-link {{ Request::is('superadmin/generatetanggal') ? 'active' : '' }}">
         <i class="nav-icon fas fa-th"></i>
@@ -45,7 +62,7 @@
             Generate Presensi
         </p>
     </a>
-    </li>
+    </li> --}}
 
     <li class="nav-item">
     <a href="/logout" class="nav-link">
