@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Skpd;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
@@ -19,6 +20,16 @@ class LaporanAdminController extends Controller
 
         $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->get();
         return view('admin.laporan.index',compact('bulan','tahun','data'));
+    }
+
+    public function tanggalSuperadmin()
+    {
+        $skpd_id = request()->get('skpd_id');
+        $tanggal = request()->get('tanggal');
+        $skpd = Skpd::find($skpd_id);
+        
+        $data = Presensi::where('skpd_id', $skpd_id)->where('tanggal', $tanggal)->get();
+        return view('superadmin.skpd.laporan.tanggal',compact('data','skpd','tanggal'));
     }
 
     public function tanggal()

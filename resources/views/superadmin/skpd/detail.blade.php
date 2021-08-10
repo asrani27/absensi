@@ -48,7 +48,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Lokasi</span>
-          <span class="info-box-number">4<a href="#" class="btn btn-sm"><i class="fas fa-sign-out-alt"></i></a></span>
+          <span class="info-box-number">{{$countLokasi}}<a href="/superadmin/skpd/{{$skpd->id}}/lokasi" class="btn btn-sm"><i class="fas fa-sign-out-alt"></i></a></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -61,11 +61,11 @@
 
     <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box mb-3">
-        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-qrcode"></i></span>
+        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user"></i></span>
 
         <div class="info-box-content">
-          <span class="info-box-text">Qr Code</span>
-          <span class="info-box-number">7<a href="#" class="btn btn-sm"><i class="fas fa-sign-out-alt"></i></a></span>
+          <span class="info-box-text">Cuti</span>
+          <span class="info-box-number">{{$countCuti}}<a href="/superadmin/skpd/{{$skpd->id}}/cuti" class="btn btn-sm"><i class="fas fa-sign-out-alt"></i></a></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -78,7 +78,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Laporan</span>
-          <span class="info-box-number">2<a href="#" class="btn btn-sm"><i class="fas fa-sign-out-alt"></i></a></span>
+          <span class="info-box-number">2<a href="/superadmin/skpd/{{$skpd->id}}/laporan" class="btn btn-sm"><i class="fas fa-sign-out-alt"></i></a></span>
         </div>
         <!-- /.info-box-content -->
       </div>
@@ -88,9 +88,17 @@
 </div>
 
 @if ($page == null)
+
 @elseif($page == 'pegawai')
-@include('superadmin.skpd.pegawai')
+    @include('superadmin.skpd.pegawai')
+@elseif($page == 'lokasi')
+    @include('superadmin.skpd.lokasi')
+@elseif($page == 'laporan')
+    @include('superadmin.skpd.laporan')
+@elseif($page == 'cuti')
+    @include('superadmin.skpd.cuti')
 @endif
+
 @endsection
 
 @push('js')

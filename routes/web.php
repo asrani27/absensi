@@ -91,10 +91,15 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::prefix('superadmin')->group(function () {
+        Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggalSuperadmin']);
         Route::resource('jam', JamController::class);
         Route::get('skpd/{skpd_id}/resetpass', [SkpdController::class, 'resetpass']);
         Route::get('skpd/{skpd_id}/detail', [SkpdController::class, 'detail']);
         Route::get('skpd/{skpd_id}/pegawai', [SkpdController::class, 'pegawai']);
+        Route::get('skpd/{skpd_id}/laporan', [SkpdController::class, 'laporan']);
+        Route::get('skpd/{skpd_id}/lokasi', [SkpdController::class, 'lokasi']);
+        
+        Route::get('skpd/{skpd_id}/cuti', [SkpdController::class, 'cuti']);
         Route::resource('skpd', SkpdController::class);
         Route::resource('rentang', RentangController::class);
         Route::resource('libur', LiburNasionalController::class);
