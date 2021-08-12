@@ -67,7 +67,7 @@ crossorigin=""/>
                     <button class="btn btn-block btn-info" id='grabFrameButton'>Take Photo</button>
                     <canvas id='grabFrameCanvas'></canvas>
                 </div>
-                <form method="post" action="/pegawai/presensi/radius">
+                <form  id="radius" method="post" action="/pegawai/presensi/radius">
                     @csrf
                 <input type="hidden" name="datajarak" id="datajarak">
                 <div class="form-group row">
@@ -81,10 +81,10 @@ crossorigin=""/>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <button type="submit" class="btn btn-block bg-gradient-success" name="button" value="masuk">MASUK</button>
+                        <button type="submit" class="btn btn-block bg-gradient-success btnMasuk" name="button" value="masuk">MASUK</button>
                     </div>
                     <div class="col-6">
-                        <button type="submit" class="btn btn-block bg-gradient-danger" name="button" value="pulang">PULANG</button>
+                        <button type="submit" class="btn btn-block bg-gradient-danger btnPulang" name="button" value="pulang">PULANG</button>
                     </div>
                 </div>
                 </form>
@@ -118,8 +118,22 @@ crossorigin=""/>
 
 @push('js')
 
+<script>
+  $(document).ready(function () {
+      $("#radius").submit(function () {
+      $(".btnMasuk").attr("disabled", true);
+      return true;
+      });
 
-  
+      
+      $("#radius").submit(function () {
+      $(".btnPulang").attr("disabled", true);
+      return true;
+      });
+
+      console.log('2');
+  });
+</script>
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>

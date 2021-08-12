@@ -58,7 +58,7 @@ crossorigin=""/>
     <div class="col-lg-12">
         <div class="card">
             <div class="card-body">
-                <form method="post" action="/pegawai/presensi/radius" enctype="multipart/form-data">
+                <form method="post" action="/pegawai/presensi/radius" enctype="multipart/form-data"  id="radius">
                     @csrf
                 <div class="form-group row">
                     <input type="file" name="file" class="form-control">
@@ -75,10 +75,10 @@ crossorigin=""/>
                 </div>
                 <div class="form-group row">
                     <div class="col-6">
-                        <button type="submit" class="btn btn-block bg-gradient-success" name="button" value="masuk">MASUK</button>
+                        <button type="submit" class="btn btn-block bg-gradient-success btnMasuk" name="button" value="masuk">MASUK</button>
                     </div>
                     <div class="col-6">
-                        <button type="submit" class="btn btn-block bg-gradient-danger" name="button" value="pulang">PULANG</button>
+                        <button type="submit" class="btn btn-block bg-gradient-danger btnPulang" name="button" value="pulang">PULANG</button>
                     </div>
                 </div>
                 </form>
@@ -87,30 +87,27 @@ crossorigin=""/>
         <div id="mapid"></div>
     </div>
 </div>
-        {{-- <div class="row">
-            <div class="col-lg-6 col-6">
-                <a href="/pegawai/presensi/masuk">
-                <div class="info-box bg-gradient-success">
-                <div class="info-box-content text-center">
-                    <span class="info-box-text"><i class="far fa-calendar"></i><br/><strong>PRESENSI MASUK</strong></span>              
-                </div>
-                </div>
-                </a> 
-            </div>
-            <div class="col-lg-6 col-6">
-                <a href="/pegawai/presensi/pulang">
-                <div class="info-box bg-gradient-danger">
-                <div class="info-box-content text-center">
-                    <span class="info-box-text"><i class="far fa-calendar"></i><br/><strong>PRESENSI PULANG</strong></span>               
-                </div>
-                </div>
-                </a>
-            </div>
-        </div> --}}
-        
+       
 @endsection 
 
 @push('js')
+
+<script>
+    $(document).ready(function () {
+        $("#radius").submit(function () {
+        $(".btnMasuk").attr("disabled", true);
+        return true;
+        });
+
+        
+        $("#radius").submit(function () {
+        $(".btnPulang").attr("disabled", true);
+        return true;
+        });
+        
+      console.log('1');
+    });
+</script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 crossorigin=""></script>
