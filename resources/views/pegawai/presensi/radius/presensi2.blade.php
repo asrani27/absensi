@@ -119,20 +119,20 @@ crossorigin=""/>
 @push('js')
 
 <script>
-  $(document).ready(function () {
-      $("#radius").submit(function () {
-      $(".btnMasuk").attr("disabled", true);
-      return true;
-      });
+  // $(document).ready(function () {
+  //     $("#radius").submit(function () {
+  //     $(".btnMasuk").attr("disabled", true);
+  //     return true;
+  //     });
 
       
-      $("#radius").submit(function () {
-      $(".btnPulang").attr("disabled", true);
-      return true;
-      });
+  //     $("#radius").submit(function () {
+  //     $(".btnPulang").attr("disabled", true);
+  //     return true;
+  //     });
 
-      console.log('2');
-  });
+  //     console.log('2');
+  // });
 </script>
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

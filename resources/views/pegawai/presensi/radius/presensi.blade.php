@@ -94,16 +94,16 @@ crossorigin=""/>
 
 <script>
     $(document).ready(function () {
-        $("#radius").submit(function () {
-        $(".btnMasuk").attr("disabled", true);
-        return true;
-        });
+        // $("#radius").submit(function () {
+        // $(".btnMasuk").attr("disabled", true);
+        // return true;
+        // });
 
         
-        $("#radius").submit(function () {
-        $(".btnPulang").attr("disabled", true);
-        return true;
-        });
+        // $("#radius").submit(function () {
+        // $(".btnPulang").attr("disabled", true);
+        // return true;
+        // });
         
       console.log('1');
     });
