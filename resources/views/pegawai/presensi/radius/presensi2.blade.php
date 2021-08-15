@@ -74,6 +74,7 @@ crossorigin=""/>
                     <div class="col-6 text-center">
                         <strong>{{$jam_masuk == null ? '00:00:00': $jam_masuk}}</strong>
                         <input type="hidden" id="photo" name="photo">
+                        <input type="hidden" id="button" name="button">
                     </div>
                     <div class="col-6 text-center">
                         <strong>{{$jam_pulang == null ? '00:00:00': $jam_pulang}}</strong>
@@ -85,6 +86,11 @@ crossorigin=""/>
                     </div>
                     <div class="col-6">
                         <button type="submit" class="btn btn-block bg-gradient-danger btnPulang" name="button" value="pulang">PULANG</button>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12" id="btnLoading">
+                      <button type="button" class="btn btn-block bg-gradient-primary btnLoading"><i class="fas fa-sync-alt fa-spin"></i> Menyimpan...</button>
                     </div>
                 </div>
                 </form>
@@ -119,20 +125,28 @@ crossorigin=""/>
 @push('js')
 
 <script>
-  // $(document).ready(function () {
-  //     $("#radius").submit(function () {
-  //     $(".btnMasuk").attr("disabled", true);
-  //     return true;
-  //     });
+   $(document).ready(function () {
+    
+    var loading = document.getElementById("btnLoading");
+    loading.style.display = "none";
 
+      $("#radius").submit(function () {
+        $(".btnMasuk").hide();
+        //$(".btnMasuk").attr("disabled", true);  
+        document.getElementById("button").value = "masuk";
+        loading.style.display = "block";
+        return true;
+      });
+
+      $("#radius").submit(function () {
+        $(".btnPulang").hide();
+        //$(".btnPulang").attr("disabled", true);  
+        document.getElementById("button").value = "pulang";
+        loading.style.display = "block";
+        return true;
+      });
       
-  //     $("#radius").submit(function () {
-  //     $(".btnPulang").attr("disabled", true);
-  //     return true;
-  //     });
-
-  //     console.log('2');
-  // });
+   });
 </script>
     
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

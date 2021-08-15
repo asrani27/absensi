@@ -63,6 +63,7 @@ crossorigin=""/>
                 <div class="form-group row">
                     <input type="file" name="file" class="form-control">
                     <input type="hidden" name="browser" class="form-control" value="{{$os}}">
+                    <input type="hidden" id="button" name="button">
                 </div>
                 <input type="hidden" name="datajarak" id="datajarak">
                 <div class="form-group row">
@@ -81,6 +82,11 @@ crossorigin=""/>
                         <button type="submit" class="btn btn-block bg-gradient-danger btnPulang" name="button" value="pulang">PULANG</button>
                     </div>
                 </div>
+                <div class="form-group row">
+                    <div class="col-12" id="btnLoading">
+                      <button type="button" class="btn btn-block bg-gradient-primary btnLoading"><i class="fas fa-sync-alt fa-spin"></i> Menyimpan...</button>
+                    </div>
+                </div>
                 </form>
             </div>
         </div>
@@ -94,18 +100,25 @@ crossorigin=""/>
 
 <script>
     $(document).ready(function () {
-        // $("#radius").submit(function () {
-        // $(".btnMasuk").attr("disabled", true);
-        // return true;
-        // });
+        
+        var loading = document.getElementById("btnLoading");
+        loading.style.display = "none";
 
-        
-        // $("#radius").submit(function () {
-        // $(".btnPulang").attr("disabled", true);
-        // return true;
-        // });
-        
-      console.log('1');
+      $("#radius").submit(function () {
+        $(".btnMasuk").hide();
+        //$(".btnMasuk").attr("disabled", true);  
+        document.getElementById("button").value = "masuk";
+        loading.style.display = "block";
+        return true;
+      });
+
+      $("#radius").submit(function () {
+        $(".btnPulang").hide();
+        //$(".btnPulang").attr("disabled", true);  
+        document.getElementById("button").value = "pulang";
+        loading.style.display = "block";
+        return true;
+      });
     });
 </script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"

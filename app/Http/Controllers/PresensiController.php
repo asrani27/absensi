@@ -10,6 +10,7 @@ use App\Models\Rentang;
 use App\Models\Presensi;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -279,31 +280,28 @@ class PresensiController extends Controller
         $today = Carbon::now();
         $hari  = $today->translatedFormat('l');
         $jam   = $today->format('H:i:s');
-
-        $rentang = Rentang::where('hari', $hari)->first();
-        if($jam < $rentang->jam_masuk_selesai && $jam > $rentang->jam_masuk_mulai){
-            if($req->button == 'pulang'){
-                toastr()->error('Anda Berada Di Jam Masuk');
-                return back();
-            }else{
-                $this->simpanRadius($req);
-                return back();
-            }
-        }elseif($jam < $rentang->jam_pulang_selesai && $jam > $rentang->jam_pulang_mulai){
-            if($req->button == 'masuk'){
-                toastr()->error('Anda Berada Di Jam Pulang');
-                return back();
-            }else{
-                $this->simpanRadius($req);
-                return back();
-            }
-        }else{
-            toastr()->error('Tidak Bisa Presensi Karena Di Luar Jam Presensi');
-            return back();
-        }
-
         
-        
+            $rentang = Rentang::where('hari', $hari)->first();
+            if($jam < $rentang->jam_masuk_selesai && $jam > $rentang->jam_masuk_mulai){
+                if($req->button == 'pulang'){
+                    toastr()->error('Anda Berada Di Jam Masuk');
+                    return back();
+                }else{
+                    $this->simpanRadius($req);
+                    return back();
+                }
+            }elseif($jam < $rentang->jam_pulang_selesai && $jam > $rentang->jam_pulang_mulai){
+                if($req->button == 'masuk'){
+                    toastr()->error('Anda Berada Di Jam Pulang');
+                    return back();
+                }else{
+                    $this->simpanRadius($req);
+                    return back();
+                }
+            }else{
+                toastr()->error('Tidak Bisa Presensi Karena Di Luar Jam Presensi');
+                return back();
+            }        
     }
 
     public function simpanRadius($req)
@@ -365,11 +363,15 @@ class PresensiController extends Controller
                     $jam_pulang= $date->format('H:i:s');
     
                     $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
+                    //dd($check, $this->pegawai()->nip, $tanggal);
                     if($check == null){
+
                           $attr['nip'] = $this->pegawai()->nip;
                           $attr['tanggal'] = $tanggal;
                           $attr['jam_pulang'] = $jam_pulang;
+                          
                           Presensi::create($attr);
+                          
                           toastr()->success('Presensi Pulang Berhasil Disimpan');
                           return back();
                     }else{
@@ -383,6 +385,7 @@ class PresensiController extends Controller
                         // }  
 
                         $filename = rand(1,9999).'.jpg';
+                        
                         if($req->file == null){
                             $check->update([
                                 'jam_pulang' => $jam_pulang,
