@@ -32,12 +32,12 @@ crossorigin=""/>
                       <span class="float-right text-danger">{{\Carbon\Carbon::now()->isoFormat('D MMMM Y HH:mm')}}</span>
                     </a>
                   </li>
-                  {{-- <li class="nav-item">
+                  <li class="nav-item">
                     <a href="#" class="nav-link">
                       Lokasi Presensi
                       <span class="float-right text-success">{{Auth::user()->pegawai->lokasi == null ? '-':Auth::user()->pegawai->lokasi->nama}}</span>
                     </a>
-                  </li> --}}
+                  </li>
                   <li class="nav-item">
                     <a href="#" class="nav-link">
                       Jam Masuk
@@ -53,12 +53,18 @@ crossorigin=""/>
                   </li>
                   <li class="nav-item">
                     <a href="#" class="nav-link">
-                     INFO : Fitur Radius Nonaktif, Anda Bisa Presensi tanpa radius
+                      Jarak 
+                      <span class="float-right text-primary"><div id="jarak"></div></span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link">
+                     INFO : Fitur Radius Nonaktif
                       {{-- <span class="float-right text-primary"><div id="jarak"></div></span> --}}
                     </a>
                   </li>
                   <li class="nav-item">
-                    {{-- <a href="/pegawai/presensi/radius" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Dapatkan Lokasi Saya</a> --}}
+                    <a href="/pegawai/presensi/radius" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Dapatkan Lokasi Saya</a>
                     {{-- <a href="/home/pegawai" class='btn btn-xs btn-secondary btn-block'><i class=""></i> Kembali</a> --}}
                   </li>
                 </ul>
