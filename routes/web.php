@@ -23,11 +23,6 @@ Route::get('/', function(){
     return view('welcome');
 });
 
-Route::get('/session', function(){
-    dd(session());
-});
-
-
 Route::get('/logout', function(){
     Auth::logout();
     return redirect('/');
