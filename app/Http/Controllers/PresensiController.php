@@ -285,6 +285,7 @@ class PresensiController extends Controller
         $jam   = $today->format('H:i:s');
         
             $rentang = Rentang::where('hari', $hari)->first();
+            
             if($jam < $rentang->jam_masuk_selesai && $jam > $rentang->jam_masuk_mulai){
                 if($req->button == 'pulang'){
                     toastr()->error('Anda Berada Di Jam Masuk');
@@ -386,6 +387,7 @@ class PresensiController extends Controller
         }else{
             if($req->button == 'masuk'){    
                 //Presensi Masuk
+                
                 $date      = Carbon::now();
                 $tanggal   = $date->format('Y-m-d');
                 $jam_masuk = $date->format('H:i:s');
@@ -393,6 +395,7 @@ class PresensiController extends Controller
                 $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
                 if($check == null){
                       $attr['nip'] = $this->pegawai()->nip;
+                      $attr['nama'] = $this->pegawai()->nama;
                       $attr['tanggal'] = $tanggal;
                       $attr['jam_masuk'] = $jam_masuk;
                       $attr['skpd_id'] = $this->pegawai()->skpd_id;
@@ -402,15 +405,15 @@ class PresensiController extends Controller
                 }else{
                     //Update Data
                       if($check->jam_masuk == null){
-                        if($req->photo == null){
-                            toastr()->error('Take Photo Terlebih Dahulu');
-                        }else{
+                        // if($req->photo == null){
+                        //     toastr()->error('Take Photo Terlebih Dahulu');
+                        // }else{
                             $check->update([
                                 'jam_masuk' => $jam_masuk,
-                                'photo_masuk' => $req->photo,
+                                // 'photo_masuk' => $req->photo,
                             ]);
                             toastr()->success('Presensi Masuk Berhasil Disimpan');
-                        }
+                        // }
                         return back();
                       }else{
                         toastr()->info('Anda Sudah Melakukan Presensi Masuk');
@@ -426,6 +429,7 @@ class PresensiController extends Controller
                 $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
                 if($check == null){
                       $attr['nip'] = $this->pegawai()->nip;
+                      $attr['nama'] = $this->pegawai()->nama;
                       $attr['tanggal'] = $tanggal;
                       $attr['jam_pulang'] = $jam_pulang;
                       $attr['skpd_id'] = $this->pegawai()->skpd_id;
@@ -434,15 +438,15 @@ class PresensiController extends Controller
                       return back();
                 }else{
                     //Update Data
-                    if($req->photo == null){
-                        toastr()->error('Take Photo Terlebih Dahulu');
-                    }else{
+                    // if($req->photo == null){
+                    //     toastr()->error('Take Photo Terlebih Dahulu');
+                    // }else{
                         $check->update([
                             'jam_pulang' => $jam_pulang,
-                            'photo_pulang' => $req->photo,
+                            // 'photo_pulang' => $req->photo,
                         ]);
                         toastr()->success('Presensi Pulang Berhasil DiUpdate');
-                    }
+                    // }
                     return back();
                 }
             }

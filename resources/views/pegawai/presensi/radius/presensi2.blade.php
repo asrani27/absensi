@@ -93,7 +93,7 @@ crossorigin=""/>
                 <div class="form-group row">
                     <div class="col-6 text-center">
                         <strong>{{$jam_masuk == null ? '00:00:00': $jam_masuk}}</strong>
-                        <input type="hidden" id="photo" name="photo">
+                        {{-- <input type="hidden" id="photo" name="photo"> --}}
                         <input type="hidden" id="button" name="button">
                     </div>
                     <div class="col-6 text-center">
