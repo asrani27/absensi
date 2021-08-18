@@ -9,12 +9,26 @@
 <br/>
 <div class="row">
     <div class="col-12 text-center">
-        500<br/>
-        <a href="/pegawai/presensi/radius" class="btn btn-lg btn-primary">REFRESH KLIK DISINI</a>
+        
+        <a href="/home/pegawai" class="btn btn-lg btn-primary refresh">REFRESH KLIK DISINI</a>
+        <div class="col-12" id="btnLoading">
+        <button type="button" class="btn btn-block bg-gradient-primary btnLoading"><i class="fas fa-sync-alt fa-spin"></i> Harap menunggu...</button>
+        </div>
     </div>
 </div>
 
 @endsection
 
 @push('js')
+<script>
+$(document).ready(function () {
+    
+    var loading = document.getElementById("btnLoading");
+    loading.style.display = "none";
+    $(".refresh").click(function(){
+        $(".refresh").hide();
+        loading.style.display = "block";
+    });      
+   });
+    </script>
 @endpush
