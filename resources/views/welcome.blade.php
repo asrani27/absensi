@@ -66,6 +66,7 @@
           </div>
         </div>
         <button type="submit" class='btn btn-block btn-primary'>Login</button>
+        <a href="https://absensi.banjarmasinkota.go.id" class='btn btn-block btn-primary'>web</a>
       </form>
 
       {{-- <div class="social-auth-links text-center mb-3">
