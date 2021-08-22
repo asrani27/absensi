@@ -10,7 +10,7 @@
 <div class="row">
     <div class="col-12 text-center">
         
-        <a href="/home/pegawai" class="btn btn-lg btn-primary refresh">REFRESH KLIK DISINI</a>
+        <a href="https://absensi.banjarmasinkota.go.id" class="btn btn-lg btn-primary refresh">REFRESH KLIK DISINI</a>
         <div class="col-12" id="btnLoading">
         <button type="button" class="btn btn-block bg-gradient-primary btnLoading"><i class="fas fa-sync-alt fa-spin"></i> Harap menunggu...</button>
         </div>
