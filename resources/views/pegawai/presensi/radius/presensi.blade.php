@@ -58,12 +58,6 @@ crossorigin=""/>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
-                     INFO : Fitur Radius Nonaktif
-                      {{-- <span class="float-right text-primary"><div id="jarak"></div></span> --}}
-                    </a>
-                  </li>
-                  <li class="nav-item">
                     <a href="/pegawai/presensi/radius" class='btn btn-xs btn-primary btn-block'><i class="fas fa-sync"></i> Dapatkan Lokasi Saya</a>
                     {{-- <a href="/home/pegawai" class='btn btn-xs btn-secondary btn-block'><i class=""></i> Kembali</a> --}}
                   </li>
@@ -92,15 +86,20 @@ crossorigin=""/>
                     <div class="col-6 text-center">
                         <strong>{{$jam_pulang == null ? '00:00:00': $jam_pulang}}</strong>
                     </div>
-                </div>
+                </div>                
                 <div class="form-group row">
+                  <div class="col-12">
+                      <button type="submit" class="btn btn-block bg-gradient-success btnMasuk" name="button">SIMPAN PRESENSI</button>
+                  </div>
+                </div>
+                {{-- <div class="form-group row">
                     <div class="col-6">
                         <button type="submit" class="btn btn-block bg-gradient-success btnMasuk" name="button" value="masuk">MASUK</button>
                     </div>
                     <div class="col-6">
                         <button type="submit" class="btn btn-block bg-gradient-danger btnPulang" name="button" value="pulang">PULANG</button>
                     </div>
-                </div>
+                </div> --}}
                 <div class="form-group row">
                     <div class="col-12" id="btnLoading">
                       <button type="button" class="btn btn-block bg-gradient-primary btnLoading"><i class="fas fa-sync-alt fa-spin"></i> Menyimpan...</button>

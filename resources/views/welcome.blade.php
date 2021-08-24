@@ -30,13 +30,13 @@
 <div class="login-box">
     
   <!-- /.login-logo -->
-  @if((new \Jenssegers\Agent\Agent())->isMobile())
+  {{-- @if((new \Jenssegers\Agent\Agent())->isMobile())
     @if((new \Jenssegers\Agent\Agent())->browser() == 'Safari')
     
     @else
     <button type="button" class="btn btn-info btn-lg btn-block" id="install-button"><strong><i class="fas fa-file-download"></i> Install APP</strong></button><br/>
     @endif
-  @endif
+  @endif --}}
   <div class="card">
     <div class="card-body login-card-body">
         

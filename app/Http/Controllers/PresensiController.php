@@ -10,10 +10,13 @@ use App\Models\Rentang;
 use App\Models\Presensi;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
+use App\Jobs\PresensiProcessMasuk;
 use Illuminate\Support\Facades\DB;
+use App\Jobs\PresensiProcessPulang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Alert;
 
 class PresensiController extends Controller
 {
@@ -278,192 +281,110 @@ class PresensiController extends Controller
         return back();
     }
 
-    public function storeRadius(Request $req)
+    public function checkJam($req)
     {
         $today = Carbon::now();
         $hari  = $today->translatedFormat('l');
         $jam   = $today->format('H:i:s');
+        $rentang = Rentang::where('hari', $hari)->first();
         
-            $rentang = Rentang::where('hari', $hari)->first();
-            
-            if($jam < $rentang->jam_masuk_selesai && $jam > $rentang->jam_masuk_mulai){
-                if($req->button == 'pulang'){
-                    toastr()->error('Anda Berada Di Jam Masuk');
-                    return back();
-                }else{
-                    $this->simpanRadius($req);
-                    return back();
-                }
-            }elseif($jam < $rentang->jam_pulang_selesai && $jam > $rentang->jam_pulang_mulai){
-                if($req->button == 'masuk'){
-                    toastr()->error('Anda Berada Di Jam Pulang');
-                    return back();
-                }else{
-                    $this->simpanRadius($req);
-                    return back();
-                }
-            }else{
-                toastr()->error('Tidak Bisa Presensi Karena Di Luar Jam Presensi');
-                return back();
-            }        
-    }
-
-    public function simpanRadius($req)
-    {
-        if($req->browser == 'Safari'){            
-            if($req->button == 'masuk'){    
-                //Presensi Masuk
-                $date      = Carbon::now();
-                $tanggal   = $date->format('Y-m-d');
-                $jam_masuk = $date->format('H:i:s');
-
-                $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
-                if($check == null){
-                      $attr['nip'] = $this->pegawai()->nip;
-                      $attr['tanggal'] = $tanggal;
-                      $attr['jam_masuk'] = $jam_masuk;
-                      Presensi::create($attr);
-                      
-                      toastr()->success('Presensi Masuk Berhasil Disimpan');
-                      return back();
-                }else{
-                    //Update Data
-                      if($check->jam_masuk == null){
-                        if($req->file == null){
-                            $check->update([
-                                'jam_masuk' => $jam_masuk,
-                            ]);
-                        }else{
-                            $check->update([
-                                'jam_masuk' => $jam_masuk,
-                            ]);
-                        }
-
-                        toastr()->success('Presensi Masuk Berhasil Disimpan');
-                      }else{
-                        toastr()->info('Anda Sudah Melakukan Presensi Masuk');
-                      }
-                      return back();
-                }
-            }else{
-                //Presensi Pulang
-                $date      = Carbon::now();
-                $tanggal   = $date->format('Y-m-d');
-                $jam_pulang= $date->format('H:i:s');
-
-                $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
-                
-                if($check == null){
-
-                      $attr['nip'] = $this->pegawai()->nip;
-                      $attr['tanggal'] = $tanggal;
-                      $attr['jam_pulang'] = $jam_pulang;
-                      
-                      Presensi::create($attr);
-                      
-                      toastr()->success('Presensi Pulang Berhasil Disimpan');
-                      return back();
-                }else{
-                    //Update Data                    
-                    if($req->file == null){
-                        $check->update([
-                            'jam_pulang' => $jam_pulang,
-                        ]);
-                    }else{
-                        $check->update([
-                            'jam_pulang' => $jam_pulang,
-                        ]);
-                    }
-                    toastr()->success('Presensi Pulang Berhasil DiUpdate');
-                    return back();
-                }
-            }
-            // $radius = $this->pegawai()->lokasi->radius;
-            // if((int)$req->datajarak > (int)$radius){
-            //     toastr()->error('Anda Berada Di Luar Jangkauan Lokasi Presensi');
-            //     return back();
-            // }else{
-            // }
+        if($jam < $rentang->jam_masuk_selesai && $jam > $rentang->jam_masuk_mulai){
+            return 'masuk';
+        }elseif($jam < $rentang->jam_pulang_selesai && $jam > $rentang->jam_pulang_mulai){
+            return 'pulang';
         }else{
-            if($req->button == 'masuk'){    
-                //Presensi Masuk
-                
-                $date      = Carbon::now();
-                $tanggal   = $date->format('Y-m-d');
-                $jam_masuk = $date->format('H:i:s');
-
-                $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
-                if($check == null){
-                      $attr['nip'] = $this->pegawai()->nip;
-                      $attr['nama'] = $this->pegawai()->nama;
-                      $attr['tanggal'] = $tanggal;
-                      $attr['jam_masuk'] = $jam_masuk;
-                      $attr['skpd_id'] = $this->pegawai()->skpd_id;
-                      Presensi::create($attr);
-                      toastr()->success('Presensi Masuk Berhasil Disimpan');
-                      return back();
-                }else{
-                    //Update Data
-                      if($check->jam_masuk == null){
-                        // if($req->photo == null){
-                        //     toastr()->error('Take Photo Terlebih Dahulu');
-                        // }else{
-                            $check->update([
-                                'jam_masuk' => $jam_masuk,
-                                // 'photo_masuk' => $req->photo,
-                            ]);
-                            toastr()->success('Presensi Masuk Berhasil Disimpan');
-                        // }
-                        return back();
-                      }else{
-                        toastr()->info('Anda Sudah Melakukan Presensi Masuk');
-                        return back();
-                      }
-                }
-            }else{
-                //Presensi Pulang
-                $date      = Carbon::now();
-                $tanggal   = $date->format('Y-m-d');
-                $jam_pulang= $date->format('H:i:s');
-
-                $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
-                if($check == null){
-                      $attr['nip'] = $this->pegawai()->nip;
-                      $attr['nama'] = $this->pegawai()->nama;
-                      $attr['tanggal'] = $tanggal;
-                      $attr['jam_pulang'] = $jam_pulang;
-                      $attr['skpd_id'] = $this->pegawai()->skpd_id;
-                      Presensi::create($attr);
-                      toastr()->success('Presensi Pulang Berhasil Disimpan');
-                      return back();
-                }else{
-                    //Update Data
-                    // if($req->photo == null){
-                    //     toastr()->error('Take Photo Terlebih Dahulu');
-                    // }else{
-                        $check->update([
-                            'jam_pulang' => $jam_pulang,
-                            // 'photo_pulang' => $req->photo,
-                        ]);
-                        toastr()->success('Presensi Pulang Berhasil DiUpdate');
-                    // }
-                    return back();
-                }
-            }
-            // if($req->datajarak == null){
-            //     toastr()->error('Nyalakan GPS anda');
-            //     return back();
-            // }
-            // $radius = $this->pegawai()->lokasi->radius;
-            // if((int)$req->datajarak > (int)$radius){
-            //     toastr()->error('Anda Berada Di Luar Jangkauan Lokasi Presensi');
-            //     return back();
-            // }else{
-            // }
-        }
-
+            return false;            
+        } 
     }
 
+    public function storeRadius(Request $req)
+    {
+        //Check apakah jam masuk atau jam pulang
+        
+        if($this->checkJam($req) == 'masuk' && $req->browser == 'Safari'){
+            if($this->androidMasuk() == 'simpan'){
+                $this->simpanAndroidMasuk($req, 'simpan');
+                alert()->success('Presensi Berhasil DiSimpan','Diskominfotik');
+                return redirect('/home/pegawai');
+            }elseif($this->androidMasuk() == 'update'){
+                $this->simpanAndroidMasuk($req, 'update');
+                alert()->success('Presensi Berhasil DiSimpan','Diskominfotik');
+                return redirect('/home/pegawai');
+            }else{
+                alert()->info('Anda Sudah Melakukan Presensi Masuk');
+                return redirect('/home/pegawai');
+            }
+
+        }elseif($this->checkJam($req) == 'pulang' && $req->browser == 'Safari'){
+            if($this->androidPulang() == 'simpan'){
+                $this->simpanAndroidPulang('simpan');
+            }else{
+                $this->simpanAndroidPulang('update');
+            }
+            toastr()->success('Presensi Berhasil Disimpan');
+
+        }elseif($this->checkJam($req) == 'masuk' && $req->browser == null) {
+            if($this->androidMasuk() == 'simpan'){
+                $this->simpanAndroidMasuk($req, 'simpan');
+                alert()->success('Presensi Berhasil DiSimpan','Diskominfotik');
+                return redirect('/home/pegawai');
+            }elseif($this->androidMasuk() == 'update'){
+                $this->simpanAndroidMasuk($req, 'update');
+                alert()->success('Presensi Berhasil DiSimpan','Diskominfotik');
+                return redirect('/home/pegawai');
+            }else{
+                alert()->info('Anda Sudah Melakukan Presensi Masuk');
+                return redirect('/home/pegawai');
+            }
+
+        }elseif($this->checkJam($req) == 'pulang' && $req->browser == null) {
+            if($this->androidPulang() == 'simpan'){
+                $this->simpanAndroidPulang('simpan');
+            }else{
+                $this->simpanAndroidPulang('update');
+            }
+            toastr()->success('Presensi Berhasil Disimpan');
+
+        }else{
+            alert()->error('Di Luar Jam Presensi');
+            return redirect('/home/pegawai');
+        }     
+    }
+
+    public function simpanAndroidMasuk($req, $jenis){
+        PresensiProcessMasuk::dispatch($jenis);
+    }
+
+    public function simpanAndroidPulang($jenis){
+        PresensiProcessPulang::dispatch($jenis);
+    }
+
+    public function androidMasuk(){
+        $date      = Carbon::now();
+        $tanggal   = $date->format('Y-m-d');
+        $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
+        if($check == null){
+            return 'simpan';
+        }else{
+            if($check->jam_masuk == null){
+                return 'update';
+            }else{
+                return false;
+            }
+        }
+    }
+
+    public function androidPulang(){
+        $date      = Carbon::now();
+        $tanggal   = $date->format('Y-m-d');
+        $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', $tanggal)->first();
+        if($check == null){
+            return 'simpan';
+        }else{
+            return 'update';
+        }
+    }
+    
     public function testing()
     {
         return view('pegawai.presensi.testing');

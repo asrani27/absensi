@@ -11,7 +11,7 @@ class LoginController extends Controller
 {
     public function login(Request $req)
     {
-        if (Auth::attempt(['username' => $req->username, 'password' => $req->password])) {
+        if (Auth::attempt(['username' => $req->username, 'password' => $req->password], true)) {
             
             if(Auth::user()->hasRole('pegawai')){
                 return redirect('/home/pegawai');
