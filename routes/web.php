@@ -20,6 +20,15 @@ use App\Http\Controllers\LiburNasionalController;
 use App\Http\Controllers\JenisKeteranganController;
 
 Route::get('/', function(){
+    if(Auth::check()){
+        if(Auth::user()->hasRole('pegawai')){
+            return redirect('/home/pegawai');
+        }elseif(Auth::user()->hasRole('admin')){
+            return redirect('/home/admin');
+        }elseif(Auth::user()->hasRole('superadmin')){
+            return redirect('/home/superadmin');
+        }
+    }
     return view('welcome');
 });
 
@@ -29,8 +38,12 @@ Route::get('/logout', function(){
 });
 
 Route::get('/login', function(){
+    if(Auth::check()){
+        return redirect('/');
+    }
     return view('welcome');
 })->name('login');
+
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
