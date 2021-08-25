@@ -29,7 +29,7 @@ class PresensiController extends Controller
     }
     public function masuk()
     {
-        $skpd = Skpd::find($this->skpd()->skpd_id);
+        $skpd = "-";
         $lat        = (float)$skpd->lat;
         $long       = (float)$skpd->long;
         $radius     = (float)$skpd->radius;
