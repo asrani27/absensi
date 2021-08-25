@@ -187,6 +187,13 @@ crossorigin=""/>
 @endsection 
 
 @push('js')
+@if (Session::has('sweet_alert.alert'))
+    <script>
+        swal({!! Session::get('sweet_alert.alert') !!});
+    </script>
+
+    {{ Session::forget('sweet_alert.alert') }} 
+@endif
 {{-- @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 {{Session::forget('sweet_alert');}} --}}
 {{-- @include('sweetalert::alert') --}}
