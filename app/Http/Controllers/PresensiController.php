@@ -81,7 +81,7 @@ class PresensiController extends Controller
         // $response = $client->request('get', Auth::user()->username);
         // $data =  json_decode((string) $response->getBody())->data;
         // $skpd = Skpd::find($data->skpd_id);
-        $skpd = '-';
+        $skpd = Skpd::find(Auth::user()->pegawai->skpd_id);
         if(Auth::user()->pegawai->lokasi == null){
             $latlong2 = null;
         }else{
