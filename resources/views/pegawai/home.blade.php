@@ -200,7 +200,8 @@ if (navEntries.length > 0 && navEntries[0].type === 'back_forward') {
 console.log('As per API lv2, this page is load from back/forward'); 
 } else if (window.performance.navigation && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) 
 { console.log('As per API lv1, this page is load from back/forward'); } 
-else { console.log('This is normal page load'); @if (Session::has('sweet_alert.alert')) 
+else { console.log('This is normal page load'); 
+@if (Session::has('sweet_alert.alert')) 
 swal( {!! Session::get('sweet_alert.alert') !!} ); 
 {{ Session::forget('sweet_alert.alert') }} // This will forget the alert data after displaying it :) 
 @endif }} else { console.log("Unfortunately, your browser doesn't support this API"); } 
