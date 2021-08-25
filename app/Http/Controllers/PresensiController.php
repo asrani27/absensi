@@ -77,10 +77,11 @@ class PresensiController extends Controller
     
     public function radius()
     {
-        $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/']);
-        $response = $client->request('get', Auth::user()->username);
-        $data =  json_decode((string) $response->getBody())->data;
-        $skpd = Skpd::find($data->skpd_id);
+        // $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/']);
+        // $response = $client->request('get', Auth::user()->username);
+        // $data =  json_decode((string) $response->getBody())->data;
+        // $skpd = Skpd::find($data->skpd_id);
+        $skpd = '-';
         if(Auth::user()->pegawai->lokasi == null){
             $latlong2 = null;
         }else{
