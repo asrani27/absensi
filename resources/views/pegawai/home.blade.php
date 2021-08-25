@@ -195,8 +195,16 @@ crossorigin=""/>
     {{ Session::forget('sweet_alert.alert') }} 
 @endif
 @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
-{{--{{Session::forget('sweet_alert');}} --}}
-{{-- @include('sweetalert::alert') --}}
+<script> if (window.performance) { var navEntries = window.performance.getEntriesByType('navigation'); 
+if (navEntries.length > 0 && navEntries[0].type === 'back_forward') { 
+console.log('As per API lv2, this page is load from back/forward'); 
+} else if (window.performance.navigation && window.performance.navigation.type == window.performance.navigation.TYPE_BACK_FORWARD) 
+{ console.log('As per API lv1, this page is load from back/forward'); } 
+else { console.log('This is normal page load'); @if (Session::has('sweet_alert.alert')) 
+swal( {!! Session::get('sweet_alert.alert') !!} ); 
+{{ Session::forget('sweet_alert.alert') }} // This will forget the alert data after displaying it :) 
+@endif }} else { console.log("Unfortunately, your browser doesn't support this API"); } 
+</script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 crossorigin=""></script>
