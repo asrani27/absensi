@@ -194,8 +194,8 @@ crossorigin=""/>
 
     {{ Session::forget('sweet_alert.alert') }} 
 @endif
-{{-- @include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
-{{Session::forget('sweet_alert');}} --}}
+@include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
+{{--{{Session::forget('sweet_alert');}} --}}
 {{-- @include('sweetalert::alert') --}}
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
