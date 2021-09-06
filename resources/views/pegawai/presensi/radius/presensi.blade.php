@@ -116,6 +116,7 @@ crossorigin=""/>
 
 @push('js')
 
+@include('sweetalert::alert', ['cdn' => "https://cdn.jsdelivr.net/npm/sweetalert2@9"])
 <script>
     $(document).ready(function () {
         
