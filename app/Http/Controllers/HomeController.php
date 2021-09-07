@@ -54,8 +54,13 @@ class HomeController extends Controller
         $user       = Auth::user()->skpd;
         
         $today = Carbon::today()->format('Y-m-d');
-        $data  = Presensi::where('tanggal', $today)->where('skpd_id',$user->id)->get();
-
+        $check = Presensi::where('tanggal', $today)->where('skpd_id',$user->id)->get();
+        
+        $data  = Presensi::where('tanggal', $today)->where('skpd_id',$user->id)->get()->map(function($item)use($check){
+            $item->hapus = $check->where('nip', $item->nip)->count();
+            return $item;
+        });
+        
         return view('admin.home',compact('data'));
     }
 

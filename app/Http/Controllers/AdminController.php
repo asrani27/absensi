@@ -51,25 +51,26 @@ class AdminController extends Controller
     {
         $button = request()->button;
         $tanggal = request()->tanggal;
-        
         if($button == '1'){
             $data = Presensi::where('skpd_id',Auth::user()->skpd->id)->where('tanggal', $tanggal)->get();
             request()->flash();
+            //dd($data, $tanggal);
             return view('admin.home',compact('data'));
         }else{ 
             $skpd_id = Auth::user()->skpd->id;
             $pegawai = Pegawai::where('skpd_id', $skpd_id)->get();
-
+            
             foreach($pegawai as $item)
             {
                 $check = Presensi::where('nip', $item->nip)->where('tanggal', $tanggal)->first();
                 if($check == null){
                     $n = new Presensi;
                     $n->nip     = $item->nip;
-                    $n->nama     = $item->nama;
+                    $n->nama    = $item->nama;
                     $n->tanggal = $tanggal;
                     $n->skpd_id = $skpd_id;
                     $n->save();
+                    
                 }else{
                     $check->update([
                         'nama' => $item->nama,
@@ -89,6 +90,12 @@ class AdminController extends Controller
         return view('admin.presensi.edit',compact('data'));
     }
  
+    public function deletePresensi($id)
+    {
+        Presensi::find($id)->delete();
+        toastr()->success('Berhasil Di Hapus');
+        return back();
+    }
     public function updatePresensi(Request $req, $id)
     {
         if($req->jam_masuk == '00:00'){

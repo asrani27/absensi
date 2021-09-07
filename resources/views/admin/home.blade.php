@@ -79,9 +79,14 @@ crossorigin=""/>
                         <td class="text-center">{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
                         <td>{{$item->keterangan}}</td>   
                         <td class="text-center">
-                            {{-- @if ($item->keterangan != null)     --}}
-                            <a href="/admin/presensi/{{$item->id}}" class="btn btn-xs btn-info">Presensi</button>
-                            {{-- @endif --}}
+                            @if ($item->hapus == 1)
+                                
+                            <a href="/admin/presensi/{{$item->id}}" class="btn btn-xs btn-info">Presensi</a>
+                            @else
+                            <a href="/admin/presensi/{{$item->id}}" class="btn btn-xs btn-info">Presensi</a>
+                            <a href="/admin/presensi/{{$item->id}}/delete" class="btn btn-xs btn-danger">X</a>
+                                
+                            @endif
                         </td>                 
                         </tr>
                     @endforeach
