@@ -53,7 +53,7 @@ class AdminController extends Controller
         $tanggal = request()->tanggal;
         if($button == '1'){
             
-            $check = Presensi::where('tanggal', $today)->where('skpd_id',$user->id)->get();
+            $check = Presensi::where('tanggal', $tanggal)->where('skpd_id',Auth::user()->skpd->id)->get();
             $data = Presensi::where('skpd_id',Auth::user()->skpd->id)->where('tanggal', $tanggal)->get()->map(function($item)use($check){
                 $item->hapus = $check->where('nip', $item->nip)->count();
                 return $item;
