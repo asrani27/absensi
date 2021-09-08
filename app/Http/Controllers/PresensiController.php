@@ -306,49 +306,49 @@ class PresensiController extends Controller
             if($this->androidMasuk() == 'simpan'){
                 $this->simpanAndroidMasuk($req, 'simpan');
                 alert()->success('Presensi Berhasil DiSimpan');
-                return back();
-                //return redirect('/home/pegawai');
+                //return back();
+                return redirect('/home/pegawai');
             }elseif($this->androidMasuk() == 'update'){
                 $this->simpanAndroidMasuk($req, 'update');
                 alert()->success('Presensi Berhasil DiSimpan');
-                return back();
-                //return redirect('/home/pegawai');
+                //return back();
+                return redirect('/home/pegawai');
             }else{
                 alert()->info('Anda Sudah Melakukan Presensi Masuk');
-                return back();
-                //return redirect('/home/pegawai');
+                //return back();
+                return redirect('/home/pegawai');
             }
 
         }elseif($this->checkJam($req) == 'pulang' && $req->browser == 'Safari'){
             if($this->androidPulang() == 'simpan'){
                 $this->simpanAndroidPulang('simpan');
                 alert()->success('Presensi Berhasil DiSimpan');
-                return back();
-                //return redirect('/home/pegawai');
+                //return back();
+                return redirect('/home/pegawai');
             }else{
                 $this->simpanAndroidPulang('update');
                 alert()->success('Presensi Berhasil DiSimpan');
-                return back();
-                //return redirect('/home/pegawai');
+                //return back();
+                return redirect('/home/pegawai');
             }
             alert()->success('Presensi Berhasil Disimpan');
 
         }elseif($this->checkJam($req) == 'masuk' && $req->browser == null) {
             if($this->androidMasuk() == 'simpan'){
                 $this->simpanAndroidMasuk($req, 'simpan');
-                dd($req->all(),$this->simpanAndroidMasuk($req, 'simpan'));
+                //dd($req->all(),$this->simpanAndroidMasuk($req, 'simpan'));
                 alert()->success('Presensi Berhasil DiSimpan');
-                return back();
-                //return redirect('/home/pegawai');
+                //return back();
+                return redirect('/home/pegawai');
             }elseif($this->androidMasuk() == 'update'){
                 $this->simpanAndroidMasuk($req, 'update');
                 alert()->success('Presensi Berhasil DiSimpan');
-                return back();
-                //return redirect('/home/pegawai');
+                //return back();
+                return redirect('/home/pegawai');
             }else{
                 alert()->info('Anda Sudah Melakukan Presensi Masuk');
-                return back();
-                //return redirect('/home/pegawai');
+                //return back();
+                return redirect('/home/pegawai');
             }
 
         }elseif($this->checkJam($req) == 'pulang' && $req->browser == null) {
