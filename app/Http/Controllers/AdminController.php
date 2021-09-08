@@ -52,7 +52,12 @@ class AdminController extends Controller
         $button = request()->button;
         $tanggal = request()->tanggal;
         if($button == '1'){
-            $data = Presensi::where('skpd_id',Auth::user()->skpd->id)->where('tanggal', $tanggal)->get();
+            
+            $check = Presensi::where('tanggal', $today)->where('skpd_id',$user->id)->get();
+            $data = Presensi::where('skpd_id',Auth::user()->skpd->id)->where('tanggal', $tanggal)->get()->map(function($item)use($check){
+                $item->hapus = $check->where('nip', $item->nip)->count();
+                return $item;
+            });
             request()->flash();
             
             return view('admin.home',compact('data'));
@@ -80,7 +85,7 @@ class AdminController extends Controller
             }
             request()->flash();
             toastr()->success('Berhasil Di Generate');
-            return back();
+            return redirect('/home/admin');
         }
     }
 
