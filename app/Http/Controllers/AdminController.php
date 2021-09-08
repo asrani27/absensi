@@ -54,7 +54,7 @@ class AdminController extends Controller
         if($button == '1'){
             $data = Presensi::where('skpd_id',Auth::user()->skpd->id)->where('tanggal', $tanggal)->get();
             request()->flash();
-            //dd($data, $tanggal);
+            
             return view('admin.home',compact('data'));
         }else{ 
             $skpd_id = Auth::user()->skpd->id;

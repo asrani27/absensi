@@ -84,7 +84,7 @@ crossorigin=""/>
                             <a href="/admin/presensi/{{$item->id}}" class="btn btn-xs btn-info">Presensi</a>
                             @else
                             <a href="/admin/presensi/{{$item->id}}" class="btn btn-xs btn-info">Presensi</a>
-                            <a href="/admin/presensi/{{$item->id}}/delete" class="btn btn-xs btn-danger">X</a>
+                            {{-- <a href="/admin/presensi/{{$item->id}}/delete" class="btn btn-xs btn-danger">X</a> --}}
                                 
                             @endif
                         </td>                 
