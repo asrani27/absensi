@@ -31,8 +31,8 @@
 <tr style="font-size: 9px">
     <td style="width: 5%; text-align: center;">{{$no++}}</td>
     <td style="width: 25%; padding:2px 2px;">{{$item->nama}}<br/>{{$item->nip}}</td>
-    <td style="width: 25%; text-align: center;">{{$item->jam_masuk == null ? '00:00:00':$item->jam_masuk}}</td>
-    <td style="width: 25%; text-align: center;">{{$item->jam_pulang == null ? '00:00:00':$item->jam_pulang}}</td>
+    <td style="width: 25%; text-align: center;">{{$item->presensi->jam_masuk == null ? '00:00:00':$item->presensi->jam_masuk}}</td>
+    <td style="width: 25%; text-align: center;">{{$item->presensi->jam_pulang == null ? '00:00:00':$item->presensi->jam_pulang}}</td>
 </tr>
 @endforeach
 </tbody>

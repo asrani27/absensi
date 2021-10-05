@@ -9,6 +9,7 @@ use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Models\Ringkasan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class LaporanAdminController extends Controller
@@ -37,7 +38,20 @@ class LaporanAdminController extends Controller
         $tanggal = request()->tanggal;
         $skpd = Auth::user()->skpd;
 
-        $data = Presensi::where('skpd_id', $skpd->id)->where('tanggal', $tanggal)->get();
+        $presensi = Presensi::where('skpd_id', $skpd->id)->where('tanggal', $tanggal)->get();
+        $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('jabatan','!=', null)->orderBy(DB::raw('urutan IS NULL, urutan'), 'ASC')->get();
+
+        //mapping data
+        $data = $datapegawai->map(function($item)use($presensi){
+            $check = $presensi->where('nip', $item->nip);
+            if(count($check) == 1){
+                $item->presensi = $check->first();
+            }else{
+                $item->presensi = 'doubledata';
+            }
+            return $item;
+        });
+
         return view('admin.laporan.tanggal',compact('data','skpd','tanggal'));
     }
     

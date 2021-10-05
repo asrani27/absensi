@@ -81,6 +81,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('pegawai/search', [PegawaiController::class, 'search']);
         Route::get('pegawai/sync', [PegawaiController::class, 'sync']);
         Route::get('pegawai/createuser', [PegawaiController::class, 'createuser']);
+        Route::get('pegawai/sortir', [PegawaiController::class, 'sortir']);
+        Route::post('pegawai/sortir', [PegawaiController::class, 'simpanSortir']);
         Route::get('pegawai/{id}/resetpass', [PegawaiController::class, 'resetpass']);
         Route::get('pegawai/{id}/lokasi', [PegawaiController::class, 'lokasi']);
         Route::get('pegawai/{id}/editlokasi', [PegawaiController::class, 'editlokasi']);

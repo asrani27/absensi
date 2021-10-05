@@ -19,7 +19,8 @@ class PegawaiController extends Controller
 {
     public function index()
     {
-        $data = Pegawai::where('skpd_id', $this->skpd()->id)->paginate(10);
+        $data = Pegawai::where('skpd_id', $this->skpd()->id)->orderBy(DB::raw('urutan IS NULL, urutan'), 'ASC')->paginate(10);
+        //$data = Pegawai::where('skpd_id', $this->skpd()->id)->paginate(10);
         return view('admin.pegawai.index',compact('data'));
     }
 
@@ -163,5 +164,24 @@ class PegawaiController extends Controller
         
         return view('admin.pegawai.presensi',compact('data','pegawai'));
         
+    }
+
+    public function sortir()
+    {
+        $data = Pegawai::where('skpd_id', $this->skpd()->id)->where('jabatan','!=', null)->orderBy(DB::raw('urutan IS NULL, urutan'), 'ASC')->get();
+        return view('admin.pegawai.sortir',compact('data'));
+    }
+
+    public function simpanSortir(Request $req)
+    {
+        foreach($req->urutan as $key => $item){
+            if($item == null){
+                
+            }else{
+                Pegawai::find($req->pegawai_id[$key])->update(['urutan' => $item]);
+            }
+        }
+        toastr()->success('Urutan Berhasil Di Update');
+        return back();
     }
 }
