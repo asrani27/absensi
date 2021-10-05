@@ -7,9 +7,16 @@
     ADMIN
 @endsection
 @section('content')
-<br/>
 <div class="row">
-    Gunakan Ctrl + F Untuk Pencarian Pegawai
+    <div class="col-lg-12">
+        <div class="card card-widget">
+            <div class="card-header">
+                <span class="description">No urut di isi dengan angka 1,2,3,4.... dst, jika pegawai sangat banyak, cukup isi nomor untuk pejabat struktural</span>
+            </div>    
+        </div>
+    </div>
+</div>
+<div class="row">
     <div class="col-12">
         <div class="card">
         <div class="card-header">
