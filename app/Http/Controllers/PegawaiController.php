@@ -9,6 +9,7 @@ use App\Models\Lokasi;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use App\Jobs\SyncPegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -30,31 +31,13 @@ class PegawaiController extends Controller
     public function sync()
     {
         $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/skpd/']);
-        $response = $client->request('get', $this->skpd()->kode_skpd);
+        $response = $client->request('get', $this->skpd()->kode_skpd, ['verify' => false]);
         $data =  json_decode($response->getBody())->data;
-        
         DB::beginTransaction();
         try {
             foreach($data as $item)
             {
-                $check = Pegawai::where('nip', $item->nip)->first();
-                if($check == null){
-                    //simpan data
-                    $p = new Pegawai;
-                    $p->nip = $item->nip;
-                    $p->nama = $item->nama == null ? null : $item->nama;
-                    $p->jabatan = $item->jabatan == null ? null : $item->jabatan->nama;
-                    $p->tanggal_lahir = $item->tanggal_lahir;
-                    $p->skpd_id = $this->skpd()->id;
-                    $p->is_aktif = $item->is_aktif;
-                    $p->save();                            
-                }else{
-                    $check->update([
-                        'jabatan' => $item->jabatan == null ? null: $item->jabatan->nama,
-                        'skpd_id' => $this->skpd()->id,
-                        'tanggal_lahir' => $item->tanggal_lahir,
-                    ]);
-                }
+                SyncPegawai::dispatch($item);
             }
             DB::commit();
             toastr()->success('Sinkronisasi Berhasil');
