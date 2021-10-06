@@ -19,8 +19,8 @@ crossorigin=""/>
             <div class="card-header">
                 <div class="user-block">
                   <img class="img-circle" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/2048px-User_icon_2.svg.png" alt="User Image">
-                  <span class="username"><a href="#">{{Auth::user()->name}}</a></span>
-                  <span class="description">{{Auth::user()->username}}</span>
+                  <span class="username"><a href="#">{{Auth::user()->pegawai->nama}}</a></span>
+                  <span class="description">{{Auth::user()->pegawai->nip}}</span>
                   <span class="description"></span>
                 </div>
             </div>
