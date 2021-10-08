@@ -45,16 +45,20 @@ class SyncPegawai implements ShouldQueue
             $p->nip = $this->pegawai->nip;
             $p->nama = $this->pegawai->nama == null ? null : $this->pegawai->nama;
             $p->jabatan = $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->nama;
+            $p->pangkat = $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->nama;
+            $p->golongan = $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->golongan;
             $p->tanggal_lahir = $this->pegawai->tanggal_lahir;
             $p->skpd_id = $this->skpd->id;
             $p->is_aktif = $this->pegawai->is_aktif;
             $p->save();                            
         }else{
             $check->update([
-                'jabatan' => $this->pegawai->jabatan == null ? null: $this->pegawai->jabatan->nama,
-                'skpd_id' => $this->skpd->id,
+                'jabatan'       => $this->pegawai->jabatan == null ? null: $this->pegawai->jabatan->nama,
+                'skpd_id'       => $this->skpd->id,
                 'tanggal_lahir' => $this->pegawai->tanggal_lahir,
-                'nama' => $this->pegawai->nama,
+                'nama'          => $this->pegawai->nama,
+                'pangkat'       => $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->nama,
+                'golongan'       => $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->golongan,
             ]);
         }
     }

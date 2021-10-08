@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\NotNullProcess;
 use Carbon\Carbon;
 use App\Models\Pegawai;
 use App\Models\Presensi;
@@ -48,5 +49,17 @@ class GenerateController extends Controller
     public function index()
     {
         return view('superadmin.generate.tanggal');
+    }
+
+    public function notnull()
+    {
+        $data = Presensi::where('jam_masuk', null)->orWhere('jam_pulang', null)->get();
+
+        foreach($data as $item){
+            NotNullProcess::dispatch($item);
+        }
+        
+        toastr()->success('Berhasil Di Generate');
+        return back();
     }
 }

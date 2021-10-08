@@ -21,6 +21,15 @@
         </div>
     </div>
 </div>       
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card card-widget">
+            <div class="card-body">
+            <a href="/superadmin/notnull" class="btn btn-outline-primary">Generate NULL jam masuk & pulang</a>  
+            </div>    
+        </div>
+    </div>
+</div>       
 @endsection
 
 @push('js')

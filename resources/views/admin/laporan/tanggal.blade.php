@@ -1,44 +1,78 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    
-<style media="print">
-    @page {
-      size: auto;  /* auto is the initial value */
-      margin: 0mm; /* this affects the margin in the printer settings */
-    }
-</style>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<style type="text/css">
+.auto-style1 {
+	text-align: center;
+}
+.auto-style2 {
+	border: 0px solid #000000;
+}
+.auto-style3 {
+	border-style: solid;
+	border-width: 1px;
+	text-align: center;
+}
+.auto-style4 {
+	border-style: solid;
+	border-width: 1px;
+}
+</style>
 </head>
+
 <body>
-    <p style="text-align: center;">{{strtoupper($skpd->nama)}}<br />TANGGAL : {{strtoupper(\Carbon\Carbon::parse($tanggal)->isoFormat('D MMMM Y'))}}<br />DATA PRESENSI<br /><br /></p>
-<table style="border-collapse: collapse; width: 100%;" border="1">
-<tbody>
-<tr>
-<td style="width: 5%; text-align: center;">No</td>
-<td style="width: 25%; text-align: center;">NIP/Nama</td>
-<td style="width: 25%; text-align: center;">Jam Masuk</td>
-<td style="width: 25%; text-align: center;">Jam Pulang</td>
-</tr>
-@php
-    $no=1;
-@endphp
-@foreach ($data as $item)
-<tr style="font-size: 9px">
-    <td style="width: 5%; text-align: center;">{{$no++}}</td>
-    <td style="width: 25%; padding:2px 2px;">{{$item->nama}}<br/>{{$item->nip}}</td>
-    <td style="width: 25%; text-align: center;">{{$item->presensi->jam_masuk == null ? '00:00:00':$item->presensi->jam_masuk}}</td>
-    <td style="width: 25%; text-align: center;">{{$item->presensi->jam_pulang == null ? '00:00:00':$item->presensi->jam_pulang}}</td>
-</tr>
-@endforeach
-</tbody>
+
+<p class="auto-style1"><strong>DAFTAR HADIR PEGAWAI NEGERI SIPIL {{strtoupper($skpd->nama)}}<br />
+KOTA BANJARMASIN</strong></p>
+<table style="width: 100%">
+	<tr>
+		<td style="width: 87px"><strong>HARI</strong></td>
+		<td><strong>: SENIN</strong></td>
+	</tr>
+	<tr>
+		<td style="width: 87px"><strong>TANGGAL</strong></td>
+		<td><strong>: {{strtoupper(\Carbon\Carbon::parse($tanggal)->translatedFormat('d F Y'))}}</strong></td>
+	</tr>
 </table>
+
+<br/>
+
+<table style="width: 100%" cellpadding="5" cellspacing="0" class="auto-style2">
+    <thead>
+	<tr>
+		<td class="auto-style3" style="height: 54px"><strong>NO</strong></td>
+		<td class="auto-style3" style="height: 54px; width:30%;"><strong>NAMA / NIP</strong></td>
+		<td class="auto-style3" style="height: 54px"><strong>PANGKAT</strong></td>
+		<td class="auto-style3" style="height: 54px"><strong>JABATAN</strong></td>
+		<td class="auto-style3" style="height: 54px"><strong>PAGI</strong></td>
+		<td class="auto-style3" style="height: 54px"><strong>PULANG</strong></td>
+	</tr>
+    </thead>
+    @php
+        $no=1;
+    @endphp
+    @foreach ($data as $item)
+    <tbody>
+	<tr>
+		<td class="auto-style3">{{$no++}}</td>
+		<td class="auto-style4">{{$item->nama}} <br/> {{$item->nip}}</td>
+		<td class="auto-style3">{{$item->pangkat}}<br/>({{$item->golongan}})</td>
+		<td class="auto-style3">{{$item->jabatan}}</td>
+		<td class="auto-style3">{{$item->presensi->jam_masuk}}</td>
+		<td class="auto-style3">{{$item->presensi->jam_pulang}}</td>
+	</tr>
+    </tbody>
+    @endforeach
+</table>
+
+
 </body>
 <script>
     window.print();
 </script>
+
 </html>
+

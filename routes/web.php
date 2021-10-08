@@ -121,6 +121,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::resource('libur', LiburNasionalController::class);
         Route::resource('jenis', JenisKeteranganController::class);
         Route::get('generatetanggal', [GenerateController::class, 'index']);
+        Route::get('notnull', [GenerateController::class, 'notnull']);
         Route::get('generatetanggal/{bulan}', [GenerateController::class, 'generate']);
     });
 });

@@ -36,6 +36,7 @@
                 <tr>
                 <th>#</th>
                 <th>NIP/Nama/Jabatan</th>
+                <th>Pangkat</th>
                 <th>Tgl Lahir</th>
                 <th>Lokasi Presensi</th>
                 <th>Aksi</th>
@@ -49,6 +50,7 @@
                     <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                     <td>{{$no++}}</td>
                     <td>{{$item->nama}}<br/>{{$item->nip}}<br/>{{$item->jabatan}}</td>
+                    <td>{{$item->pangkat}}</td>
                     <td>{{\Carbon\Carbon::parse($item->tanggal_lahir)->format('d-m-Y')}}</td>
                     <td>
                         @if ($item->lokasi == null)

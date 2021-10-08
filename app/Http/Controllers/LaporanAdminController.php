@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DoubleData;
 use Carbon\Carbon;
 use App\Models\Skpd;
 use GuzzleHttp\Client;
@@ -42,12 +43,26 @@ class LaporanAdminController extends Controller
         $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('jabatan','!=', null)->orderBy(DB::raw('urutan IS NULL, urutan'), 'ASC')->get();
 
         //mapping data
-        $data = $datapegawai->map(function($item)use($presensi){
+        $data = $datapegawai->map(function($item)use($presensi, $tanggal){
             $check = $presensi->where('nip', $item->nip);
             if(count($check) == 1){
                 $item->presensi = $check->first();
+            }elseif(count($check) == 0){
+                //Buat Presensi Default
+                $p = new Presensi;
+                $p->nip = $item->nip;
+                $p->nama = $item->nama;
+                $p->skpd_id = $item->skpd_id;
+                $p->tanggal = $tanggal;
+                $p->jam_masuk = '00:00:00';
+                $p->jam_pulang = '00:00:00';
+                $p->save();
             }else{
-                $item->presensi = 'doubledata';
+                //Log Data Double 
+                $d = new DoubleData;
+                $d->nip = $item->nip;
+                $d->tanggal = $tanggal;
+                $d->save();
             }
             return $item;
         });
