@@ -53,7 +53,7 @@ class GenerateController extends Controller
 
     public function notnull()
     {
-        $data = Presensi::where('jam_masuk', null)->orWhere('jam_pulang', null)->take(100)->get();
+        $data = Presensi::where('jam_masuk', null)->orWhere('jam_pulang', null)->take(1000)->get();
         dd($data);
         foreach($data as $item){
             NotNullProcess::dispatch($item);
