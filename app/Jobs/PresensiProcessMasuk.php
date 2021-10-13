@@ -49,10 +49,7 @@ class PresensiProcessMasuk implements ShouldQueue
                 $attr['skpd_id'] = $this->pegawai->skpd_id;
                 Presensi::create($attr);
             }else{
-                $check     = Presensi::where('nip', $this->pegawai->nip)->where('tanggal', $tanggal)->first();
-                $check->update([
-                    'jam_masuk' => $jam_masuk,
-                ]);
+                
             }
         }else{
             $check     = Presensi::where('nip', $this->pegawai->nip)->where('tanggal', $tanggal)->first();
