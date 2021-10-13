@@ -314,7 +314,8 @@ class PresensiController extends Controller
                 //return back();
                 return redirect('/home/pegawai');
             }else{
-                alert()->info('Anda Sudah Melakukan Presensi Masuk');
+                $this->simpanAndroidMasuk($req, 'simpan');
+                //alert()->info('Anda Sudah Melakukan Presensi Masuk');
                 //return back();
                 return redirect('/home/pegawai');
             }
@@ -346,7 +347,8 @@ class PresensiController extends Controller
                 //return back();
                 return redirect('/home/pegawai');
             }else{
-                alert()->info('Anda Sudah Melakukan Presensi Masuk');
+                $this->simpanAndroidMasuk($req, 'simpan');
+                //alert()->info('Anda Sudah Melakukan Presensi Masuk');
                 //return back();
                 return redirect('/home/pegawai');
             }
