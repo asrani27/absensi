@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\NotNullProcess;
 use Carbon\Carbon;
+use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use Carbon\CarbonPeriod;
+use App\Jobs\NotNullProcess;
 use Illuminate\Http\Request;
+use App\Jobs\SyncPegawaiAdmin;
 
 class GenerateController extends Controller
 {
@@ -59,6 +61,21 @@ class GenerateController extends Controller
             NotNullProcess::dispatch($item);
         }
         
+        toastr()->success('Berhasil Di Generate');
+        return back();
+    }
+
+    public function tarikpegawai()
+    {
+        $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/']);
+        $response = $client->request('get', 'pegawai', ['verify' => false]);
+        $data =  json_decode($response->getBody())->data;
+
+        foreach($data as $item)
+        {
+            SyncPegawaiAdmin::dispatch($item);
+        }
+
         toastr()->success('Berhasil Di Generate');
         return back();
     }

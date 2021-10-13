@@ -26,6 +26,7 @@
         <div class="card card-widget">
             <div class="card-body">
             <a href="/superadmin/notnull" class="btn btn-outline-primary">Generate NULL jam masuk & pulang</a>  
+            <a href="/superadmin/tarikpegawai" class="btn btn-outline-primary">Tarik Data Pegawai Dari TPP</a>  
             </div>    
         </div>
     </div>

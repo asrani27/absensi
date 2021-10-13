@@ -122,6 +122,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::resource('jenis', JenisKeteranganController::class);
         Route::get('generatetanggal', [GenerateController::class, 'index']);
         Route::get('notnull', [GenerateController::class, 'notnull']);
+        Route::get('tarikpegawai', [GenerateController::class, 'tarikpegawai']);
         Route::get('generatetanggal/{bulan}', [GenerateController::class, 'generate']);
     });
 });
