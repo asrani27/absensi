@@ -42,18 +42,20 @@ class PresensiProcessPulang implements ShouldQueue
         $tanggal   = $date->format('Y-m-d');
         $jam_pulang= $date->format('H:i:s');
 
-        $check = Presensi::where('nip', $this->pegawai->nip)->where('tanggal', $tanggal)->first();
-        if($this->jenis == 'simpan'){
-            $attr['nip'] = $this->pegawai->nip;
-            $attr['nama'] = $this->pegawai->nama;
-            $attr['tanggal'] = $tanggal;
-            $attr['jam_pulang'] = $jam_pulang;
-            $attr['skpd_id'] = $this->pegawai->skpd_id;
-            Presensi::create($attr);            
+        $check     = Presensi::where('nip', $this->pegawai->nip)->where('tanggal', $tanggal)->first();
+
+        if($check == null){
+            $attr['nip']         = $this->pegawai->nip;
+            $attr['nama']        = $this->pegawai->nama;
+            $attr['tanggal']     = $tanggal;
+            $attr['jam_pulang']  = $jam_pulang;
+            $attr['skpd_id']     = $this->pegawai->skpd_id;
+            Presensi::create($attr);
         }else{
             $check->update([
                 'jam_pulang' => $jam_pulang,
-            ]); 
-        }
+                'skpd_id' => $this->pegawai->skpd_id,
+            ]);
+        } 
     }
 }

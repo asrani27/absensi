@@ -21,12 +21,10 @@ class PresensiProcessMasuk implements ShouldQueue
      *
      * @return void
      */
-    public $jenis;
     public $pegawai;
 
-    public function __construct($jenis)
+    public function __construct()
     {
-        $this->jenis = $jenis;
         $this->pegawai = Auth::user()->pegawai;
     }
 
@@ -40,25 +38,30 @@ class PresensiProcessMasuk implements ShouldQueue
         $date      = Carbon::now();
         $tanggal   = $date->format('Y-m-d');  
         $jam_masuk = $date->format('H:i:s');
-        if($this->jenis == 'simpan'){
-            if(Presensi::where('nip', $this->pegawai->nip)->where('tanggal', $tanggal)->first() == null){
-                $attr['nip'] = $this->pegawai->nip;
-                $attr['nama'] = $this->pegawai->nama;
-                $attr['tanggal'] = $tanggal;
-                $attr['jam_masuk'] = $jam_masuk;
-                $attr['skpd_id'] = $this->pegawai->skpd_id;
-                Presensi::create($attr);
-            }else{
-                $check     = Presensi::where('nip', $this->pegawai->nip)->where('tanggal', $tanggal)->first();
+
+        $check     = Presensi::where('nip', $this->pegawai->nip)->where('tanggal', $tanggal)->first();
+
+        if($check == null){
+            $attr['nip'] = $this->pegawai->nip;
+            $attr['nama'] = $this->pegawai->nama;
+            $attr['tanggal'] = $tanggal;
+            $attr['jam_masuk'] = $jam_masuk;
+            $attr['skpd_id'] = $this->pegawai->skpd_id;
+            Presensi::create($attr);
+        }else{
+            if($check->jam_masuk == '00:00:00'){
                 $check->update([
                     'jam_masuk' => $jam_masuk,
+                    'skpd_id' => $this->pegawai->skpd_id,
                 ]);
+            }elseif($check->jam_masuk == null){
+                $check->update([
+                    'jam_masuk' => $jam_masuk,
+                    'skpd_id' => $this->pegawai->skpd_id,
+                ]);
+            }else{
+
             }
-        }else{
-            $check     = Presensi::where('nip', $this->pegawai->nip)->where('tanggal', $tanggal)->first();
-            $check->update([
-                'jam_masuk' => $jam_masuk,
-            ]);
-        }
+        }   
     }
 }
