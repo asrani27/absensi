@@ -21,12 +21,10 @@ class PresensiProcessPulang implements ShouldQueue
      *
      * @return void
      */
-    public $jenis;
     public $pegawai;
 
-    public function __construct($jenis)
+    public function __construct()
     {
-        $this->jenis = $jenis;
         $this->pegawai = Auth::user()->pegawai;
     }
     
