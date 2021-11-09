@@ -13,18 +13,25 @@ class LoginController extends Controller
     {
         if (Auth::attempt(['username' => $req->username, 'password' => $req->password], true)) {
             
-            if(Auth::user()->hasRole('pegawai')){
-                return redirect('/home/pegawai');
-            }elseif(Auth::user()->hasRole('admin')){
-                return redirect('/home/admin');
-            }elseif(Auth::user()->hasRole('superadmin')){
-                return redirect('/home/superadmin');
-            }else{
-                $role = Role::where('name', 'pegawai')->first();
-                $u = Auth::user();
-                $u->roles()->attach($role);
-                return redirect('/home/pegawai');
-            }
+                if(Auth::user()->hasRole('pegawai')){
+                    if(Auth::user()->pegawai->is_aktif == 0){
+                        Auth::logout();
+                        toastr()->error('Anda Telah Pensiun');
+                        return redirect('/');
+                    }else{
+                        return redirect('/home/pegawai');
+                    }
+                }elseif(Auth::user()->hasRole('admin')){
+                    return redirect('/home/admin');
+                }elseif(Auth::user()->hasRole('superadmin')){
+                    return redirect('/home/superadmin');
+                }else{
+                    $role = Role::where('name', 'pegawai')->first();
+                    $u = Auth::user();
+                    $u->roles()->attach($role);
+                    return redirect('/home/pegawai');
+                }
+            
         } else {
             toastr()->error('Username / Password Tidak Ditemukan');
             $req->flash();
