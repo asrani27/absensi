@@ -47,25 +47,38 @@
             @endphp
             <tbody>
             @foreach ($data as $key => $item)
-                    <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                    @if ($item->is_aktif == 0)                        
+                    <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif; background-color:#f2dede">
+                    @else                        
+                    <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif; ">
+                    @endif
                     <td>{{$no++}}</td>
                     <td>{{$item->nama}}<br/>{{$item->nip}}<br/>{{$item->jabatan}}</td>
                     <td>{{$item->pangkat}}</td>
                     <td>{{\Carbon\Carbon::parse($item->tanggal_lahir)->format('d-m-Y')}}</td>
                     <td>
+                        
+                    @if ($item->is_aktif == 0) 
+                    @else
                         @if ($item->lokasi == null)
                         <a href="/admin/pegawai/{{$item->id}}/lokasi" class="btn btn-xs bg-gradient-primary"><i class="fas fa-pen"></i></a>
                         @else
                             {{$item->lokasi->nama}}
                             <a href="/admin/pegawai/{{$item->id}}/editlokasi" class="btn btn-xs bg-gradient-success"><i class="fas fa-pen"></i></a>
                         @endif
+                    @endif
                     </td>
                     <td>
-                        @if ($item->user == null)
-                        <a href="/admin/pegawai/{{$item->id}}/createuser" class="btn btn-xs bg-gradient-success">Buat Akun</a>
+                        @if ($item->is_aktif == 0)     
+                        <strong>STATUS : PENSIUN</strong>
+                        
                         @else
-                            <a href="/admin/pegawai/{{$item->id}}/presensi" class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
-                            <a href="/admin/pegawai/{{$item->id}}/resetpass" class="btn btn-xs bg-gradient-secondary"><i class="fas fa-key"></i> Reset Pass</a>
+                            @if ($item->user == null)
+                            <a href="/admin/pegawai/{{$item->id}}/createuser" class="btn btn-xs bg-gradient-success">Buat Akun</a>
+                            @else
+                                <a href="/admin/pegawai/{{$item->id}}/presensi" class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
+                                <a href="/admin/pegawai/{{$item->id}}/resetpass" class="btn btn-xs bg-gradient-secondary"><i class="fas fa-key"></i> Reset Pass</a>
+                            @endif
                         @endif
                     </td>
                     </tr>

@@ -58,7 +58,8 @@ class SyncPegawai implements ShouldQueue
                 'tanggal_lahir' => $this->pegawai->tanggal_lahir,
                 'nama'          => $this->pegawai->nama,
                 'pangkat'       => $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->nama,
-                'golongan'       => $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->golongan,
+                'golongan'      => $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->golongan,
+                'is_aktif'      => $this->pegawai->is_aktif,
             ]);
         }
     }

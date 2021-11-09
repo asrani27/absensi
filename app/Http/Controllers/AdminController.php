@@ -63,7 +63,7 @@ class AdminController extends Controller
             return view('admin.home',compact('data'));
         }else{ 
             $skpd_id = Auth::user()->skpd->id;
-            $pegawai = Pegawai::where('skpd_id', $skpd_id)->get();
+            $pegawai = Pegawai::where('skpd_id', $skpd_id)->where('is_aktif', 1)->get();
             
             foreach($pegawai as $item)
             {
