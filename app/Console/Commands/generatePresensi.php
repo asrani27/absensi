@@ -43,40 +43,36 @@ class generatePresensi extends Command
     public function handle()
     {
         $pegawai = Pegawai::where('is_aktif', 1)->get();
-        $endDate = Carbon::today()->format('Y-m-d');
-        $result = CarbonPeriod::create('2021-09-01', $endDate);
+        $today = Carbon::today()->format('Y-m-d');
   
-        foreach ($result as $dt) {
-            foreach($pegawai as $item)
+        foreach($pegawai as $item)
+        {
+            $p = Presensi::where('nip', $item->nip)->where('tanggal', $today)->first();
+            if($p == null)
             {
-                $p = Presensi::where('nip', $item->nip)->where('tanggal', $dt->format("Y-m-d"))->first();
-                if($p == null)
-                {
-                    $attr['nip'] = $item->nip;
-                    $attr['nama'] = $item->nama;
-                    $attr['tanggal'] = $dt->format("Y-m-d");
-                    $attr['jam_masuk'] = '00:00:00';
-                    $attr['jam_pulang'] = '00:00:00';
-                    $attr['skpd_id'] = $item->skpd_id;
-        
-                    Presensi::create($attr);
-                }else{
-                    if($p->jam_masuk == null){
-                        $p->update(['jam_masuk' => '00:00:00']);
-                    }
-                    
-                    if($p->jam_pulang == null){
-                        $p->update(['jam_pulang' => '00:00:00']);
-                    }
-                    
-                    if($p->skpd_id == null){
-                        $p->update(['skpd_id' => $item->skpd_id]);
-                    }
+                $attr['nip'] = $item->nip;
+                $attr['nama'] = $item->nama;
+                $attr['tanggal'] = $dt->format("Y-m-d");
+                $attr['jam_masuk'] = '00:00:00';
+                $attr['jam_pulang'] = '00:00:00';
+                $attr['skpd_id'] = $item->skpd_id;
+    
+                Presensi::create($attr);
+            }else{
+                if($p->jam_masuk == null){
+                    $p->update(['jam_masuk' => '00:00:00']);
+                }
+                
+                if($p->jam_pulang == null){
+                    $p->update(['jam_pulang' => '00:00:00']);
+                }
+                
+                if($p->skpd_id == null){
+                    $p->update(['skpd_id' => $item->skpd_id]);
                 }
             }
         }
 
-        $today = Carbon::today()->format('Y-m-d');
         
 
         $com['nama_command'] = 'presensi';
