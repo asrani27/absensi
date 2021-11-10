@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('presensi')->dailyAt('11:35');;
+        $schedule->command('presensi')->everyMinute();
     }
 
     /**
