@@ -44,41 +44,38 @@ class generatePresensi extends Command
     {
         $pegawai = Pegawai::where('is_aktif', 1)->get();
         $today = Carbon::today()->format('Y-m-d');
-  
-        foreach($pegawai as $item)
-        {
+
+        foreach ($pegawai as $item) {
             $p = Presensi::where('nip', $item->nip)->where('tanggal', $today)->first();
-            if($p == null)
-            {
+            if ($p == null) {
                 $attr['nip'] = $item->nip;
                 $attr['nama'] = $item->nama;
-                $attr['tanggal'] = $dt->format("Y-m-d");
+                $attr['tanggal'] = $today;
                 $attr['jam_masuk'] = '00:00:00';
                 $attr['jam_pulang'] = '00:00:00';
                 $attr['skpd_id'] = $item->skpd_id;
-    
+
                 Presensi::create($attr);
-            }else{
-                if($p->jam_masuk == null){
+            } else {
+                if ($p->jam_masuk == null) {
                     $p->update(['jam_masuk' => '00:00:00']);
                 }
-                
-                if($p->jam_pulang == null){
+
+                if ($p->jam_pulang == null) {
                     $p->update(['jam_pulang' => '00:00:00']);
                 }
-                
-                if($p->skpd_id == null){
+
+                if ($p->skpd_id == null) {
                     $p->update(['skpd_id' => $item->skpd_id]);
                 }
             }
         }
 
-        
+
 
         $com['nama_command'] = 'presensi';
         $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
-        
+
         Komando::create($com);
-        
     }
 }
