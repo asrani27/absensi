@@ -71,8 +71,6 @@ class generatePresensi extends Command
             }
         }
 
-
-
         $com['nama_command'] = 'presensi';
         $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
 
