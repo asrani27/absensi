@@ -43,7 +43,7 @@ class generatePresensi extends Command
     public function handle()
     {
         $pegawai = Pegawai::where('is_aktif', 1)->get();
-        $today = Carbon::today()->subDays(1)->format('Y-m-d');
+        $today = Carbon::today()->format('Y-m-d');
 
         foreach ($pegawai as $item) {
             $p = Presensi::where('nip', $item->nip)->where('tanggal', $today)->first();
