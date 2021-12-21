@@ -87,7 +87,7 @@ class LaporanAdminController extends Controller
             return back();
         } else {
 
-            $pegawai = Pegawai::where('skpd_id', $skpd->id)->get();
+            $pegawai = Pegawai::where('skpd_id', $skpd->id)->orderBy('urutan', 'ASC')->get();
             foreach ($pegawai as $item) {
                 $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
                 if ($check == null) {
