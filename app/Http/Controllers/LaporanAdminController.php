@@ -21,7 +21,7 @@ class LaporanAdminController extends Controller
         $tahun = Carbon::today()->format('Y');
 
         $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->get();
-        return view('admin.laporan.index',compact('bulan','tahun','data'));
+        return view('admin.laporan.index', compact('bulan', 'tahun', 'data'));
     }
 
     public function tanggalSuperadmin()
@@ -29,9 +29,9 @@ class LaporanAdminController extends Controller
         $skpd_id = request()->get('skpd_id');
         $tanggal = request()->get('tanggal');
         $skpd = Skpd::find($skpd_id);
-        
+
         $data = Presensi::where('skpd_id', $skpd_id)->where('tanggal', $tanggal)->get();
-        return view('superadmin.skpd.laporan.tanggal',compact('data','skpd','tanggal'));
+        return view('superadmin.skpd.laporan.tanggal', compact('data', 'skpd', 'tanggal'));
     }
 
     public function tanggal()
@@ -40,15 +40,15 @@ class LaporanAdminController extends Controller
         $skpd = Auth::user()->skpd;
 
         $presensi = Presensi::where('skpd_id', $skpd->id)->where('tanggal', $tanggal)->get();
-        
-        $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('jabatan','!=', null)->orderBy(DB::raw('urutan IS NULL, urutan'), 'ASC')->get();
+
+        $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('jabatan', '!=', null)->orderBy('urutan', 'ASC')->get();
 
         //mapping data
-        $data = $datapegawai->map(function($item)use($presensi, $tanggal){
+        $data = $datapegawai->map(function ($item) use ($presensi, $tanggal) {
             $check = $presensi->where('nip', $item->nip);
-            if(count($check) == 1){
+            if (count($check) == 1) {
                 $item->presensi = $check->first();
-            }elseif(count($check) == 0){
+            } elseif (count($check) == 0) {
                 //Buat Presensi Default
                 $p = new Presensi;
                 $p->nip = $item->nip;
@@ -58,7 +58,7 @@ class LaporanAdminController extends Controller
                 $p->jam_masuk = '00:00:00';
                 $p->jam_pulang = '00:00:00';
                 $p->save();
-            }else{
+            } else {
                 //Log Data Double 
                 $d = new DoubleData;
                 $d->nip = $item->nip;
@@ -68,30 +68,29 @@ class LaporanAdminController extends Controller
             return $item;
         });
 
-        return view('admin.laporan.tanggal',compact('data','skpd','tanggal'));
+        return view('admin.laporan.tanggal', compact('data', 'skpd', 'tanggal'));
     }
-    
+
     public function bulan()
     {
-        $button = request()->button; 
+        $button = request()->button;
         $skpd = Auth::user()->skpd;
         $bulan   = request()->bulan;
         $tahun   = request()->tahun;
-        if($button == '1'){
-            $pegawai = Presensi::where('skpd_id', $skpd->id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->groupBy(function($item){
+        if ($button == '1') {
+            $pegawai = Presensi::where('skpd_id', $skpd->id)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->groupBy(function ($item) {
                 $item->nip;
             });
-            
+
             request()->flash();
             toastr()->error('Dalam Pengembangan');
             return back();
-        }else{
-            
+        } else {
+
             $pegawai = Pegawai::where('skpd_id', $skpd->id)->get();
-            foreach($pegawai as $item)
-            {
+            foreach ($pegawai as $item) {
                 $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
-                if($check == null){
+                if ($check == null) {
                     $r = new Ringkasan;
                     $r->nip     = $item->nip;
                     $r->nama    = $item->nama;
@@ -100,14 +99,13 @@ class LaporanAdminController extends Controller
                     $r->bulan   = $bulan;
                     $r->tahun   = $tahun;
                     $r->save();
-                }else{
-
+                } else {
                 }
             }
-            
+
             $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->get();
             request()->flash();
-            return view('admin.laporan.index',compact('bulan','tahun','data'));
+            return view('admin.laporan.index', compact('bulan', 'tahun', 'data'));
         }
     }
 }
