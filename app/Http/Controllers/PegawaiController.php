@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Role;
 use App\Models\User;
+use App\Jobs\SyncUrut;
 use App\Models\Lokasi;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
@@ -21,7 +22,7 @@ class PegawaiController extends Controller
     {
         $data = Pegawai::where('skpd_id', $this->skpd()->id)->orderBy(DB::raw('urutan IS NULL, urutan'), 'ASC')->paginate(10);
         //$data = Pegawai::where('skpd_id', $this->skpd()->id)->paginate(10);
-        return view('admin.pegawai.index',compact('data'));
+        return view('admin.pegawai.index', compact('data'));
     }
 
     public function skpd()
@@ -37,15 +38,14 @@ class PegawaiController extends Controller
         //dd($data);
         DB::beginTransaction();
         try {
-            foreach($data as $item)
-            {
+            foreach ($data as $item) {
                 SyncPegawai::dispatch($item);
             }
             DB::commit();
             toastr()->success('Sinkronisasi Berhasil');
             return back();
         } catch (\Exception $e) {
-            
+
             DB::rollback();
             toastr()->error('Sinkronisasi Gagal');
             return back();
@@ -57,26 +57,25 @@ class PegawaiController extends Controller
         $skpd_id = Auth::user()->skpd->id;
         $search = request()->get('search');
         $data   = Pegawai::where('skpd_id', $skpd_id)
-        ->where('nama', 'LIKE','%'.$search.'%')
-        ->orWhere(function($query)use ($search, $skpd_id){
-            $query->where('skpd_id', $skpd_id)->where('nip','LIKE','%'.$search.'%');
-        })->paginate(10);
+            ->where('nama', 'LIKE', '%' . $search . '%')
+            ->orWhere(function ($query) use ($search, $skpd_id) {
+                $query->where('skpd_id', $skpd_id)->where('nip', 'LIKE', '%' . $search . '%');
+            })->paginate(10);
         $data->appends(['search' => $search])->links();
         request()->flash();
-        return view('admin.pegawai.index',compact('data'))->withInput(request()->all());
+        return view('admin.pegawai.index', compact('data'))->withInput(request()->all());
     }
 
     public function createuser()
     {
         $pegawai = Pegawai::where('skpd_id', $this->skpd()->id)->where('user_id', null)->get()->take(200);
-        
-        $rolePegawai = Role::where('name','pegawai')->first();
+
+        $rolePegawai = Role::where('name', 'pegawai')->first();
         DB::beginTransaction();
         try {
-            foreach($pegawai as $item)
-            {
+            foreach ($pegawai as $item) {
                 $check = User::where('username', $item->nip)->first();
-                if($check == null){
+                if ($check == null) {
                     $u = new User;
                     $u->name = $item->nama;
                     $u->username = $item->nip;
@@ -88,10 +87,10 @@ class PegawaiController extends Controller
                     $item->update([
                         'user_id' => $user_id,
                     ]);
-                    
+
                     //Create Role
                     $u->roles()->attach($rolePegawai);
-                }else{
+                } else {
                     $item->update([
                         'user_id' => $check->id,
                     ]);
@@ -111,7 +110,7 @@ class PegawaiController extends Controller
     {
         $p = Pegawai::find($id);
         User::where('id', $p->user_id)->first()->update(['password' => bcrypt(Carbon::parse($p->tanggal_lahir)->format('dmY'))]);
-        toastr()->success('Password Baru : '. Carbon::parse($p->tanggal_lahir)->format('dmY'));
+        toastr()->success('Password Baru : ' . Carbon::parse($p->tanggal_lahir)->format('dmY'));
         return back();
     }
 
@@ -119,14 +118,14 @@ class PegawaiController extends Controller
     {
         $data = Pegawai::find($id);
         $lokasi = Lokasi::where('skpd_id', $this->skpd()->id)->get();
-        return view('admin.pegawai.lokasi',compact('data','lokasi'));
+        return view('admin.pegawai.lokasi', compact('data', 'lokasi'));
     }
-    
+
     public function editlokasi($id)
     {
         $data = Pegawai::find($id);
         $lokasi = Lokasi::where('skpd_id', $this->skpd()->id)->get();
-        return view('admin.pegawai.editlokasi',compact('data','lokasi'));
+        return view('admin.pegawai.editlokasi', compact('data', 'lokasi'));
     }
 
     public function storeLokasi(Request $req, $id)
@@ -137,7 +136,7 @@ class PegawaiController extends Controller
         toastr()->success('Lokasi Presensi Berhasil Di Update');
         return redirect('/admin/pegawai');
     }
-    
+
     public function updateLokasi(Request $req, $id)
     {
         $data = Pegawai::find($id)->update([
@@ -151,8 +150,8 @@ class PegawaiController extends Controller
     {
         $pegawai = Pegawai::find($id);
         $data = null;
-        
-        return view('admin.pegawai.presensi',compact('pegawai','data'));
+
+        return view('admin.pegawai.presensi', compact('pegawai', 'data'));
     }
 
     public function tampilkanPresensi($id)
@@ -160,25 +159,39 @@ class PegawaiController extends Controller
         $bulan = request()->bulan;
         $tahun = request()->tahun;
         $pegawai = Pegawai::find($id);
-        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderBy('tanggal','ASC')->get();
+        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderBy('tanggal', 'ASC')->get();
         request()->flash();
-        
-        return view('admin.pegawai.presensi',compact('data','pegawai'));
-        
+
+        return view('admin.pegawai.presensi', compact('data', 'pegawai'));
     }
 
     public function sortir()
     {
-        $data = Pegawai::where('skpd_id', $this->skpd()->id)->where('jabatan','!=', null)->orderBy(DB::raw('urutan IS NULL, urutan'), 'ASC')->get();
-        return view('admin.pegawai.sortir',compact('data'));
+        $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/']);
+        $response = $client->request('get', 'pegawai', ['verify' => false]);
+        $data =  json_decode($response->getBody())->data;
+
+        DB::beginTransaction();
+        try {
+            foreach ($data as $item) {
+                SyncUrut::dispatch($item);
+            }
+            DB::commit();
+            toastr()->success('Sinkronisasi Urut Berhasil');
+            return back();
+        } catch (\Exception $e) {
+
+            DB::rollback();
+            toastr()->error('Sinkronisasi Urut Gagal');
+            return back();
+        }
     }
 
     public function simpanSortir(Request $req)
     {
-        foreach($req->urutan as $key => $item){
-            if($item == null){
-                
-            }else{
+        foreach ($req->urutan as $key => $item) {
+            if ($item == null) {
+            } else {
                 Pegawai::find($req->pegawai_id[$key])->update(['urutan' => $item]);
             }
         }
