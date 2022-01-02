@@ -20,7 +20,7 @@ class SkpdController extends Controller
 
     public function resetpass($id)
     {
-        Skpd::find($id)->update([
+        Skpd::find($id)->user->update([
             'password' => bcrypt('adminskpd'),
         ]);
         toastr()->success('password : adminskpd');
