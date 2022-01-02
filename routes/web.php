@@ -115,6 +115,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('skpd/{skpd_id}/pegawai/search', [SkpdController::class, 'searchPegawai']);
         Route::get('skpd/{skpd_id}/laporan', [SkpdController::class, 'laporan']);
         Route::get('skpd/{skpd_id}/lokasi', [SkpdController::class, 'lokasi']);
+        Route::get('skpd/{skpd_id}/pegawai/{id_pegawai}/resetpass', [SkpdController::class, 'resetPassPegawai']);
 
         Route::get('skpd/{skpd_id}/cuti', [SkpdController::class, 'cuti']);
         Route::resource('skpd', SkpdController::class);

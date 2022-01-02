@@ -56,7 +56,7 @@
                                 {{-- <a href="/admin/pegawai/{{$item->id}}/presensi"
                                     class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
                                 --}}
-                                <a href="/superadmin/pegawai/{{$item->id}}/resetpass"
+                                <a href="/superadmin/skpd/{{$id}}/pegawai/{{$item->id}}/resetpass"
                                     class="btn btn-xs bg-gradient-secondary"><i class="fas fa-key"></i> Reset Pass</a>
                                 @endif
                             </td>

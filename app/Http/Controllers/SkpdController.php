@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Skpd;
+use App\Models\User;
 use App\Models\Lokasi;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
@@ -108,5 +110,13 @@ class SkpdController extends Controller
         $bulan = null;
         $tahun = null;
         return view('superadmin.skpd.detail', compact('skpd', 'page', 'countPegawai', 'countLokasi', 'countCuti', 'bulan', 'tahun'));
+    }
+
+    public function resetPassPegawai($skpd_id, $pegawai_id)
+    {
+        $p = Pegawai::find($pegawai_id);
+        User::where('id', $p->user_id)->first()->update(['password' => bcrypt(Carbon::parse($p->tanggal_lahir)->format('dmY'))]);
+        toastr()->success('Password Baru : ' . Carbon::parse($p->tanggal_lahir)->format('dmY'));
+        return back();
     }
 }
