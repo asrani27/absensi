@@ -19,26 +19,26 @@ use App\Http\Controllers\LaporanAdminController;
 use App\Http\Controllers\LiburNasionalController;
 use App\Http\Controllers\JenisKeteranganController;
 
-Route::get('/', function(){
-    if(Auth::check()){
-        if(Auth::user()->hasRole('pegawai')){
+Route::get('/', function () {
+    if (Auth::check()) {
+        if (Auth::user()->hasRole('pegawai')) {
             return redirect('/home/pegawai');
-        }elseif(Auth::user()->hasRole('admin')){
+        } elseif (Auth::user()->hasRole('admin')) {
             return redirect('/home/admin');
-        }elseif(Auth::user()->hasRole('superadmin')){
+        } elseif (Auth::user()->hasRole('superadmin')) {
             return redirect('/home/superadmin');
         }
     }
     return view('welcome');
 });
 
-Route::get('/logout', function(){
+Route::get('/logout', function () {
     Auth::logout();
     return redirect('/');
 });
 
-Route::get('/login', function(){
-    if(Auth::check()){
+Route::get('/login', function () {
+    if (Auth::check()) {
         return redirect('/');
     }
     return view('welcome');
@@ -95,7 +95,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('qrcode/tampil/{id}', [QrcodeController::class, 'tampilQr']);
         Route::resource('qrcode', QrcodeController::class);
         Route::resource('cuti', CutiController::class);
-        
+
         Route::get('laporan', [LaporanAdminController::class, 'index']);
         Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggal']);
         Route::get('laporan/rekap', [LaporanAdminController::class, 'bulan']);
@@ -112,9 +112,10 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('skpd/{skpd_id}/resetpass', [SkpdController::class, 'resetpass']);
         Route::get('skpd/{skpd_id}/detail', [SkpdController::class, 'detail']);
         Route::get('skpd/{skpd_id}/pegawai', [SkpdController::class, 'pegawai']);
+        Route::get('skpd/{skpd_id}/pegawai/search', [SkpdController::class, 'searchPegawai']);
         Route::get('skpd/{skpd_id}/laporan', [SkpdController::class, 'laporan']);
         Route::get('skpd/{skpd_id}/lokasi', [SkpdController::class, 'lokasi']);
-        
+
         Route::get('skpd/{skpd_id}/cuti', [SkpdController::class, 'cuti']);
         Route::resource('skpd', SkpdController::class);
         Route::resource('rentang', RentangController::class);

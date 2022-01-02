@@ -13,7 +13,7 @@ class SkpdController extends Controller
     public function index()
     {
         $data = Skpd::get();
-        return view('superadmin.skpd.index',compact('data'));
+        return view('superadmin.skpd.index', compact('data'));
     }
 
     public function resetpass($id)
@@ -32,9 +32,9 @@ class SkpdController extends Controller
         $countPegawai = $this->countPegawai($id);
         $countLokasi  = $this->countLokasi($id);
         $countCuti  = $this->countCuti($id);
-        return view('superadmin.skpd.detail',compact('skpd','page','countPegawai','countLokasi','countCuti'));
+        return view('superadmin.skpd.detail', compact('skpd', 'page', 'countPegawai', 'countLokasi', 'countCuti'));
     }
-    
+
     public function countPegawai($id)
     {
         return Pegawai::where('skpd_id', $id)->get()->count();
@@ -55,23 +55,34 @@ class SkpdController extends Controller
         $skpd     = Skpd::find($id);
         $pegawai  = Pegawai::where('skpd_id', $id)->paginate(10);
         $page     = 'pegawai';
-        
+
         $countPegawai = $this->countPegawai($id);
         $countLokasi  = $this->countLokasi($id);
         $countCuti  = $this->countCuti($id);
-        return view('superadmin.skpd.detail',compact('skpd','page','pegawai','countPegawai','countLokasi','countCuti'));
+        return view('superadmin.skpd.detail', compact('skpd', 'page', 'pegawai', 'countPegawai', 'countLokasi', 'countCuti', 'id'));
     }
 
+    public function searchPegawai($id)
+    {
+        $countPegawai = $this->countPegawai($id);
+        $countLokasi  = $this->countLokasi($id);
+        $countCuti  = $this->countCuti($id);
+        $skpd     = Skpd::find($id);
+        $page     = 'pegawai';
+        $search = request()->search;
+        $pegawai  = Pegawai::where('skpd_id', $id)->where('nama', 'like', '%' . $search . '%')->paginate(10);
+        return view('superadmin.skpd.detail', compact('skpd', 'page', 'pegawai', 'countPegawai', 'countLokasi', 'countCuti', 'id'));
+    }
     public function lokasi($id)
     {
         $skpd    = Skpd::find($id);
         $lokasi = Lokasi::where('skpd_id', $id)->paginate(10);
         $page    = 'lokasi';
-        
+
         $countPegawai = $this->countPegawai($id);
         $countLokasi  = $this->countLokasi($id);
         $countCuti  = $this->countCuti($id);
-        return view('superadmin.skpd.detail',compact('skpd','page','lokasi','countPegawai','countLokasi','countCuti'));
+        return view('superadmin.skpd.detail', compact('skpd', 'page', 'lokasi', 'countPegawai', 'countLokasi', 'countCuti'));
     }
 
     public function cuti($id)
@@ -79,23 +90,23 @@ class SkpdController extends Controller
         $skpd    = Skpd::find($id);
         $cuti    = Cuti::where('skpd_id', $id)->paginate(10);
         $page    = 'cuti';
-        
+
         $countPegawai = $this->countPegawai($id);
         $countLokasi  = $this->countLokasi($id);
         $countCuti  = $this->countCuti($id);
-        return view('superadmin.skpd.detail',compact('skpd','page','cuti','countPegawai','countLokasi','countCuti'));
+        return view('superadmin.skpd.detail', compact('skpd', 'page', 'cuti', 'countPegawai', 'countLokasi', 'countCuti'));
     }
 
     public function laporan($id)
     {
         $skpd    = Skpd::find($id);
         $page    = 'laporan';
-        
+
         $countPegawai = $this->countPegawai($id);
         $countLokasi  = $this->countLokasi($id);
         $countCuti    = $this->countCuti($id);
         $bulan = null;
         $tahun = null;
-        return view('superadmin.skpd.detail',compact('skpd','page','countPegawai','countLokasi','countCuti','bulan','tahun'));
+        return view('superadmin.skpd.detail', compact('skpd', 'page', 'countPegawai', 'countLokasi', 'countCuti', 'bulan', 'tahun'));
     }
 }
