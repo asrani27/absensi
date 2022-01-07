@@ -58,7 +58,7 @@ ADMIN
                             @endif
                             <td>{{$no++}}</td>
                             <td>{{$item->nama}}<br />{{$item->nip}}<br />{{$item->jabatan}}</td>
-                            <td>{{$item->pangkat}}</td>
+                            <td>{{$item->pangkat}}<br />{{$item->golongan}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal_lahir)->format('d-m-Y')}}</td>
                             <td>
 
