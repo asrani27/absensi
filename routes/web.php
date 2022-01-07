@@ -98,6 +98,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
         Route::get('laporan', [LaporanAdminController::class, 'index']);
         Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggal']);
+        Route::get('laporan/tanggal/excel', [LaporanAdminController::class, 'excel']);
         Route::get('laporan/rekap', [LaporanAdminController::class, 'bulan']);
         Route::get('generate/presensi', [AdminController::class, 'generate']);
         Route::get('tampilgenerate', [AdminController::class, 'tampilgenerate']);

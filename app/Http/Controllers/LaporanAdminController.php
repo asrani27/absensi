@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DoubleData;
+use Excel;
 use Carbon\Carbon;
 use App\Models\Skpd;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Models\Ringkasan;
+use App\Models\DoubleData;
 use Illuminate\Http\Request;
+use App\Exports\PresensiExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -36,39 +38,45 @@ class LaporanAdminController extends Controller
 
     public function tanggal()
     {
+        $jenis = request()->jenis;
         $tanggal = request()->tanggal;
         $skpd = Auth::user()->skpd;
+        if ($jenis == 'excel') {
+            return Excel::download(new PresensiExport($tanggal, $skpd), 'presensi.xlsx');
+        } else {
 
-        $presensi = Presensi::where('skpd_id', $skpd->id)->where('tanggal', $tanggal)->get();
+            $presensi = Presensi::where('skpd_id', $skpd->id)->where('tanggal', $tanggal)->get();
 
-        $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('jabatan', '!=', null)->orderBy('urutan', 'ASC')->get();
+            $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('jabatan', '!=', null)->orderBy('urutan', 'DESC')->get();
 
-        //mapping data
-        $data = $datapegawai->map(function ($item) use ($presensi, $tanggal) {
-            $check = $presensi->where('nip', $item->nip);
-            if (count($check) == 1) {
-                $item->presensi = $check->first();
-            } elseif (count($check) == 0) {
-                //Buat Presensi Default
-                $p = new Presensi;
-                $p->nip = $item->nip;
-                $p->nama = $item->nama;
-                $p->skpd_id = $item->skpd_id;
-                $p->tanggal = $tanggal;
-                $p->jam_masuk = '00:00:00';
-                $p->jam_pulang = '00:00:00';
-                $p->save();
-            } else {
-                //Log Data Double 
-                $d = new DoubleData;
-                $d->nip = $item->nip;
-                $d->tanggal = $tanggal;
-                $d->save();
-            }
-            return $item;
-        });
+            //mapping data
+            $data = $datapegawai->map(function ($item) use ($presensi, $tanggal) {
+                $check = $presensi->where('nip', $item->nip);
+                if (count($check) == 1) {
+                    $item->presensi = $check->first();
+                } elseif (count($check) == 0) {
+                    //Buat Presensi Default
+                    $p = new Presensi;
+                    $p->nip = $item->nip;
+                    $p->nama = $item->nama;
+                    $p->skpd_id = $item->skpd_id;
+                    $p->tanggal = $tanggal;
+                    $p->jam_masuk = '00:00:00';
+                    $p->jam_pulang = '00:00:00';
+                    $p->save();
+                } else {
+                    //Log Data Double 
+                    $d = new DoubleData;
+                    $d->nip = $item->nip;
+                    $d->tanggal = $tanggal;
+                    $d->save();
+                }
+                return $item;
+            });
 
-        return view('admin.laporan.tanggal', compact('data', 'skpd', 'tanggal'));
+            $pimpinan = $datapegawai->first();
+            return view('admin.laporan.tanggal', compact('data', 'skpd', 'tanggal', 'pimpinan'));
+        }
     }
 
     public function bulan()

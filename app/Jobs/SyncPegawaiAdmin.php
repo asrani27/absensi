@@ -34,7 +34,7 @@ class SyncPegawaiAdmin implements ShouldQueue
     public function handle()
     {
         $check = Pegawai::where('nip', $this->pegawai->nip)->first();
-        if($check == null){
+        if ($check == null) {
             //simpan data
             $p = new Pegawai;
             $p->nip = $this->pegawai->nip;
@@ -45,16 +45,18 @@ class SyncPegawaiAdmin implements ShouldQueue
             $p->tanggal_lahir = $this->pegawai->tanggal_lahir;
             $p->skpd_id = $this->pegawai->skpd_id;
             $p->is_aktif = $this->pegawai->is_aktif;
-            $p->save();                            
-        }else{
+            $p->urutan = $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->kelas_id;
+            $p->save();
+        } else {
             $check->update([
-                'jabatan'       => $this->pegawai->jabatan == null ? null: $this->pegawai->jabatan->nama,
+                'jabatan'       => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->nama,
                 'skpd_id'       => $this->pegawai->skpd_id,
                 'tanggal_lahir' => $this->pegawai->tanggal_lahir,
                 'nama'          => $this->pegawai->nama,
                 'pangkat'       => $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->nama,
                 'golongan'       => $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->golongan,
                 'is_aktif'      => $this->pegawai->is_aktif,
+                'urutan'        => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->kelas_id,
             ]);
         }
     }

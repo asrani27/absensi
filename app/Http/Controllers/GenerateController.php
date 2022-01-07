@@ -16,7 +16,7 @@ class GenerateController extends Controller
     public function generate($bulan)
     {
         $year   = Carbon::today()->format('Y');
-        $month  = $year.'-'.$bulan;
+        $month  = $year . '-' . $bulan;
 
         $start  = Carbon::parse($month)->startOfMonth();
         $end    = Carbon::parse($month)->endOfMonth();
@@ -24,22 +24,19 @@ class GenerateController extends Controller
 
         $pegawai = Pegawai::get();
 
-        foreach($period as $date)
-        {
+        foreach ($period as $date) {
             $dates[] = $date->format('Y-m-d');
         }
 
-        $pegawai->map(function($item)use($dates){
-            foreach($dates as $d)
-            {
+        $pegawai->map(function ($item) use ($dates) {
+            foreach ($dates as $d) {
                 $check = Presensi::where('nip', $item->nip)->where('tanggal', $d)->first();
-                if($check == null){
+                if ($check == null) {
                     $p = new Presensi;
                     $p->nip = $item->nip;
                     $p->tanggal = $d;
                     $p->save();
-                }else{
-
+                } else {
                 }
             }
             return $item;
@@ -47,7 +44,7 @@ class GenerateController extends Controller
         toastr()->success('Berhasil Di Generate');
         return back();
     }
-    
+
     public function index()
     {
         return view('superadmin.generate.tanggal');
@@ -56,11 +53,11 @@ class GenerateController extends Controller
     public function notnull()
     {
         $data = Presensi::where('jam_masuk', null)->orWhere('jam_pulang', null)->take(1000)->get();
-        
-        foreach($data as $item){
+
+        foreach ($data as $item) {
             NotNullProcess::dispatch($item);
         }
-        
+
         toastr()->success('Berhasil Di Generate');
         return back();
     }
@@ -71,12 +68,11 @@ class GenerateController extends Controller
         $response = $client->request('get', 'pegawai', ['verify' => false]);
         $data =  json_decode($response->getBody())->data;
 
-        foreach($data as $item)
-        {
+        foreach ($data as $item) {
             SyncPegawaiAdmin::dispatch($item);
         }
 
-        toastr()->success('Berhasil Di Generate');
+        toastr()->success('Berhasil Di tarik');
         return back();
     }
 }
