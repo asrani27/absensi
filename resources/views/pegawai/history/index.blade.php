@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @push('css')
-    
+
 @endpush
 @section('title')
-  <strong>PRESENSI</strong>
+<strong>PRESENSI</strong>
 @endsection
 @section('content')
 <div class="row">
@@ -17,18 +17,18 @@
                         <label class="col-sm-2 col-form-label">Bulan</label>
                         <div class="col-sm-10">
                             <select name="bulan" class="form-control">
-                                <option value="01" {{old('bulan') == '01' ? 'selected':''}}>Januari</option>
-                                <option value="02" {{old('bulan') == '02' ? 'selected':''}}>Februari</option>
-                                <option value="03" {{old('bulan') == '03' ? 'selected':''}}>Maret</option>
-                                <option value="04" {{old('bulan') == '04' ? 'selected':''}}>April</option>
-                                <option value="05" {{old('bulan') == '05' ? 'selected':''}}>Mei</option>
-                                <option value="06" {{old('bulan') == '06' ? 'selected':''}}>Juni</option>
-                                <option value="07" {{old('bulan') == '07' ? 'selected':''}}>Juli</option>
-                                <option value="08" {{old('bulan') == '08' ? 'selected':''}}>Agustus</option>
-                                <option value="09" {{old('bulan') == '09' ? 'selected':''}}>September</option>
-                                <option value="10" {{old('bulan') == '10' ? 'selected':''}}>Oktober</option>
-                                <option value="11" {{old('bulan') == '11' ? 'selected':''}}>November</option>
-                                <option value="12" {{old('bulan') == '12' ? 'selected':''}}>Desember</option>
+                                <option value="01" {{old('bulan')=='01' ? 'selected' :''}}>Januari</option>
+                                <option value="02" {{old('bulan')=='02' ? 'selected' :''}}>Februari</option>
+                                <option value="03" {{old('bulan')=='03' ? 'selected' :''}}>Maret</option>
+                                <option value="04" {{old('bulan')=='04' ? 'selected' :''}}>April</option>
+                                <option value="05" {{old('bulan')=='05' ? 'selected' :''}}>Mei</option>
+                                <option value="06" {{old('bulan')=='06' ? 'selected' :''}}>Juni</option>
+                                <option value="07" {{old('bulan')=='07' ? 'selected' :''}}>Juli</option>
+                                <option value="08" {{old('bulan')=='08' ? 'selected' :''}}>Agustus</option>
+                                <option value="09" {{old('bulan')=='09' ? 'selected' :''}}>September</option>
+                                <option value="10" {{old('bulan')=='10' ? 'selected' :''}}>Oktober</option>
+                                <option value="11" {{old('bulan')=='11' ? 'selected' :''}}>November</option>
+                                <option value="12" {{old('bulan')=='12' ? 'selected' :''}}>Desember</option>
                             </select>
                         </div>
                     </div>
@@ -36,8 +36,8 @@
                         <label class="col-sm-2 col-form-label">Tahun</label>
                         <div class="col-sm-10">
                             <select name="tahun" class="form-control">
-                                <option value="2021" {{old('tahun') == '2021' ? 'selected':''}}>2021</option>
-                                <option value="2022" {{old('tahun') == '2022' ? 'selected':''}}>2022</option>
+                                <option value="2021" {{old('tahun')=='2021' ? 'selected' :''}}>2021</option>
+                                <option value="2022" {{old('tahun')=='2022' ? 'selected' :''}}>2022</option>
                             </select>
                         </div>
                     </div>
@@ -48,64 +48,64 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
 
 
 <div class="row">
     <div class="col-12">
         <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">History Presensi</h3>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap table-sm">
-            <thead>
-                <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
-                <th>Tgl</th>
-                <th>Hari</th>
-                <th class="text-center">Jam Masuk</th>
-                <th class="text-center">Jam Pulang</th>
-                <th></th>
-                </tr>
-            </thead>
-            @php
-                $no =1;
-            @endphp
-            <tbody>
-            @foreach ($data as $key => $item)
-                    @if (\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l') == 'Minggu' || \Carbon\Carbon::parse($item->tanggal)->translatedFormat('l') == 'Sabtu')
-                    <tr style="background-color: #f2dede;font-size:10px; font-family:Arial, Helvetica, sans-serif">
-                    @else
-                    <tr style="background-color: #dff0d8;font-size:10px; font-family:Arial, Helvetica, sans-serif">    
-                    @endif
-                    <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d')}}</td>
-                    <td>{{\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l')}}</td>
-                    <td class="text-center">{{$item->jam_masuk}}<br/>
-                        @if ($item->photo_masuk == null)
-                        
-                        @else
-                            <img src="{{$item->photo_masuk}}" width="75px" height="25px">
-                        @endif    
-                    </td>
-                    <td class="text-center">{{$item->jam_pulang}}<br/>
-                        @if ($item->photo_pulang == null)
-                        
-                        @else
-                            <img src="{{$item->photo_pulang}}" width="75px" height="25px">
-                        @endif    
-                    </td>
-                    <td></td>
-                    </tr>
-                @endforeach
-            </tbody>
-            </table>
-        </div>
-        <!-- /.card-body -->
+            <div class="card-header">
+                <h3 class="card-title">History Presensi</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap table-sm">
+                    <thead>
+                        <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
+                            <th>Tgl</th>
+                            <th>Hari</th>
+                            <th class="text-center">Jam Masuk</th>
+                            <th class="text-center">Jam Pulang</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @php
+                    $no =1;
+                    @endphp
+                    <tbody>
+                        @foreach ($data as $key => $item)
+                        @if (\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l') == 'Minggu')
+                        <tr style="background-color: #f2dede;font-size:10px; font-family:Arial, Helvetica, sans-serif">
+                            @else
+                        <tr style="background-color: #dff0d8;font-size:10px; font-family:Arial, Helvetica, sans-serif">
+                            @endif
+                            <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d')}}</td>
+                            <td>{{\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l')}}</td>
+                            <td class="text-center">{{$item->jam_masuk}}<br />
+                                @if ($item->photo_masuk == null)
+
+                                @else
+                                <img src="{{$item->photo_masuk}}" width="75px" height="25px">
+                                @endif
+                            </td>
+                            <td class="text-center">{{$item->jam_pulang}}<br />
+                                @if ($item->photo_pulang == null)
+
+                                @else
+                                <img src="{{$item->photo_pulang}}" width="75px" height="25px">
+                                @endif
+                            </td>
+                            <td></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
         </div>
     </div>
 </div>
-@endsection 
+@endsection
 
 @push('js')
 
