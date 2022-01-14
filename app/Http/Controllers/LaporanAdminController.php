@@ -47,7 +47,7 @@ class LaporanAdminController extends Controller
 
             $presensi = Presensi::where('skpd_id', $skpd->id)->where('tanggal', $tanggal)->get();
 
-            $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('jabatan', '!=', null)->orderBy('urutan', 'ASC')->get();
+            $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('jabatan', '!=', null)->orderBy('urutan', 'DESC')->get();
 
             //mapping data
             $data = $datapegawai->map(function ($item) use ($presensi, $tanggal) {
