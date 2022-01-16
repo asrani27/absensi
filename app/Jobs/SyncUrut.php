@@ -38,7 +38,7 @@ class SyncUrut implements ShouldQueue
         if ($check == null) {
         } else {
             $check->update([
-                'urutan'        => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->tingkat,
+                'urutan'        => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->kelas_id,
             ]);
         }
     }
