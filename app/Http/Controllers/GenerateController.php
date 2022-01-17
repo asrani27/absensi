@@ -11,6 +11,7 @@ use Carbon\CarbonPeriod;
 use App\Models\Ringkasan;
 use App\Jobs\NotNullProcess;
 use Illuminate\Http\Request;
+use App\Jobs\HitungTerlambat;
 use App\Models\LiburNasional;
 use App\Jobs\SyncPegawaiAdmin;
 
@@ -141,25 +142,13 @@ class GenerateController extends Controller
         $today = Carbon::today()->format('Y-m-d');
         $hari = Carbon::today()->translatedFormat('l');
         $jam = Jam::where('hari', $hari)->first();
-        dd($hari, $jam);
-        $presensi = Presensi::where('tanggal', $today)->get()->take(10);
+        //dd($hari, $jam);
+        $presensi = Presensi::where('tanggal', $today)->get();
         foreach ($presensi as $item) {
-
-            if ($item->jam_masuk == '00:00:00') {
-                $item->update([
-                    'terlambat' => 240,
-                ]);
-            } elseif ($item->jam_pulang == '00:00:00') {
-                $item->update([
-                    'lebih_awal' => 240,
-                ]);
-            } elseif ($item->jam_pulang > $jam->jam_masuk) {
-                $item->update([
-                    'terlambat' => 40,
-                ]);
-            }
+            HitungTerlambat::dispatch($item, $jam);
         }
 
+        toastr()->success('Selesai Di Hitung');
         return back();
     }
 
