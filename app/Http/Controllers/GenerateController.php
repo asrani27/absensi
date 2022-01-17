@@ -161,7 +161,6 @@ class GenerateController extends Controller
         }
 
         return back();
-        dd($presensi);
     }
 
     public function ringkasanpegawai()
@@ -183,5 +182,7 @@ class GenerateController extends Controller
             } else {
             }
         }
+        toastr()->success('Berhasil Di Generate');
+        return back();
     }
 }
