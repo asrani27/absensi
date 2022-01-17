@@ -118,6 +118,7 @@
               <th rowspan=2>Nama</th>
               <th rowspan=2>Jabatan</th>
               <th rowspan=2>Jum Hari</th>
+              <th rowspan=2>Jum Jam</th>
               <th colspan=2 class="text-center">Hadir Di Hari</th>
               <th colspan=8 class="text-center">Ketidakhadiran*</th>
               <th colspan=2>Total Absensi</th>
@@ -153,6 +154,8 @@
               <td>{{$item->nip}}</td>
               <td>{{$item->nama}}</td>
               <td>{{$item->jabatan}}</td>
+              <td>{{$item->jumlah_hari}}</td>
+              <td>{{$item->jumlah_jam / 60}} Jam</td>
               <td>0</td>
               <td>0</td>
               <td>0</td>
@@ -169,7 +172,6 @@
               <td>0</td>
               <td>0</td>
               <td>0</td>
-              <td>100</td>
               <td>0</td>
             </tr>
             @endforeach

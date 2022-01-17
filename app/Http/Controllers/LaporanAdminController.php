@@ -21,8 +21,9 @@ class LaporanAdminController extends Controller
     {
         $bulan = Carbon::today()->format('m');
         $tahun = Carbon::today()->format('Y');
-
-        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->get();
+        $data = [];
+        //$data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->get();
+        //dd($data);
         return view('admin.laporan.index', compact('bulan', 'tahun', 'data'));
     }
 
@@ -94,8 +95,8 @@ class LaporanAdminController extends Controller
             toastr()->error('Dalam Pengembangan');
             return back();
         } else {
-
-            $pegawai = Pegawai::where('skpd_id', $skpd->id)->orderBy('urutan', 'ASC')->get();
+            $pegawai = Pegawai::where('skpd_id', $skpd->id)->where('is_aktif', 1)->orderBy('urutan', 'DESC')->get();
+            //dd($pegawai);
             foreach ($pegawai as $item) {
                 $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
                 if ($check == null) {
@@ -111,7 +112,7 @@ class LaporanAdminController extends Controller
                 }
             }
 
-            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->get();
+            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->where('jabatan', '!=', null)->get();
             request()->flash();
             return view('admin.laporan.index', compact('bulan', 'tahun', 'data'));
         }

@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Jam;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use Carbon\CarbonPeriod;
+use App\Models\Ringkasan;
 use App\Jobs\NotNullProcess;
 use Illuminate\Http\Request;
+use App\Models\LiburNasional;
 use App\Jobs\SyncPegawaiAdmin;
 
 class GenerateController extends Controller
@@ -74,5 +77,111 @@ class GenerateController extends Controller
 
         toastr()->success('Berhasil Di tarik');
         return back();
+    }
+
+    public function limaharikerja()
+    {
+        $data = Pegawai::get();
+        foreach ($data as $item) {
+            $item->update(['jenis_presensi' => 1]);
+        }
+        toastr()->success('Berhasil Di Generate, semua pegawai masuk dalam presensi 5 hari kerja');
+        return back();
+    }
+
+    public function hitungpresensi()
+    {
+        //hitung jumlah hari bulan ini di potong sabtu dan minggu dan hari libur
+        $bulan = Carbon::now()->format('m');
+        $tahun = Carbon::now()->format('Y');
+        $tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->pluck('tanggal')->toArray();
+        $weekends = [];
+        $start = Carbon::now()->startOfMonth();
+        $end = Carbon::now()->endOfMonth();
+        $period = CarbonPeriod::create($start, $end);
+        $dates = [];
+        foreach ($period as $date) {
+            if ($date->isWeekend()) {
+                array_push($weekends, $date->format('Y-m-d'));
+            }
+            $dates[] = $date->format('Y-m-d');
+        }
+        $array_merge = array_merge($weekends, $tanggalmerah);
+        $jumlah_hari_kerja = collect($dates)->diff($array_merge);
+
+        $jumlah_jam = [];
+        foreach ($jumlah_hari_kerja as $item) {
+            $jumlah_jam[] = Carbon::parse($item)->format('l') == 'Friday' ? 210 : 510;
+        }
+        //dd(array_sum($jumlah_jam));
+        //Update Jumlah Hari Kerja Di Tabel Ringkasan        
+        $ringkasan = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->get();
+        //dd($ringkasan);
+        foreach ($ringkasan as $item) {
+            $check = Pegawai::where('nip', $item->nip)->first();
+            //dd($check, $item);
+            if ($check->jenis_presensi == 1) {
+                $item->update([
+                    'jumlah_hari' => count($jumlah_hari_kerja),
+                    'jumlah_jam' => array_sum($jumlah_jam),
+                ]);
+            } else {
+            }
+        }
+        //$ringkasan = Ringkasan::where()
+        toastr()->success('Berhasil Di Generate');
+        return back();
+        // dd($dates, $array_merge, $jumlah_hari_kerja);
+        // dd($start, $end, $period, $dates, $weekends, $tanggalmerah, $array_merge);
+        //        $totaldate = Carbon::
+    }
+
+    public function hitungterlambat()
+    {
+        $today = Carbon::today()->format('Y-m-d');
+        $hari = Carbon::today()->translatedFormat('l');
+        $jam = Jam::where('hari', $hari)->first();
+        dd($hari, $jam);
+        $presensi = Presensi::where('tanggal', $today)->get()->take(10);
+        foreach ($presensi as $item) {
+
+            if ($item->jam_masuk == '00:00:00') {
+                $item->update([
+                    'terlambat' => 240,
+                ]);
+            } elseif ($item->jam_pulang == '00:00:00') {
+                $item->update([
+                    'lebih_awal' => 240,
+                ]);
+            } elseif ($item->jam_pulang > $jam->jam_masuk) {
+                $item->update([
+                    'terlambat' => 40,
+                ]);
+            }
+        }
+
+        return back();
+        dd($presensi);
+    }
+
+    public function ringkasanpegawai()
+    {
+        $bulan = Carbon::now()->format('m');
+        $tahun = Carbon::now()->format('Y');
+        $pegawai = Pegawai::get();
+        foreach ($pegawai as $item) {
+            $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            if ($check == null) {
+                $r = new Ringkasan;
+                $r->nip     = $item->nip;
+                $r->nama    = $item->nama;
+                $r->jabatan = $item->jabatan;
+                $r->skpd_id = $item->skpd_id;
+                $r->bulan   = $bulan;
+                $r->tahun   = $tahun;
+                $r->save();
+            } else {
+            }
+        }
     }
 }

@@ -7,6 +7,7 @@ use App\Models\Cuti;
 use App\Models\Skpd;
 use App\Models\Lokasi;
 use GuzzleHttp\Client;
+use App\Models\Pegawai;
 use App\Models\Rentang;
 use App\Models\Presensi;
 use Jenssegers\Agent\Agent;
@@ -59,8 +60,9 @@ class HomeController extends Controller
 
         $data  = Presensi::where('tanggal', $today)->where('skpd_id', $user->id)->get()->map(function ($item) use ($check) {
             $item->hapus = $check->where('nip', $item->nip)->count();
+            $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
             return $item;
-        });
+        })->sortByDesc('urut');
 
         return view('admin.home', compact('data'));
     }

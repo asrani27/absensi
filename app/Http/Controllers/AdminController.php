@@ -27,22 +27,21 @@ class AdminController extends Controller
         $skpd_id = Auth::user()->skpd->id;
         $pegawai = Pegawai::where('skpd_id', $skpd_id)->get();
 
-        foreach($pegawai as $item)
-        {
+        foreach ($pegawai as $item) {
             $check = Presensi::where('nip', $item->nip)->where('tanggal', Carbon::today()->format('Y-m-d'))->first();
-            if($check == null){
+            if ($check == null) {
                 $n = new Presensi;
                 $n->nip     = $item->nip;
                 $n->tanggal = Carbon::today()->format('Y-m-d');
                 $n->skpd_id = $skpd_id;
                 $n->save();
-            }else{
+            } else {
                 $check->update([
                     'nama' => $item->nama
                 ]);
             }
         }
-        
+
         toastr()->success('Berhasil Di Generate');
         return back();
     }
@@ -51,32 +50,31 @@ class AdminController extends Controller
     {
         $button = request()->button;
         $tanggal = request()->tanggal;
-        if($button == '1'){
-            
-            $check = Presensi::where('tanggal', $tanggal)->where('skpd_id',Auth::user()->skpd->id)->get();
-            $data = Presensi::where('skpd_id',Auth::user()->skpd->id)->where('tanggal', $tanggal)->get()->map(function($item)use($check){
+        if ($button == '1') {
+
+            $check = Presensi::where('tanggal', $tanggal)->where('skpd_id', Auth::user()->skpd->id)->get();
+            $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', $tanggal)->get()->map(function ($item) use ($check) {
                 $item->hapus = $check->where('nip', $item->nip)->count();
+                $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
                 return $item;
-            });
+            })->sortByDesc('urut');
             request()->flash();
-            
-            return view('admin.home',compact('data'));
-        }else{ 
+
+            return view('admin.home', compact('data'));
+        } else {
             $skpd_id = Auth::user()->skpd->id;
             $pegawai = Pegawai::where('skpd_id', $skpd_id)->where('is_aktif', 1)->get();
-            
-            foreach($pegawai as $item)
-            {
+
+            foreach ($pegawai as $item) {
                 $check = Presensi::where('nip', $item->nip)->where('tanggal', $tanggal)->first();
-                if($check == null){
+                if ($check == null) {
                     $n = new Presensi;
                     $n->nip     = $item->nip;
                     $n->nama    = $item->nama;
                     $n->tanggal = $tanggal;
                     $n->skpd_id = $skpd_id;
                     $n->save();
-                    
-                }else{
+                } else {
                     $check->update([
                         'nama' => $item->nama,
                         'skpd_id' => $skpd_id
@@ -92,9 +90,9 @@ class AdminController extends Controller
     public function editPresensi($id)
     {
         $data = Presensi::find($id);
-        return view('admin.presensi.edit',compact('data'));
+        return view('admin.presensi.edit', compact('data'));
     }
- 
+
     public function deletePresensi($id)
     {
         Presensi::find($id)->delete();
@@ -103,24 +101,24 @@ class AdminController extends Controller
     }
     public function updatePresensi(Request $req, $id)
     {
-        if($req->jam_masuk == '00:00'){
+        if ($req->jam_masuk == '00:00') {
             $jam_masuk = null;
-        }else{
+        } else {
             $jam_masuk = $req->jam_masuk;
         }
-        
-        if($req->jam_pulang == '00:00'){
+
+        if ($req->jam_pulang == '00:00') {
             $jam_pulang = null;
-        }else{
+        } else {
             $jam_pulang = $req->jam_pulang;
         }
-        
-        
+
+
         Presensi::find($id)->update([
             'jam_masuk' => $jam_masuk,
             'jam_pulang' => $jam_pulang,
             'keterangan' => $req->keterangan
-        ]); 
+        ]);
         toastr()->success('Presensi Berhasil Di Update');
         return back();
     }
@@ -133,12 +131,12 @@ class AdminController extends Controller
     public function updatepassword(Request $req)
     {
         $passlama = Auth::user()->password;
-        if(Hash::check($req->passlama , $passlama)){
+        if (Hash::check($req->passlama, $passlama)) {
             Auth::user()->update([
                 'password' => bcrypt($req->passbaru),
             ]);
             toastr()->success('Password Berhasil Di Ubah');
-        }else{
+        } else {
             toastr()->error('Password Lama Tidak Cocok');
         }
         return back();

@@ -3,52 +3,69 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cuti;
-use App\Models\JenisKeterangan;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
+use App\Models\JenisKeterangan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class CutiController extends Controller
 {
     public function index()
     {
-        $data = Cuti::orderBy('id','DESC')->where('skpd_id', Auth::user()->skpd->id)->get();
-        return view('admin.cuti.index',compact('data'));
+        $data = Cuti::orderBy('id', 'DESC')->where('skpd_id', Auth::user()->skpd->id)->get();
+        return view('admin.cuti.index', compact('data'));
     }
 
     public function create()
     {
         $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->get();
         $jenis = JenisKeterangan::get();
-        return view('admin.cuti.create',compact('pegawai','jenis'));
+        return view('admin.cuti.create', compact('pegawai', 'jenis'));
     }
-    
+
     public function store(Request $request)
     {
         $attr            = $request->all();
         $attr['skpd_id'] = Auth::user()->skpd->id;
-        
+
         $attr['nama']    = Pegawai::where('nip', $request->nip)->first()->nama;
-        
+
+        $validator = Validator::make($request->all(), [
+            'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
+        ]);
+
+        if ($validator->fails()) {
+            toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
+            return back();
+        }
+
+        if ($request->hasFile('file')) {
+            $filename = $request->file->getClientOriginalName();
+            $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
+            $request->file->storeAs('/public/cuti', $filename);
+            $attr['file'] = $filename;
+        } else {
+            $attr['file'] = null;
+        }
+
         Cuti::create($attr);
 
         toastr()->success('Data Di Simpan');
         return redirect('admin/cuti');
     }
-    
+
     public function show($id)
     {
         //
     }
-    
+
     public function edit($id)
     {
-        
     }
-    
+
     public function update(Request $request, $id)
     {
-
     }
 
     public function destroy($id)

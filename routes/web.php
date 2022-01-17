@@ -126,6 +126,12 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('generatetanggal', [GenerateController::class, 'index']);
         Route::get('notnull', [GenerateController::class, 'notnull']);
         Route::get('tarikpegawai', [GenerateController::class, 'tarikpegawai']);
+        Route::get('limaharikerja', [GenerateController::class, 'limaharikerja']);
+        Route::get('hitungpresensi', [GenerateController::class, 'hitungpresensi']);
+        Route::get('hitungtotaljam', [GenerateController::class, 'hitungtotaljam']);
+        Route::get('hitungterlambat', [GenerateController::class, 'hitungterlambat']);
+
+        Route::get('ringkasanpegawai', [GenerateController::class, 'ringkasanpegawai']);
         Route::get('generatetanggal/{bulan}', [GenerateController::class, 'generate']);
     });
 });
