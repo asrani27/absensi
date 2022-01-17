@@ -94,6 +94,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('qrcode/generate', [QrcodeController::class, 'generateQrcode']);
         Route::get('qrcode/tampil/{id}', [QrcodeController::class, 'tampilQr']);
         Route::resource('qrcode', QrcodeController::class);
+        Route::get('cuti/upload/{id}', [CutiController::class, 'upload']);
+        Route::post('cuti/upload/{id}', [CutiController::class, 'storeUpload']);
         Route::resource('cuti', CutiController::class);
 
         Route::get('laporan', [LaporanAdminController::class, 'index']);

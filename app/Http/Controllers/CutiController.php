@@ -68,6 +68,39 @@ class CutiController extends Controller
     {
     }
 
+    public function upload($id)
+    {
+        return view('admin.cuti.upload', compact('id'));
+    }
+
+    public function storeUpload(Request $req, $id)
+    {
+
+        $validator = Validator::make($req->all(), [
+            'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
+        ]);
+
+        if ($validator->fails()) {
+            toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
+            return back();
+        }
+
+        if ($req->hasFile('file')) {
+            $filename = $req->file->getClientOriginalName();
+            $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
+            $req->file->storeAs('/public/cuti', $filename);
+            $namafile = $filename;
+        } else {
+            $namafile = null;
+        }
+
+        Cuti::find($id)->update([
+            'file' => $namafile
+        ]);
+
+        toastr()->success('Berhasil Di upload');
+        return redirect('admin/cuti');
+    }
     public function destroy($id)
     {
         Cuti::find($id)->delete();

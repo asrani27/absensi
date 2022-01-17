@@ -44,7 +44,17 @@ CUTI/TL/IZIN/SAKIT
                             <td>{{\Carbon\Carbon::parse($item->tanggal_mulai)->isoFormat('D MMMM Y')}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal_selesai)->isoFormat('D MMMM Y')}}</td>
                             <td>{{$item->jenis_keterangan->keterangan}}</td>
-                            <td><a href="/storage/cuti/{{$item->file}}" target="_blank">Lihat</a></td>
+                            <td>
+                                @if ($item->file == null)
+                                <a href="/admin/cuti/upload{{$item->id}}" class="btn btn-xs btn-info"
+                                    target="_blank">Upload</a>
+                                @else
+                                <a href="/storage/cuti/{{$item->file}}" class="btn btn-xs btn-info"
+                                    target="_blank">Lihat</a><br />
+                                <a href="/admin/cuti/upload/{{$item->id}}" class="btn btn-xs btn-success"
+                                    target="_blank">Upload</a>
+                                @endif
+                            </td>
                             <td>{{$item->keterangan}}</td>
                             <td>
 
