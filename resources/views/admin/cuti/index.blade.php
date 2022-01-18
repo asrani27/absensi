@@ -46,7 +46,7 @@ CUTI/TL/IZIN/SAKIT
                             <td>{{$item->jenis_keterangan->keterangan}}</td>
                             <td>
                                 @if ($item->file == null)
-                                <a href="/admin/cuti/upload{{$item->id}}" class="btn btn-xs btn-info"
+                                <a href="/admin/cuti/upload/{{$item->id}}" class="btn btn-xs btn-info"
                                     target="_blank">Upload</a>
                                 @else
                                 <a href="/storage/cuti/{{$item->file}}" class="btn btn-xs btn-info"
