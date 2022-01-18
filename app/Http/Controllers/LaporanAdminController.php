@@ -112,7 +112,12 @@ class LaporanAdminController extends Controller
                 }
             }
 
-            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->where('jabatan', '!=', null)->get();
+            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->where('jabatan', '!=', null)->get()
+                ->map(function ($item) {
+                    $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                    return $item;
+                })->sortByDesc('urut');
+
             request()->flash();
 
             return view('admin.laporan.index', compact('bulan', 'tahun', 'data'));

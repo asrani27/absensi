@@ -132,9 +132,6 @@ class GenerateController extends Controller
         //$ringkasan = Ringkasan::where()
         toastr()->success('Berhasil Di Generate');
         return back();
-        // dd($dates, $array_merge, $jumlah_hari_kerja);
-        // dd($start, $end, $period, $dates, $weekends, $tanggalmerah, $array_merge);
-        //        $totaldate = Carbon::
     }
 
     public function hitungterlambat(Request $req)
