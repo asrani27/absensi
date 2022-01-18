@@ -169,8 +169,8 @@
               <td>0</td>
               <td>0</td>
               <td>0</td>
-              <td>0</td>
-              <td>0</td>
+              <td>{{$item->datang_lambat / 60}}</td>
+              <td>{{$item->pulang_cepat / 60}}</td>
               <td>0</td>
               <td>0</td>
             </tr>
