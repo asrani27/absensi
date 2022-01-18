@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use App\Models\Jam;
+use App\Models\Komando;
 use App\Models\Presensi;
 use App\Jobs\HitungTerlambat;
 use App\Models\LiburNasional;
@@ -74,7 +75,10 @@ class HitungTerlambatHariIni extends Command
                     HitungTerlambat::dispatch($item, $jam);
                 }
 
-                toastr()->success('Selesai Di Hitung');
+                $com['nama_command'] = 'hitung terlambat ini';
+                $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
+
+                Komando::create($com);
             }
         }
     }
