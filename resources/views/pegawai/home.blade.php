@@ -152,7 +152,7 @@
             @if ($persen_kehadiran == null)
             0 %
             @else
-            {{$persen_kehadiran->persen_kehadiran}}
+            {{$persen_kehadiran->persen_kehadiran}} %
             @endif
 
           </span>
