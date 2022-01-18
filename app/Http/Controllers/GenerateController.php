@@ -200,4 +200,21 @@ class GenerateController extends Controller
         toastr()->success('Berhasil Di Generate');
         return back();
     }
+
+    public function totalterlambat()
+    {
+        $bulan = Carbon::now()->format('m');
+        $tahun = Carbon::now()->format('Y');
+        $pegawai = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->get();
+        $pegawai->map(function ($item) use ($bulan, $tahun) {
+            $presensi = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+            $item->datang_lambat = $presensi->sum('terlambat');
+            $item->pulang_cepat = $presensi->sum('lebih_awal');
+            $item->save();
+        });
+        toastr()->success('Berhasil Di Akumulasi');
+        return back();
+        dd($pegawai);
+        dd('d', $bulan, $tahun);
+    }
 }

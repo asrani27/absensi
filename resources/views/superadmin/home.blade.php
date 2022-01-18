@@ -32,6 +32,7 @@
                 <a href="/superadmin/ringkasanpegawai" class="btn btn-outline-primary">Masukkan Semua Pegawai Ke
                     Laporan
                     Bulanan</a>
+                <a href="/superadmin/totalterlambat" class="btn btn-outline-primary">Hitung Total terlambat</a>
             </div>
         </div>
         <div class="card">
