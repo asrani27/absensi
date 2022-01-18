@@ -75,7 +75,7 @@ class HitungTerlambatHariIni extends Command
                     HitungTerlambat::dispatch($item, $jam);
                 }
 
-                $com['nama_command'] = 'hitung terlambat ini';
+                $com['nama_command'] = 'hitung terlambat tanggal' . $today;
                 $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
 
                 Komando::create($com);

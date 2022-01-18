@@ -53,7 +53,7 @@ class RekapAbsensiBulanan extends Command
             $item->save();
         });
 
-        $com['nama_command'] = 'rekap bulanan';
+        $com['nama_command'] = 'update rekap bulanan';
         $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
 
         Komando::create($com);
