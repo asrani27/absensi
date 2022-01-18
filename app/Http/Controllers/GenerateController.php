@@ -137,18 +137,28 @@ class GenerateController extends Controller
         //        $totaldate = Carbon::
     }
 
-    public function hitungterlambat()
+    public function hitungterlambat(Request $req)
     {
-        $today = Carbon::today()->format('Y-m-d');
-        $hari = Carbon::today()->translatedFormat('l');
-        $jam = Jam::where('hari', $hari)->first();
-        //dd($hari, $jam);
-        $presensi = Presensi::where('tanggal', $today)->get();
-        foreach ($presensi as $item) {
-            HitungTerlambat::dispatch($item, $jam);
+        if (Carbon::parse($req->tanggal)->isWeekend() == true) {
+            toastr()->success('ini adalah hari weekend');
+        } else {
+            if (LiburNasional::where('tanggal', $req->tanggal)->first() != null) {
+                toastr()->success('ini adalah hari libur nasional');
+            } else {
+                $today = Carbon::today()->format('Y-m-d');
+                $hari = Carbon::today()->translatedFormat('l');
+                $jam = Jam::where('hari', $hari)->first();
+                //dd($hari, $jam);
+                $presensi = Presensi::where('tanggal', $today)->get();
+                foreach ($presensi as $item) {
+                    HitungTerlambat::dispatch($item, $jam);
+                }
+
+                toastr()->success('Selesai Di Hitung');
+            }
         }
 
-        toastr()->success('Selesai Di Hitung');
+        $req->flash();
         return back();
     }
 

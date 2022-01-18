@@ -131,7 +131,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('limaharikerja', [GenerateController::class, 'limaharikerja']);
         Route::get('hitungpresensi', [GenerateController::class, 'hitungpresensi']);
         Route::get('hitungtotaljam', [GenerateController::class, 'hitungtotaljam']);
-        Route::get('hitungterlambat', [GenerateController::class, 'hitungterlambat']);
+        //Route::get('hitungterlambat', [GenerateController::class, 'hitungterlambat']);
+        Route::post('hitungterlambat', [GenerateController::class, 'hitungterlambat']);
 
         Route::get('ringkasanpegawai', [GenerateController::class, 'ringkasanpegawai']);
         Route::get('generatetanggal/{bulan}', [GenerateController::class, 'generate']);
