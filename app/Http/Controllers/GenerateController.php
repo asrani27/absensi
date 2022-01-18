@@ -159,8 +159,10 @@ class GenerateController extends Controller
                 }
                 toastr()->success('ini adalah hari libur nasional');
             } else {
-                $today = Carbon::today()->format('Y-m-d');
-                $hari = Carbon::today()->translatedFormat('l');
+                $today = $req->tanggal;
+                //Carbon::today()->format('Y-m-d');
+                $hari = Carbon::parse($req->tanggal)->translatedFormat('l');
+                //Carbon::today()->translatedFormat('l');
                 $jam = Jam::where('hari', $hari)->first();
                 //dd($hari, $jam);
                 $presensi = Presensi::where('tanggal', $today)->get();
