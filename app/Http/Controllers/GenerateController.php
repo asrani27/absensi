@@ -140,9 +140,23 @@ class GenerateController extends Controller
     public function hitungterlambat(Request $req)
     {
         if (Carbon::parse($req->tanggal)->isWeekend() == true) {
+            $presensi = Presensi::where('tanggal', $today)->get();
+            foreach ($presensi as $item) {
+                $item->update([
+                    'terlambat' => 0,
+                    'lebih_awal' => 0,
+                ]);
+            }
             toastr()->success('ini adalah hari weekend');
         } else {
             if (LiburNasional::where('tanggal', $req->tanggal)->first() != null) {
+                $presensi = Presensi::where('tanggal', $today)->get();
+                foreach ($presensi as $item) {
+                    $item->update([
+                        'terlambat' => 0,
+                        'lebih_awal' => 0,
+                    ]);
+                }
                 toastr()->success('ini adalah hari libur nasional');
             } else {
                 $today = Carbon::today()->format('Y-m-d');
