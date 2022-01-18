@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('presensi')->everyMinute();
         $schedule->command('hitungharidanjam')->everyMinute();
         $schedule->command('hitungterlambathariini')->everyMinute();
+        $schedule->command('rekapbulanan')->everyMinute();
     }
 
     /**

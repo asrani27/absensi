@@ -207,11 +207,11 @@ class GenerateController extends Controller
             $presensi = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
             $item->datang_lambat = $presensi->sum('terlambat');
             $item->pulang_cepat = $presensi->sum('lebih_awal');
+            $item->jam_kerja = round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / 60, 2);
+            $item->persen_kehadiran = round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / $item->jumlah_jam * 100, 2);
             $item->save();
         });
         toastr()->success('Berhasil Di Akumulasi');
         return back();
-        dd($pegawai);
-        dd('d', $bulan, $tahun);
     }
 }
