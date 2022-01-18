@@ -123,8 +123,8 @@
               <th colspan=8 class="text-center">Ketidakhadiran*</th>
               <th colspan=2>Total Absensi</th>
               <th rowspan=2>Jam Kerja Pegawai</th>
-              <th rowspan=2>Datang Lambat</th>
-              <th rowspan=2>Pulang Cepat</th>
+              <th rowspan=2>Datang <br />Lambat<br />(Jam)</th>
+              <th rowspan=2>Pulang <br />Cepat<br />(Jam)</th>
               <th rowspan=2>% Hadir</th>
               <th rowspan=2>Total Hari Kerja</th>
             </tr>
@@ -169,8 +169,8 @@
               <td>0</td>
               <td>0</td>
               <td>0</td>
-              <td>{{$item->datang_lambat / 60}}</td>
-              <td>{{$item->pulang_cepat / 60}}</td>
+              <td>{{round($item->datang_lambat / 60)}}</td>
+              <td>{{round($item->pulang_cepat / 60)}}</td>
               <td>0</td>
               <td>0</td>
             </tr>
