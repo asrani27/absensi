@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Rentang;
 use App\Models\Presensi;
+use App\Models\Ringkasan;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,7 +48,8 @@ class HomeController extends Controller
 
         $cuti = Cuti::where('nip', $nip)->where('tanggal_selesai', '>=', $today)->where('tanggal_mulai', '<=', $today)->first();
 
-        return view('pegawai.home', compact('skpd', 'latlong2', 'os', 'lokasi', 'cuti', 'rentang'));
+        $persen_kehadiran = Ringkasan::where('nip', $nip)->where('bulan', Carbon::now()->format('m'))->where('tahun', Carbon::now()->format('Y'))->first();
+        return view('pegawai.home', compact('skpd', 'latlong2', 'os', 'lokasi', 'cuti', 'rentang', 'persen_kehadiran'));
     }
 
     public function admin()

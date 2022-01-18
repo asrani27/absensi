@@ -122,21 +122,6 @@
       <!-- /.info-box -->
     </a>
   </div>
-  <!-- /.col -->
-  <div class="col-12 col-sm-6 col-md-3">
-    <a href="/pegawai/presensi/barcode" style="color:black">
-      <div class="info-box mb-3">
-        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-qrcode"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">PRESENSI BARCODE</span>
-          <span class="info-box-number">Scan Barcode</span>
-        </div>
-        <!-- /.info-box-content -->
-      </div>
-    </a>
-    <!-- /.info-box -->
-  </div>
   <!-- fix for small devices only -->
   <div class="clearfix hidden-md-up"></div>
 
@@ -148,6 +133,29 @@
         <div class="info-box-content">
           <span class="info-box-text">PRESENSI MANUAL</span>
           <span class="info-box-number">Oleh Admin SKPD</span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+    </a>
+    <!-- /.info-box -->
+  </div>
+
+  <!-- /.col -->
+  <div class="col-12 col-sm-6 col-md-3">
+    <a href="/pegawai/presensi/barcode" style="color:black">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-qrcode"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">PERSENTASE KEHADIRAN</span>
+          <span class="info-box-number">
+            @if ($persen_kehadiran == null)
+            0 %
+            @else
+            {{$persen_kehadiran->persen_kehadiran}}
+            @endif
+
+          </span>
         </div>
         <!-- /.info-box-content -->
       </div>

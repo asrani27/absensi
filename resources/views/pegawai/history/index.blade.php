@@ -17,6 +17,7 @@
                         <label class="col-sm-2 col-form-label">Bulan</label>
                         <div class="col-sm-10">
                             <select name="bulan" class="form-control">
+                                <option value="">-Bulan-</option>
                                 <option value="01" {{old('bulan')=='01' ? 'selected' :''}}>Januari</option>
                                 <option value="02" {{old('bulan')=='02' ? 'selected' :''}}>Februari</option>
                                 <option value="03" {{old('bulan')=='03' ? 'selected' :''}}>Maret</option>
@@ -36,6 +37,7 @@
                         <label class="col-sm-2 col-form-label">Tahun</label>
                         <div class="col-sm-10">
                             <select name="tahun" class="form-control">
+                                <option value="">-Tahun-</option>
                                 <option value="2021" {{old('tahun')=='2021' ? 'selected' :''}}>2021</option>
                                 <option value="2022" {{old('tahun')=='2022' ? 'selected' :''}}>2022</option>
                             </select>
@@ -55,7 +57,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">History Presensi</h3>
+                <h3 class="card-title">History Presensi Bulan : {{old('bulan')}}/{{old('tahun')}}</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
