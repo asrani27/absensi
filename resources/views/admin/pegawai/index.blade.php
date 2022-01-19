@@ -43,6 +43,7 @@ ADMIN
                             <th>Pangkat</th>
                             <th>Tgl Lahir</th>
                             <th>Lokasi Presensi</th>
+                            <th>Jenis Presensi</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -73,6 +74,18 @@ ADMIN
                                     class="btn btn-xs bg-gradient-success"><i class="fas fa-pen"></i></a>
                                 @endif
                                 @endif
+                            </td>
+                            <td>
+                                @if ($item->jenis_presensi == 1)
+                                5 Hari Kerja
+                                @elseif($item->jenis_presensi == 2)
+                                6 Hari kerja
+                                @else
+                                shift
+                                @endif
+
+                                <a href="/admin/pegawai/{{$item->id}}/jenispresensi"
+                                    class="btn btn-xs bg-gradient-info"><i class="fas fa-edit"></i></a>
                             </td>
                             <td>
                                 @if ($item->is_aktif == 0)

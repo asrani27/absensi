@@ -198,4 +198,19 @@ class PegawaiController extends Controller
         toastr()->success('Urutan Berhasil Di Update');
         return back();
     }
+
+    public function jenispresensi($id)
+    {
+        $data = Pegawai::find($id);
+        return view('admin.pegawai.jenispresensi', compact('data'));
+    }
+
+    public function simpanjenispresensi(Request $req, $id)
+    {
+        Pegawai::find($id)->update([
+            'jenis_presensi' => $req->jenis_presensi,
+        ]);
+        toastr()->success('Jenis Presensi Berhasil Di Update');
+        return redirect('/admin/pegawai');
+    }
 }
