@@ -13,7 +13,7 @@ class CutiController extends Controller
 {
     public function index()
     {
-        $data = Cuti::orderBy('id', 'DESC')->where('skpd_id', Auth::user()->skpd->id)->get();
+        $data = Cuti::orderBy('id', 'DESC')->where('skpd_id', Auth::user()->skpd->id)->paginate(10);
         return view('admin.cuti.index', compact('data'));
     }
 

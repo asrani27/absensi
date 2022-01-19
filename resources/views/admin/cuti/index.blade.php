@@ -37,7 +37,7 @@ CUTI/TL/IZIN/SAKIT
                     @endphp
                     <tbody>
                         @foreach ($data as $key => $item)
-                        <tr>
+                        <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif; ">
                             <td>{{$no++}}</td>
                             <td>{{$item->nip}}</td>
                             <td>{{$item->nama}}</td>
@@ -50,7 +50,7 @@ CUTI/TL/IZIN/SAKIT
                                     target="_blank">Upload</a>
                                 @else
                                 <a href="/storage/cuti/{{$item->file}}" class="btn btn-xs btn-info"
-                                    target="_blank">Lihat</a><br />
+                                    target="_blank">Lihat</a>
                                 <a href="/admin/cuti/upload/{{$item->id}}" class="btn btn-xs btn-success"
                                     target="_blank">Upload</a>
                                 @endif
