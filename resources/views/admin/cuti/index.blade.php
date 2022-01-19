@@ -76,6 +76,7 @@ CUTI/TL/IZIN/SAKIT
             </div>
             <!-- /.card-body -->
         </div>
+        {{$data->links()}}
     </div>
 </div>
 
