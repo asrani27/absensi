@@ -24,10 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('presensi')->everyMinute();
-        $schedule->command('hitungharidanjam')->everyMinute();
-        $schedule->command('hitungterlambathariini')->everyMinute();
-        $schedule->command('rekapbulanan')->everyMinute();
+        $schedule->command('presensi')->cron('10 2 * * *');
+        $schedule->command('hitungharidanjam')->cron('35 8 * * *');
+        $schedule->command('hitungterlambathariini')->cron('36 8 * * *');
+        $schedule->command('rekapbulanan')->cron('37 8 * * *');
     }
 
     /**
