@@ -72,7 +72,11 @@ class HitungTerlambatHariIni extends Command
                 //dd($hari, $jam);
                 $presensi = Presensi::where('tanggal', $today)->get();
                 foreach ($presensi as $item) {
-                    HitungTerlambat::dispatch($item, $jam);
+                    if ($item->jenis_keterangan_id == 7) {
+                        //Cuti tahunan presensinya di akui
+                    } else {
+                        HitungTerlambat::dispatch($item, $jam);
+                    }
                 }
 
                 $com['nama_command'] = 'hitung terlambat tanggal' . $today;
