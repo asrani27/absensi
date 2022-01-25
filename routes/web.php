@@ -15,6 +15,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\RentangController;
 use App\Http\Controllers\GenerateController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\LaporanAdminController;
 use App\Http\Controllers\LiburNasionalController;
 use App\Http\Controllers\JenisKeteranganController;
@@ -112,6 +113,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     Route::prefix('superadmin')->group(function () {
+        Route::get('pegawai', [SuperadminController::class, 'pegawai']);
+        Route::get('pegawai/{id}/history', [SuperadminController::class, 'history']);
+        Route::get('pegawai/{id}/history/tampilkan', [SuperadminController::class, 'tampilkanHistory']);
+        Route::get('pegawai/search', [SuperadminController::class, 'searchPegawai']);
         Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggalSuperadmin']);
         Route::resource('jam', JamController::class);
         Route::get('skpd/{skpd_id}/resetpass', [SkpdController::class, 'resetpass']);
