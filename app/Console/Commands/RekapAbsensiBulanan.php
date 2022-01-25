@@ -49,7 +49,7 @@ class RekapAbsensiBulanan extends Command
             $item->datang_lambat = $presensi->sum('terlambat');
             $item->pulang_cepat = $presensi->sum('lebih_awal');
             $item->jam_kerja = round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / 60, 2);
-            $item->persen_kehadiran = round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / $item->jumlah_jam * 100, 0);
+            $item->persen_kehadiran = floor(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / $item->jumlah_jam * 100, 0);
             $item->save();
         });
 
