@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Jam;
+use App\Models\Cuti;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
@@ -212,6 +213,46 @@ class GenerateController extends Controller
             $item->save();
         });
         toastr()->success('Berhasil Di Akumulasi');
+        return back();
+    }
+
+    public function hitungcuti()
+    {
+        $tahun = Carbon::now()->format('Y');
+        $data = Cuti::where('jenis_keterangan_id', 7)->whereYear('tanggal_mulai', $tahun)->get();
+
+
+        foreach ($data as $item) {
+            $dates = [];
+            $period = CarbonPeriod::create($item->tanggal_mulai, $item->tanggal_selesai);
+            foreach ($period as $date) {
+                //simpan cuti tahun di presensi
+                $check = Presensi::where('nip', $item->nip)->where('tanggal', $date->format('Y-m-d'))->first();
+                if ($check == null) {
+                    //save
+                    $p = new Presensi;
+                    $p->nip = $item->nip;
+                    $p->nama = $item->nama;
+                    $p->skpd_id = $item->skpd_id;
+                    $p->tanggal = $date->format('Y-m-d');
+                    $p->jam_masuk = '00:00:00';
+                    $p->jam_pulang = '00:00:00';
+                    $p->terlambat = 0;
+                    $p->lebih_awal = 0;
+                    $p->jenis_keterangan_id = 7;
+                    $p->save();
+                } else {
+                    $check->update([
+                        'jam_masuk' => '00:00:00',
+                        'jam_pulang' => '00:00:00',
+                        'terlambat' => 0,
+                        'lebih_awal' => 0,
+                        'jenis_keterangan_id' => 7,
+                    ]);
+                }
+            }
+        }
+        toastr()->success('Cuti Tahunan Di generate');
         return back();
     }
 }
