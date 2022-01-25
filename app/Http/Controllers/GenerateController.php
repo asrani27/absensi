@@ -221,9 +221,7 @@ class GenerateController extends Controller
         $tahun = Carbon::now()->format('Y');
         $data = Cuti::where('jenis_keterangan_id', 7)->whereYear('tanggal_mulai', $tahun)->get();
 
-
         foreach ($data as $item) {
-            $dates = [];
             $period = CarbonPeriod::create($item->tanggal_mulai, $item->tanggal_selesai);
             foreach ($period as $date) {
                 //simpan cuti tahun di presensi
