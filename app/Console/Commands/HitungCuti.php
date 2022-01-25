@@ -61,7 +61,7 @@ class HitungCuti extends Command
                     $p->jam_pulang = '00:00:00';
                     $p->terlambat = 0;
                     $p->lebih_awal = 0;
-                    $p->jenis_keterangan_id = 7;
+                    $p->jenis_keterangan_id = null;
                     $p->save();
                 } else {
                     $check->update([
@@ -69,7 +69,7 @@ class HitungCuti extends Command
                         'jam_pulang' => '00:00:00',
                         'terlambat' => 0,
                         'lebih_awal' => 0,
-                        'jenis_keterangan_id' => 7,
+                        'jenis_keterangan_id' => null,
                     ]);
                 }
             }
