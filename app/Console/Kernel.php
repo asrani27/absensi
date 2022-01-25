@@ -28,6 +28,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('hitungharidanjam')->cron('35 19 * * *');
         $schedule->command('hitungterlambathariini')->cron('36 19 * * *');
         $schedule->command('rekapbulanan')->cron('37 19 * * *');
+        $schedule->command('hitungcuti')->cron('38 19 * * *');
     }
 
     /**
