@@ -7,6 +7,7 @@ use App\Models\Cuti;
 use App\Models\Komando;
 use App\Models\Presensi;
 use Carbon\CarbonPeriod;
+use App\Models\LiburNasional;
 use Illuminate\Console\Command;
 
 class HitungCuti extends Command
