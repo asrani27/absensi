@@ -171,8 +171,7 @@
               <td>{{round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / 60, 2)}}</td>
               <td>{{round($item->datang_lambat / 60, 2)}}</td>
               <td>{{round($item->pulang_cepat / 60, 2)}}</td>
-              <td>{{round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / $item->jumlah_jam * 100,
-                2)}}</td>
+              <td>{{$item->persen_kehadiran}}</td>
               <td>0</td>
             </tr>
             @endforeach
