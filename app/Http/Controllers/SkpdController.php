@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Cuti;
+use App\Models\Role;
 use App\Models\Skpd;
 use App\Models\User;
 use App\Models\Lokasi;
