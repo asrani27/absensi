@@ -125,8 +125,10 @@ class SkpdController extends Controller
         $skpd = Skpd::find($skpd_id);
 
         $check = User::where('username', $skpd->kode_skpd)->first();
-        if ($check == null) {
+        if ($check != null) {
             //create user
+            toastr()->success('Username Sudah ada');
+            return back();
         } else {
             $role = Role::where('name', 'admin')->first();
 
