@@ -15,6 +15,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\RentangController;
 use App\Http\Controllers\GenerateController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\PuskesmasController;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\LaporanAdminController;
 use App\Http\Controllers\LiburNasionalController;
@@ -75,6 +76,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::prefix('admin')->group(function () {
         Route::resource('lokasi', LokasiController::class);
         Route::get('gantipass', [AdminController::class, 'gantipassword']);
+        Route::get('puskesmas', [PuskesmasController::class, 'index']);
         Route::post('gantipass', [AdminController::class, 'updatepassword']);
         Route::get('presensi/{id}', [AdminController::class, 'editPresensi']);
         Route::post('presensi/{id}', [AdminController::class, 'updatePresensi']);
@@ -120,6 +122,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggalSuperadmin']);
         Route::resource('jam', JamController::class);
         Route::get('skpd/{skpd_id}/resetpass', [SkpdController::class, 'resetpass']);
+        Route::get('skpd/{skpd_id}/buatakun', [SkpdController::class, 'buatakun']);
         Route::get('skpd/{skpd_id}/detail', [SkpdController::class, 'detail']);
         Route::get('skpd/{skpd_id}/pegawai', [SkpdController::class, 'pegawai']);
         Route::get('skpd/{skpd_id}/pegawai/search', [SkpdController::class, 'searchPegawai']);

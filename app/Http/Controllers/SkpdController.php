@@ -119,4 +119,31 @@ class SkpdController extends Controller
         toastr()->success('Password Baru : ' . Carbon::parse($p->tanggal_lahir)->format('dmY'));
         return back();
     }
+
+    public function buatakun($skpd_id)
+    {
+        $skpd = Skpd::find($skpd_id);
+
+        $check = User::where('username', $skpd->kode_skpd)->first();
+        if ($check == null) {
+            //create user
+        } else {
+            $role = Role::where('name', 'admin')->first();
+
+            $n = new User;
+            $n->name = $skpd->nama;
+            $n->username = $skpd->kode_skpd;
+            $n->password = bcrypt('adminskpd');
+            $n->save();
+
+            $n->roles()->attach($role);
+
+            $skpd->update([
+                'user_id' => $n->id,
+            ]);
+
+            toastr()->success('password : adminskpd');
+            return back();
+        }
+    }
 }
