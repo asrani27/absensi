@@ -53,7 +53,7 @@ class AdminController extends Controller
         if ($button == '1') {
 
             $check = Presensi::where('tanggal', $tanggal)->where('skpd_id', Auth::user()->skpd->id)->get();
-            $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', $tanggal)->get()->map(function ($item) use ($check) {
+            $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', $tanggal)->where('puskesmas_id', null)->get()->map(function ($item) use ($check) {
                 $item->hapus = $check->where('nip', $item->nip)->count();
                 $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
                 return $item;
