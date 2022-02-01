@@ -67,7 +67,7 @@ class HomeController extends Controller
             $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
             return $item;
         })->sortByDesc('urut');
-        dd($data);
+
         return view('admin.home', compact('data'));
     }
 
