@@ -85,8 +85,8 @@ ADMIN
                                 shift
                                 @endif
 
-                                {{-- <a href="/puskesmas/pegawai/{{$item->id}}/jenispresensi"
-                                    class="btn btn-xs bg-gradient-info"><i class="fas fa-edit"></i></a> --}}
+                                <a href="/puskesmas/pegawai/{{$item->id}}/jenispresensi"
+                                    class="btn btn-xs bg-gradient-info"><i class="fas fa-edit"></i></a>
                             </td>
                             <td>
                                 @if ($item->is_aktif == 0)

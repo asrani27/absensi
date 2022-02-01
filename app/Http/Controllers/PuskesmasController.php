@@ -155,4 +155,19 @@ class PuskesmasController extends Controller
         request()->flash();
         return view('puskesmas.pegawai.index', compact('data'))->withInput(request()->all());
     }
+
+    public function jenispresensi($id)
+    {
+        $data = Pegawai::find($id);
+        return view('puskesmas.pegawai.jenis', compact('data'));
+    }
+
+    public function updatejenispresensi(Request $request, $id)
+    {
+        Pegawai::find($id)->update([
+            'jenis_presensi' => $request->jenis_presensi
+        ]);
+        toastr()->success('Berhasil Di Ubah');
+        return redirect('/puskesmas/pegawai');
+    }
 }
