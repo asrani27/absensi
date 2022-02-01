@@ -36,7 +36,7 @@ class SyncPuskesmas implements ShouldQueue
     {
         $presensi = Presensi::where('nip', $this->pegawai->nip)->get();
         foreach ($presensi as $p) {
-            $p->update(['puskesmas_id' => $item->puskesmas_id]);
+            $p->update(['puskesmas_id' => $this->pegawai->puskesmas_id]);
         }
     }
 }
