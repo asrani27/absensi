@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Models\Puskesmas;
+use App\Jobs\SyncPuskesmas;
 use Illuminate\Http\Request;
 use App\Models\JenisKeterangan;
 use Illuminate\Support\Facades\Auth;
@@ -50,10 +51,7 @@ class PuskesmasController extends Controller
     {
         $pegawai = Pegawai::where('puskesmas_id', '!=', null)->get();
         foreach ($pegawai as $item) {
-            $presensi = Presensi::where('nip', $item->nip)->get();
-            foreach ($presensi as $p) {
-                $p->update(['puskesmas_id' => $item->puskesmas_id]);
-            }
+            SyncPuskesmas::dispatch($item);
         }
         toastr()->success('Sinkronisasi berhasil');
         return back();
