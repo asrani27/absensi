@@ -531,31 +531,39 @@ class PresensiController extends Controller
             toastr()->success('Presensi Masuk Berhasil');
             return back();
         } else {
-
-            if ($check->shift == 'P') {
-                if ($check->shift_jam_masuk == null) {
-                    //simpan absen masuk
-                    $check->update([
-                        'shift_jam_masuk' => Carbon::now()->format('Y-m-d H:i:s'),
-                    ]);
-                    toastr()->success('Presensi Masuk Berhasil');
-                    return back();
-                } else {
-                    //simpan absen pulang
-                    $check->update([
-                        'shift_jam_pulang' => Carbon::now()->format('Y-m-d H:i:s'),
-                    ]);
-                    toastr()->success('Presensi Pulang Berhasil');
-                    return back();
-                }
-            } else {
-                if ($check->shift == 'S') {
-                    $shift = 'Siang';
-                } else {
-                    $shift = 'Malam';
-                }
-                toastr()->error('Anda tidak bisa absen karena hari ini anda sudah absen shift ' . $shift);
+            if ($check->shift == null) {
+                $check->update([
+                    'shift' => 'P',
+                    'jenis_presensi' => 3,
+                ]);
+                toastr()->success('Update Menjadi Shift Pagi, silahkan absen lagi');
                 return back();
+            } else {
+                if ($check->shift == 'P') {
+                    if ($check->shift_jam_masuk == null) {
+                        //simpan absen masuk
+                        $check->update([
+                            'shift_jam_masuk' => Carbon::now()->format('Y-m-d H:i:s'),
+                        ]);
+                        toastr()->success('Presensi Masuk Berhasil');
+                        return back();
+                    } else {
+                        //simpan absen pulang
+                        $check->update([
+                            'shift_jam_pulang' => Carbon::now()->format('Y-m-d H:i:s'),
+                        ]);
+                        toastr()->success('Presensi Pulang Berhasil');
+                        return back();
+                    }
+                } else {
+                    if ($check->shift == 'S') {
+                        $shift = 'Siang';
+                    } else {
+                        $shift = 'Malam';
+                    }
+                    toastr()->error('Anda tidak bisa absen karena hari ini anda sudah absen shift ' . $shift);
+                    return back();
+                }
             }
         }
     }
@@ -627,30 +635,40 @@ class PresensiController extends Controller
             toastr()->success('Presensi Masuk Berhasil');
             return back();
         } else {
-            if ($check->shift == 'S') {
-                if ($check->shift_jam_masuk == null) {
-                    //simpan absen masuk
-                    $check->update([
-                        'shift_jam_masuk' => Carbon::now()->format('Y-m-d H:i:s'),
-                    ]);
-                    toastr()->success('Presensi Masuk Berhasil');
-                    return back();
-                } else {
-                    //simpan absen pulang
-                    $check->update([
-                        'shift_jam_pulang' => Carbon::now()->format('Y-m-d H:i:s'),
-                    ]);
-                    toastr()->success('Presensi Pulang Berhasil');
-                    return back();
-                }
-            } else {
-                if ($check->shift == 'P') {
-                    $shift = 'Pagi';
-                } else {
-                    $shift = 'Malam';
-                }
-                toastr()->error('Anda tidak bisa absen karena hari ini anda sudah absen shift ' . $shift);
+
+            if ($check->shift == null) {
+                $check->update([
+                    'shift' => 'S',
+                    'jenis_presensi' => 3,
+                ]);
+                toastr()->success('Update Menjadi Shift Siang, silahkan absen lagi');
                 return back();
+            } else {
+                if ($check->shift == 'S') {
+                    if ($check->shift_jam_masuk == null) {
+                        //simpan absen masuk
+                        $check->update([
+                            'shift_jam_masuk' => Carbon::now()->format('Y-m-d H:i:s'),
+                        ]);
+                        toastr()->success('Presensi Masuk Berhasil');
+                        return back();
+                    } else {
+                        //simpan absen pulang
+                        $check->update([
+                            'shift_jam_pulang' => Carbon::now()->format('Y-m-d H:i:s'),
+                        ]);
+                        toastr()->success('Presensi Pulang Berhasil');
+                        return back();
+                    }
+                } else {
+                    if ($check->shift == 'P') {
+                        $shift = 'Pagi';
+                    } else {
+                        $shift = 'Malam';
+                    }
+                    toastr()->error('Anda tidak bisa absen karena hari ini anda sudah absen shift ' . $shift);
+                    return back();
+                }
             }
         }
     }
@@ -724,30 +742,41 @@ class PresensiController extends Controller
             toastr()->success('Presensi Masuk Berhasil');
             return back();
         } else {
-            if ($check->shift == 'M') {
-                if ($check->shift_jam_masuk == null) {
-                    //simpan absen masuk
-                    $check->update([
-                        'shift_jam_masuk' => Carbon::now()->format('Y-m-d H:i:s'),
-                    ]);
-                    toastr()->success('Presensi Masuk Berhasil');
-                    return back();
-                } else {
-                    //simpan absen pulang
-                    $check->update([
-                        'shift_jam_pulang' => Carbon::now()->format('Y-m-d H:i:s'),
-                    ]);
-                    toastr()->success('Presensi Pulang Berhasil');
-                    return back();
-                }
-            } else {
-                if ($check->shift == 'P') {
-                    $shift = 'Pagi';
-                } else {
-                    $shift = 'Siang';
-                }
-                toastr()->error('Anda tidak bisa absen karena hari ini anda sudah absen shift ' . $shift);
+
+            if ($check->shift == null) {
+                $check->update([
+                    'shift' => 'M',
+                    'jenis_presensi' => 3,
+                ]);
+                toastr()->success('Update Menjadi Shift Malam, silahkan absen lagi');
                 return back();
+            } else {
+
+                if ($check->shift == 'M') {
+                    if ($check->shift_jam_masuk == null) {
+                        //simpan absen masuk
+                        $check->update([
+                            'shift_jam_masuk' => Carbon::now()->format('Y-m-d H:i:s'),
+                        ]);
+                        toastr()->success('Presensi Masuk Berhasil');
+                        return back();
+                    } else {
+                        //simpan absen pulang
+                        $check->update([
+                            'shift_jam_pulang' => Carbon::now()->format('Y-m-d H:i:s'),
+                        ]);
+                        toastr()->success('Presensi Pulang Berhasil');
+                        return back();
+                    }
+                } else {
+                    if ($check->shift == 'P') {
+                        $shift = 'Pagi';
+                    } else {
+                        $shift = 'Siang';
+                    }
+                    toastr()->error('Anda tidak bisa absen karena hari ini anda sudah absen shift ' . $shift);
+                    return back();
+                }
             }
         }
     }
