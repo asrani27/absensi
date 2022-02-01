@@ -484,8 +484,13 @@ class PresensiController extends Controller
             $jam_masuk = '00:00:00';
             $jam_pulang = '00:00:00';
         } else {
-            $jam_masuk = $check->shift_jam_masuk;
-            $jam_pulang = $check->shift_jam_pulang;
+            if ($check->shift == 'P') {
+                $jam_masuk = $check->shift_jam_masuk;
+                $jam_pulang = $check->shift_jam_pulang;
+            } else {
+                $jam_masuk = '00:00:00';
+                $jam_pulang = '00:00:00';
+            }
         }
 
         $agent = new Agent();
@@ -575,8 +580,13 @@ class PresensiController extends Controller
             $jam_masuk = '00:00:00';
             $jam_pulang = '00:00:00';
         } else {
-            $jam_masuk = $check->shift_jam_masuk;
-            $jam_pulang = $check->shift_jam_pulang;
+            if ($check->shift == 'S') {
+                $jam_masuk = $check->shift_jam_masuk;
+                $jam_pulang = $check->shift_jam_pulang;
+            } else {
+                $jam_masuk = '00:00:00';
+                $jam_pulang = '00:00:00';
+            }
         }
 
         $agent = new Agent();
@@ -667,8 +677,13 @@ class PresensiController extends Controller
             $jam_masuk = '00:00:00';
             $jam_pulang = '00:00:00';
         } else {
-            $jam_masuk = $check->shift_jam_masuk;
-            $jam_pulang = $check->shift_jam_pulang;
+            if ($check->shift == 'M') {
+                $jam_masuk = $check->shift_jam_masuk;
+                $jam_pulang = $check->shift_jam_pulang;
+            } else {
+                $jam_masuk = '00:00:00';
+                $jam_pulang = '00:00:00';
+            }
         }
 
         $agent = new Agent();
