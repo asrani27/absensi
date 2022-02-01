@@ -39,6 +39,7 @@ class PegawaiController extends Controller
         DB::beginTransaction();
         try {
             foreach ($data as $item) {
+                dd($item);
                 SyncPegawai::dispatch($item);
             }
             DB::commit();
