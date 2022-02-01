@@ -158,7 +158,13 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
 Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
     Route::prefix('puskesmas')->group(function () {
         Route::get('pegawai', [PuskesmasController::class, 'pegawai']);
+        Route::get('pegawai/search', [PuskesmasController::class, 'searchpegawai']);
         Route::get('cuti', [PuskesmasController::class, 'cuti']);
+        Route::get('cuti/{id}/delete', [PuskesmasController::class, 'deletecuti']);
+        Route::get('cuti/create', [PuskesmasController::class, 'createcuti']);
+        Route::post('cuti/create', [PuskesmasController::class, 'storecuti']);
+        Route::get('gantipass', [PuskesmasController::class, 'gantipass']);
+        Route::post('gantipass', [PuskesmasController::class, 'updatepass']);
     });
 });
 
