@@ -61,13 +61,13 @@ class HomeController extends Controller
         $today = Carbon::today()->format('Y-m-d');
 
         $check = Presensi::where('tanggal', $today)->where('skpd_id', $user->id)->get();
-        dd(Presensi::where('tanggal', $today)->where('skpd_id', $user->id)->where('puskesmas_id', null)->get());
+
         $data  = Presensi::where('tanggal', $today)->where('skpd_id', $user->id)->where('puskesmas_id', null)->get()->map(function ($item) use ($check) {
             $item->hapus = $check->where('nip', $item->nip)->count();
             $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
             return $item;
         })->sortByDesc('urut');
-
+        dd($data);
         return view('admin.home', compact('data'));
     }
 
