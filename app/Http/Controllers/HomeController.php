@@ -74,4 +74,9 @@ class HomeController extends Controller
     {
         return view('superadmin.home');
     }
+
+    public function puskesmas()
+    {
+        return view('puskesmas.home');
+    }
 }

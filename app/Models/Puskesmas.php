@@ -13,4 +13,14 @@ class Puskesmas extends Model
     protected $guarded = ['id'];
 
     public $timestamps = false;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function pegawai()
+    {
+        return $this->hasMany(Pegawai::class, 'puskesmas_id');
+    }
 }

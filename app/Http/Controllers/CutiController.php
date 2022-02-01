@@ -28,8 +28,9 @@ class CutiController extends Controller
     {
         $attr            = $request->all();
         $attr['skpd_id'] = Auth::user()->skpd->id;
-
-        $attr['nama']    = Pegawai::where('nip', $request->nip)->first()->nama;
+        $pegawai         = Pegawai::where('nip', $request->nip)->first();
+        $attr['nama']    = $pegawai->nama;
+        $attr['puskesmas_id']    = $pegawai->puskesmas_id;
 
         $validator = Validator::make($request->all(), [
             'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'

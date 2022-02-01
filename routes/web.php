@@ -78,6 +78,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('gantipass', [AdminController::class, 'gantipassword']);
         Route::get('puskesmas', [PuskesmasController::class, 'index']);
         Route::get('puskesmas/{id}/createuser', [PuskesmasController::class, 'createuser']);
+        Route::get('puskesmas/{id}/resetpass', [PuskesmasController::class, 'resetpass']);
         Route::get('puskesmas/sync', [PuskesmasController::class, 'sync']);
         Route::post('gantipass', [AdminController::class, 'updatepassword']);
         Route::get('presensi/{id}', [AdminController::class, 'editPresensi']);
@@ -154,9 +155,16 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
     });
 });
 
+Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
+    Route::prefix('puskesmas')->group(function () {
+        Route::get('pegawai', [PuskesmasController::class, 'pegawai']);
+        Route::get('cuti', [PuskesmasController::class, 'cuti']);
+    });
+});
 
-Route::group(['middleware' => ['auth', 'role:superadmin|admin|pegawai']], function () {
+Route::group(['middleware' => ['auth', 'role:superadmin|admin|pegawai|puskesmas']], function () {
     Route::get('/home/superadmin', [HomeController::class, 'superadmin']);
     Route::get('/home/admin', [HomeController::class, 'admin']);
     Route::get('/home/pegawai', [HomeController::class, 'pegawai']);
+    Route::get('/home/puskesmas', [HomeController::class, 'puskesmas']);
 });

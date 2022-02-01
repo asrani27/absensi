@@ -22,8 +22,10 @@ CUTI/TL/IZIN/SAKIT
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>NIP</th>
-                            <th>Nama</th>
+                            <th>NIP/Nama</th>
+                            @if (Auth::user()->username == '1.02.01.')
+                            <th>Rs/Puskesmas</th>
+                            @endif
                             <th>Tgl Mulai</th>
                             <th>Tgl Selesai</th>
                             <th>Jenis</th>
@@ -39,8 +41,10 @@ CUTI/TL/IZIN/SAKIT
                         @foreach ($data as $key => $item)
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif; ">
                             <td>{{$no++}}</td>
-                            <td>{{$item->nip}}</td>
-                            <td>{{$item->nama}}</td>
+                            <td>{{$item->nama}}<br />{{$item->nip}}</td>
+                            @if (Auth::user()->username == '1.02.01.')
+                            <td>{{$item->puskesmas == null ? 'Dinas Kesehatan': $item->puskesmas->nama}}</td>
+                            @endif
                             <td>{{\Carbon\Carbon::parse($item->tanggal_mulai)->isoFormat('D MMMM Y')}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal_selesai)->isoFormat('D MMMM Y')}}</td>
                             <td>{{$item->jenis_keterangan->keterangan}}</td>

@@ -52,14 +52,15 @@ ADMIN
                             <td>1.02.01.{{$item->id}}</td>
                             <td>{{$item->nama}}</td>
                             <td>
-                                @if ($item->user == null)
+                                @if ($item->user_id == null)
                                 <a href="/admin/puskesmas/{{$item->id}}/createuser"
                                     class="btn btn-xs bg-gradient-success">Buat Akun</a>
                                 @else
-                                <a href="/admin/puskesmas/{{$item->id}}/resetpass" class="btn btn-xs btn-success"><i
+                                <a href="/admin/puskesmas/{{$item->id}}/resetpass" class="btn btn-xs btn-secondary"><i
                                         class="fas fa-key"></i> Reset Pass</a>
-                                <a href="/admin/puskesmas/{{$item->id}}/presensi"
-                                    class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Login</a>
+                                {{-- <a href="/admin/puskesmas/{{$item->id}}/presensi"
+                                    class="btn btn-xs bg-gradient-primary"><i class="fas fa-calendar"></i> Login</a>
+                                --}}
                                 @endif
                             </td>
                         </tr>

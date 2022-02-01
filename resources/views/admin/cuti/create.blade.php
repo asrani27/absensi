@@ -2,6 +2,10 @@
 
 @push('css')
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+<!-- Select2 -->
+<link rel="stylesheet" href="/theme/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 @endpush
 
 @section('title')
@@ -91,8 +95,18 @@ TAMBAH DATA
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
 
+<!-- Select2 -->
+<script src="/theme/plugins/select2/js/select2.full.min.js"></script>
 
 <script>
+    //Initialize Select2 Elements
+    $('.select2').select2()
+
+    //Initialize Select2 Elements
+    $('.select2bs4').select2({
+      theme: 'bootstrap4'
+    })
+
     var map = L.map('mapid').setView([-3.327653847548605,114.5884147286779], 16);
     googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
         maxZoom: 20,

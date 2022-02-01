@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Puskesmas;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -17,7 +18,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    
+
     protected $guarded = ['id'];
 
     /**
@@ -51,6 +52,11 @@ class User extends Authenticatable
     public function skpd()
     {
         return $this->hasOne(Skpd::class, 'user_id');
+    }
+
+    public function puskesmas()
+    {
+        return $this->hasOne(Puskesmas::class, 'user_id');
     }
 
     public function pegawai()

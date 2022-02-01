@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Pegawai;
 use App\Models\Puskesmas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PuskesmasController extends Controller
 {
@@ -27,7 +31,7 @@ class PuskesmasController extends Controller
 
             $n->roles()->attach($role);
 
-            $check->update(['user_id' => $n->id]);
+            Puskesmas::find($id)->update(['user_id' => $n->id]);
 
             toastr()->success('Berhasil Di buat, password : admin495');
             return back();
@@ -41,5 +45,19 @@ class PuskesmasController extends Controller
     {
         toastr()->success('Sinkronisasi berhasil');
         return back();
+    }
+
+    public function resetpass($id)
+    {
+        Puskesmas::find($id)->user->update(['password' => bcrypt('admin495')]);
+        toastr()->success('Berhasil Di reset, password : admin495');
+        return back();
+    }
+
+    public function pegawai()
+    {
+        $data = Pegawai::where('puskesmas_id', Auth::user()->puskesmas->id)->orderBy('urutan', 'DESC')->paginate(10);
+
+        return view('puskesmas.pegawai.index', compact('data'));
     }
 }

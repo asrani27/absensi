@@ -10,18 +10,19 @@ ADMIN
 <br />
 <div class="row">
     <div class="col-12">
-        <a href="/admin/pegawai/sync" class="btn btn-sm bg-gradient-purple"><i class="fas fa-sync"></i> Sinkronisasi
+        {{-- <a href="/admin/pegawai/sync" class="btn btn-sm bg-gradient-purple"><i class="fas fa-sync"></i>
+            Sinkronisasi
             Pegawai</a>
         <a href="/admin/pegawai/createuser" class="btn btn-sm bg-gradient-green"><i class="fas fa-key"></i> Buat Akun
-            Login</a>
+            Login</a> --}}
         {{-- <a href="/admin/pegawai/sortir" class="btn btn-sm bg-gradient-info"><i class="fas fa-users"></i> Urutkan
             Pegawai</a> --}}
-        <br /><br />
+
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Data Pegawai ({{$data->total()}})</h3>
                 <div class="card-tools">
-                    <form method="get" action="/admin/pegawai/search">
+                    <form method="get" action="/puskesmas/pegawai/search">
                         <div class="input-group input-group-sm" style="width: 250px;">
                             <input type="text" name="search" class="form-control float-right" value="{{old('search')}}"
                                 placeholder="Nama / NIP">
@@ -66,12 +67,12 @@ ADMIN
                                 @if ($item->is_aktif == 0)
                                 @else
                                 @if ($item->lokasi == null)
-                                <a href="/admin/pegawai/{{$item->id}}/lokasi" class="btn btn-xs bg-gradient-primary"><i
-                                        class="fas fa-pen"></i></a>
+                                {{-- <a href="/puskesmas/pegawai/{{$item->id}}/lokasi"
+                                    class="btn btn-xs bg-gradient-primary"><i class="fas fa-pen"></i></a> --}}
                                 @else
                                 {{$item->lokasi->nama}}
-                                <a href="/admin/pegawai/{{$item->id}}/editlokasi"
-                                    class="btn btn-xs bg-gradient-success"><i class="fas fa-pen"></i></a>
+                                {{-- <a href="/puskesmas/pegawai/{{$item->id}}/editlokasi"
+                                    class="btn btn-xs bg-gradient-success"><i class="fas fa-pen"></i></a> --}}
                                 @endif
                                 @endif
                             </td>
@@ -84,8 +85,8 @@ ADMIN
                                 shift
                                 @endif
 
-                                <a href="/admin/pegawai/{{$item->id}}/jenispresensi"
-                                    class="btn btn-xs bg-gradient-info"><i class="fas fa-edit"></i></a>
+                                {{-- <a href="/puskesmas/pegawai/{{$item->id}}/jenispresensi"
+                                    class="btn btn-xs bg-gradient-info"><i class="fas fa-edit"></i></a> --}}
                             </td>
                             <td>
                                 @if ($item->is_aktif == 0)
@@ -93,13 +94,14 @@ ADMIN
 
                                 @else
                                 @if ($item->user == null)
-                                <a href="/admin/pegawai/{{$item->id}}/createuser"
-                                    class="btn btn-xs bg-gradient-success">Buat Akun</a>
+                                {{-- <a href="/puskesmas/pegawai/{{$item->id}}/createuser"
+                                    class="btn btn-xs bg-gradient-success">Buat Akun</a> --}}
                                 @else
-                                <a href="/admin/pegawai/{{$item->id}}/presensi"
+                                {{-- <a href="/puskesmas/pegawai/{{$item->id}}/presensi"
                                     class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
-                                <a href="/admin/pegawai/{{$item->id}}/resetpass"
+                                <a href="/puskesmas/pegawai/{{$item->id}}/resetpass"
                                     class="btn btn-xs bg-gradient-secondary"><i class="fas fa-key"></i> Reset Pass</a>
+                                --}}
                                 @endif
                                 @endif
                             </td>
