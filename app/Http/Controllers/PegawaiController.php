@@ -45,8 +45,8 @@ class PegawaiController extends Controller
             toastr()->success('Sinkronisasi Berhasil');
             return back();
         } catch (\Exception $e) {
-
             DB::rollback();
+            dd($e);
             toastr()->error('Sinkronisasi Gagal');
             return back();
         }
