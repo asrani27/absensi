@@ -702,7 +702,7 @@ class PresensiController extends Controller
             $attr['skpd_id'] = $pegawai->skpd_id;
             $attr['shift_jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
             $attr['jenis_presensi'] = 3;
-            $attr['shift'] = 'P';
+            $attr['shift'] = 'M';
             $attr['puskesmas_id'] = $pegawai->puskesmas_id;
 
             Presensi::create($attr);
