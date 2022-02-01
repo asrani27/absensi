@@ -43,6 +43,10 @@
                 '-':Auth::user()->pegawai->lokasi->nama}}</span>
             </a>
           </li>
+          @if (Auth::user()->pegawai->jenis_presensi == 3)
+
+          @else
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               Jam Masuk
@@ -59,6 +63,7 @@
                 {{\Carbon\Carbon::parse($rentang->jam_pulang_selesai)->format('H:i')}}</span>
             </a>
           </li>
+          @endif
           {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               Jarak Dengan Lokasi
@@ -106,6 +111,61 @@
   </div>
   @else
 
+
+  @if (Auth::user()->pegawai->jenis_presensi == 3)
+
+  <div class="col-12 col-sm-6 col-md-3">
+    <a href="/pegawai/presensi/pagi" style="color:black">
+      <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-camera"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">PRESENSI PAGI</span>
+          <span class="info-box-number">
+            Jarak
+            <small></small>
+          </span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </a>
+  </div>
+
+  <div class="col-12 col-sm-6 col-md-3">
+    <a href="/pegawai/presensi/siang" style="color:black">
+      <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-camera"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">PRESENSI SIANG</span>
+          <span class="info-box-number">
+            Jarak
+            <small></small>
+          </span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </a>
+  </div>
+
+  <div class="col-12 col-sm-6 col-md-3">
+    <a href="/pegawai/presensi/malam" style="color:black">
+      <div class="info-box">
+        <span class="info-box-icon bg-info elevation-1"><i class="fas fa-camera"></i></span>
+        <div class="info-box-content">
+          <span class="info-box-text">PRESENSI MALAM</span>
+          <span class="info-box-number">
+            Jarak
+            <small></small>
+          </span>
+        </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </a>
+  </div>
+  @else
+
   <div class="col-12 col-sm-6 col-md-3">
     <a href="/pegawai/presensi/radius" style="color:black">
       <div class="info-box">
@@ -122,6 +182,7 @@
       <!-- /.info-box -->
     </a>
   </div>
+  @endif
   <!-- fix for small devices only -->
   <div class="clearfix hidden-md-up"></div>
 

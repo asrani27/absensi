@@ -67,6 +67,13 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
         Route::post('manual', [PresensiController::class, 'storeManual']);
         Route::get('history', [HistoryController::class, 'index']);
         Route::get('history/search', [HistoryController::class, 'search']);
+
+        Route::get('pagi', [PresensiController::class, 'pagi']);
+        Route::post('pagi', [PresensiController::class, 'simpanpagi']);
+        Route::get('siang', [PresensiController::class, 'siang']);
+        Route::post('siang', [PresensiController::class, 'simpansiang']);
+        Route::get('malam', [PresensiController::class, 'malam']);
+        Route::post('malam', [PresensiController::class, 'simpanmalam']);
     });
     Route::post('savephoto ', [PresensiController::class, 'savephoto']);
 });
