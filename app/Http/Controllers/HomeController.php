@@ -59,9 +59,9 @@ class HomeController extends Controller
         $user       = Auth::user()->skpd;
 
         $today = Carbon::today()->format('Y-m-d');
-        if(Auth::user()->username == '1.02.01.'){
-            $check  = Presensi::where('tanggal', $today)->where('skpd_id', $user->id)->where('puskesmas_id', null)->get()
-        }else{
+        if (Auth::user()->username == '1.02.01.') {
+            $check  = Presensi::where('tanggal', $today)->where('skpd_id', $user->id)->where('puskesmas_id', null)->get();
+        } else {
             $check = Presensi::where('tanggal', $today)->where('skpd_id', $user->id)->get();
         }
 
