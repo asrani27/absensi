@@ -39,7 +39,6 @@ class PegawaiController extends Controller
         DB::beginTransaction();
         try {
             foreach ($data as $item) {
-                dd($item);
                 SyncPegawai::dispatch($item);
             }
             DB::commit();
@@ -47,7 +46,6 @@ class PegawaiController extends Controller
             return back();
         } catch (\Exception $e) {
             DB::rollback();
-            dd($e);
             toastr()->error('Sinkronisasi Gagal');
             return back();
         }

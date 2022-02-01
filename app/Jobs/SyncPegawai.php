@@ -51,7 +51,7 @@ class SyncPegawai implements ShouldQueue
             $p->skpd_id = $this->skpd->id;
             $p->is_aktif = $this->pegawai->is_aktif;
             $p->urutan = $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->kelas_id;
-            $p->puskesmas_id = $this->pegawai->jabatan->rs_puskesmas_id;
+            $p->puskesmas_id = $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->rs_puskesmas_id;
             $p->save();
         } else {
             $check->update([
@@ -63,7 +63,7 @@ class SyncPegawai implements ShouldQueue
                 'golongan'      => $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->golongan,
                 'is_aktif'      => $this->pegawai->is_aktif,
                 'urutan'        => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->kelas_id,
-                'puskesmas_id'  => $this->pegawai->jabatan->rs_puskesmas_id,
+                'puskesmas_id'  => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->rs_puskesmas_id,
             ]);
         }
     }
