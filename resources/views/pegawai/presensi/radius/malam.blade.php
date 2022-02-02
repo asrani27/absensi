@@ -82,10 +82,54 @@
 </div>
 
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Presensi Shift Malam</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body p-0">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 10px">Tanggal</th>
+                            <th class="text-center">Masuk</th>
+                            <th class="text-center">Pulang</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $item)
+                        <tr>
+                            <td class="text-center">{{\Carbon\Carbon::parse($item->tanggal)->format('d')}}</td>
+                            <td class="text-center">
+                                @if ($item->shift_jam_masuk == null)
+                                <a href="/pegawai/presensi/malam/masuk/{{$item->id}}"
+                                    class="btn btn-xs bg-gradient-success"
+                                    onclick="return confirm('Konfirmasi Sekali lagi, yakin?');">MASUK</a>
+                                @else
+                                {{$item->shift_jam_masuk}}
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                @if ($item->shift_jam_pulang == null)
+                                <a href="/pegawai/presensi/malam/pulang/{{$item->id}}"
+                                    class="btn btn-xs bg-gradient-success"
+                                    onclick="return confirm('Konfirmasi Sekali lagi, yakin?');">PULANG</a>
+                                @else
+                                {{$item->shift_jam_pulang}}
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
         <div class="card">
             <div class="card-body">
-                <form id="radius" method="post" action="/pegawai/presensi/malam">
+
+                {{-- <form id="radius" method="post" action="/pegawai/presensi/malam">
                     @csrf
                     <input type="hidden" name="datajarak" id="datajarak">
                     <div class="form-group row">
@@ -93,7 +137,7 @@
 
                             <strong>Masuk<br />{{$jam_masuk == null ? '00:00:00':
                                 \Carbon\Carbon::parse($jam_masuk)->format('d-M-Y H:i:s')}}</strong>
-                            {{-- <input type="hidden" id="photo" name="photo"> --}}
+                            {{-- <input type="hidden" id="photo" name="photo">
                             <input type="hidden" id="button" name="button">
                         </div>
                         <div class="col-6 text-center">
@@ -104,7 +148,8 @@
                     <div class="form-group row">
                         <div class="col-12">
                             <button type="submit" class="btn btn-block bg-gradient-success btnMasuk"
-                                name="button">SIMPAN PRESENSI</button>
+                                name="button">SIMPAN
+                                PRESENSI</button>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -113,7 +158,7 @@
                                     class="fas fa-sync-alt fa-spin"></i> Menyimpan...</button>
                         </div>
                     </div>
-                </form>
+                </form> --}}
             </div>
         </div>
         <div id="mapid"></div>

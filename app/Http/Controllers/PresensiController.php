@@ -675,8 +675,9 @@ class PresensiController extends Controller
 
     public function malam()
     {
-
         $skpd = Skpd::find(Auth::user()->pegawai->skpd_id);
+        $data = Presensi::where('nip', $this->pegawai()->nip)->whereMonth('tanggal', Carbon::now()->format('m'))->get();
+
         if (Auth::user()->pegawai->lokasi == null) {
             $latlong2 = null;
         } else {
@@ -716,7 +717,7 @@ class PresensiController extends Controller
 
             //return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
         } else {
-            return view('pegawai.presensi.radius.malam', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang'));
+            return view('pegawai.presensi.radius.malam', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang', 'data'));
         }
     }
 
@@ -779,5 +780,40 @@ class PresensiController extends Controller
                 }
             }
         }
+    }
+
+    public function malam_pulang($id)
+    {
+        $presensi = Presensi::find($id);
+        $today = Carbon::now()->format('Y-m-d');
+        if ($presensi->shift == 'M' || $presensi->shift == null) {
+            if (Carbon::parse($presensi->tanggal)->diffInDays($today) > 1) {
+                toastr()->error('Presensi Pulang Tidak bisa dilakukan karena sudah 2 hari');
+                return back();
+            } elseif ($presensi->tanggal == $today) {
+                toastr()->error('Presensi Pulang Shift Malam Hanya bisa di lakukan pada tanggal berikutnya');
+                return back();
+            } else {
+                $presensi->update([
+                    'shift_jam_pulang' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'shift' => 'M',
+                ]);
+                toastr()->success('Presensi Pulang Berhasil');
+                return back();
+            }
+        } else {
+            toastr()->error('Tidak bisa absen, karena anda sudah absen shift pagi/siang');
+            return back();
+        }
+    }
+
+    public function malam_masuk($id)
+    {
+        Presensi::find($id)->update([
+            'shift_jam_masuk' => Carbon::now()->format('Y-m-d H:i:s'),
+            'shift' => 'M',
+        ]);
+        toastr()->success('Presensi Masuk Berhasil');
+        return back();
     }
 }
