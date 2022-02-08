@@ -93,8 +93,13 @@
                     $no =1;
                     @endphp
                     <tbody>
+
                         @foreach ($data as $key => $item)
+                        @if (\Carbon\Carbon::parse($item->tanggal)->isWeekend())
+                        <tr style="background-color: #f2dede;font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                            @else
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                            @endif
                             <td>{{$no++}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d M Y')}}</td>
                             <td>{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
@@ -110,10 +115,14 @@
                             <td>{{$item->lebih_awal}}</td>
                         </tr>
                         @endforeach
+                        <tr>
+                            <td></td>
+                            <td>Total Terlambat</td>
+                            <td>Total Lebih awal</td>
+                        </tr>
                     </tbody>
                 </table>
                 @endif
-
             </div>
         </div>
     </div>

@@ -90,7 +90,18 @@ class AdminController extends Controller
     public function editPresensi($id)
     {
         $data = Presensi::find($id);
-        return view('admin.presensi.edit', compact('data'));
+        $today = Carbon::now();
+        $today->diff($data->tanggal);
+        if ($today->format('m') == Carbon::parse($data->tanggal)->format('m')) {
+            return view('admin.presensi.edit', compact('data'));
+        } else {
+            if ($today->diffInDays(Carbon::parse($data->tanggal)) > 5) {
+                toastr()->error('Tidak bisa di edit karena data ini telah di rekap pada tanggal 5 setiap bulan');
+                return back();
+            } else {
+                return view('admin.presensi.edit', compact('data'));
+            }
+        }
     }
 
     public function deletePresensi($id)
