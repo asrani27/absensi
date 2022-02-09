@@ -35,14 +35,14 @@
             </a>
         </li>
 
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="/admin/qrcode" class="nav-link {{Request::is('admin/qrcode') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-qrcode"></i>
                 <p>
                     QR Code
                 </p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a href="/admin/cuti" class="nav-link {{Request::is('admin/cuti') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-calendar"></i>
