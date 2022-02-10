@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
@@ -32,28 +33,61 @@ class CutiController extends Controller
         $attr['nama']    = $pegawai->nama;
         $attr['puskesmas_id']    = $pegawai->puskesmas_id;
 
-        $validator = Validator::make($request->all(), [
-            'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
-        ]);
+        $today = Carbon::now();
 
-        if ($validator->fails()) {
-            toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
-            return back();
-        }
+        if ($today->format('m') == Carbon::parse($request->tanggal_mulai)->format('m')) {
+            $validator = Validator::make($request->all(), [
+                'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
+            ]);
 
-        if ($request->hasFile('file')) {
-            $filename = $request->file->getClientOriginalName();
-            $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
-            $request->file->storeAs('/public/cuti', $filename);
-            $attr['file'] = $filename;
+            if ($validator->fails()) {
+                toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
+                return back();
+            }
+
+            if ($request->hasFile('file')) {
+                $filename = $request->file->getClientOriginalName();
+                $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
+                $request->file->storeAs('/public/cuti', $filename);
+                $attr['file'] = $filename;
+            } else {
+                $attr['file'] = null;
+            }
+
+            Cuti::create($attr);
+
+            toastr()->success('Data Di Simpan');
+            return redirect('admin/cuti');
         } else {
-            $attr['file'] = null;
+            if ($today->diffInDays(Carbon::parse($request->tanggal_mulai)) > 5) {
+                toastr()->error('Tidak bisa Menambah Data karena data ini telah di rekap pada tanggal 5 setiap bulan');
+                return back();
+            } else {
+
+                $validator = Validator::make($request->all(), [
+                    'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
+                ]);
+
+                if ($validator->fails()) {
+                    toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
+                    return back();
+                }
+
+                if ($request->hasFile('file')) {
+                    $filename = $request->file->getClientOriginalName();
+                    $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
+                    $request->file->storeAs('/public/cuti', $filename);
+                    $attr['file'] = $filename;
+                } else {
+                    $attr['file'] = null;
+                }
+
+                Cuti::create($attr);
+
+                toastr()->success('Data Di Simpan');
+                return redirect('admin/cuti');
+            }
         }
-
-        Cuti::create($attr);
-
-        toastr()->success('Data Di Simpan');
-        return redirect('admin/cuti');
     }
 
     public function show($id)

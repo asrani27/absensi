@@ -173,7 +173,7 @@
         <div class="info-box-content">
           <span class="info-box-text">PRESENSI RADIUS</span>
           <span class="info-box-number">
-            Jarak + Photo
+            Jarak
             <small></small>
           </span>
         </div>
