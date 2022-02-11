@@ -68,12 +68,26 @@
                             <th>Hari</th>
                             <th class="text-center">Jam Masuk</th>
                             <th class="text-center">Jam Pulang</th>
-                            <th></th>
                         </tr>
                     </thead>
                     @php
                     $no =1;
                     @endphp
+                    @if (Auth::user()->pegawai->jenis_presensi == 3)
+                    <tbody>
+                        @foreach ($data as $key => $item)
+                        <tr style="font-size:10px; font-family:Arial, Helvetica, sans-serif">
+                            <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d')}}</td>
+                            <td>{{\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l')}}</td>
+                            <td class="text-center">{{$item->shift_jam_masuk == null ? '00:00:00':
+                                \Carbon\Carbon::parse($item->shift_jam_masuk)->format('d-m-Y H:i:s')}}</td>
+                            <td class="text-center">{{$item->shift_jam_pulang == null ? '00:00:00':
+                                \Carbon\Carbon::parse($item->shift_jam_pulang)->format('d-m-Y H:i:s')}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    @else
+
                     <tbody>
                         @foreach ($data as $key => $item)
                         @if (\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l') == 'Minggu')
@@ -101,6 +115,7 @@
                         </tr>
                         @endforeach
                     </tbody>
+                    @endif
                 </table>
             </div>
             <!-- /.card-body -->
