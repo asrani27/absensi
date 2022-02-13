@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Komando;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use App\Models\ErrorData;
 use App\Models\Ringkasan;
 use Illuminate\Console\Command;
 
@@ -43,7 +44,7 @@ class RekapManualBulanan extends Command
     public function handle()
     {
         $pegawai = Ringkasan::where('bulan', '01')->where('tahun', '2022')->get();
-        $pegawai->map(function ($item) {
+        foreach ($pegawai as $item) {
             try {
                 $checkJenisPresensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
                 //cek dia jenis presensi 5 hari kerja gak?
@@ -57,10 +58,13 @@ class RekapManualBulanan extends Command
                 } else {
                 }
             } catch (\Exception $e) {
-                dd($item);
+                $n = new ErrorData;
+                $n->nip = $item->nip;
+                $n->keterangan = 'Rekap Bulan 01/2022';
+                $n->save();
+                continue;
             }
-        });
-
+        }
         $com['nama_command'] = 'update rekap bulanan manual perbaikan data bulan januari 2022';
         $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
 

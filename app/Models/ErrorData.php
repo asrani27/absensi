@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class ErrorData extends Model
+{
+    use HasFactory;
+    protected $table = 'error_data';
+    protected $guarded = ['id'];
+}
