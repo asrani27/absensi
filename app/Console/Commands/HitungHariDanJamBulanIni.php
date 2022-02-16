@@ -68,17 +68,35 @@ class HitungHariDanJamBulanIni extends Command
         //Update Jumlah Hari Kerja Di Tabel Ringkasan        
         $ringkasan = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->get();
         //dd($ringkasan);
-        foreach ($ringkasan as $item) {
-            $check = Pegawai::where('nip', $item->nip)->first();
-            //dd($check, $item);
-            if ($check->jenis_presensi == 1) {
+        $pegawai = Pegawai::where('jenis_presensi', '1')->get();
+        foreach ($pegawai as $item) {
+            $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            if ($check == null) {
+                $n = new Ringkasan;
+                $n->nip = $item->nip;
+                $n->nama = $item->nama;
+                $n->jabatan = $item->jabatan;
+                $n->jumlah_hari = count($jumlah_hari_kerja);
+                $n->jumlah_jam = array_sum($jumlah_jam);
+                $n->save();
+            } else {
                 $item->update([
                     'jumlah_hari' => count($jumlah_hari_kerja),
                     'jumlah_jam' => array_sum($jumlah_jam),
                 ]);
-            } else {
             }
         }
+        // foreach ($ringkasan as $item) {
+        //     $check = Pegawai::where('nip', $item->nip)->first();
+        //     //dd($check, $item);
+        //     if ($check->jenis_presensi == 1) {
+        //         $item->update([
+        //             'jumlah_hari' => count($jumlah_hari_kerja),
+        //             'jumlah_jam' => array_sum($jumlah_jam),
+        //         ]);
+        //     } else {
+        //     }
+        // }
 
         $com['nama_command'] = 'hitung hari dan jam bulan ini';
         $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
