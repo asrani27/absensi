@@ -27,7 +27,8 @@ ADMIN
                         <select name="puskesmas_id" class='form-control form-control-sm'>
                             <option value="">-Pilih-</option>
                             @foreach ($puskesmas as $item)
-                            <option value="{{$item->id}}">{{$item->nama}}</option>
+                            <option value="{{$item->id}}" {{old('puskesmas_id')==$item->id ?
+                                'selected':''}}>{{$item->nama}}</option>
                             @endforeach
                         </select>
                     </div>

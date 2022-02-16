@@ -23,7 +23,6 @@ class PegawaiController extends Controller
     {
         $data = Pegawai::where('skpd_id', $this->skpd()->id)->orderBy('urutan', 'DESC')->paginate(10);
         $puskesmas = Puskesmas::get();
-        //$data = Pegawai::where('skpd_id', $this->skpd()->id)->paginate(10);
         return view('admin.pegawai.index', compact('data', 'puskesmas'));
     }
 
@@ -215,5 +214,13 @@ class PegawaiController extends Controller
         ]);
         toastr()->success('Jenis Presensi Berhasil Di Update');
         return redirect('/admin/pegawai');
+    }
+
+    public function pegawaiPuskesmas(Request $req)
+    {
+        $data = Pegawai::where('puskesmas_id', $req->puskesmas_id)->orderBy('urutan', 'DESC')->paginate(10);
+        $puskesmas = Puskesmas::get();
+        $req->flash();
+        return view('admin.pegawai.index', compact('data', 'puskesmas'));
     }
 }
