@@ -48,7 +48,7 @@ class LaporanAdminController extends Controller
 
             $presensi = Presensi::where('skpd_id', $skpd->id)->where('tanggal', $tanggal)->get();
 
-            $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('jabatan', '!=', null)->orderBy('urutan', 'DESC')->get();
+            $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('puskesmas_id', null)->where('jabatan', '!=', null)->orderBy('urutan', 'DESC')->get();
 
             //mapping data
             $data = $datapegawai->map(function ($item) use ($presensi, $tanggal) {
@@ -95,7 +95,7 @@ class LaporanAdminController extends Controller
             toastr()->error('Dalam Pengembangan');
             return back();
         } else {
-            $pegawai = Pegawai::where('skpd_id', $skpd->id)->where('is_aktif', 1)->orderBy('urutan', 'DESC')->get();
+            $pegawai = Pegawai::where('skpd_id', $skpd->id)->where('puskesmas_id', null)->where('is_aktif', 1)->orderBy('urutan', 'DESC')->get();
             //dd($pegawai);
             foreach ($pegawai as $item) {
                 $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -107,12 +107,16 @@ class LaporanAdminController extends Controller
                     $r->skpd_id = $item->skpd_id;
                     $r->bulan   = $bulan;
                     $r->tahun   = $tahun;
+                    $r->puskesmas_id   = $item->puskesmas_id;
                     $r->save();
                 } else {
+                    $check->update([
+                        'puskesmas_id' => $item->puskesmas_id,
+                    ]);
                 }
             }
 
-            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->where('jabatan', '!=', null)->get()
+            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('skpd_id', Auth::user()->skpd->id)->where('jabatan', '!=', null)->get()
                 ->map(function ($item) {
                     $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
                     return $item;
