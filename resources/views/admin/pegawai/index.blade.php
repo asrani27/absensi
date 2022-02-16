@@ -21,13 +21,23 @@ ADMIN
 
         <form method="post" action="/admin/pegawai/puskesmas">
             @csrf
-            <select name="puskesmas_id" class='select2 form-control'>
-                <option value="">-Pilih-</option>
-                @foreach ($puskesmas as $item)
-                <option value="{{$item->id}}">{{$item->nama}}</option>
-                @endforeach
-            </select>
-            <button type="submit" class="btn btn-sm bg-gradient-green">Tampilkan</button>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <select name="puskesmas_id" class='form-control form-control-sm'>
+                            <option value="">-Pilih-</option>
+                            @foreach ($puskesmas as $item)
+                            <option value="{{$item->id}}">{{$item->nama}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-sm bg-gradient-green">Tampilkan</button>
+                    </div>
+                </div>
+            </div>
         </form>
         <div class="card">
             <div class="card-header">
