@@ -219,6 +219,7 @@ class PegawaiController extends Controller
     public function pegawaiPuskesmas(Request $req)
     {
         $puskesmas = request()->get('puskesmas_id');
+
         if ($puskesmas == '34') {
             $data = Pegawai::where('skpd_id', '34')->where('puskesmas_id', null)->orderBy('urutan', 'DESC')->paginate(10);
         } else {
