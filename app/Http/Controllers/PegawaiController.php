@@ -21,8 +21,9 @@ class PegawaiController extends Controller
     public function index()
     {
         $data = Pegawai::where('skpd_id', $this->skpd()->id)->orderBy('urutan', 'DESC')->paginate(10);
+        $puskesmas = Puskesmas::get();
         //$data = Pegawai::where('skpd_id', $this->skpd()->id)->paginate(10);
-        return view('admin.pegawai.index', compact('data'));
+        return view('admin.pegawai.index', compact('data', 'puskesmas'));
     }
 
     public function skpd()

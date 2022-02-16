@@ -17,6 +17,16 @@ ADMIN
         {{-- <a href="/admin/pegawai/sortir" class="btn btn-sm bg-gradient-info"><i class="fas fa-users"></i> Urutkan
             Pegawai</a> --}}
         <br /><br />
+        <form method="post" action="/admin/pegawai/puskesmas">
+            @csrf
+            <select name="puskesmas_id" class='select2 form-control'>
+                <option value="">-Pilih-</option>
+                @foreach ($puskesmas as $item)
+                <option value="{{$item->id}}">{{$item->nama}}</option>
+                @endforeach
+            </select>
+            <button type="submit" class="btn btn-sm bg-gradient-green">Tampilkan</button>
+        </form>
         @if (Auth::user()->username == '1.02.01.')
         <div class="card">
             <div class="card-header">
