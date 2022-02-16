@@ -11,6 +11,7 @@ use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Jobs\SyncPegawai;
+use App\Models\Puskesmas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -63,7 +64,9 @@ class PegawaiController extends Controller
             })->paginate(10);
         $data->appends(['search' => $search])->links();
         request()->flash();
-        return view('admin.pegawai.index', compact('data'))->withInput(request()->all());
+
+        $puskesmas = Puskesmas::get();
+        return view('admin.pegawai.index', compact('data', 'puskesmas'))->withInput(request()->all());
     }
 
     public function createuser()
