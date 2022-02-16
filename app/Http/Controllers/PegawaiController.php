@@ -218,12 +218,13 @@ class PegawaiController extends Controller
 
     public function pegawaiPuskesmas(Request $req)
     {
-        if ($req->puskesmas_id == '34') {
+        $puskesmas = request()->get('puskesmas_id');
+        if ($puskesmas == '34') {
             $data = Pegawai::where('skpd_id', '34')->where('puskesmas_id', null)->orderBy('urutan', 'DESC')->paginate(10);
         } else {
-            $data = Pegawai::where('puskesmas_id', $req->puskesmas_id)->orderBy('urutan', 'DESC')->paginate(10);
+            $data = Pegawai::where('puskesmas_id', $puskesmas)->orderBy('urutan', 'DESC')->paginate(10);
         }
-        $data->appends(['puskesmas_id' => $req->puskesmas_id])->links();
+        $data->appends(['puskesmas_id' => $puskesmas])->links();
         $puskesmas = Puskesmas::get();
         $req->flash();
         return view('admin.pegawai.index', compact('data', 'puskesmas'));

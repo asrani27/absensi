@@ -19,7 +19,7 @@ ADMIN
         <br /><br />
         @if (Auth::user()->username == '1.02.01.')
 
-        <form method="post" action="/admin/pegawai/puskesmas">
+        <form method="get" action="/admin/pegawai/puskesmas">
             @csrf
             <div class="row">
                 <div class="col-sm-6">
