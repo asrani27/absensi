@@ -17,6 +17,8 @@ ADMIN
         {{-- <a href="/admin/pegawai/sortir" class="btn btn-sm bg-gradient-info"><i class="fas fa-users"></i> Urutkan
             Pegawai</a> --}}
         <br /><br />
+        @if (Auth::user()->username == '1.02.01.')
+
         <form method="post" action="/admin/pegawai/puskesmas">
             @csrf
             <select name="puskesmas_id" class='select2 form-control'>
@@ -27,7 +29,6 @@ ADMIN
             </select>
             <button type="submit" class="btn btn-sm bg-gradient-green">Tampilkan</button>
         </form>
-        @if (Auth::user()->username == '1.02.01.')
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Data Pegawai ({{$data->total()}})</h3>
