@@ -223,6 +223,7 @@ class PegawaiController extends Controller
         } else {
             $data = Pegawai::where('puskesmas_id', $req->puskesmas_id)->orderBy('urutan', 'DESC')->paginate(10);
         }
+        $data->appends(['puskesmas_id' => $req->puskesmas_id])->links();
         $puskesmas = Puskesmas::get();
         $req->flash();
         return view('admin.pegawai.index', compact('data', 'puskesmas'));
