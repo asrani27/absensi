@@ -59,34 +59,34 @@ class CutiController extends Controller
             toastr()->success('Data Di Simpan');
             return redirect('admin/cuti');
         } else {
-            if ($today->diffInDays(Carbon::parse($request->tanggal_mulai)) > 5) {
-                toastr()->error('Tidak bisa Menambah Data karena data ini telah di rekap pada tanggal 5 setiap bulan');
+            // if ($today->diffInDays(Carbon::parse($request->tanggal_mulai)) > 5) {
+            //     toastr()->error('Tidak bisa Menambah Data karena data ini telah di rekap pada tanggal 5 setiap bulan');
+            //     return back();
+            // } else {
+
+            $validator = Validator::make($request->all(), [
+                'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
+            ]);
+
+            if ($validator->fails()) {
+                toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
                 return back();
-            } else {
-
-                $validator = Validator::make($request->all(), [
-                    'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
-                ]);
-
-                if ($validator->fails()) {
-                    toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
-                    return back();
-                }
-
-                if ($request->hasFile('file')) {
-                    $filename = $request->file->getClientOriginalName();
-                    $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
-                    $request->file->storeAs('/public/cuti', $filename);
-                    $attr['file'] = $filename;
-                } else {
-                    $attr['file'] = null;
-                }
-
-                Cuti::create($attr);
-
-                toastr()->success('Data Di Simpan');
-                return redirect('admin/cuti');
             }
+
+            if ($request->hasFile('file')) {
+                $filename = $request->file->getClientOriginalName();
+                $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
+                $request->file->storeAs('/public/cuti', $filename);
+                $attr['file'] = $filename;
+            } else {
+                $attr['file'] = null;
+            }
+
+            Cuti::create($attr);
+
+            toastr()->success('Data Di Simpan');
+            return redirect('admin/cuti');
+            // }
         }
     }
 
