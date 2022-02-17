@@ -155,7 +155,7 @@
               <td>{{$item->nama}}</td>
               <td>{{$item->jabatan}}</td>
               <td>{{$item->jumlah_hari}}</td>
-              <td>{{$item->jumlah_jam / 60}} Jam</td>
+              <td>{{intdiv($item->jumlah_jam, 60)}}:{{$item->jumlah_jam % 60}}</td>
               <td>0</td>
               <td>0</td>
               <td>{{$item->a == null ? '0': $item->a}}</td>
@@ -168,9 +168,10 @@
               <td>{{$item->o == null ? '0': $item->o}}</td>
               <td>0</td>
               <td>0</td>
-              <td>{{round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / 60, 2)}}</td>
-              <td>{{round($item->datang_lambat / 60, 2)}}</td>
-              <td>{{round($item->pulang_cepat / 60, 2)}}</td>
+              <td>{{intdiv(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat), 60)}}:{{($item->jumlah_jam
+                - $item->datang_lambat - $item->pulang_cepat) % 60}}</td>
+              <td>{{intdiv($item->datang_lambat, 60)}}:{{$item->datang_lambat % 60}}</td>
+              <td>{{intdiv($item->pulang_cepat, 60)}}:{{$item->pulang_cepat % 60}}</td>
               <td>{{$item->persen_kehadiran}}</td>
               <td>0</td>
             </tr>
