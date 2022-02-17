@@ -55,8 +55,7 @@ CUTI
                             <td>{{$item->jenis_keterangan->keterangan}}</td>
                             <td>{{$item->created_at}}</td>
                             <td>
-                                <a href="/superadmin/pegawai/{{$item->id}}/history" class="btn btn-xs btn-primary"><i
-                                        class="fas fa-eye"></i> History</a>
+
                             </td>
                         </tr>
                         @endforeach
