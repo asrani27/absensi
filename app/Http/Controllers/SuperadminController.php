@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cuti;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class SuperadminController extends Controller
 
     public function cuti()
     {
-        $data = Cuti::orderBy('id', 'DESC')->get();
+        $data = Cuti::orderBy('id', 'DESC')->paginate(15);
         return view('superadmin.cuti.index', compact('data'));
     }
 }
