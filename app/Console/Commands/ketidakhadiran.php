@@ -50,7 +50,7 @@ class ketidakhadiran extends Command
             $countTugas = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', '01')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 5)->get());
             //dd($countSakit, $countTraining, $countTugas, $countCutiTahun);
             $item->update([
-                's' => $countSakit,
+                's' => $countSakit + $countSakitKarenaCovid,
                 'tr' => $countTraining,
                 'd' => $countTugas,
                 'c' => $countCutiTahun,
