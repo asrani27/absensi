@@ -122,6 +122,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::resource('cuti', CutiController::class);
 
         Route::get('laporan', [LaporanAdminController::class, 'index']);
+        Route::get('laporan/rekap/{bulan}/{tahun}', [LaporanAdminController::class, 'bulanTahun']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/pdf', [LaporanAdminController::class, 'bulanPdf']);
         Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggal']);
         Route::get('laporan/tanggal/excel', [LaporanAdminController::class, 'excel']);
         Route::get('laporan/rekap', [LaporanAdminController::class, 'bulan']);

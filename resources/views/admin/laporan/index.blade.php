@@ -67,8 +67,37 @@
         Laporan presensi Per Bulan
       </div>
       <div class="card-body">
+        <table class="table table-hover table-striped text-nowrap table-sm">
+          <thead>
+            <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
+              <th>#</th>
+              <th>Bulan</th>
+              <th>Tahun</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          @php
+          $no =1;
+          @endphp
+          <tbody>
 
-        <form method="get" action="/admin/laporan/rekap" target="_blank">
+            @foreach (bulanTahun() as $key => $item)
+            <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+              <td>{{$no++}}</td>
+              <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}}</td>
+              <td>{{$item->tahun}}</td>
+              <td><a href="/admin/laporan/rekap/{{$item->bulan}}/{{$item->tahun}}" class="btn btn-xs btn-success"><i
+                    class="fas fa-eye"></i> Detail</a></td>
+            </tr>
+            @endforeach
+            {{-- <tr>
+              <td></td>
+              <td>Total Terlambat</td>
+              <td>Total Lebih awal</td>
+            </tr> --}}
+          </tbody>
+        </table>
+        {{-- <form method="get" action="/admin/laporan/rekap" target="_blank">
           @csrf
           <div class="row">
             <div class="col-sm-5">
@@ -177,7 +206,7 @@
             </tr>
             @endforeach
           </tbody>
-        </table>
+        </table> --}}
       </div>
     </div>
   </div>

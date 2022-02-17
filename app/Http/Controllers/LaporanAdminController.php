@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Exports\PresensiExport;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class LaporanAdminController extends Controller
 {
@@ -126,5 +127,31 @@ class LaporanAdminController extends Controller
 
             return view('admin.laporan.index', compact('bulan', 'tahun', 'data'));
         }
+    }
+
+    public function bulanTahun($bulan, $tahun)
+    {
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('skpd_id', Auth::user()->skpd->id)->where('jabatan', '!=', null)->get()
+            ->map(function ($item) {
+                $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                return $item;
+            })->sortByDesc('urut');
+
+        return view('admin.laporan.bulantahun', compact('bulan', 'tahun', 'data'));
+    }
+
+    public function bulanPdf($bulan, $tahun)
+    {
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('skpd_id', Auth::user()->skpd->id)->where('jabatan', '!=', null)->get()
+            ->map(function ($item) {
+                $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                return $item;
+            })->sortByDesc('urut');
+        $skpd = Auth::user()->skpd;
+        $mulai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->firstOfMonth()->format('d-m-Y');
+        $sampai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth()->format('d-m-Y');
+
+        $pdf = PDF::loadView('admin.laporan.bulanpdf', compact('data', 'skpd', 'mulai', 'sampai'))->setPaper('legal', 'landscape');
+        return $pdf->stream();
     }
 }
