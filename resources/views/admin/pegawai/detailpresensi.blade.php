@@ -39,6 +39,7 @@
                             class="bg-gradient-primary">
                             <th>#</th>
                             <th>Tanggal</th>
+                            <th>Hari</th>
                             <th>Jam Masuk</th>
                             <th>Jam Pulang</th>
                             <th>Keterangan</th>
@@ -59,6 +60,7 @@
                             @endif
                             <td>{{$no++}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d M Y')}}</td>
+                            <td>{{\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l')}}</td>
                             <td>{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
                             <td>{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
                             <td>
@@ -77,6 +79,7 @@
                         </tr>
                         @endforeach
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
