@@ -44,7 +44,7 @@ class HitungCuti extends Command
     public function handle()
     {
         $tahun = Carbon::now()->format('Y');
-        $data = Cuti::where('jenis_keterangan_id', 7)->whereYear('tanggal_mulai', $tahun)->get();
+        $data = Cuti::whereIn('jenis_keterangan_id', [5, 7, 9])->whereYear('tanggal_mulai', $tahun)->get();
 
         foreach ($data as $item) {
             $period = CarbonPeriod::create($item->tanggal_mulai, $item->tanggal_selesai);
@@ -75,7 +75,7 @@ class HitungCuti extends Command
                                     'jam_pulang' => '00:00:00',
                                     'terlambat' => 0,
                                     'lebih_awal' => 0,
-                                    'jenis_keterangan_id' => 7,
+                                    'jenis_keterangan_id' => $item->jenis_keterangan_id,
                                 ]);
                             }
                         } else {
