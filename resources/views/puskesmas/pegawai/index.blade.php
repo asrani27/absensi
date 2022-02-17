@@ -94,14 +94,14 @@ ADMIN
 
                                 @else
                                 @if ($item->user == null)
-                                {{-- <a href="/puskesmas/pegawai/{{$item->id}}/createuser"
-                                    class="btn btn-xs bg-gradient-success">Buat Akun</a> --}}
+                                <a href="/puskesmas/pegawai/{{$item->id}}/createuser"
+                                    class="btn btn-xs bg-gradient-success">Buat Akun</a>
                                 @else
-                                {{-- <a href="/puskesmas/pegawai/{{$item->id}}/presensi"
+                                <a href="/puskesmas/pegawai/{{$item->id}}/presensi"
                                     class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
                                 <a href="/puskesmas/pegawai/{{$item->id}}/resetpass"
                                     class="btn btn-xs bg-gradient-secondary"><i class="fas fa-key"></i> Reset Pass</a>
-                                --}}
+
                                 @endif
                                 @endif
                             </td>

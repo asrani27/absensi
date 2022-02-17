@@ -170,4 +170,19 @@ class PuskesmasController extends Controller
         toastr()->success('Berhasil Di Ubah');
         return redirect('/puskesmas/pegawai');
     }
+
+    public function presensi($id)
+    {
+        $pegawai = Pegawai::find($id);
+        $data = null;
+
+        return view('puskesmas.pegawai.presensi', compact('pegawai', 'data', 'id'));
+    }
+
+    public function detailPresensi($id, $bulan, $tahun)
+    {
+        $pegawai = Pegawai::find($id);
+        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+        return view('puskesmas.pegawai.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
+    }
 }

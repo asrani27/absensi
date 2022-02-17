@@ -175,6 +175,9 @@ Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
     Route::prefix('puskesmas')->group(function () {
         Route::get('pegawai', [PuskesmasController::class, 'pegawai']);
         Route::get('pegawai/search', [PuskesmasController::class, 'searchpegawai']);
+        Route::get('pegawai/{id}/resetpass', [PegawaiController::class, 'resetpass']);
+        Route::get('pegawai/{id}/presensi/{bulan}/{tahun}', [PuskesmasController::class, 'detailPresensi']);
+        Route::get('pegawai/{id}/presensi', [PuskesmasController::class, 'presensi']);
         Route::get('cuti', [PuskesmasController::class, 'cuti']);
         Route::get('pegawai/{id}/jenispresensi', [PuskesmasController::class, 'jenispresensi']);
         Route::post('pegawai/{id}/jenispresensi', [PuskesmasController::class, 'updatejenispresensi']);
