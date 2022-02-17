@@ -74,7 +74,7 @@
                             <td>{{$item->terlambat}}</td>
                             <td>{{$item->lebih_awal}}</td>
                             <td><a href="/admin/pegawai/{{$id}}/presensi/{{$bulan}}/{{$tahun}}/{{$item->id}}/edit"><i
-                                        class="fas fa-edit"></i></a>
+                                        class="fas fa-edit"></i> Edit</a>
                             </td>
                         </tr>
                         @endforeach
