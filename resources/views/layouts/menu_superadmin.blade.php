@@ -25,6 +25,15 @@
                 </p>
             </a>
         </li>
+
+        <li class="nav-item">
+            <a href="/superadmin/cuti" class="nav-link {{ Request::is('superadmin/cuti*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                    CUTI
+                </p>
+            </a>
+        </li>
         <li class="nav-header">SETTING</li>
         <li class="nav-item">
             <a href="/superadmin/jam" class="nav-link {{ Request::is('superadmin/profil*') ? 'active' : '' }}">

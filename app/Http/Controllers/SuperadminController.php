@@ -38,4 +38,10 @@ class SuperadminController extends Controller
         request()->flash();
         return view('superadmin.pegawai.history', compact('pegawai', 'data'));
     }
+
+    public function cuti()
+    {
+        $data = Cuti::orderBy('id', 'DESC')->get();
+        return view('superadmin.cuti.index', compact('data'));
+    }
 }

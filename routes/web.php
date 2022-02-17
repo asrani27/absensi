@@ -162,6 +162,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('generatetanggal/{bulan}', [GenerateController::class, 'generate']);
 
         Route::get('hitungcuti', [GenerateController::class, 'hitungcuti']);
+        Route::get('cuti', [SuperadminController::class, 'cuti']);
     });
 });
 
