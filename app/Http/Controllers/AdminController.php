@@ -95,12 +95,12 @@ class AdminController extends Controller
         if ($today->format('m') == Carbon::parse($data->tanggal)->format('m')) {
             return view('admin.presensi.edit', compact('data'));
         } else {
-            if ($today->diffInDays(Carbon::parse($data->tanggal)) > 5) {
-                toastr()->error('Tidak bisa di edit karena data ini telah di rekap pada tanggal 5 setiap bulan');
-                return back();
-            } else {
-                return view('admin.presensi.edit', compact('data'));
-            }
+            // if ($today->diffInDays(Carbon::parse($data->tanggal)) > 5) {
+            //     toastr()->error('Tidak bisa di edit karena data ini telah di rekap pada tanggal 5 setiap bulan');
+            //     return back();
+            // } else {
+            return view('admin.presensi.edit', compact('data'));
+            // }
         }
     }
 
