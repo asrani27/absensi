@@ -37,6 +37,7 @@ CUTI
                             <th>Nama/Nip</th>
                             <th>Mulai - Selesai</th>
                             <th>Ket</th>
+                            <th>Dibuat</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -52,6 +53,7 @@ CUTI
                             <td>{{\Carbon\Carbon::parse($item->tanggal_mulai)->format('d M Y')}} s/d
                                 {{\Carbon\Carbon::parse($item->tanggal_selesai)->format('d M Y')}}</td>
                             <td>{{$item->jenis_keterangan->keterangan}}</td>
+                            <td>{{$item->created_at}}</td>
                             <td>
                                 <a href="/superadmin/pegawai/{{$item->id}}/history" class="btn btn-xs btn-primary"><i
                                         class="fas fa-eye"></i> History</a>
