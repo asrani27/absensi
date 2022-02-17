@@ -17,7 +17,8 @@
                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/2048px-User_icon_2.svg.png"
                         alt="User Image">
                     <span class="username"><a href="#">{{$pegawai->nama}}</a></span>
-                    <span class="description">{{$pegawai->nip}} <br />{{$pegawai->skpd->nama}}</span>
+                    <span class="description">{{$pegawai->nip}} <br />{{$pegawai->skpd->nama}} -
+                        {{$pegawai->puskesmas_id == null ? '':$pegawai->puskesmas->nama}}</span>
                 </div>
             </div>
         </div>
@@ -53,7 +54,7 @@
                     @endphp
                     <tbody>
                         @foreach ($data as $key => $item)
-                        @if (\Carbon\Carbon::parse($item->tanggal)->isWeekend())
+                        @if (\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l') === 'Minggu')
                         <tr style="background-color: #f2dede;font-size:11px; font-family:Arial, Helvetica, sans-serif">
                             @else
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
@@ -73,7 +74,7 @@
                             </td>
                             <td>{{$item->terlambat}}</td>
                             <td>{{$item->lebih_awal}}</td>
-                            <td><a href="/admin/pegawai/{{$id}}/presensi/{{$bulan}}/{{$tahun}}/{{$item->id}}/edit"><i
+                            <td><a href="/puskesmas/pegawai/{{$id}}/presensi/{{$bulan}}/{{$tahun}}/{{$item->id}}/edit"><i
                                         class="fas fa-edit"></i> Edit</a>
                             </td>
                         </tr>
