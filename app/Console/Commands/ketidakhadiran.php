@@ -42,13 +42,13 @@ class ketidakhadiran extends Command
         $ringkasan = Ringkasan::where('bulan', '01')->where('tahun', '2022')->get();
         foreach ($ringkasan as $item) {
 
-            $countSakit = count(Presensi::whereMonth('tanggal', '02')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 3)->get());
-            $countSakitKarenaCovid = count(Presensi::whereMonth('tanggal', '02')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 9)->get());
-            $countCutiTahun = count(Presensi::whereMonth('tanggal', '02')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 7)->get());
-            $countCutiLain = count(Presensi::whereMonth('tanggal', '02')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 8)->get());
-            $countTraining = count(Presensi::whereMonth('tanggal', '02')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 4)->get());
-            $countTugas = count(Presensi::whereMonth('tanggal', '02')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 5)->get());
-
+            $countSakit = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', '01')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 3)->get());
+            $countSakitKarenaCovid = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', '01')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 9)->get());
+            $countCutiTahun = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', '01')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 7)->get());
+            $countCutiLain = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', '01')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 8)->get());
+            $countTraining = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', '01')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 4)->get());
+            $countTugas = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', '01')->whereYear('tanggal', '2022')->where('jenis_keterangan_id', 5)->get());
+            //dd($countSakit, $countTraining, $countTugas, $countCutiTahun);
             $item->update([
                 's' => $countSakit,
                 'tr' => $countTraining,
