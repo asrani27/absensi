@@ -157,15 +157,14 @@
               <td>{{$item->jumlah_hari}}</td>
               <td>{{$item->jumlah_jam / 60}} Jam</td>
               <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
-              <td>0</td>
+              <td>{{$item->a}}</td>
+              <td>{{$item->s}}</td>
+              <td>{{$item->tr}}</td>
+              <td>{{$item->d}}</td>
+              <td>{{$item->i}}</td>
+              <td>{{$item->c}}</td>
+              <td>{{$item->l}}</td>
+              <td>{{$item->o}}</td>
               <td>0</td>
               <td>0</td>
               <td>{{round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / 60, 2)}}</td>
