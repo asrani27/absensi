@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Jam;
 use App\Models\Role;
 use App\Models\User;
 use App\Jobs\SyncUrut;
@@ -153,7 +154,7 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::find($id);
         $data = null;
 
-        return view('admin.pegawai.presensi', compact('pegawai', 'data'));
+        return view('admin.pegawai.presensi', compact('pegawai', 'data', 'id'));
     }
 
     public function tampilkanPresensi($id)
@@ -229,5 +230,66 @@ class PegawaiController extends Controller
         $puskesmas = Puskesmas::get();
         $req->flash();
         return view('admin.pegawai.index', compact('data', 'puskesmas'));
+    }
+
+    public function detailPresensi($id, $bulan, $tahun)
+    {
+        $pegawai = Pegawai::find($id);
+        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+        return view('admin.pegawai.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
+    }
+
+    public function editPresensi($id, $bulan, $tahun, $id_presensi)
+    {
+        $data = Presensi::find($id_presensi);
+        return view('admin.pegawai.editpresensi', compact('data', 'id', 'bulan', 'tahun'));
+    }
+
+    public function updatePresensi(Request $req, $id, $bulan, $tahun, $id_presensi)
+    {
+        $hari = Carbon::now()->translatedFormat('l');
+
+        $jam = Jam::where('hari', $hari)->first();
+
+        Presensi::find($id_presensi)->update([
+            'jam_masuk' => $req->jam_masuk,
+            'jam_pulang' => $req->jam_pulang,
+        ]);
+
+        $data = Presensi::find($id_presensi);
+
+        if ($data->jam_masuk == '00:00:00') {
+            $data->update([
+                'terlambat' => 240,
+            ]);
+        } elseif ($data->jam_masuk > $jam->jam_masuk) {
+            $terlambat = floor(Carbon::parse($data->jam_masuk)->diffInSeconds($jam->jam_masuk) / 60);
+            $data->update([
+                'terlambat' => $terlambat,
+            ]);
+        } else {
+            $data->update([
+                'terlambat' => 0,
+            ]);
+        }
+
+        if ($data->jam_pulang == '00:00:00') {
+            $data->update([
+                'lebih_awal' => 240,
+            ]);
+        } elseif ($data->jam_pulang < $jam->jam_pulang) {
+            $lebih_awal = floor(Carbon::parse($data->jam_pulang)->diffInSeconds($jam->jam_pulang) / 60);
+            //dd($lebih_awal, $item->jam_pulang, $jam->jam_pulang);
+            $data->update([
+                'lebih_awal' => $lebih_awal,
+            ]);
+        } else {
+            $data->update([
+                'lebih_awal' => 0,
+            ]);
+        }
+
+        toastr()->success('Berhasil Di Ubah');
+        return redirect('/admin/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
     }
 }

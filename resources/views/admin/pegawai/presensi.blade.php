@@ -28,10 +28,41 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                Data Presensi
+                Data Riwayat Presensi
             </div>
             <div class="card-body">
-                <form method="get" action="/admin/pegawai/{{$pegawai->id}}/presensi/tampilkan">
+                <table class="table table-hover table-striped text-nowrap table-sm">
+                    <thead>
+                        <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif"
+                            class="bg-gradient-primary">
+                            <th>#</th>
+                            <th>Bulan</th>
+                            <th>Tahun</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    @php
+                    $no =1;
+                    @endphp
+                    <tbody>
+
+                        @foreach (bulanTahun() as $key => $item)
+                        <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                            <td>{{$no++}}</td>
+                            <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}}</td>
+                            <td>{{$item->tahun}}</td>
+                            <td><a href="/admin/pegawai/{{$id}}/presensi/{{$item->bulan}}/{{$item->tahun}}"
+                                    class="btn btn-xs btn-success"><i class="fas fa-eye"></i> Detail</a></td>
+                        </tr>
+                        @endforeach
+                        {{-- <tr>
+                            <td></td>
+                            <td>Total Terlambat</td>
+                            <td>Total Lebih awal</td>
+                        </tr> --}}
+                    </tbody>
+                </table>
+                {{-- <form method="get" action="/admin/pegawai/{{$pegawai->id}}/presensi/tampilkan">
                     @csrf
                     <div class="row">
 
@@ -69,11 +100,10 @@
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Tampilkan</button>
-                                {{-- <a href="/admin/generate/presensi" class="btn btn-warning">Generate</a> --}}
                             </div>
                         </div>
                     </div>
-                </form>
+                </form> --}}
 
                 @if ($data != null)
                 <table class="table table-hover table-striped text-nowrap table-sm">
@@ -87,6 +117,7 @@
                             <th>Keterangan</th>
                             <th>Telat</th>
                             <th>Lebih awal</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     @php
@@ -114,6 +145,8 @@
                             </td>
                             <td>{{$item->terlambat}}</td>
                             <td>{{$item->lebih_awal}}</td>
+                            <td><a href="/admin/pegawai/presensi/{{$item->id}}/edit" class="btn btn-xs btn-success"><i
+                                        class="fas fa-edit"></i></a></td>
                         </tr>
                         @endforeach
                         {{-- <tr>
