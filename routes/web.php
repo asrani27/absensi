@@ -94,8 +94,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::post('presensi/{id}', [AdminController::class, 'updatePresensi']);
         Route::get('presensi/{id}/delete', [AdminController::class, 'deletePresensi']);
         Route::get('pegawai/search', [PegawaiController::class, 'search']);
-        Route::get('pegawai/presensi/{id}/edit', [PegawaiController::class, 'editPresensi']);
-        Route::post('pegawai/presensi/{id}/edit', [PegawaiController::class, 'updatePresensi']);
+        // Route::get('pegawai/presensi/{id}/edit', [PegawaiController::class, 'editPresensi']);
+        // Route::post('pegawai/presensi/{id}/edit', [PegawaiController::class, 'updatePresensi']);
         Route::get('pegawai/sync', [PegawaiController::class, 'sync']);
         Route::get('pegawai/createuser', [PegawaiController::class, 'createuser']);
         Route::get('pegawai/puskesmas', [PegawaiController::class, 'pegawaiPuskesmas']);
