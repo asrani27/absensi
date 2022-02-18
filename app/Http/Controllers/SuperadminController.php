@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cuti;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use App\Models\Ringkasan;
 use Illuminate\Http\Request;
 
 class SuperadminController extends Controller
@@ -44,5 +45,16 @@ class SuperadminController extends Controller
     {
         $data = Cuti::orderBy('id', 'DESC')->paginate(15);
         return view('superadmin.cuti.index', compact('data'));
+    }
+
+    public function rekapitulasi()
+    {
+        return view('superadmin.rekapitulasi.index');
+    }
+
+    public function detailRekapitulasi($bulan, $tahun)
+    {
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->orderBy('id', 'DESC')->paginate(15);
+        return view('superadmin.rekapitulasi.detail', compact('data'));
     }
 }
