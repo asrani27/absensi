@@ -71,8 +71,10 @@ class HitungHariDanJam6 extends Command
         }
 
         $pegawai = Pegawai::where('jenis_presensi', '2')->get();
+
         foreach ($pegawai as $item) {
             $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+
             if ($check == null) {
                 $n = new Ringkasan;
                 $n->nip = $item->nip;
@@ -83,7 +85,7 @@ class HitungHariDanJam6 extends Command
                 $n->jumlah_jam = array_sum($jumlah_jam);
                 $n->save();
             } else {
-                $item->update([
+                $check->update([
                     'jumlah_hari' => count($jumlah_hari_kerja),
                     'jumlah_jam' => array_sum($jumlah_jam),
                     'puskesmas_id' => $item->puskesmas_id,

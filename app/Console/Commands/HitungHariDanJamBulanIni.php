@@ -80,13 +80,13 @@ class HitungHariDanJamBulanIni extends Command
                 $n->jumlah_jam = array_sum($jumlah_jam);
                 $n->save();
             } else {
-                $item->update([
+                $check->update([
                     'jumlah_hari' => count($jumlah_hari_kerja),
                     'jumlah_jam' => array_sum($jumlah_jam),
                 ]);
             }
         }
-        
+
         $com['nama_command'] = 'hitung hari dan jam bulan ini';
         $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
 
