@@ -54,7 +54,7 @@ class SuperadminController extends Controller
 
     public function detailRekapitulasi($bulan, $tahun)
     {
-        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->orderBy('id', 'DESC')->paginate(15);
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->orderBy('id', 'DESC')->paginate(800);
         return view('superadmin.rekapitulasi.detail', compact('data'));
     }
 }
