@@ -36,9 +36,15 @@ class HitungTerlambat implements ShouldQueue
     public function handle()
     {
         if ($this->presensi->jam_masuk == '00:00:00') {
-            $this->presensi->update([
-                'terlambat' => 240,
-            ]);
+            if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
+                $this->presensi->update([
+                    'terlambat' => 120,
+                ]);
+            } else {
+                $this->presensi->update([
+                    'terlambat' => 240,
+                ]);
+            }
         } elseif ($this->presensi->jam_masuk > $this->jam->jam_masuk) {
             $terlambat = floor(Carbon::parse($this->presensi->jam_masuk)->diffInSeconds($this->jam->jam_masuk) / 60);
             $this->presensi->update([
@@ -51,9 +57,15 @@ class HitungTerlambat implements ShouldQueue
         }
 
         if ($this->presensi->jam_pulang == '00:00:00') {
-            $this->presensi->update([
-                'lebih_awal' => 240,
-            ]);
+            if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
+                $this->presensi->update([
+                    'terlambat' => 120,
+                ]);
+            } else {
+                $this->presensi->update([
+                    'terlambat' => 240,
+                ]);
+            }
         } elseif ($this->presensi->jam_pulang < $this->jam->jam_pulang) {
             $lebih_awal = floor(Carbon::parse($this->presensi->jam_pulang)->diffInSeconds($this->jam->jam_pulang) / 60);
             //dd($lebih_awal, $item->jam_pulang, $jam->jam_pulang);

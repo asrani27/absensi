@@ -78,6 +78,35 @@ class TerlambatDalamSebulan extends Command
                         }
                     }
                 }
+            } elseif ($checkJenisPresensi == 2) {
+                //cek dia tanggalnya minggu gak?
+                if (Carbon::parse($item->tanggal)->translatedFormat('l') == 'Minggu') {
+                    // minggu 
+                    $item->update([
+                        'terlambat' => 0,
+                        'lebih_awal' => 0,
+                    ]);
+                } else {
+                    //cek dia tanggalnya Libur nasional gak?
+                    if (LiburNasional::where('tanggal', $item->tanggal)->first() != null) {
+                        $item->update([
+                            'terlambat' => 0,
+                            'lebih_awal' => 0,
+                        ]);
+                    } else {
+                        //cek dia TL / Cuti Tahunan gak?
+                        if ($item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 9 || $item->jenis_keterangan_id == 4) {
+                            $item->update([
+                                'terlambat' => 0,
+                                'lebih_awal' => 0,
+                            ]);
+                        } else {
+                            $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
+                            $jam = Jam6::where('hari', $hari)->first();
+                            HitungTerlambat::dispatch($item, $jam);
+                        }
+                    }
+                }
             } else {
             }
         }
