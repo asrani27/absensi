@@ -66,7 +66,7 @@ class TerlambatDalamSebulan extends Command
                         ]);
                     } else {
                         //cek dia TL / Cuti Tahunan gak?
-                        if ($item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 5) {
+                        if ($item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 9 || $item->jenis_keterangan_id == 4) {
                             $item->update([
                                 'terlambat' => 0,
                                 'lebih_awal' => 0,
