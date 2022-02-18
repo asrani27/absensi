@@ -16,7 +16,7 @@ class HitungHariDanJam6 extends Command
      *
      * @var string
      */
-    protected $signature = 'hitungharidanjam6';
+    protected $signature = 'hitungharidanjamdinkes';
 
     /**
      * The console command description.
