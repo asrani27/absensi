@@ -47,6 +47,7 @@ class TerlambatDalamSebulan extends Command
     {
         //Hitung Terlambat Untuk Jenis Presensi 5 Hari Kerja
         $data = Presensi::where('skpd_id', '14')->whereMonth('tanggal', '01')->whereYear('tanggal', '2022')->get();
+
         foreach ($data as $item) {
             $checkJenisPresensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
             //cek dia jenis presensi 5 hari kerja gak?

@@ -59,11 +59,11 @@ class HitungTerlambat implements ShouldQueue
         if ($this->presensi->jam_pulang == '00:00:00') {
             if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
                 $this->presensi->update([
-                    'terlambat' => 105,
+                    'lebih_awal' => 105,
                 ]);
             } else {
                 $this->presensi->update([
-                    'terlambat' => 255,
+                    'lebih_awal' => 255,
                 ]);
             }
         } elseif ($this->presensi->jam_pulang < $this->jam->jam_pulang) {
