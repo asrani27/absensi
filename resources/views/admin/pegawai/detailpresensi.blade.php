@@ -68,7 +68,7 @@
                             <td>{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
                             <td>
 
-                                {{$item->jenis_keterangan->keterangan}}
+                                {{$item->jenis_keterangan == null ? '': $item->jenis_keterangan->keterangan}}
                                 {{-- @if ($item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 ||
                                 $item->jenis_keterangan_id == 9)
                                 @else
