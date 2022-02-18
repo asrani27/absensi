@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Pegawai;
+use App\Models\Presensi;
 use App\Models\Ringkasan;
 use Illuminate\Console\Command;
 
