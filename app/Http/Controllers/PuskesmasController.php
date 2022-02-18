@@ -266,7 +266,7 @@ class PuskesmasController extends Controller
                 $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
                 return $item;
             })->sortByDesc('urut');
-        $skpd = Auth::user()->skpd;
+        $skpd = Auth::user()->puskesmas;
         $mulai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->firstOfMonth()->format('d-m-Y');
         $sampai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth()->format('d-m-Y');
 
