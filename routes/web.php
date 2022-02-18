@@ -192,6 +192,9 @@ Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
         Route::post('cuti/create', [PuskesmasController::class, 'storecuti']);
         Route::get('gantipass', [PuskesmasController::class, 'gantipass']);
         Route::post('gantipass', [PuskesmasController::class, 'updatepass']);
+        Route::get('laporan', [PuskesmasController::class, 'laporan']);
+        Route::get('laporan/rekap/{bulan}/{tahun}', [PuskesmasController::class, 'bulanTahun']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/pdf', [PuskesmasController::class, 'bulanPdf']);
     });
 });
 

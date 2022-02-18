@@ -27,6 +27,14 @@
         </li>
 
         <li class="nav-item">
+            <a href="/puskesmas/laporan" class="nav-link {{Request::is('puskesmas/laporan') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-file"></i>
+                <p>
+                    Laporan
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="/puskesmas/gantipass" class="nav-link {{Request::is('puskesmas/gantipass') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-key"></i>
                 <p>

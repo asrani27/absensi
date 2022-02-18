@@ -10,12 +10,14 @@ use App\Models\User;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Models\Puskesmas;
+use App\Models\Ringkasan;
 use App\Jobs\SyncPuskesmas;
 use Illuminate\Http\Request;
 use App\Models\JenisKeterangan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class PuskesmasController extends Controller
 {
@@ -239,5 +241,36 @@ class PuskesmasController extends Controller
 
         toastr()->success('Berhasil Di Ubah');
         return redirect('/puskesmas/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
+    }
+
+    public function laporan()
+    {
+        return view('puskesmas.laporan.index');
+    }
+
+    public function bulanTahun($bulan, $tahun)
+    {
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('jabatan', '!=', null)->get()
+            ->map(function ($item) {
+                $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                return $item;
+            })->sortByDesc('urut');
+
+        return view('puskesmas.laporan.bulantahun', compact('bulan', 'tahun', 'data'));
+    }
+
+    public function bulanPdf($bulan, $tahun)
+    {
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('jabatan', '!=', null)->get()
+            ->map(function ($item) {
+                $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                return $item;
+            })->sortByDesc('urut');
+        $skpd = Auth::user()->skpd;
+        $mulai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->firstOfMonth()->format('d-m-Y');
+        $sampai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth()->format('d-m-Y');
+
+        $pdf = PDF::loadView('puskesmas.laporan.bulanpdf', compact('data', 'skpd', 'mulai', 'sampai'))->setPaper('legal', 'landscape');
+        return $pdf->stream();
     }
 }
