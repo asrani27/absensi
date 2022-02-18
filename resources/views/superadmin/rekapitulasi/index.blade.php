@@ -57,8 +57,8 @@
               <td>{{$no++}}</td>
               <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}}</td>
               <td>{{$item->tahun}}</td>
-              <td><a href="/superadmin/laporan/rekap/{{$item->bulan}}/{{$item->tahun}}"
-                  class="btn btn-xs btn-success"><i class="fas fa-eye"></i> Detail</a></td>
+              <td><a href="/superadmin/rekapitulasi/{{$item->bulan}}/{{$item->tahun}}" class="btn btn-xs btn-success"><i
+                    class="fas fa-eye"></i> Detail</a></td>
             </tr>
             @endforeach
           </tbody>
