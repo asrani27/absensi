@@ -55,6 +55,13 @@ class RekapManualBulanan extends Command
                     $item->jam_kerja = round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / 60, 2);
                     $item->persen_kehadiran = round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / $item->jumlah_jam * 100, 2);
                     $item->save();
+                } elseif ($checkJenisPresensi == 2) {
+                    $presensi = Presensi::where('nip', $item->nip)->whereMonth('tanggal', '01')->whereYear('tanggal', '2022')->get();
+                    $item->datang_lambat = $presensi->sum('terlambat');
+                    $item->pulang_cepat = $presensi->sum('lebih_awal');
+                    $item->jam_kerja = round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / 60, 2);
+                    $item->persen_kehadiran = round(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat) / $item->jumlah_jam * 100, 2);
+                    $item->save();
                 } else {
                 }
             } catch (\Exception $e) {
