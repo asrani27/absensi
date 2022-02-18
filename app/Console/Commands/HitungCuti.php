@@ -44,8 +44,8 @@ class HitungCuti extends Command
     public function handle()
     {
         $tahun = Carbon::now()->format('Y');
-        $data = Cuti::whereIn('jenis_keterangan_id', [5, 7, 9])->whereYear('tanggal_mulai', $tahun)->get();
-
+        $data = Cuti::whereIn('jenis_keterangan_id', [5, 7, 9])->whereDate('created_at', '=', '2022-02-18')->get();
+        dd($data);
         foreach ($data as $item) {
             $period = CarbonPeriod::create($item->tanggal_mulai, $item->tanggal_selesai);
             foreach ($data as $item) {
@@ -85,7 +85,7 @@ class HitungCuti extends Command
             }
         }
 
-        $com['nama_command'] = 'hitung cuti bulan ini';
+        $com['nama_command'] = 'hitung cuti hari ini';
         $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
 
         Komando::create($com);
