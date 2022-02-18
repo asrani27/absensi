@@ -261,7 +261,7 @@ class PuskesmasController extends Controller
 
     public function bulanPdf($bulan, $tahun)
     {
-        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('jabatan', '!=', null)->get()
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('jabatan', '!=', null)->get()
             ->map(function ($item) {
                 $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
                 return $item;
