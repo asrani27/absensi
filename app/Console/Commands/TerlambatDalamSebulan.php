@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use App\Models\Jam;
+use App\Models\Jam6;
 use App\Models\Komando;
 use App\Models\Pegawai;
 use App\Models\Presensi;
