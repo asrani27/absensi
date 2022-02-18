@@ -109,6 +109,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::post('pegawai/{id}/editlokasi', [PegawaiController::class, 'updateLokasi']);
         Route::post('pegawai/{id}/lokasi', [PegawaiController::class, 'storeLokasi']);
         Route::get('pegawai/{id}/presensi', [PegawaiController::class, 'presensi']);
+        Route::get('pegawai/{id}/presensi/generate/{bulan}/{tahun}', [PegawaiController::class, 'generateTanggal']);
         Route::get('pegawai/{id}/presensi/{bulan}/{tahun}', [PegawaiController::class, 'detailPresensi']);
         Route::get('pegawai/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PegawaiController::class, 'editPresensi']);
         Route::post('pegawai/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PegawaiController::class, 'updatePresensi']);

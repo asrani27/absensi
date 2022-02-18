@@ -33,8 +33,8 @@
             <div class="card-body">
                 <a href="/admin/pegawai/{{$id}}/presensi" class="btn btn-xs btn-secondary"><i
                         class="fas fa-arrow-left"></i> Kembali</a>
-                <a href="/admin/pegawai/{{$id}}/presensi/generate/{{$bulan}}/{{$tahun}}"
-                    class="btn btn-xs btn-secondary"><i class="fas fa-arrow-left"></i> Generate Absensi</a>
+                <a href="/admin/pegawai/{{$id}}/presensi/generate/{{$bulan}}/{{$tahun}}" class="btn btn-xs btn-info">
+                    Generate Absensi</a>
                 <br /><br />
                 <table class="table table-hover table-striped text-nowrap table-sm">
                     <thead>

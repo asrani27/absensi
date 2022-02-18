@@ -11,6 +11,7 @@ use App\Models\Lokasi;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use Carbon\CarbonPeriod;
 use App\Jobs\SyncPegawai;
 use App\Models\Puskesmas;
 use Illuminate\Http\Request;
@@ -235,7 +236,7 @@ class PegawaiController extends Controller
     public function detailPresensi($id, $bulan, $tahun)
     {
         $pegawai = Pegawai::find($id);
-        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderby('tanggal', 'ASC')->get();
         return view('admin.pegawai.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
     }
 
@@ -291,5 +292,32 @@ class PegawaiController extends Controller
 
         toastr()->success('Berhasil Di Ubah');
         return redirect('/admin/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
+    }
+
+    public function generateTanggal($id, $bulan, $tahun)
+    {
+        $start = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->startOfMonth()->format('Y-m-d');
+        $end = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth()->format('Y-m-d');
+        $period = CarbonPeriod::create($start, $end);
+        $pegawai = Pegawai::find($id);
+
+        $tanggal = [];
+        foreach ($period as $date) {
+            //array_push($tanggal, $date->format('Y-m-d'));
+            $check = Presensi::where('tanggal', $date->format('Y-m-d'))->where('nip', $pegawai->nip)->first();
+            if ($check == null) {
+                $attr['nip'] = $pegawai->nip;
+                $attr['nama'] = $pegawai->nama;
+                $attr['tanggal'] = $date->format('Y-m-d');
+                $attr['jam_masuk'] = '00:00:00';
+                $attr['jam_pulang'] = '00:00:00';
+                $attr['skpd_id'] = $pegawai->skpd_id;
+                Presensi::create($attr);
+            } else {
+            }
+        }
+
+        toastr()->success('Presensi Berhasil Di generate');
+        return back();
     }
 }
