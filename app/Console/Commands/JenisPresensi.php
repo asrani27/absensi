@@ -41,8 +41,8 @@ class JenisPresensi extends Command
     {
         $data = Pegawai::get();
         foreach ($data as $item) {
-            $ringkasan = Ringkasan::where('nip', $item->nip)->get();
-            foreach ($ringkasan as $item2) {
+            $presensi = Presensi::whereMonth('tanggal', '01')->whereYear('tanggal', '2022')->where('nip', $item->nip)->get();
+            foreach ($presensi as $item2) {
                 $item2->update(['jenis_presensi' => $item->jenis_presensi]);
             }
         }
