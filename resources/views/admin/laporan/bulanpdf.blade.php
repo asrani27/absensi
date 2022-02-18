@@ -128,14 +128,14 @@
                     <td>{{$item->jumlah_hari}}</td>
                     <td>0</td>
                     <td>0</td>
-                    <td align="center">0</td>
-                    <td align="center">0</td>
-                    <td align="center">0</td>
-                    <td align="center">0</td>
-                    <td align="center">0</td>
-                    <td align="center">0</td>
-                    <td align="center">0</td>
-                    <td align="center">0</td>
+                    <td align="center">{{$item->a == null ? '0': $item->a}}</td>
+                    <td align="center">{{$item->s == null ? '0': $item->s}}</td>
+                    <td align="center">{{$item->tr == null ? '0': $item->tr}}</td>
+                    <td align="center">{{$item->d == null ? '0': $item->d}}</td>
+                    <td align="center">{{$item->i == null ? '0': $item->i}}</td>
+                    <td align="center">{{$item->c == null ? '0': $item->c}}</td>
+                    <td align="center">{{$item->l == null ? '0': $item->l}}</td>
+                    <td align="center">{{$item->o == null ? '0': $item->o}}</td>
                     <td>0</td>
                     <td>0</td>
                     <td>{{intdiv(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat),
