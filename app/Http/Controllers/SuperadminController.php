@@ -57,4 +57,10 @@ class SuperadminController extends Controller
         $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->orderBy('id', 'DESC')->get();
         return view('superadmin.rekapitulasi.detail', compact('data'));
     }
+
+    public function deletePresensi($id)
+    {
+        Presensi::find($id)->delete();
+        return back();
+    }
 }

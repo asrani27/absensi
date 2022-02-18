@@ -81,6 +81,7 @@
                             class="bg-gradient-primary">
                             <th>#</th>
                             <th>Tanggal</th>
+                            <th>Hari</th>
                             <th>Jam Masuk</th>
                             <th>Jam Pulang</th>
                             <th>Keterangan</th>
@@ -96,6 +97,7 @@
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                             <td>{{$no++}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d M Y')}}</td>
+                            <td>{{\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l')}}</td>
                             <td>{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
                             <td>{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
                             <td>
@@ -108,6 +110,8 @@
                             </td>
                             <td>{{$item->terlambat}}</td>
                             <td>{{$item->lebih_awal}}</td>
+                            <td><a href="/superadmin/presensipegawai/{{$item->id}}"
+                                    onclick="return confirm('Yakin ingin dihapus?');">delete</a></td>
                         </tr>
                         @endforeach
                     </tbody>
