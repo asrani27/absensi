@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use Carbon\Carbon;
-use App\Models\Pegawai;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -37,31 +36,14 @@ class HitungTerlambat implements ShouldQueue
     public function handle()
     {
         if ($this->presensi->jam_masuk == '00:00:00') {
-            if (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 1) {
-                if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
-                    $this->presensi->update([
-                        'terlambat' => 105,
-                    ]);
-                } else {
-                    $this->presensi->update([
-                        'terlambat' => 255,
-                    ]);
-                }
-            } elseif (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 2) {
-                if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
-                    $this->presensi->update([
-                        'terlambat' => 105,
-                    ]);
-                } elseif (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Sabtu') {
-                    $this->presensi->update([
-                        'terlambat' => 180,
-                    ]);
-                } else {
-                    $this->presensi->update([
-                        'terlambat' => 210,
-                    ]);
-                }
+            if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
+                $this->presensi->update([
+                    'terlambat' => 105,
+                ]);
             } else {
+                $this->presensi->update([
+                    'terlambat' => 255,
+                ]);
             }
         } elseif ($this->presensi->jam_masuk > $this->jam->jam_masuk) {
             $terlambat = floor(Carbon::parse($this->presensi->jam_masuk)->diffInSeconds($this->jam->jam_masuk) / 60);
@@ -75,35 +57,17 @@ class HitungTerlambat implements ShouldQueue
         }
 
         if ($this->presensi->jam_pulang == '00:00:00') {
-            if (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 1) {
-                if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
-                    $this->presensi->update([
-                        'terlambat' => 105,
-                    ]);
-                } else {
-                    $this->presensi->update([
-                        'terlambat' => 255,
-                    ]);
-                }
-            } elseif (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 2) {
-                if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
-                    $this->presensi->update([
-                        'terlambat' => 105,
-                    ]);
-                } elseif (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Sabtu') {
-                    $this->presensi->update([
-                        'terlambat' => 180,
-                    ]);
-                } else {
-                    $this->presensi->update([
-                        'terlambat' => 210,
-                    ]);
-                }
+            if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
+                $this->presensi->update([
+                    'terlambat' => 105,
+                ]);
             } else {
+                $this->presensi->update([
+                    'terlambat' => 255,
+                ]);
             }
         } elseif ($this->presensi->jam_pulang < $this->jam->jam_pulang) {
             $lebih_awal = floor(Carbon::parse($this->presensi->jam_pulang)->diffInSeconds($this->jam->jam_pulang) / 60);
-            //dd($lebih_awal, $item->jam_pulang, $jam->jam_pulang);
             $this->presensi->update([
                 'lebih_awal' => $lebih_awal,
             ]);
