@@ -36,14 +36,31 @@ class HitungTerlambat implements ShouldQueue
     public function handle()
     {
         if ($this->presensi->jam_masuk == '00:00:00') {
-            if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
-                $this->presensi->update([
-                    'terlambat' => 105,
-                ]);
+            if (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 1) {
+                if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
+                    $this->presensi->update([
+                        'terlambat' => 105,
+                    ]);
+                } else {
+                    $this->presensi->update([
+                        'terlambat' => 255,
+                    ]);
+                }
+            } elseif (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 2) {
+                if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
+                    $this->presensi->update([
+                        'terlambat' => 105,
+                    ]);
+                } elseif (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Sabtu') {
+                    $this->presensi->update([
+                        'terlambat' => 180,
+                    ]);
+                } else {
+                    $this->presensi->update([
+                        'terlambat' => 210,
+                    ]);
+                }
             } else {
-                $this->presensi->update([
-                    'terlambat' => 255,
-                ]);
             }
         } elseif ($this->presensi->jam_masuk > $this->jam->jam_masuk) {
             $terlambat = floor(Carbon::parse($this->presensi->jam_masuk)->diffInSeconds($this->jam->jam_masuk) / 60);
@@ -57,14 +74,31 @@ class HitungTerlambat implements ShouldQueue
         }
 
         if ($this->presensi->jam_pulang == '00:00:00') {
-            if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
-                $this->presensi->update([
-                    'lebih_awal' => 105,
-                ]);
+            if (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 1) {
+                if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
+                    $this->presensi->update([
+                        'lebih_awal' => 105,
+                    ]);
+                } else {
+                    $this->presensi->update([
+                        'lebih_awal' => 255,
+                    ]);
+                }
+            } elseif (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 2) {
+                if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
+                    $this->presensi->update([
+                        'lebih_awal' => 105,
+                    ]);
+                } elseif (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Sabtu') {
+                    $this->presensi->update([
+                        'lebih_awal' => 180,
+                    ]);
+                } else {
+                    $this->presensi->update([
+                        'lebih_awal' => 210,
+                    ]);
+                }
             } else {
-                $this->presensi->update([
-                    'lebih_awal' => 255,
-                ]);
             }
         } elseif ($this->presensi->jam_pulang < $this->jam->jam_pulang) {
             $lebih_awal = floor(Carbon::parse($this->presensi->jam_pulang)->diffInSeconds($this->jam->jam_pulang) / 60);
