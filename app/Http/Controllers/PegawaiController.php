@@ -248,9 +248,6 @@ class PegawaiController extends Controller
 
     public function updatePresensi(Request $req, $id, $bulan, $tahun, $id_presensi)
     {
-        $hari = Carbon::now()->translatedFormat('l');
-
-        $jam = Jam::where('hari', $hari)->first();
 
         Presensi::find($id_presensi)->update([
             'jam_masuk' => $req->jam_masuk,
@@ -258,6 +255,10 @@ class PegawaiController extends Controller
         ]);
 
         $data = Presensi::find($id_presensi);
+
+        $hari = Carbon::parse($data->tanggal)->translatedFormat('l');
+
+        $jam = Jam::where('hari', $hari)->first();
 
         if ($data->jam_masuk == '00:00:00') {
             if (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 1) {
@@ -326,7 +327,7 @@ class PegawaiController extends Controller
             }
         } elseif ($data->jam_pulang < $jam->jam_pulang) {
             $lebih_awal = floor(Carbon::parse($data->jam_pulang)->diffInSeconds($jam->jam_pulang) / 60);
-            //dd($lebih_awal, $item->jam_pulang, $jam->jam_pulang);
+
             $data->update([
                 'lebih_awal' => $lebih_awal,
             ]);
