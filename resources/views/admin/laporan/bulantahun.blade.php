@@ -58,7 +58,8 @@
                             <th rowspan=2>Datang <br />Lambat<br />(Jam)</th>
                             <th rowspan=2>Pulang <br />Cepat<br />(Jam)</th>
                             <th rowspan=2>% Hadir</th>
-                            <th rowspan=2>Total Hari Kerja</th>
+                            <th rowspan=2>Total<br /> Hari<br /> Kerja</th>
+                            <th rowspan=2>Aksi</th>
                         </tr>
 
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif"
@@ -108,6 +109,11 @@
                             <td>{{intdiv($item->pulang_cepat, 60)}}:{{$item->pulang_cepat % 60}}</td>
                             <td>{{$item->persen_kehadiran}}</td>
                             <td>0</td>
+                            <td>
+                                <a href="/ringkasan/{{$item->id}}/delete"
+                                    onclick="return confirm('Yakin Ingin Dihapus?');"><span
+                                        class="text-danger">Hapus</span></a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

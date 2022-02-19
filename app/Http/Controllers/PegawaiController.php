@@ -260,9 +260,32 @@ class PegawaiController extends Controller
         $data = Presensi::find($id_presensi);
 
         if ($data->jam_masuk == '00:00:00') {
-            $data->update([
-                'terlambat' => 240,
-            ]);
+            if (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 1) {
+                if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
+                    $data->update([
+                        'terlambat' => 105,
+                    ]);
+                } else {
+                    $data->update([
+                        'terlambat' => 255,
+                    ]);
+                }
+            } elseif (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 2) {
+                if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
+                    $data->update([
+                        'terlambat' => 105,
+                    ]);
+                } elseif (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Sabtu') {
+                    $data->update([
+                        'terlambat' => 180,
+                    ]);
+                } else {
+                    $data->update([
+                        'terlambat' => 210,
+                    ]);
+                }
+            } else {
+            }
         } elseif ($data->jam_masuk > $jam->jam_masuk) {
             $terlambat = floor(Carbon::parse($data->jam_masuk)->diffInSeconds($jam->jam_masuk) / 60);
             $data->update([
@@ -275,9 +298,32 @@ class PegawaiController extends Controller
         }
 
         if ($data->jam_pulang == '00:00:00') {
-            $data->update([
-                'lebih_awal' => 240,
-            ]);
+            if (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 1) {
+                if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
+                    $data->update([
+                        'lebih_awal' => 105,
+                    ]);
+                } else {
+                    $data->update([
+                        'lebih_awal' => 255,
+                    ]);
+                }
+            } elseif (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 2) {
+                if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
+                    $data->update([
+                        'lebih_awal' => 105,
+                    ]);
+                } elseif (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Sabtu') {
+                    $data->update([
+                        'lebih_awal' => 180,
+                    ]);
+                } else {
+                    $data->update([
+                        'lebih_awal' => 210,
+                    ]);
+                }
+            } else {
+            }
         } elseif ($data->jam_pulang < $jam->jam_pulang) {
             $lebih_awal = floor(Carbon::parse($data->jam_pulang)->diffInSeconds($jam->jam_pulang) / 60);
             //dd($lebih_awal, $item->jam_pulang, $jam->jam_pulang);
