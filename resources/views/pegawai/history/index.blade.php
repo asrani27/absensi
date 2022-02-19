@@ -116,7 +116,8 @@
                             <td class="text-center">{{$item->lebih_awal}}</td>
                         </tr>
                         @endforeach
-                        <tr style="background-color: #dff0d8;font-size:10px; font-family:Arial, Helvetica, sans-serif">
+                        {{-- <tr
+                            style="background-color: #dff0d8;font-size:10px; font-family:Arial, Helvetica, sans-serif">
                             <td></td>
                             <td></td>
                             <td></td>
@@ -124,14 +125,13 @@
                             <td class="text-center">{{$data->sum('terlambat')}} Menit</td>
                             <td class="text-center">{{$data->sum('lebih_awal')}} Menit</td>
                         </tr>
-                        {{-- <tr
-                            style="background-color: #dff0d8;font-size:10px; font-family:Arial, Helvetica, sans-serif">
+                        <tr style="background-color: #dff0d8;font-size:10px; font-family:Arial, Helvetica, sans-serif">
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td>Persentase Kehadiran</td>
-                            <td>{{persenKehadiran(Auth::user()->username, )}}</td>
+                            <td>{{persenKehadiran(Auth::user()->username, $bulan, $tahun)->persen_kehadiran}}</td>
                         </tr> --}}
                     </tbody>
                     @endif

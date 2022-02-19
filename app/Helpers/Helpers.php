@@ -19,7 +19,7 @@ function telat($nip, $bulan, $tahun)
 
 function persenKehadiran($nip, $bulan, $tahun)
 {
-    return Ringkasan::where('nip', $nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->first();
+    return Ringkasan::where('nip', $nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
 }
 
 function jumlahHari($bulan, $tahun)
