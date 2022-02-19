@@ -38,7 +38,6 @@
                         <div class="col-sm-10">
                             <select name="tahun" class="form-control">
                                 <option value="">-Tahun-</option>
-                                <option value="2021" {{old('tahun')=='2021' ? 'selected' :''}}>2021</option>
                                 <option value="2022" {{old('tahun')=='2022' ? 'selected' :''}}>2022</option>
                             </select>
                         </div>
@@ -68,6 +67,8 @@
                             <th>Hari</th>
                             <th class="text-center">Jam Masuk</th>
                             <th class="text-center">Jam Pulang</th>
+                            <th class="text-center">Telat</th>
+                            <th class="text-center">Lebih Awal</th>
                         </tr>
                     </thead>
                     @php
@@ -111,9 +112,27 @@
                                 <img src="{{$item->photo_pulang}}" width="75px" height="25px">
                                 @endif
                             </td>
-                            <td></td>
+                            <td class="text-center">{{$item->terlambat}}</td>
+                            <td class="text-center">{{$item->lebih_awal}}</td>
                         </tr>
                         @endforeach
+                        <tr style="background-color: #dff0d8;font-size:10px; font-family:Arial, Helvetica, sans-serif">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-center">{{$data->sum('terlambat')}} Menit</td>
+                            <td class="text-center">{{$data->sum('lebih_awal')}} Menit</td>
+                        </tr>
+                        {{-- <tr
+                            style="background-color: #dff0d8;font-size:10px; font-family:Arial, Helvetica, sans-serif">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Persentase Kehadiran</td>
+                            <td>{{persenKehadiran(Auth::user()->username, )}}</td>
+                        </tr> --}}
                     </tbody>
                     @endif
                 </table>

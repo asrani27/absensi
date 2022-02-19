@@ -16,6 +16,12 @@ function telat($nip, $bulan, $tahun)
 {
     return Presensi::where('nip', $nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
 }
+
+function persenKehadiran($nip, $bulan, $tahun)
+{
+    return Ringkasan::where('nip', $nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->first();
+}
+
 function jumlahHari($bulan, $tahun)
 {
     $tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->pluck('tanggal')->toArray();
