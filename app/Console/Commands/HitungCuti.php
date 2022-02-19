@@ -44,45 +44,45 @@ class HitungCuti extends Command
     public function handle()
     {
         $tahun = Carbon::now()->format('Y');
-        $data = Cuti::whereIn('jenis_keterangan_id', [5, 7, 9])->whereDate('created_at', '=', '2022-02-19')->get();
+        $data = Cuti::whereIn('jenis_keterangan_id', [5, 7, 9, 3, 6, 8])->whereDate('created_at', '=', '2022-02-19')->get();
 
         foreach ($data as $item) {
+            // $period = CarbonPeriod::create($item->tanggal_mulai, $item->tanggal_selesai);
+            // foreach ($data as $item) {
             $period = CarbonPeriod::create($item->tanggal_mulai, $item->tanggal_selesai);
-            foreach ($data as $item) {
-                $period = CarbonPeriod::create($item->tanggal_mulai, $item->tanggal_selesai);
-                foreach ($period as $date) {
-                    if ($date->isWeekend()) {
-                    } else {
-                        if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
-                            //simpan cuti tahun di presensi
-                            $check = Presensi::where('nip', $item->nip)->where('tanggal', $date->format('Y-m-d'))->first();
-                            if ($check == null) {
-                                //save
-                                $p = new Presensi;
-                                $p->nip = $item->nip;
-                                $p->nama = $item->nama;
-                                $p->skpd_id = $item->skpd_id;
-                                $p->tanggal = $date->format('Y-m-d');
-                                $p->jam_masuk = '00:00:00';
-                                $p->jam_pulang = '00:00:00';
-                                $p->terlambat = 0;
-                                $p->lebih_awal = 0;
-                                $p->jenis_keterangan_id = $item->jenis_keterangan_id;
-                                $p->save();
-                            } else {
-                                $check->update([
-                                    'jam_masuk' => '00:00:00',
-                                    'jam_pulang' => '00:00:00',
-                                    'terlambat' => 0,
-                                    'lebih_awal' => 0,
-                                    'jenis_keterangan_id' => $item->jenis_keterangan_id,
-                                ]);
-                            }
+            foreach ($period as $date) {
+                if ($date->translatedFormat('l') == 'Minggu') {
+                } else {
+                    if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
+                        //simpan cuti tahun di presensi
+                        $check = Presensi::where('nip', $item->nip)->where('tanggal', $date->format('Y-m-d'))->first();
+                        if ($check == null) {
+                            //save
+                            $p = new Presensi;
+                            $p->nip = $item->nip;
+                            $p->nama = $item->nama;
+                            $p->skpd_id = $item->skpd_id;
+                            $p->tanggal = $date->format('Y-m-d');
+                            $p->jam_masuk = '00:00:00';
+                            $p->jam_pulang = '00:00:00';
+                            $p->terlambat = 0;
+                            $p->lebih_awal = 0;
+                            $p->jenis_keterangan_id = $item->jenis_keterangan_id;
+                            $p->save();
                         } else {
+                            $check->update([
+                                'jam_masuk' => '00:00:00',
+                                'jam_pulang' => '00:00:00',
+                                'terlambat' => 0,
+                                'lebih_awal' => 0,
+                                'jenis_keterangan_id' => $item->jenis_keterangan_id,
+                            ]);
                         }
+                    } else {
                     }
                 }
             }
+            //}
         }
 
         $com['nama_command'] = 'hitung cuti hari ini';
