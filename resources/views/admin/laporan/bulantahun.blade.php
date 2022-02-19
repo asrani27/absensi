@@ -41,6 +41,14 @@
             <div class="card-body">
                 <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
                     class="btn btn-xs btn-danger">Export PDF</a>
+                <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/masukkanpegawai" target="_blank"
+                    class="btn btn-xs btn-primary"
+                    onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
+                    Pegawai</a>
+                {{-- <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/updatejabatan" target="_blank"
+                    class="btn btn-xs btn-primary" onclick="return confirm('Yakin Ingin Mengupdate Jabatan?');">Update
+                    Jabatan</a> --}}
+                <br /><br />
                 <table class="table table-hover table-striped table-bordered text-nowrap table-sm  table-responsive">
                     <thead>
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif"
@@ -113,8 +121,7 @@
                                 <a href="/ringkasan/{{$item->id}}/delete"
                                     onclick="return confirm('Yakin Ingin Dihapus?');"><span
                                         class="badge badge-danger">Hapus</span></a> |
-                                <a href="/ringkasan/{{$item->id}}/delete"
-                                    onclick="return confirm('Yakin Ingin Dihapus?');"><span
+                                <a href="/ringkasan/{{$item->id}}/hitung"><span
                                         class="badge badge-primary">Hitung</span></a>
                             </td>
                         </tr>

@@ -16,6 +16,7 @@ use App\Http\Controllers\RentangController;
 use App\Http\Controllers\GenerateController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\PuskesmasController;
+use App\Http\Controllers\RingkasanController;
 use App\Http\Controllers\SuperadminController;
 use App\Http\Controllers\LaporanAdminController;
 use App\Http\Controllers\LiburNasionalController;
@@ -130,6 +131,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('laporan/rekap', [LaporanAdminController::class, 'bulan']);
         Route::get('generate/presensi', [AdminController::class, 'generate']);
         Route::get('tampilgenerate', [AdminController::class, 'tampilgenerate']);
+        Route::get('ringkasan/{id}/delete', [RingkasanController::class, 'delete']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/masukkanpegawai', [RingkasanController::class, 'masukkanPegawai']);
     });
 });
 
