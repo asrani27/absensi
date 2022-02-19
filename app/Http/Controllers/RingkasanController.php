@@ -9,6 +9,30 @@ use Illuminate\Support\Facades\Auth;
 
 class RingkasanController extends Controller
 {
+    public function tambahPegawai(Request $req)
+    {
+        $checkDataPegawai = Pegawai::where('nip', $req->nip)->first();
+        if ($checkDataPegawai == null) {
+            toastr()->error('Tidak Ada data Di Absensi');
+            return back();
+        } else {
+            $check = Ringkasan::where('nip', $req->nip)->where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->first();
+            if ($check == null) {
+                $n = new Ringkasan;
+                $n->nip = $req->nip;
+                $n->nama = $checkDataPegawai->nama;
+                $n->jabatan = $req->jabatan;
+                $n->skpd_id = Auth::user()->skpd->id;
+                $n->save();
+                toastr()->success('Berhasil Di Tambahkan');
+                return back();
+            } else {
+
+                toastr()->error('NIP Sudah ada');
+                return back();
+            }
+        }
+    }
     public function delete($id)
     {
         Ringkasan::find($id)->delete();
