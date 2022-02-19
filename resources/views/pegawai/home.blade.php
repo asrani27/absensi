@@ -43,6 +43,22 @@
                 '-':Auth::user()->pegawai->lokasi->nama}}</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              Jenis Presensi
+              <span class="float-right text-success">
+                @if (Auth::user()->pegawai->jenis_presensi == 1)
+                5 Hari Kerja
+                @elseif (Auth::user()->pegawai->jenis_presensi == 2)
+                6 Hari Kerja
+                @else
+                Shift
+                @endif
+                {{-- {{Auth::user()->pegawai->jenis_presensi == null ?
+                '-':Auth::user()->pegawai->lokasi->nama}} --}}
+              </span>
+            </a>
+          </li>
           @if (Auth::user()->pegawai->jenis_presensi == 3)
 
           @else
