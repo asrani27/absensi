@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pegawai;
+use App\Models\Presensi;
 use App\Models\Ringkasan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -116,18 +117,15 @@ class RingkasanController extends Controller
                 $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
                 $lebih_awal = telat($item->nip, $bulan, $tahun)->sum('lebih_awal');
 
-                $item->update([
-                    'jumlah_hari' => $jml_hari,
-                    'jumlah_jam' => $jml_jam,
-                    'datang_lambat' => $terlambat,
-                    'pulang_cepat' => $lebih_awal,
-                    'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
-                ]);
-            } elseif (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 2) {
-                $jml_hari   = jumlahHari6($bulan, $tahun)['jumlah_hari'];
-                $jml_jam    = jumlahHari6($bulan, $tahun)['jumlah_jam'];
-                $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
-                $lebih_awal = telat($item->nip, $bulan, $tahun)->sum('lebih_awal');
+                $countSakit = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 3)->get());
+                $countSakitKarenaCovid = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 9)->get());
+                $countCutiTahun = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 7)->get());
+                $countCutiLain = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 8)->get());
+                $countTraining = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 4)->get());
+                $countTugas = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 5)->get());
+                $countIzin = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get());
+                $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
+
 
                 $item->update([
                     'jumlah_hari' => $jml_hari,
@@ -135,6 +133,42 @@ class RingkasanController extends Controller
                     'datang_lambat' => $terlambat,
                     'pulang_cepat' => $lebih_awal,
                     'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
+                    's' => $countSakit + $countSakitKarenaCovid,
+                    'tr' => $countTraining,
+                    'd' => $countTugas,
+                    'c' => $countCutiTahun,
+                    'l' => $countCutiLain,
+                    'i' => $countIzin,
+                    'a' => $countAlpa,
+                ]);
+            } elseif (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 2) {
+                $jml_hari   = jumlahHari6($bulan, $tahun)['jumlah_hari'];
+                $jml_jam    = jumlahHari6($bulan, $tahun)['jumlah_jam'];
+                $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
+                $lebih_awal = telat($item->nip, $bulan, $tahun)->sum('lebih_awal');
+
+                $countSakit = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 3)->get());
+                $countSakitKarenaCovid = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 9)->get());
+                $countCutiTahun = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 7)->get());
+                $countCutiLain = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 8)->get());
+                $countTraining = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 4)->get());
+                $countTugas = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 5)->get());
+                $countIzin = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get());
+                $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
+
+                $item->update([
+                    'jumlah_hari' => $jml_hari,
+                    'jumlah_jam' => $jml_jam,
+                    'datang_lambat' => $terlambat,
+                    'pulang_cepat' => $lebih_awal,
+                    'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
+                    's' => $countSakit + $countSakitKarenaCovid,
+                    'tr' => $countTraining,
+                    'd' => $countTugas,
+                    'c' => $countCutiTahun,
+                    'l' => $countCutiLain,
+                    'i' => $countIzin,
+                    'a' => $countAlpa,
                 ]);
                 toastr()->success('Berhasil Di Hitung');
                 return back();
