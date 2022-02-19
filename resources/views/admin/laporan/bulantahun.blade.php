@@ -112,7 +112,10 @@
                             <td>
                                 <a href="/ringkasan/{{$item->id}}/delete"
                                     onclick="return confirm('Yakin Ingin Dihapus?');"><span
-                                        class="text-danger">Hapus</span></a>
+                                        class="badge badge-danger">Hapus</span></a> |
+                                <a href="/ringkasan/{{$item->id}}/delete"
+                                    onclick="return confirm('Yakin Ingin Dihapus?');"><span
+                                        class="badge badge-primary">Hitung</span></a>
                             </td>
                         </tr>
                         @endforeach

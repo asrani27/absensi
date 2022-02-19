@@ -37,10 +37,18 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                Data Presensi
+                Panduan Edit Presensi Pegawai
             </div>
             <div class="card-body">
-                <form method="get" action="/admin/tampilgenerate">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/GjggZkQOXFQ"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+                {{-- Pilih Menu Pegawai<br />
+                <img src="/theme/panduan.png" width="20%" height="90"><br />
+                KLik Tombol Presensi<br />
+                <img src="/theme/panduan2.png" width="80%" height="60"> --}}
+                {{-- <form method="get" action="/admin/tampilgenerate">
                     @csrf
                     <div class="row">
                         <div class="col-sm-10">
@@ -52,9 +60,6 @@
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary" name="button" value="1">Tampilkan</button>
-                                {{-- <button type="submit" class="btn btn-warning" name="button"
-                                    value="2">Generate</button> --}}
-                                {{-- <a href="/admin/generate/presensi" class="btn btn-warning">Generate</a> --}}
                             </div>
                         </div>
                     </div>
@@ -82,10 +87,13 @@
                             <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                                 <td class="text-center">{{$no++}}</td>
                                 <td>{{$item->nama}}<br />{{$item->nip}}</td>
-                                <td class="text-center">{{\Carbon\Carbon::parse($item->tanggal)->isoFormat('D MMMM Y')}}
+                                <td class="text-center">{{\Carbon\Carbon::parse($item->tanggal)->isoFormat('D MMMM
+                                    Y')}}
                                 </td>
-                                <td class="text-center">{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
-                                <td class="text-center">{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}
+                                <td class="text-center">{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}
+                                </td>
+                                <td class="text-center">{{$item->jam_pulang == null ? '00:00:00':
+                                    $item->jam_pulang}}
                                 </td>
                                 <td>{{$item->keterangan}}</td>
                                 <td class="text-center">
@@ -102,7 +110,7 @@
                             @endforeach
                         </tbody>
                     </table>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
