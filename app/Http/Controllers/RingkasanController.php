@@ -16,13 +16,16 @@ class RingkasanController extends Controller
             toastr()->error('Tidak Ada data Di Absensi');
             return back();
         } else {
-            $check = Ringkasan::where('nip', $req->nip)->where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', Auth::user()->skpd->id)->first();
+            $check = Ringkasan::where('nip', $req->nip)->where('bulan', $req->bulan)->where('tahun', $req->tahun)->where('skpd_id', Auth::user()->skpd->id)->first();
+            //dd($check);
             if ($check == null) {
                 $n = new Ringkasan;
                 $n->nip = $req->nip;
                 $n->nama = $checkDataPegawai->nama;
                 $n->jabatan = $req->jabatan;
                 $n->skpd_id = Auth::user()->skpd->id;
+                $n->bulan = $req->bulan;
+                $n->tahun = $req->tahun;
                 $n->save();
                 toastr()->success('Berhasil Di Tambahkan');
                 return back();

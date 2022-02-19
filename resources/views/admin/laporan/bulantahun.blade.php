@@ -129,7 +129,7 @@
                     </tbody>
                 </table><br />
                 Isi NIP dan Jabatan Lama di bawah ini, Jika Yang bersangkutan sudah pindah/promosi ke skpd lain
-                <form method="post">
+                <form method="post" action="/admin/ringkasan/create">
                     @csrf
                     <input type="text" name="nip" class="form-control-sm" placeholder="nip" required>
                     <input type="text" name="jabatan" class="form-control-sm" placeholder="Nama Jabatan" required>
