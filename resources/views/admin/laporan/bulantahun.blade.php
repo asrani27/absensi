@@ -41,8 +41,7 @@
             <div class="card-body">
                 <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
                     class="btn btn-xs btn-danger">Export PDF</a>
-                <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/masukkanpegawai" target="_blank"
-                    class="btn btn-xs btn-primary"
+                <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai & Update Jabatan</a>
                 {{-- <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/updatejabatan" target="_blank"
