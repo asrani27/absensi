@@ -132,6 +132,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('generate/presensi', [AdminController::class, 'generate']);
         Route::get('tampilgenerate', [AdminController::class, 'tampilgenerate']);
         Route::get('ringkasan/{id}/delete', [RingkasanController::class, 'delete']);
+        Route::get('ringkasan/{id}/hitung/{bulan}/{tahun}', [RingkasanController::class, 'hitung']);
         Route::get('laporan/rekap/{bulan}/{tahun}/masukkanpegawai', [RingkasanController::class, 'masukkanPegawai']);
     });
 });

@@ -44,7 +44,7 @@
                 <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/masukkanpegawai" target="_blank"
                     class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
-                    Pegawai</a>
+                    Semua Pegawai & Update Jabatan</a>
                 {{-- <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/updatejabatan" target="_blank"
                     class="btn btn-xs btn-primary" onclick="return confirm('Yakin Ingin Mengupdate Jabatan?');">Update
                     Jabatan</a> --}}
@@ -121,7 +121,7 @@
                                 <a href="/admin/ringkasan/{{$item->id}}/delete"
                                     onclick="return confirm('Yakin Ingin Dihapus?');"><span
                                         class="badge badge-danger">Hapus</span></a> |
-                                <a href="/admin/ringkasan/{{$item->id}}/hitung"><span
+                                <a href="/admin/ringkasan/{{$item->id}}/hitung/{{$bulan}}/{{$tahun}}"><span
                                         class="badge badge-primary">Hitung</span></a>
                             </td>
                         </tr>

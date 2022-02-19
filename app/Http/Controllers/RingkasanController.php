@@ -40,4 +40,41 @@ class RingkasanController extends Controller
         toastr()->success('Berhasil Di Masukkan');
         return back();
     }
+
+    public function hitung($id, $bulan, $tahun)
+    {
+        $data = Ringkasan::find($id);
+        if (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 1) {
+            $jml_hari   = jumlahHari($bulan, $tahun)['jumlah_hari'];
+            $jml_jam    = jumlahHari($bulan, $tahun)['jumlah_jam'];
+            $terlambat  = telat($data->nip, $bulan, $tahun)->sum('terlambat');
+            $lebih_awal = telat($data->nip, $bulan, $tahun)->sum('lebih_awal');
+
+            $data->update([
+                'jumlah_hari' => $jml_hari,
+                'jumlah_jam' => $jml_jam,
+                'datang_lambat' => $terlambat,
+                'pulang_cepat' => $lebih_awal,
+                'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
+            ]);
+            toastr()->success('Berhasil Di Hitung');
+            return back();
+        } elseif (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 2) {
+            $jml_hari   = jumlahHari6($bulan, $tahun)['jumlah_hari'];
+            $jml_jam    = jumlahHari6($bulan, $tahun)['jumlah_jam'];
+            $terlambat  = telat($data->nip, $bulan, $tahun)->sum('terlambat');
+            $lebih_awal = telat($data->nip, $bulan, $tahun)->sum('lebih_awal');
+
+            $data->update([
+                'jumlah_hari' => $jml_hari,
+                'jumlah_jam' => $jml_jam,
+                'datang_lambat' => $terlambat,
+                'pulang_cepat' => $lebih_awal,
+                'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
+            ]);
+            toastr()->success('Berhasil Di Hitung');
+            return back();
+        } else {
+        }
+    }
 }
