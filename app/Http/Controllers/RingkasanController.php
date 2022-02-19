@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pegawai;
+use App\Models\Ringkasan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RingkasanController extends Controller
 {
