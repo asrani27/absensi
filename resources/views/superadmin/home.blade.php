@@ -21,12 +21,13 @@
         </div>
     </div>
 </div>
+{{--
 <div class="row">
     <div class="col-lg-12">
         <div class="card card-widget">
             <div class="card-body">
                 <a href="/superadmin/hitungcuti" class="btn btn-outline-primary">Hitung Cuti</a>
-                {{-- <a href="/superadmin/tarikpegawai" class="btn btn-outline-primary">Sinkron Data Pegawai Dari
+                <a href="/superadmin/tarikpegawai" class="btn btn-outline-primary">Sinkron Data Pegawai Dari
                     TPP</a>
                 <a href="/superadmin/limaharikerja" class="btn btn-outline-primary">Presensi 5 hari kerja</a>
                 <a href="/superadmin/hitungpresensi" class="btn btn-outline-primary">Hitung Jumlah hari dan jam Bulan
@@ -34,10 +35,10 @@
                 <a href="/superadmin/ringkasanpegawai" class="btn btn-outline-primary">Masukkan Semua Pegawai Ke
                     Laporan
                     Bulanan</a>
-                <a href="/superadmin/totalterlambat" class="btn btn-outline-primary">Hitung Total terlambat</a> --}}
+                <a href="/superadmin/totalterlambat" class="btn btn-outline-primary">Hitung Total terlambat</a>
             </div>
         </div>
-        {{-- <div class="card">
+        <div class="card">
             <div class="card-body">
                 <form method="post" action="/superadmin/hitungterlambat">
                     @csrf
@@ -45,9 +46,9 @@
                     <button type="submit" class="btn btn-sm btn-outline-primary">Hitung Terlambat</button>
                 </form>
             </div>
-        </div> --}}
+        </div>
     </div>
-</div>
+</div> --}}
 @endsection
 
 @push('js')

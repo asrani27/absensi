@@ -104,4 +104,45 @@ class RingkasanController extends Controller
         } else {
         }
     }
+
+    public function hitungSemua($bulan, $tahun)
+    {
+        //dd($bulan, $tahun);
+        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        foreach ($ringkasan as $item) {
+            if (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 1) {
+                $jml_hari   = jumlahHari($bulan, $tahun)['jumlah_hari'];
+                $jml_jam    = jumlahHari($bulan, $tahun)['jumlah_jam'];
+                $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
+                $lebih_awal = telat($item->nip, $bulan, $tahun)->sum('lebih_awal');
+
+                $item->update([
+                    'jumlah_hari' => $jml_hari,
+                    'jumlah_jam' => $jml_jam,
+                    'datang_lambat' => $terlambat,
+                    'pulang_cepat' => $lebih_awal,
+                    'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
+                ]);
+            } elseif (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 2) {
+                $jml_hari   = jumlahHari6($bulan, $tahun)['jumlah_hari'];
+                $jml_jam    = jumlahHari6($bulan, $tahun)['jumlah_jam'];
+                $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
+                $lebih_awal = telat($item->nip, $bulan, $tahun)->sum('lebih_awal');
+
+                $item->update([
+                    'jumlah_hari' => $jml_hari,
+                    'jumlah_jam' => $jml_jam,
+                    'datang_lambat' => $terlambat,
+                    'pulang_cepat' => $lebih_awal,
+                    'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
+                ]);
+                toastr()->success('Berhasil Di Hitung');
+                return back();
+            } else {
+            }
+        }
+
+        toastr()->success('Selesai Di Hitung');
+        return back();
+    }
 }
