@@ -49,6 +49,10 @@
                 <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/hitungsemua" class="btn btn-xs btn-primary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Semua</a>
 
+                <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/hitungtotalharikerja" class="btn btn-xs btn-primary"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Total Hari
+                    Kerja</a>
+
                 <br /><br />
                 <table class="table table-hover table-striped table-bordered text-nowrap table-sm  table-responsive">
                     <thead>
