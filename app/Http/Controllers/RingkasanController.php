@@ -203,8 +203,6 @@ class RingkasanController extends Controller
                     'i' => $countIzin,
                     'a' => $countAlpa,
                 ]);
-                toastr()->success('Berhasil Di Hitung');
-                return back();
             } else {
             }
         }

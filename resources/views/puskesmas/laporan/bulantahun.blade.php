@@ -66,7 +66,9 @@
                             <th rowspan=2>Datang <br />Lambat<br />(Jam)</th>
                             <th rowspan=2>Pulang <br />Cepat<br />(Jam)</th>
                             <th rowspan=2>% Hadir</th>
-                            <th rowspan=2>Total Hari Kerja</th>
+                            <th rowspan=2>Total <br />Hari <br />Kerja</th>
+                            <th rowspan=2>Aksi</th>
+
                         </tr>
 
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif"
@@ -116,10 +118,26 @@
                             <td>{{intdiv($item->pulang_cepat, 60)}}:{{$item->pulang_cepat % 60}}</td>
                             <td>{{$item->persen_kehadiran}}</td>
                             <td>0</td>
+                            <td>
+                                <a href="/puskesmas/ringkasan/{{$item->id}}/delete"
+                                    onclick="return confirm('Yakin Ingin Dihapus?');"><span
+                                        class="badge badge-danger">Hapus</span></a> |
+                                <a href="/puskesmas/ringkasan/{{$item->id}}/hitung/{{$bulan}}/{{$tahun}}"><span
+                                        class="badge badge-primary">Hitung</span></a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
-                </table>
+                </table><br />
+                Isi NIP dan Jabatan Lama di bawah ini, Jika Yang bersangkutan sudah pindah/promosi ke skpd lain
+                <form method="post" action="/puskesmas/ringkasan/create">
+                    @csrf
+                    <input type="text" name="nip" class="form-control-sm" placeholder="nip" required>
+                    <input type="text" name="jabatan" class="form-control-sm" placeholder="Nama Jabatan" required>
+                    <input type="hidden" name="bulan" value="{{$bulan}}" class="form-control-sm" placeholder="bulan">
+                    <input type="hidden" name="tahun" value="{{$tahun}}" class="form-control-sm" placeholder="tahun">
+                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                </form>
             </div>
         </div>
     </div>
