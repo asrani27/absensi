@@ -126,7 +126,7 @@
                     <td>{{strtoupper($item->nama)}}</td>
                     <td>{{Str::limit(strtoupper($item->jabatan), 50)}}</td>
                     <td>{{$item->jumlah_hari}}</td>
-                    <td>0</td>
+                    <td>{{$item->kerja}}</td>
                     <td>0</td>
                     <td align="center">{{$item->a == null ? '0': $item->a}}</td>
                     <td align="center">{{$item->s == null ? '0': $item->s}}</td>
@@ -136,15 +136,15 @@
                     <td align="center">{{$item->c == null ? '0': $item->c}}</td>
                     <td align="center">{{$item->l == null ? '0': $item->l}}</td>
                     <td align="center">{{$item->o == null ? '0': $item->o}}</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td>{{$item->masuk}}</td>
+                    <td>{{$item->keluar}}</td>
                     <td>{{intdiv(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat),
                         60)}}:{{($item->jumlah_jam
                         - $item->datang_lambat - $item->pulang_cepat) % 60}}</td>
                     <td>{{intdiv($item->datang_lambat, 60)}}:{{$item->datang_lambat % 60}}</td>
                     <td>{{intdiv($item->pulang_cepat, 60)}}:{{$item->pulang_cepat % 60}}</td>
                     <td>{{$item->persen_kehadiran}}</td>
-                    <td></td>
+                    <td>{{$item->kerja}}</td>
                 </tr>
                 @endforeach
             </tbody>

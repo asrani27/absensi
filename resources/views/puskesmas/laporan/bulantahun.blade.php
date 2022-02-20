@@ -36,7 +36,8 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                Laporan presensi Bulan {{\Carbon\Carbon::createFromFormat('m', $bulan)->translatedFormat('F')}} {{$tahun}}
+                Laporan presensi Bulan {{\Carbon\Carbon::createFromFormat('m', $bulan)->translatedFormat('F')}}
+                {{$tahun}}
             </div>
             <div class="card-body">
                 <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
@@ -48,6 +49,10 @@
 
                 <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/hitungsemua" class="btn btn-xs btn-primary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Semua</a>
+                <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/hitungtotalharikerja"
+                    class="btn btn-xs btn-primary"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Total Hari
+                    Kerja</a>
                 <br /><br />
                 <table class="table table-hover table-striped table-bordered text-nowrap table-sm  table-responsive">
                     <thead>
@@ -99,7 +104,7 @@
                             <td>{{$item->jabatan}}</td>
                             <td>{{$item->jumlah_hari}}</td>
                             <td>{{intdiv($item->jumlah_jam, 60)}}:{{$item->jumlah_jam % 60}}</td>
-                            <td>0</td>
+                            <td>{{$item->kerja}}</td>
                             <td>0</td>
                             <td>{{$item->a == null ? '0': $item->a}}</td>
                             <td>{{$item->s == null ? '0': $item->s}}</td>
@@ -109,15 +114,15 @@
                             <td>{{$item->c == null ? '0': $item->c}}</td>
                             <td>{{$item->l == null ? '0': $item->l}}</td>
                             <td>{{$item->o == null ? '0': $item->o}}</td>
-                            <td>0</td>
-                            <td>0</td>
+                            <td>{{$item->masuk}}</td>
+                            <td>{{$item->keluar}}</td>
                             <td>{{intdiv(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat),
                                 60)}}:{{($item->jumlah_jam
                                 - $item->datang_lambat - $item->pulang_cepat) % 60}}</td>
                             <td>{{intdiv($item->datang_lambat, 60)}}:{{$item->datang_lambat % 60}}</td>
                             <td>{{intdiv($item->pulang_cepat, 60)}}:{{$item->pulang_cepat % 60}}</td>
                             <td>{{$item->persen_kehadiran}}</td>
-                            <td>0</td>
+                            <td>{{$item->kerja}}</td>
                             <td>
                                 <a href="/puskesmas/ringkasan/{{$item->id}}/delete"
                                     onclick="return confirm('Yakin Ingin Dihapus?');"><span

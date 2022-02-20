@@ -503,4 +503,24 @@ class PuskesmasController extends Controller
         toastr()->success('Berhasil Di Hapus');
         return back();
     }
+
+    public function hitungtotalharikerja($bulan, $tahun)
+    {
+        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+
+        foreach ($ringkasan as $item) {
+
+            $masuk = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->get());
+            $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', '00:00:00')->get());
+            //dd($hadirdiharikerja, $item->nama);
+            $item->update([
+                'kerja' => $masuk,
+                'masuk' => $masuk,
+                'keluar' => $pulang,
+            ]);
+        }
+
+        toastr()->success('Selesai Di Hitung');
+        return back();
+    }
 }
