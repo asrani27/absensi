@@ -199,9 +199,9 @@ class PuskesmasController extends Controller
     public function updatePresensi(Request $req, $id, $bulan, $tahun, $id_presensi)
     {
 
-        $data = Presensi::find($id_presensi);
+        $tanggalPresensi = Presensi::find($id_presensi);
 
-        $hari = Carbon::parse($data->tanggal)->translatedFormat('l');
+        $hari = Carbon::parse($tanggalPresensi->tanggal)->translatedFormat('l');
 
         $jam = Jam6::where('hari', $hari)->first();
 
@@ -209,6 +209,8 @@ class PuskesmasController extends Controller
             'jam_masuk' => $req->jam_masuk,
             'jam_pulang' => $req->jam_pulang,
         ]);
+
+        $data = Presensi::find($id_presensi);
 
         if ($data->jam_masuk == '00:00:00') {
             if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
