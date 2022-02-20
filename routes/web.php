@@ -180,6 +180,9 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('cuti', [SuperadminController::class, 'cuti']);
         Route::get('rekapitulasi', [SuperadminController::class, 'rekapitulasi']);
         Route::get('rekapitulasi/{bulan}/{tahun}', [SuperadminController::class, 'detailRekapitulasi']);
+        Route::get('rekapitulasi/{bulan}/{tahun}/skpd', [SuperadminController::class, 'skpdRekapitulasi']);
+        Route::get('rekapitulasi/{bulan}/{tahun}/skpd/{id}/pdf', [SuperadminController::class, 'skpdPdf']);
+        Route::get('rekapitulasi/{bulan}/{tahun}/puskesmas/{id}/pdf', [SuperadminController::class, 'puskesmasPdf']);
     });
 });
 

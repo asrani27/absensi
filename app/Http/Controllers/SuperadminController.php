@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Cuti;
+use App\Models\Skpd;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use App\Models\Puskesmas;
 use App\Models\Ringkasan;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Auth;
 
 class SuperadminController extends Controller
 {
@@ -62,5 +67,42 @@ class SuperadminController extends Controller
     {
         Presensi::find($id)->delete();
         return back();
+    }
+
+    public function skpdRekapitulasi($bulan, $tahun)
+    {
+        $skpd = Skpd::get();
+        $puskesmas = Puskesmas::get();
+        return view('superadmin.detailskpd', compact('skpd', 'bulan', 'tahun', 'puskesmas'));
+    }
+
+    public function skpdPdf($bulan, $tahun, $id)
+    {
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('skpd_id', $id)->where('puskesmas_id', null)->where('jabatan', '!=', null)->get()
+            ->map(function ($item) {
+                $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                return $item;
+            })->sortByDesc('urut');
+        $skpd = Skpd::find($id);
+        $mulai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->firstOfMonth()->format('d-m-Y');
+        $sampai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth()->format('d-m-Y');
+
+        $pdf = PDF::loadView('superadmin.skpdpdf', compact('data', 'skpd', 'mulai', 'sampai'))->setPaper('legal', 'landscape');
+        return $pdf->stream();
+    }
+
+    public function puskesmasPdf($bulan, $tahun, $id)
+    {
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', $id)->where('jabatan', '!=', null)->get()
+            ->map(function ($item) {
+                $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                return $item;
+            })->sortByDesc('urut');
+        $skpd = Puskesmas::find($id);
+        $mulai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->firstOfMonth()->format('d-m-Y');
+        $sampai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth()->format('d-m-Y');
+
+        $pdf = PDF::loadView('superadmin.puskesmaspdf', compact('data', 'skpd', 'mulai', 'sampai'))->setPaper('legal', 'landscape');
+        return $pdf->stream();
     }
 }

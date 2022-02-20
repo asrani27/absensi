@@ -21,6 +21,43 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                Laporan presensi Per Bulan
+            </div>
+            <div class="card-body">
+                <table class="table table-hover table-striped text-nowrap table-sm">
+                    <thead>
+                        <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif"
+                            class="bg-gradient-primary">
+                            <th>#</th>
+                            <th>Bulan</th>
+                            <th>Tahun</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    @php
+                    $no =1;
+                    @endphp
+                    <tbody>
+
+                        @foreach (bulanTahun() as $key => $item)
+                        <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                            <td>{{$no++}}</td>
+                            <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}}</td>
+                            <td>{{$item->tahun}}</td>
+                            <td><a href="/superadmin/rekapitulasi/{{$item->bulan}}/{{$item->tahun}}/skpd"
+                                    class="btn btn-xs btn-success"><i class="fas fa-eye"></i> Detail</a></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {{--
 <div class="row">
     <div class="col-lg-12">

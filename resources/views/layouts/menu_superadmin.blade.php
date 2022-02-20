@@ -34,7 +34,7 @@
                 </p>
             </a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a href="/superadmin/rekapitulasi"
                 class="nav-link {{ Request::is('superadmin/rekapitulasi*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-users"></i>
@@ -42,7 +42,7 @@
                     REKAPITULASI
                 </p>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-header">SETTING</li>
         <li class="nav-item">
             <a href="/superadmin/jam" class="nav-link {{ Request::is('superadmin/profil*') ? 'active' : '' }}">
