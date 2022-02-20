@@ -495,7 +495,7 @@ class PuskesmasController extends Controller
             }
         }
     }
-    public function delete($id)
+    public function deleteRingkasan($id)
     {
         Ringkasan::find($id)->delete();
         toastr()->success('Berhasil Di Hapus');
