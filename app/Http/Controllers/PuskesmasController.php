@@ -506,7 +506,7 @@ class PuskesmasController extends Controller
 
     public function hitungtotalharikerja($bulan, $tahun)
     {
-        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        $ringkasan = Ringkasan::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->get();
 
         foreach ($ringkasan as $item) {
 
