@@ -50,7 +50,7 @@ PEGAWAI
                             <td>{{$item->nip}}<br />
                                 {{$item->nama}}<br />
                                 {{$item->pangkat}} - {{$item->golongan}}</td>
-                            <td>{{$item->skpd == null ? '' : $item->skpd->nama}}</td>
+                            <td>{{$item->skpd == null ? '' : $item->skpd->nama}} <br />{{$item->jabatan}}</td>
                             <td>{{$item->puskesmas_id == null ? '': $item->puskesmas->nama}}</td>
                             <td>
                                 <a href="/superadmin/pegawai/{{$item->id}}/history" class="btn btn-xs btn-primary"><i
