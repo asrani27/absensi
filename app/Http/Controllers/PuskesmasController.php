@@ -307,7 +307,7 @@ class PuskesmasController extends Controller
                 $n->nip = $item->nip;
                 $n->nama = $item->nama;
                 $n->jabatan = $item->jabatan;
-                $n->skpd_id = $pegawai->skpd_id;
+                $n->skpd_id = $item->skpd_id;
                 $n->puskesmas_id = $puskesmas_id;
                 $n->bulan = $bulan;
                 $n->tahun = $tahun;
