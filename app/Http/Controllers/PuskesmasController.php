@@ -315,7 +315,7 @@ class PuskesmasController extends Controller
             } else {
                 $check->update([
                     'jabatan' => $item->jabatan,
-                    'puskesmas_id' => $pegawai->puskesmas_id,
+                    'puskesmas_id' => $puskesmas_id,
                 ]);
             }
         }
