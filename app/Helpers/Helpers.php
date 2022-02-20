@@ -46,6 +46,7 @@ function jumlahHari($bulan, $tahun)
 
     $data['jumlah_hari'] = count($jumlah_hari_kerja);
     $data['jumlah_jam'] = array_sum($jumlah_jam);
+    $data['off'] = count($array_merge);
     return $data;
 }
 
@@ -79,5 +80,6 @@ function jumlahHari6($bulan, $tahun)
 
     $data['jumlah_hari'] = count($jumlah_hari_kerja);
     $data['jumlah_jam'] = array_sum($jumlah_jam);
+    $data['off'] = count($array_merge);
     return $data;
 }
