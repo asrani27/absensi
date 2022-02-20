@@ -483,7 +483,7 @@ class PuskesmasController extends Controller
                 $n->nip = $req->nip;
                 $n->nama = $checkDataPegawai->nama;
                 $n->jabatan = $req->jabatan;
-                $n->skpd_id = Auth::user()->skpd->id;
+                $n->skpd_id = $checkDataPegawai->skpd_id;
                 $n->puskesmas_id = $checkDataPegawai->puskesmas_id;
                 $n->bulan = $req->bulan;
                 $n->tahun = $req->tahun;
