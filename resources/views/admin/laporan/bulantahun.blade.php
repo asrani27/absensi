@@ -36,7 +36,8 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                Laporan presensi Per Bulan
+                Laporan presensi Bulan {{\Carbon\Carbon::createFromFormat('m', $bulan)->translatedFormat('F')}}
+                {{$tahun}}
             </div>
             <div class="card-body">
                 <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
