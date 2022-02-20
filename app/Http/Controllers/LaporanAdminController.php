@@ -131,7 +131,7 @@ class LaporanAdminController extends Controller
 
     public function bulanTahun($bulan, $tahun)
     {
-        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('skpd_id', Auth::user()->skpd->id)->where('jabatan', '!=', null)->get()
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('skpd_id', Auth::user()->skpd->id)->get()
             ->map(function ($item) {
                 $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
                 return $item;
@@ -142,7 +142,7 @@ class LaporanAdminController extends Controller
 
     public function bulanPdf($bulan, $tahun)
     {
-        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('skpd_id', Auth::user()->skpd->id)->where('jabatan', '!=', null)->get()
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('skpd_id', Auth::user()->skpd->id)->get()
             ->map(function ($item) {
                 $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
                 return $item;
