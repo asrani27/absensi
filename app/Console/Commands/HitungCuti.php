@@ -47,8 +47,6 @@ class HitungCuti extends Command
         $data = Cuti::whereIn('jenis_keterangan_id', [1, 4, 5, 7, 9, 3, 6, 8])->whereDate('created_at', '=', '2022-02-19')->get();
 
         foreach ($data as $item) {
-            // $period = CarbonPeriod::create($item->tanggal_mulai, $item->tanggal_selesai);
-            // foreach ($data as $item) {
             $period = CarbonPeriod::create($item->tanggal_mulai, $item->tanggal_selesai);
             foreach ($period as $date) {
                 if ($date->translatedFormat('l') == 'Minggu') {
@@ -82,7 +80,6 @@ class HitungCuti extends Command
                     }
                 }
             }
-            //}
         }
 
         $com['nama_command'] = 'hitung cuti hari ini';

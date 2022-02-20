@@ -41,6 +41,14 @@
             <div class="card-body">
                 <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
                     class="btn btn-xs btn-danger">Export PDF</a>
+
+                <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"
+                    onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
+                    Semua Pegawai & Update Jabatan</a>
+
+                <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/hitungsemua" class="btn btn-xs btn-primary"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Semua</a>
+                <br /><br />
                 <table class="table table-hover table-striped table-bordered text-nowrap table-sm  table-responsive">
                     <thead>
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif"

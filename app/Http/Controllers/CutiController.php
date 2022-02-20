@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Pegawai;
+use App\Models\Presensi;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
+use App\Models\LiburNasional;
 use App\Models\JenisKeterangan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -34,6 +37,40 @@ class CutiController extends Controller
         $attr['puskesmas_id']    = $pegawai->puskesmas_id;
 
         $today = Carbon::now();
+
+        $period = CarbonPeriod::create($request->tanggal_mulai, $request->tanggal_selesai);
+        foreach ($period as $date) {
+            if ($date->translatedFormat('l') == 'Minggu') {
+            } else {
+                if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
+                    //simpan cuti tahun di presensi
+                    $check = Presensi::where('nip', $request->nip)->where('tanggal', $date->format('Y-m-d'))->first();
+                    if ($check == null) {
+                        //save
+                        $p = new Presensi;
+                        $p->nip = $request->nip;
+                        $p->nama = $pegawai->nama;
+                        $p->skpd_id = $pegawai->skpd_id;
+                        $p->tanggal = $date->format('Y-m-d');
+                        $p->jam_masuk = '00:00:00';
+                        $p->jam_pulang = '00:00:00';
+                        $p->terlambat = 0;
+                        $p->lebih_awal = 0;
+                        $p->jenis_keterangan_id = $request->jenis_keterangan_id;
+                        $p->save();
+                    } else {
+                        $check->update([
+                            'jam_masuk' => '00:00:00',
+                            'jam_pulang' => '00:00:00',
+                            'terlambat' => 0,
+                            'lebih_awal' => 0,
+                            'jenis_keterangan_id' => $request->jenis_keterangan_id,
+                        ]);
+                    }
+                } else {
+                }
+            }
+        }
 
         if ($today->format('m') == Carbon::parse($request->tanggal_mulai)->format('m')) {
             $validator = Validator::make($request->all(), [
