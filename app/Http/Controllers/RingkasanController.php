@@ -159,12 +159,11 @@ class RingkasanController extends Controller
                 $countIzin = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get());
                 $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
 
-                $hadirdiharikerja = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->orWhere('jam_pulang', '!=', '00:00:00')->get());
+                //$hadirdiharikerja = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->orWhere('jam_pulang', '!=', '00:00:00')->get());
 
                 $item->update([
                     'jumlah_hari' => $jml_hari,
                     'jumlah_jam' => $jml_jam,
-                    'kerja' => $hadirdiharikerja,
                     'datang_lambat' => $terlambat,
                     'pulang_cepat' => $lebih_awal,
                     'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
@@ -192,12 +191,11 @@ class RingkasanController extends Controller
                 $countIzin = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get());
                 $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
 
-                $hadirdiharikerja = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->orWhere('jam_pulang', '!=', '00:00:00')->get());
+                //$hadirdiharikerja = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->orWhere('jam_pulang', '!=', '00:00:00')->get());
 
                 $item->update([
                     'jumlah_hari' => $jml_hari,
                     'jumlah_jam' => $jml_jam,
-                    'kerja' => $hadirdiharikerja,
                     'datang_lambat' => $terlambat,
                     'pulang_cepat' => $lebih_awal,
                     'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
