@@ -63,6 +63,7 @@ class RingkasanController extends Controller
             } else {
                 $check->update([
                     'jabatan' => $item->jabatan,
+                    'skpd_id' => $skpd_id,
                 ]);
             }
         }
