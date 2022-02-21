@@ -110,6 +110,10 @@ class TerlambatDalamSebulan extends Command
                     }
                 }
             } else {
+                $item->update([
+                    'terlambat' => 0,
+                    'lebih_awal' => 0,
+                ]);
             }
         }
 
