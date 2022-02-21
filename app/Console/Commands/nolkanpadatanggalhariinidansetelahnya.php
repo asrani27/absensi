@@ -41,7 +41,7 @@ class nolkanpadatanggalhariinidansetelahnya extends Command
     {
         $today = Carbon::now()->format('Y-m-d');
         $data = Presensi::where('tanggal', '>=', $today)->get();
-        dd($data);
+
         foreach ($data as $item) {
             $item->update([
                 'terlambat' => 0,
