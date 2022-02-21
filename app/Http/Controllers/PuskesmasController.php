@@ -377,6 +377,7 @@ class PuskesmasController extends Controller
                     'l' => $countCutiLain,
                     'i' => $countIzin,
                     'a' => $countAlpa,
+                    'o' => jumlahHari($bulan, $tahun)['off'],
                 ]);
             } elseif (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 2) {
                 $jml_hari   = jumlahHari6($bulan, $tahun)['jumlah_hari'];
@@ -406,6 +407,7 @@ class PuskesmasController extends Controller
                     'l' => $countCutiLain,
                     'i' => $countIzin,
                     'a' => $countAlpa,
+                    'o' => jumlahHari6($bulan, $tahun)['off'],
                 ]);
             } else {
             }
