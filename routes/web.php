@@ -206,6 +206,7 @@ Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
         Route::post('gantipass', [PuskesmasController::class, 'updatepass']);
         Route::get('laporan', [PuskesmasController::class, 'laporan']);
         Route::get('laporan/rekap/{bulan}/{tahun}', [PuskesmasController::class, 'bulanTahun']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/shift', [PuskesmasController::class, 'bulanTahunShift']);
         Route::get('laporan/rekap/{bulan}/{tahun}/pdf', [PuskesmasController::class, 'bulanPdf']);
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungsemua', [PuskesmasController::class, 'hitungSemua']);
         Route::get('laporan/rekap/{bulan}/{tahun}/masukkanpegawai', [PuskesmasController::class, 'masukkanPegawai']);
