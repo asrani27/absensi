@@ -267,9 +267,15 @@ class PegawaiController extends Controller
                         'terlambat' => 105,
                     ]);
                 } else {
-                    $data->update([
-                        'terlambat' => 255,
-                    ]);
+                    if (Carbon::parse($data->tanggal)->isWeekend()) {
+                        $data->update([
+                            'terlambat' => 0,
+                        ]);
+                    } else {
+                        $data->update([
+                            'terlambat' => 255,
+                        ]);
+                    }
                 }
             } elseif (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 2) {
                 if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
@@ -281,9 +287,15 @@ class PegawaiController extends Controller
                         'terlambat' => 180,
                     ]);
                 } else {
-                    $data->update([
-                        'terlambat' => 210,
-                    ]);
+                    if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Minggu') {
+                        $data->update([
+                            'terlambat' => 0,
+                        ]);
+                    } else {
+                        $data->update([
+                            'terlambat' => 210,
+                        ]);
+                    }
                 }
             } else {
             }
@@ -305,9 +317,15 @@ class PegawaiController extends Controller
                         'lebih_awal' => 105,
                     ]);
                 } else {
-                    $data->update([
-                        'lebih_awal' => 255,
-                    ]);
+                    if (Carbon::parse($data->tanggal)->isWeekend()) {
+                        $data->update([
+                            'lebih_awal' => 0,
+                        ]);
+                    } else {
+                        $data->update([
+                            'lebih_awal' => 255,
+                        ]);
+                    }
                 }
             } elseif (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 2) {
                 if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
@@ -319,9 +337,15 @@ class PegawaiController extends Controller
                         'lebih_awal' => 180,
                     ]);
                 } else {
-                    $data->update([
-                        'lebih_awal' => 210,
-                    ]);
+                    if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Minggu') {
+                        $data->update([
+                            'lebih_awal' => 0,
+                        ]);
+                    } else {
+                        $data->update([
+                            'lebih_awal' => 210,
+                        ]);
+                    }
                 }
             } else {
             }
