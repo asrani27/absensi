@@ -294,11 +294,20 @@ class PuskesmasController extends Controller
 
     public function bulanPdf($bulan, $tahun)
     {
-        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('jabatan', '!=', null)->get()
-            ->map(function ($item) {
-                $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
-                return $item;
-            })->sortByDesc('urut');
+        if (Auth::user()->puskesmas->id == 8) {
+            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('jabatan', '!=', null)->get()
+                ->map(function ($item) {
+                    $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                    $item->jenis_presensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
+                    return $item;
+                })->where('jenis_presensi', '!=', 3)->sortByDesc('urut');
+        } else {
+            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('jabatan', '!=', null)->get()
+                ->map(function ($item) {
+                    $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                    return $item;
+                })->sortByDesc('urut');
+        }
         $skpd = Auth::user()->puskesmas;
         $mulai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->firstOfMonth()->format('d-m-Y');
         $sampai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth()->format('d-m-Y');
