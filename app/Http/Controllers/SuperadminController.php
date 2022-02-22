@@ -49,6 +49,14 @@ class SuperadminController extends Controller
             $bulan = request()->bulan;
             $tahun = request()->tahun;
             $pegawai = Pegawai::find($id);
+            $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderBy('tanggal', 'ASC')->get();
+            foreach ($data as $key => $item) {
+                $double = Presensi::where('nip', $pegawai->nip)->where('tanggal', $item->tanggal)->get();
+                if (count($double) == 2) {
+                    dd($double, 'dihapus');
+                } else {
+                }
+            }
             dd($bulan, $tahun, $pegawai);
         }
     }
