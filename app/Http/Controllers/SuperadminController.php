@@ -46,7 +46,10 @@ class SuperadminController extends Controller
             request()->flash();
             return view('superadmin.pegawai.history', compact('pegawai', 'data'));
         } else {
-            dd('perbaiki');
+            $bulan = request()->bulan;
+            $tahun = request()->tahun;
+            $pegawai = Pegawai::find($id);
+            dd($bulan, $tahun, $pegawai);
         }
     }
 
