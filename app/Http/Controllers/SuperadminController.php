@@ -38,12 +38,16 @@ class SuperadminController extends Controller
 
     public function tampilkanHistory($id)
     {
-        $bulan = request()->bulan;
-        $tahun = request()->tahun;
-        $pegawai = Pegawai::find($id);
-        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderBy('tanggal', 'ASC')->get();
-        request()->flash();
-        return view('superadmin.pegawai.history', compact('pegawai', 'data'));
+        if (request()->button == '1') {
+            $bulan = request()->bulan;
+            $tahun = request()->tahun;
+            $pegawai = Pegawai::find($id);
+            $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderBy('tanggal', 'ASC')->get();
+            request()->flash();
+            return view('superadmin.pegawai.history', compact('pegawai', 'data'));
+        } else {
+            dd('perbaiki');
+        }
     }
 
     public function cuti()
