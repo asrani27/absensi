@@ -17,7 +17,7 @@ class RingkasanController extends Controller
             toastr()->error('Tidak Ada data Di Absensi');
             return back();
         } else {
-            $check = Ringkasan::where('nip', $req->nip)->where('bulan', $req->bulan)->where('tahun', $req->tahun)->where('skpd_id', Auth::user()->skpd->id)->first();
+            $check = Ringkasan::where('nip', $req->nip)->where('bulan', $req->bulan)->where('tahun', $req->tahun)->first();
             //dd($check);
             if ($check == null) {
                 $n = new Ringkasan;
@@ -31,9 +31,14 @@ class RingkasanController extends Controller
                 toastr()->success('Berhasil Di Tambahkan');
                 return back();
             } else {
-
-                toastr()->error('NIP Sudah ada');
-                return back();
+                if (Auth::user()->skpd->id == $check->skpd_id) {
+                    toastr()->error('NIP Sudah ada dalam laporan');
+                    return back();
+                } else {
+                    $check->update([
+                        'skpd_id' => Auth::user()->skpd->id,
+                    ]);
+                }
             }
         }
     }
