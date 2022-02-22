@@ -53,11 +53,11 @@ class SuperadminController extends Controller
             foreach ($data as $key => $item) {
                 $double = Presensi::where('nip', $pegawai->nip)->where('tanggal', $item->tanggal)->get();
                 if (count($double) == 2) {
-                    dd($double, 'dihapus');
+                    $double->first()->delete();
                 } else {
                 }
             }
-            dd($bulan, $tahun, $pegawai);
+            return back();
         }
     }
 
