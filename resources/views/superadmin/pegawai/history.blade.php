@@ -67,7 +67,8 @@
 
                         <div class="col-sm-2">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Tampilkan</button>
+                                <button type="submit" value="1" class="btn btn-sm btn-primary">Tampilkan</button>
+                                <button type="submit" value="2" class="btn btn-sm btn-danger">Perbaiki</button>
                                 {{-- <a href="/admin/generate/presensi" class="btn btn-warning">Generate</a> --}}
                             </div>
                         </div>
