@@ -133,7 +133,8 @@ class LaporanAdminController extends Controller
     {
         $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('skpd_id', Auth::user()->skpd->id)->get()
             ->map(function ($item) {
-                $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                $check = Pegawai::where('nip', $item->nip)->first();
+                $item->urut = $check == null ? 0 : $check->urutan;
                 return $item;
             })->sortByDesc('urut');
 
