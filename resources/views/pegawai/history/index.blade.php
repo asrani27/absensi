@@ -67,8 +67,8 @@
                             <th>Hari</th>
                             <th class="text-center">Jam Masuk</th>
                             <th class="text-center">Jam Pulang</th>
-                            <th class="text-center">Telat</th>
-                            <th class="text-center">Lebih Awal</th>
+                            {{-- <th class="text-center">Telat</th>
+                            <th class="text-center">Lebih Awal</th> --}}
                         </tr>
                     </thead>
                     @php
@@ -112,8 +112,8 @@
                                 <img src="{{$item->photo_pulang}}" width="75px" height="25px">
                                 @endif
                             </td>
-                            <td class="text-center">{{$item->terlambat}}</td>
-                            <td class="text-center">{{$item->lebih_awal}}</td>
+                            {{-- <td class="text-center">{{$item->terlambat}}</td>
+                            <td class="text-center">{{$item->lebih_awal}}</td> --}}
                         </tr>
                         @endforeach
                         {{-- <tr
