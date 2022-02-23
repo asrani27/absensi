@@ -70,6 +70,10 @@ class generatePresensi extends Command
                 if ($p->skpd_id == null) {
                     $p->update(['skpd_id' => $item->skpd_id]);
                 }
+
+                if ($p->jenis_presensi == null) {
+                    $p->update(['jenis_presensi' => $item->jenis_presensi]);
+                }
             }
         }
 
