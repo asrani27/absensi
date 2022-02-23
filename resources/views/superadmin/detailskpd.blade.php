@@ -49,7 +49,7 @@
                         <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
                             <td>{{$no++}}</td>
                             <td>{{$item->nama}}</td>
-                            <td>
+                            <td style="font-size: 16px">
                                 @if (kunciSkpd($item->id,$bulan,$tahun) == null)
                                 <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/skpd/{{$item->id}}/lock"
                                     style="color:black" onclick="return confirm('Yakin ingin dikunci?');"><i
@@ -69,7 +69,7 @@
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                             <td>{{$no++}}</td>
                             <td>{{$item->nama}}</td>
-                            <td>
+                            <td style="font-size: 16px">
                                 @if (kunciPuskesmas($item->id,$bulan,$tahun) == null)
                                 <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskesmas/{{$item->id}}/lock"
                                     style="color:black" onclick="return confirm('Yakin ingin dikunci?');"><i

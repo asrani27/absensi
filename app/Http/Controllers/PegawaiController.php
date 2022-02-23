@@ -249,6 +249,11 @@ class PegawaiController extends Controller
     public function updatePresensi(Request $req, $id, $bulan, $tahun, $id_presensi)
     {
 
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->success('Data Bulan Ini telah di kunci');
+            return back();
+        }
+
         Presensi::find($id_presensi)->update([
             'jam_masuk' => $req->jam_masuk,
             'jam_pulang' => $req->jam_pulang,

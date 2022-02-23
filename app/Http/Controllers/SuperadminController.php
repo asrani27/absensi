@@ -148,15 +148,37 @@ class SuperadminController extends Controller
         $check->update([
             'lock' => null,
         ]);
-        toastr()->success('Berhasil Di kunci');
+        toastr()->success('Berhasil Di Buka');
         return back();
     }
 
-    public function lockPuskesmas($bulan, $tahun, $skpd_id)
+    public function lockPuskesmas($bulan, $tahun, $puskesmas_id)
     {
+        $check = Kunci::where('puskesmas_id', $puskesmas_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+        if ($check == null) {
+            $n = new Kunci;
+            $n->puskesmas_id = $puskesmas_id;
+            $n->bulan = $bulan;
+            $n->tahun = $tahun;
+            $n->lock = 1;
+            $n->save();
+            toastr()->success('Berhasil Di kunci');
+        } else {
+            $check->update([
+                'lock' => 1,
+            ]);
+            toastr()->success('Berhasil Di kunci');
+        }
+        return back();
     }
 
-    public function unlockPuskesmas($bulan, $tahun, $skpd_id)
+    public function unlockPuskesmas($bulan, $tahun, $puskesmas_id)
     {
+        $check = Kunci::where('puskesmas_id', $puskesmas_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+        $check->update([
+            'lock' => null,
+        ]);
+        toastr()->success('Berhasil Di Buka');
+        return back();
     }
 }
