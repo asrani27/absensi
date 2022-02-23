@@ -119,7 +119,7 @@ class HitungTerlambatHariIni extends Command
         $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
 
         Komando::create($com);
-        
+
         // if (Carbon::parse($tanggal)->isWeekend() == true) {
         //     $presensi = Presensi::where('tanggal', $tanggal)->get();
         //     foreach ($presensi as $item) {
