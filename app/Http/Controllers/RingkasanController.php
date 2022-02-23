@@ -48,7 +48,7 @@ class RingkasanController extends Controller
         }
     }
 
-    public function delete($id)
+    public function delete($id, $bulan, $tahun)
     {
         if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
             toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
