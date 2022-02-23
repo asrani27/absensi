@@ -12,7 +12,7 @@ class RingkasanController extends Controller
 {
     public function tambahPegawai(Request $req)
     {
-        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+        if (kunciSkpd(Auth::user()->skpd->id, $req->bulan, $req->tahun) == 1) {
             toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
             return back();
         }
