@@ -12,6 +12,11 @@ class RingkasanController extends Controller
 {
     public function tambahPegawai(Request $req)
     {
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
+
         $checkDataPegawai = Pegawai::where('nip', $req->nip)->first();
         if ($checkDataPegawai == null) {
             toastr()->error('Tidak Ada data Di Absensi');
@@ -42,8 +47,14 @@ class RingkasanController extends Controller
             }
         }
     }
+
     public function delete($id)
     {
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
+
         Ringkasan::find($id)->delete();
         toastr()->success('Berhasil Di Hapus');
         return back();
@@ -51,6 +62,11 @@ class RingkasanController extends Controller
 
     public function masukkanPegawai($bulan, $tahun)
     {
+
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
         $skpd_id = Auth::user()->skpd->id;
         $pegawai = Pegawai::where('skpd_id', $skpd_id)->where('puskesmas_id', null)->where('is_aktif', 1)->get();
 
@@ -78,6 +94,10 @@ class RingkasanController extends Controller
 
     public function hitung($id, $bulan, $tahun)
     {
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
         $data = Ringkasan::find($id);
         if (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 1) {
             $jml_hari   = jumlahHari($bulan, $tahun)['jumlah_hari'];
@@ -148,7 +168,11 @@ class RingkasanController extends Controller
 
     public function hitungSemua($bulan, $tahun)
     {
-        //dd($bulan, $tahun);
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
+
         $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($ringkasan as $item) {
             if (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 1) {
@@ -225,6 +249,11 @@ class RingkasanController extends Controller
 
     public function hitungtotalharikerja($bulan, $tahun)
     {
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
+
         $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
 
         foreach ($ringkasan as $item) {

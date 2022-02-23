@@ -250,7 +250,7 @@ class PegawaiController extends Controller
     {
 
         if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
-            toastr()->success('Data Bulan Ini telah di kunci');
+            toastr()->error('Data Bulan Ini telah di kunci');
             return back();
         }
 
