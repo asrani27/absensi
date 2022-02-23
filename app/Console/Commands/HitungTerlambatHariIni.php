@@ -4,7 +4,9 @@ namespace App\Console\Commands;
 
 use Carbon\Carbon;
 use App\Models\Jam;
+use App\Models\Jam6;
 use App\Models\Komando;
+use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Jobs\HitungTerlambat;
 use App\Models\LiburNasional;
@@ -115,7 +117,7 @@ class HitungTerlambatHariIni extends Command
             }
         }
 
-        $com['nama_command'] = 'hitung terlambat tanggal' . $today;
+        $com['nama_command'] = 'hitung terlambat tanggal' . $tanggal;
         $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
 
         Komando::create($com);
