@@ -132,7 +132,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('generate/presensi', [AdminController::class, 'generate']);
         Route::get('tampilgenerate', [AdminController::class, 'tampilgenerate']);
         Route::post('ringkasan/create', [RingkasanController::class, 'tambahPegawai']);
-        Route::get('ringkasan/{id}/delete', [RingkasanController::class, 'delete']);
+        Route::get('ringkasan/{id}/delete/{bulan}/{tahun}', [RingkasanController::class, 'delete']);
         Route::get('ringkasan/{id}/hitung/{bulan}/{tahun}', [RingkasanController::class, 'hitung']);
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungsemua', [RingkasanController::class, 'hitungSemua']);
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungtotalharikerja', [RingkasanController::class, 'hitungtotalharikerja']);
