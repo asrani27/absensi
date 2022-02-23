@@ -44,7 +44,7 @@ class HitungCuti extends Command
     public function handle()
     {
         $tanggal = Carbon::now()->format('Y-m-d');
-        $data = Cuti::whereIn('jenis_keterangan_id', [1, 4, 5, 7, 9, 3, 6, 8])->whereDate('created_at', '=', '2022-02-21')->get();
+        $data = Cuti::whereIn('jenis_keterangan_id', [1, 4, 5, 7, 9, 3, 6, 8])->whereDate('created_at', '=', '2022-02-22')->get();
 
         foreach ($data as $item) {
             $period = CarbonPeriod::create($item->tanggal_mulai, $item->tanggal_selesai);
