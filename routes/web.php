@@ -184,6 +184,10 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('rekapitulasi/{bulan}/{tahun}/skpd', [SuperadminController::class, 'skpdRekapitulasi']);
         Route::get('rekapitulasi/{bulan}/{tahun}/skpd/{id}/pdf', [SuperadminController::class, 'skpdPdf']);
         Route::get('rekapitulasi/{bulan}/{tahun}/puskesmas/{id}/pdf', [SuperadminController::class, 'puskesmasPdf']);
+        Route::get('rekapitulasi/{bulan}/{tahun}/skpd/{id}/lock', [SuperadminController::class, 'lockSkpd']);
+        Route::get('rekapitulasi/{bulan}/{tahun}/skpd/{id}/unlock', [SuperadminController::class, 'unlockSkpd']);
+        Route::get('rekapitulasi/{bulan}/{tahun}/puskesmas/{id}/lock', [SuperadminController::class, 'lockPuskesmas']);
+        Route::get('rekapitulasi/{bulan}/{tahun}/puskesmas/{id}/unlock', [SuperadminController::class, 'unlockPuskesmas']);
     });
 });
 

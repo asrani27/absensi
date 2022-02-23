@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Skpd;
+use App\Models\Kunci;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Models\Puskesmas;
@@ -119,5 +120,43 @@ class SuperadminController extends Controller
 
         $pdf = PDF::loadView('superadmin.puskesmaspdf', compact('data', 'skpd', 'mulai', 'sampai'))->setPaper('legal', 'landscape');
         return $pdf->stream();
+    }
+
+    public function lockSkpd($bulan, $tahun, $skpd_id)
+    {
+        $check = Kunci::where('skpd_id', $skpd_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+        if ($check == null) {
+            $n = new Kunci;
+            $n->skpd_id = $skpd_id;
+            $n->bulan = $bulan;
+            $n->tahun = $tahun;
+            $n->lock = 1;
+            $n->save();
+            toastr()->success('Berhasil Di kunci');
+        } else {
+            $check->update([
+                'lock' => 1,
+            ]);
+            toastr()->success('Berhasil Di kunci');
+        }
+        return back();
+    }
+
+    public function unlockSkpd($bulan, $tahun, $skpd_id)
+    {
+        $check = Kunci::where('skpd_id', $skpd_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+        $check->update([
+            'lock' => null,
+        ]);
+        toastr()->success('Berhasil Di kunci');
+        return back();
+    }
+
+    public function lockPuskesmas($bulan, $tahun, $skpd_id)
+    {
+    }
+
+    public function unlockPuskesmas($bulan, $tahun, $skpd_id)
+    {
     }
 }

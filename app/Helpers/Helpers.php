@@ -1,6 +1,7 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\Kunci;
 use App\Models\Presensi;
 use Carbon\CarbonPeriod;
 use App\Models\Ringkasan;
@@ -12,6 +13,27 @@ function bulanTahun()
     return BulanTahun::orderBy('id', 'DESC')->get();
 }
 
+function kunciSkpd($skpd_id, $bulan, $tahun)
+{
+    $check = Kunci::where('skpd_id', $skpd_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+    if ($check == null) {
+        $hasil = null;
+    } else {
+        $hasil = $check->lock;
+    }
+    return $hasil;
+}
+
+function kunciPuskesmas($puskesmas_id, $bulan, $tahun)
+{
+    $check = Kunci::where('puskesmas_id', $puskesmas_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+    if ($check == null) {
+        $hasil = null;
+    } else {
+        $hasil = $check->lock;
+    }
+    return $hasil;
+}
 function telat($nip, $bulan, $tahun)
 {
     return Presensi::where('nip', $nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();

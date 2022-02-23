@@ -28,12 +28,15 @@
                 Laporan presensi Bulan {{\Carbon\Carbon::createFromFormat('m', $bulan)->translatedFormat('F')}}
             </div>
             <div class="card-body">
+                <i class="fas fa-lock"></i>: Terkunci, skpd tidak bisa mengubah data<br />
+                <i class="fas fa-unlock"></i>: Terbuka, skpd dapat mengubah data
                 <table class="table table-hover table-striped text-nowrap table-sm">
                     <thead>
-                        <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif"
+                        <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif"
                             class="bg-gradient-primary">
                             <th>#</th>
                             <th>SKPD & Puskesmas</th>
+                            <th>Status</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -43,10 +46,21 @@
                     <tbody>
 
                         @foreach ($skpd as $key => $item)
-                        <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
+                        <tr style="font-size:12px; font-family:Arial, Helvetica, sans-serif">
                             <td>{{$no++}}</td>
                             <td>{{$item->nama}}</td>
-                            <td><a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/skpd/{{$item->id}}/pdf"
+                            <td>
+                                @if (kunciSkpd($item->id,$bulan,$tahun) == null)
+                                <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/skpd/{{$item->id}}/lock"
+                                    style="color:black" onclick="return confirm('Yakin ingin dikunci?');"><i
+                                        class="fas fa-unlock"></i></a>
+                                @else
+                                <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/skpd/{{$item->id}}/unlock"><i
+                                        class="fas fa-lock" onclick="return confirm('Yakin ingin dibuka?');"></i></a>
+                                @endif
+                            </td>
+                            <td>
+                                <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/skpd/{{$item->id}}/pdf"
                                     target="_blank" class="btn btn-xs btn-danger"><i class="fas fa-file"></i> Print</a>
                             </td>
                         </tr>
@@ -55,6 +69,16 @@
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                             <td>{{$no++}}</td>
                             <td>{{$item->nama}}</td>
+                            <td>
+                                @if (kunciPuskesmas($item->id,$bulan,$tahun) == null)
+                                <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskesmas/{{$item->id}}/lock"
+                                    style="color:black" onclick="return confirm('Yakin ingin dikunci?');"><i
+                                        class="fas fa-unlock"></i></a>
+                                @else
+                                <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskesmas/{{$item->id}}/unlock"><i
+                                        class="fas fa-lock" onclick="return confirm('Yakin ingin dibuka?');"></i></a>
+                                @endif
+                            </td>
                             <td><a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/puskesmas/{{$item->id}}/pdf"
                                     target="_blank" class="btn btn-xs btn-danger"><i class="fas fa-file"></i> Print</a>
                             </td>
