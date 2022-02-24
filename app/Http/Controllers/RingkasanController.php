@@ -43,6 +43,8 @@ class RingkasanController extends Controller
                     $check->update([
                         'skpd_id' => Auth::user()->skpd->id,
                     ]);
+                    toastr()->success('Berhasil Di Tambahkan');
+                    return back();
                 }
             }
         }
