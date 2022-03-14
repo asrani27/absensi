@@ -48,14 +48,16 @@ TAMBAH DATA
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Tgl Mulai</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" name="tanggal_mulai" required>
+                                    <input type="date" class="form-control" name="tanggal_mulai"
+                                        value="{{old('tanggal_mulai')}}" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Tgl Selesai</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" name="tanggal_selesai" required>
+                                    <input type="date" class="form-control" name="tanggal_selesai"
+                                        value="{{old('tanggal_selesai')}}" required>
                                 </div>
                             </div>
 

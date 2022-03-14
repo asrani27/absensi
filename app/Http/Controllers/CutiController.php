@@ -7,9 +7,11 @@ use App\Models\Cuti;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use Carbon\CarbonPeriod;
+use App\Models\DetailCuti;
 use Illuminate\Http\Request;
 use App\Models\LiburNasional;
 use App\Models\JenisKeterangan;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,100 +32,96 @@ class CutiController extends Controller
 
     public function store(Request $request)
     {
-        $attr            = $request->all();
-        $attr['skpd_id'] = Auth::user()->skpd->id;
-        $pegawai         = Pegawai::where('nip', $request->nip)->first();
-        $attr['nama']    = $pegawai->nama;
-        $attr['puskesmas_id']    = $pegawai->puskesmas_id;
+        DB::beginTransaction();
+        try {
 
-        $today = Carbon::now();
+            $attr            = $request->all();
+            $attr['skpd_id'] = Auth::user()->skpd->id;
+            $pegawai         = Pegawai::where('nip', $request->nip)->first();
+            $attr['nama']    = $pegawai->nama;
+            $attr['puskesmas_id']    = $pegawai->puskesmas_id;
 
-        $period = CarbonPeriod::create($request->tanggal_mulai, $request->tanggal_selesai);
-        foreach ($period as $date) {
-            if ($date->translatedFormat('l') == 'Minggu') {
-            } else {
-                if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
-                    //simpan cuti tahun di presensi
-                    $check = Presensi::where('nip', $request->nip)->where('tanggal', $date->format('Y-m-d'))->first();
-                    if ($check == null) {
-                        //save
-                        $p = new Presensi;
-                        $p->nip = $request->nip;
-                        $p->nama = $pegawai->nama;
-                        $p->skpd_id = $pegawai->skpd_id;
-                        $p->tanggal = $date->format('Y-m-d');
-                        $p->jam_masuk = '00:00:00';
-                        $p->jam_pulang = '00:00:00';
-                        $p->terlambat = 0;
-                        $p->lebih_awal = 0;
-                        $p->jenis_keterangan_id = $request->jenis_keterangan_id;
-                        $p->save();
-                    } else {
-                        $check->update([
-                            'jam_masuk' => '00:00:00',
-                            'jam_pulang' => '00:00:00',
-                            'terlambat' => 0,
-                            'lebih_awal' => 0,
-                            'jenis_keterangan_id' => $request->jenis_keterangan_id,
-                        ]);
-                    }
+
+            $period = CarbonPeriod::create($request->tanggal_mulai, $request->tanggal_selesai);
+            if (count($period) > 12) {
+                toastr()->error('Cuti tidak bisa lebih dari 12 hari');
+                $request->flash();
+                return back();
+            }
+
+            $today = Carbon::now();
+            if ($today->format('m') == Carbon::parse($request->tanggal_mulai)->format('m')) {
+                $validator = Validator::make($request->all(), [
+                    'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
+                ]);
+
+                if ($validator->fails()) {
+                    toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
+                    return back();
+                }
+
+                if ($request->hasFile('file')) {
+                    $filename = $request->file->getClientOriginalName();
+                    $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
+                    $request->file->storeAs('/public/cuti', $filename);
+                    $attr['file'] = $filename;
                 } else {
+                    $attr['file'] = null;
+                }
+
+                $cuti = Cuti::create($attr);
+            } else {
+                // if ($today->diffInDays(Carbon::parse($request->tanggal_mulai)) > 5) {
+                //     toastr()->error('Tidak bisa Menambah Data karena data ini telah di rekap pada tanggal 5 setiap bulan');
+                //     return back();
+                // } else {
+
+                $validator = Validator::make($request->all(), [
+                    'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
+                ]);
+
+                if ($validator->fails()) {
+                    toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
+                    return back();
+                }
+
+                if ($request->hasFile('file')) {
+                    $filename = $request->file->getClientOriginalName();
+                    $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
+                    $request->file->storeAs('/public/cuti', $filename);
+                    $attr['file'] = $filename;
+                } else {
+                    $attr['file'] = null;
+                }
+
+                $cuti = Cuti::create($attr);
+            }
+
+            foreach ($period as $date) {
+                if ($date->translatedFormat('l') == 'Minggu') {
+                } else {
+                    if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
+                        //simpan cuti tahun di presensi
+                        $n = new DetailCuti;
+                        $n->cuti_id             = $cuti->id;
+                        $n->nip                 = $request->nip;
+                        $n->skpd_id             = $pegawai->skpd_id;
+                        $n->tanggal             = $date->format('Y-m-d');
+                        $n->jenis_keterangan_id = $request->jenis_keterangan_id;
+                        $n->save();
+                    } else {
+                    }
                 }
             }
-        }
-
-        if ($today->format('m') == Carbon::parse($request->tanggal_mulai)->format('m')) {
-            $validator = Validator::make($request->all(), [
-                'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
-            ]);
-
-            if ($validator->fails()) {
-                toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
-                return back();
-            }
-
-            if ($request->hasFile('file')) {
-                $filename = $request->file->getClientOriginalName();
-                $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
-                $request->file->storeAs('/public/cuti', $filename);
-                $attr['file'] = $filename;
-            } else {
-                $attr['file'] = null;
-            }
-
-            Cuti::create($attr);
-
-            toastr()->success('Data Di Simpan');
-            return redirect('admin/cuti');
-        } else {
-            // if ($today->diffInDays(Carbon::parse($request->tanggal_mulai)) > 5) {
-            //     toastr()->error('Tidak bisa Menambah Data karena data ini telah di rekap pada tanggal 5 setiap bulan');
-            //     return back();
-            // } else {
-
-            $validator = Validator::make($request->all(), [
-                'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
-            ]);
-
-            if ($validator->fails()) {
-                toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
-                return back();
-            }
-
-            if ($request->hasFile('file')) {
-                $filename = $request->file->getClientOriginalName();
-                $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
-                $request->file->storeAs('/public/cuti', $filename);
-                $attr['file'] = $filename;
-            } else {
-                $attr['file'] = null;
-            }
-
-            Cuti::create($attr);
-
-            toastr()->success('Data Di Simpan');
-            return redirect('admin/cuti');
-            // }
+            DB::commit();
+            toastr()->success('Berhasil Menyimpan Cuti');
+            return redirect('/admin/cuti');
+        } catch (\Exception $e) {
+            dd($e);
+            DB::rollback();
+            toastr()->error('Sistem Gagal');
+            $request->flash();
+            return back();
         }
     }
 
