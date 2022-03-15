@@ -18,6 +18,14 @@
         </li>
 
         <li class="nav-item">
+            <a href="/superadmin/puskesmas" class="nav-link {{ Request::is('superadmin/puskesmas*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-hospital"></i>
+                <p>
+                    RS & Puskesmas
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="/superadmin/pegawai" class="nav-link {{ Request::is('superadmin/pegawai*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-users"></i>
                 <p>

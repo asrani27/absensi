@@ -181,4 +181,9 @@ class SuperadminController extends Controller
         toastr()->success('Berhasil Di Buka');
         return back();
     }
+
+    public function puskesmas()
+    {
+        $data = Puskesmas::get();
+    }
 }

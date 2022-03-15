@@ -50,6 +50,7 @@ class HitungTerlambatHariIni extends Command
 
         foreach ($data as $item) {
             $checkJenisPresensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
+            dd($item);
             //cek dia jenis presensi 5 hari kerja gak?
             if ($checkJenisPresensi == 1) {
                 //cek dia tanggalnya weekend gak?
