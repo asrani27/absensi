@@ -19,7 +19,7 @@ class HitungTerlambatHariIni extends Command
      *
      * @var string
      */
-    protected $signature = 'hitungterlambathariini';
+    protected $signature = 'terlambat:tanggal {--tanggal=}';
 
     /**
      * The console command description.
@@ -45,12 +45,16 @@ class HitungTerlambatHariIni extends Command
      */
     public function handle()
     {
-        $tanggal = Carbon::now()->format('Y-m-d');
+        if ($this->option('tanggal') == null) {
+            $tanggal = $this->option('tanggal');
+        } else {
+            $tanggal = Carbon::now()->format('Y-m-d');
+        }
+
         $data = Presensi::where('tanggal', $tanggal)->get();
 
         foreach ($data as $item) {
             $checkJenisPresensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
-            dd($item);
             //cek dia jenis presensi 5 hari kerja gak?
             if ($checkJenisPresensi == 1) {
                 //cek dia tanggalnya weekend gak?
