@@ -71,11 +71,11 @@ class SyncPegawai implements ShouldQueue
             ]);
         }
 
-        $rekap = Ringkasan::where('nip', $this->pegawai->nip)->get();
-        foreach ($rekap as $item) {
-            $item->update([
-                'sekolah_id' => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->sekolah_id,
-            ]);
-        }
+        // $rekap = Ringkasan::where('nip', $this->pegawai->nip)->get();
+        // foreach ($rekap as $item) {
+        //     $item->update([
+        //         'sekolah_id' => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->sekolah_id,
+        //     ]);
+        // }
     }
 }

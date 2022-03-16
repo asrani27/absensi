@@ -69,8 +69,9 @@ class RingkasanController extends Controller
             toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
             return back();
         }
+
         $skpd_id = Auth::user()->skpd->id;
-        $pegawai = Pegawai::where('skpd_id', $skpd_id)->where('puskesmas_id', null)->where('is_aktif', 1)->get();
+        $pegawai = Pegawai::where('skpd_id', $skpd_id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('is_aktif', 1)->get();
 
         foreach ($pegawai as $item) {
             $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
