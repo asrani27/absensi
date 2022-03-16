@@ -45,7 +45,7 @@ class HitungTerlambatHariIni extends Command
      */
     public function handle()
     {
-        if ($this->option('tanggal') == null) {
+        if ($this->option('tanggal') != null) {
             $tanggal = $this->option('tanggal');
         } else {
             $tanggal = Carbon::now()->format('Y-m-d');
