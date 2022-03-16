@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Pegawai;
+use App\Models\Ringkasan;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Queue\SerializesModels;
@@ -39,6 +40,7 @@ class SyncPegawai implements ShouldQueue
     public function handle()
     {
         $check = Pegawai::where('nip', $this->pegawai->nip)->first();
+
         if ($check == null) {
             //simpan data
             $p = new Pegawai;
@@ -66,6 +68,13 @@ class SyncPegawai implements ShouldQueue
                 'urutan'        => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->kelas_id,
                 'puskesmas_id'  => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->rs_puskesmas_id,
                 'sekolah_id'    => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->sekolah_id,
+            ]);
+        }
+
+        $rekap = Ringkasan::where('nip', $this->pegawai->nip)->get();
+        foreach ($rekap as $item) {
+            $item->update([
+                'sekolah_id' => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->sekolah_id,
             ]);
         }
     }
