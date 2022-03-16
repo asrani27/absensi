@@ -13,6 +13,7 @@ use App\Models\Presensi;
 use App\Models\Puskesmas;
 use App\Models\Ringkasan;
 use App\Jobs\SyncPuskesmas;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\JenisKeterangan;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -555,5 +556,28 @@ class PuskesmasController extends Controller
 
 
         return view('puskesmas.laporan.bulantahun', compact('bulan', 'tahun', 'data'));
+    }
+
+    public function gantipasspuskesmas($id)
+    {
+        $data = Puskesmas::find($id);
+        return view('admin.puskesmas.gantipass', compact('data', 'id'));
+    }
+
+    public function updatepasspuskesmas(Request $req, $id)
+    {
+        if (Str::length($req->password1) < 8) {
+            toastr()->error('Password Minimal 8 Karakter');
+            return back();
+        }
+        if ($req->password1 != $req->password2) {
+            toastr()->error('Password Tidak Sesuai');
+            return back();
+        }
+        Puskesmas::find($id)->user->update([
+            'password' => bcrypt($req->password1),
+        ]);
+        toastr()->success('Password Berhasil Diubah');
+        return redirect('/admin/puskesmas');
     }
 }

@@ -89,6 +89,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('puskesmas', [PuskesmasController::class, 'index']);
         Route::get('puskesmas/{id}/createuser', [PuskesmasController::class, 'createuser']);
         Route::get('puskesmas/{id}/resetpass', [PuskesmasController::class, 'resetpass']);
+        Route::get('puskesmas/{id}/gantipass', [PuskesmasController::class, 'gantipasspuskesmas']);
+        Route::post('puskesmas/{id}/gantipass', [PuskesmasController::class, 'updatepasspuskesmas']);
         Route::get('puskesmas/sync', [PuskesmasController::class, 'sync']);
         Route::post('gantipass', [AdminController::class, 'updatepassword']);
         Route::get('presensi/{id}', [AdminController::class, 'editPresensi']);

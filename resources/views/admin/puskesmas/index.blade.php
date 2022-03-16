@@ -19,16 +19,6 @@ ADMIN
             <div class="card-header">
                 <h3 class="card-title">Data rs & Puskesmas</h3>
                 <div class="card-tools">
-                    {{-- <form method="get" action="/admin/pegawai/search">
-                        <div class="input-group input-group-sm" style="width: 250px;">
-                            <input type="text" name="search" class="form-control float-right" value="{{old('search')}}"
-                                placeholder="Nama / NIP">
-
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form> --}}
                 </div>
             </div>
             <!-- /.card-header -->
@@ -58,6 +48,8 @@ ADMIN
                                 @else
                                 <a href="/admin/puskesmas/{{$item->id}}/resetpass" class="btn btn-xs btn-secondary"><i
                                         class="fas fa-key"></i> Reset Pass</a>
+                                <a href="/admin/puskesmas/{{$item->id}}/gantipass" class="btn btn-xs btn-warning"><i
+                                        class="fas fa-lock"></i> Ganti Pass</a>
                                 {{-- <a href="/admin/puskesmas/{{$item->id}}/presensi"
                                     class="btn btn-xs bg-gradient-primary"><i class="fas fa-calendar"></i> Login</a>
                                 --}}
