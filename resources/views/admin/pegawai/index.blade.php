@@ -82,7 +82,7 @@ ADMIN
                             @else
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif; ">
                             @endif
-                            <td>{{$no++}}</td>
+                            <td>{{$key + $data->firstitem()}}</td>
                             <td>{{$item->nama}}<br />{{$item->nip}}<br />{{$item->jabatan}}</td>
                             <td>{{$item->pangkat}}<br />{{$item->golongan}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal_lahir)->format('d-m-Y')}}</td>
