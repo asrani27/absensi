@@ -43,8 +43,8 @@ class CutiController extends Controller
 
 
             $period = CarbonPeriod::create($request->tanggal_mulai, $request->tanggal_selesai);
-            if (count($period) > 12) {
-                toastr()->error('Cuti tidak bisa lebih dari 12 hari');
+            if (count($period) > 180) {
+                toastr()->error('Cuti tidak bisa lebih dari 180 hari');
                 $request->flash();
                 return back();
             }
@@ -211,5 +211,19 @@ class CutiController extends Controller
         Cuti::find($id)->delete();
         toastr()->success('Data Di Hapus');
         return back();
+    }
+
+    public function search()
+    {
+        $skpd_id = Auth::user()->skpd->id;
+        $search = request()->get('search');
+        $data   = Cuti::where('skpd_id', $skpd_id)
+            ->where('nama', 'LIKE', '%' . $search . '%')
+            ->orWhere(function ($query) use ($search, $skpd_id) {
+                $query->where('skpd_id', $skpd_id)->where('nip', 'LIKE', '%' . $search . '%');
+            })->paginate(10);
+        $data->appends(['search' => $search])->links();
+        request()->flash();
+        return view('admin.cuti.index', compact('data'));
     }
 }

@@ -14,7 +14,19 @@ CUTI/TL/IZIN/SAKIT
             Data</a><br /><br />
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Data Absensi</h3>
+                <h3 class="card-title">Data Cuti</h3>
+                <div class="card-tools">
+                    <form method="get" action="/admin/cuti/search">
+                        <div class="input-group input-group-sm" style="width: 250px;">
+                            <input type="text" name="search" class="form-control float-right" value="{{old('search')}}"
+                                placeholder="Nama / NIP">
+
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
@@ -47,7 +59,7 @@ CUTI/TL/IZIN/SAKIT
                             @endif
                             <td>{{\Carbon\Carbon::parse($item->tanggal_mulai)->isoFormat('D MMMM Y')}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal_selesai)->isoFormat('D MMMM Y')}}</td>
-                            <td>{{$item->jenis_keterangan->keterangan}}</td>
+                            <td>{{$item->jenis_keterangan == null ? '-':$item->jenis_keterangan->keterangan}}</td>
                             <td>
                                 @if ($item->file == null)
                                 <a href="/admin/cuti/upload/{{$item->id}}" class="btn btn-xs btn-info"
