@@ -62,39 +62,6 @@ class RingkasanController extends Controller
         return back();
     }
 
-    public function masukkanPegawai($bulan, $tahun)
-    {
-
-        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
-            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
-            return back();
-        }
-
-        $skpd_id = Auth::user()->skpd->id;
-        $pegawai = Pegawai::where('skpd_id', $skpd_id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('is_aktif', 1)->get();
-
-        foreach ($pegawai as $item) {
-            $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
-            if ($check == null) {
-                $n = new Ringkasan;
-                $n->nip = $item->nip;
-                $n->nama = $item->nama;
-                $n->jabatan = $item->jabatan;
-                $n->skpd_id = $skpd_id;
-                $n->bulan = $bulan;
-                $n->tahun = $tahun;
-                $n->save();
-            } else {
-                $check->update([
-                    'jabatan' => $item->jabatan,
-                    'skpd_id' => $skpd_id,
-                ]);
-            }
-        }
-        toastr()->success('Berhasil Di Masukkan');
-        return back();
-    }
-
     public function hitung($id, $bulan, $tahun)
     {
         if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
@@ -167,6 +134,39 @@ class RingkasanController extends Controller
             return back();
         } else {
         }
+    }
+
+    public function masukkanPegawai($bulan, $tahun)
+    {
+
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
+
+        $skpd_id = Auth::user()->skpd->id;
+        $pegawai = Pegawai::where('skpd_id', $skpd_id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('is_aktif', 1)->get();
+
+        foreach ($pegawai as $item) {
+            $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            if ($check == null) {
+                $n = new Ringkasan;
+                $n->nip = $item->nip;
+                $n->nama = $item->nama;
+                $n->jabatan = $item->jabatan;
+                $n->skpd_id = $skpd_id;
+                $n->bulan = $bulan;
+                $n->tahun = $tahun;
+                $n->save();
+            } else {
+                $check->update([
+                    'jabatan' => $item->jabatan,
+                    'skpd_id' => $skpd_id,
+                ]);
+            }
+        }
+        toastr()->success('Berhasil Di Masukkan');
+        return back();
     }
 
     public function hitungSemua($bulan, $tahun)
@@ -258,6 +258,148 @@ class RingkasanController extends Controller
         }
 
         $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+
+        foreach ($ringkasan as $item) {
+
+            $masuk = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->get());
+            $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', '00:00:00')->get());
+            //dd($hadirdiharikerja, $item->nama);
+            $item->update([
+                'kerja' => $masuk,
+                'masuk' => $masuk,
+                'keluar' => $pulang,
+            ]);
+        }
+
+        toastr()->success('Selesai Di Hitung');
+        return back();
+    }
+
+
+    public function masukkanPegawaiSekolah($bulan, $tahun)
+    {
+
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
+
+        $skpd_id = Auth::user()->skpd->id;
+        $pegawai = Pegawai::where('skpd_id', $skpd_id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('is_aktif', 1)->get();
+
+        foreach ($pegawai as $item) {
+            $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            if ($check == null) {
+                $n = new Ringkasan;
+                $n->nip = $item->nip;
+                $n->nama = $item->nama;
+                $n->jabatan = $item->jabatan;
+                $n->skpd_id = $skpd_id;
+                $n->sekolah_id = $item->sekolah_id;
+                $n->bulan = $bulan;
+                $n->tahun = $tahun;
+                $n->save();
+            } else {
+                $check->update([
+                    'jabatan' => $item->jabatan,
+                    'sekolah_id' => $item->sekolah_id,
+                    'skpd_id' => $skpd_id,
+                ]);
+            }
+        }
+        toastr()->success('Berhasil Di Masukkan');
+        return back();
+    }
+
+    public function hitungSemuaSekolah($bulan, $tahun)
+    {
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
+
+        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        foreach ($ringkasan as $item) {
+            if (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 1) {
+                $jml_hari   = jumlahHari($bulan, $tahun)['jumlah_hari'];
+                $jml_jam    = jumlahHari($bulan, $tahun)['jumlah_jam'];
+                $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
+                $lebih_awal = telat($item->nip, $bulan, $tahun)->sum('lebih_awal');
+
+                $countSakit = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 3)->get());
+                $countSakitKarenaCovid = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 9)->get());
+                $countCutiTahun = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 7)->get());
+                $countCutiLain = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 8)->get());
+                $countTraining = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 4)->get());
+                $countTugas = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 5)->get());
+                $countIzin = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get());
+                $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
+
+                //$hadirdiharikerja = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->orWhere('jam_pulang', '!=', '00:00:00')->get());
+
+                $item->update([
+                    'jumlah_hari' => $jml_hari,
+                    'jumlah_jam' => $jml_jam,
+                    'datang_lambat' => $terlambat,
+                    'pulang_cepat' => $lebih_awal,
+                    'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
+                    's' => $countSakit + $countSakitKarenaCovid,
+                    'tr' => $countTraining,
+                    'd' => $countTugas,
+                    'c' => $countCutiTahun,
+                    'l' => $countCutiLain,
+                    'i' => $countIzin,
+                    'a' => $countAlpa,
+                    'o' => jumlahHari($bulan, $tahun)['off'],
+                ]);
+            } elseif (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 2) {
+                $jml_hari   = jumlahHari6($bulan, $tahun)['jumlah_hari'];
+                $jml_jam    = jumlahHari6($bulan, $tahun)['jumlah_jam'];
+                $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
+                $lebih_awal = telat($item->nip, $bulan, $tahun)->sum('lebih_awal');
+
+                $countSakit = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 3)->get());
+                $countSakitKarenaCovid = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 9)->get());
+                $countCutiTahun = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 7)->get());
+                $countCutiLain = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 8)->get());
+                $countTraining = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 4)->get());
+                $countTugas = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 5)->get());
+                $countIzin = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get());
+                $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
+
+                //$hadirdiharikerja = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->orWhere('jam_pulang', '!=', '00:00:00')->get());
+
+                $item->update([
+                    'jumlah_hari' => $jml_hari,
+                    'jumlah_jam' => $jml_jam,
+                    'datang_lambat' => $terlambat,
+                    'pulang_cepat' => $lebih_awal,
+                    'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
+                    's' => $countSakit + $countSakitKarenaCovid,
+                    'tr' => $countTraining,
+                    'd' => $countTugas,
+                    'c' => $countCutiTahun,
+                    'l' => $countCutiLain,
+                    'i' => $countIzin,
+                    'a' => $countAlpa,
+                    'o' => jumlahHari6($bulan, $tahun)['off'],
+                ]);
+            } else {
+            }
+        }
+
+        toastr()->success('Selesai Di Hitung');
+        return back();
+    }
+
+    public function hitungtotalharikerjaSekolah($bulan, $tahun)
+    {
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
+
+        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
 
         foreach ($ringkasan as $item) {
 

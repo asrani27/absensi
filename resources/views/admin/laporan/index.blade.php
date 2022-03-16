@@ -80,7 +80,6 @@
           $no =1;
           @endphp
           <tbody>
-
             @foreach (bulanTahun() as $key => $item)
             <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
               <td>{{$no++}}</td>
@@ -90,128 +89,51 @@
                     class="fas fa-eye"></i> Detail</a></td>
             </tr>
             @endforeach
-            {{-- <tr>
-              <td></td>
-              <td>Total Terlambat</td>
-              <td>Total Lebih awal</td>
-            </tr> --}}
           </tbody>
         </table>
-        {{-- <form method="get" action="/admin/laporan/rekap" target="_blank">
-          @csrf
-          <div class="row">
-            <div class="col-sm-5">
-              <div class="form-group">
-                <select class="form-control" name="bulan" required>
-                  <option value="">-pilih bulan-</option>
-                  <option value="01" {{$bulan=='01' ? 'selected' :''}}>Januari</option>
-                  <option value="02" {{$bulan=='02' ? 'selected' :''}}>Februari</option>
-                  <option value="03" {{$bulan=='03' ? 'selected' :''}}>Maret</option>
-                  <option value="04" {{$bulan=='04' ? 'selected' :''}}>April</option>
-                  <option value="05" {{$bulan=='05' ? 'selected' :''}}>Mei</option>
-                  <option value="06" {{$bulan=='06' ? 'selected' :''}}>Juni</option>
-                  <option value="07" {{$bulan=='07' ? 'selected' :''}}>Juli</option>
-                  <option value="08" {{$bulan=='08' ? 'selected' :''}}>Agustus</option>
-                  <option value="09" {{$bulan=='09' ? 'selected' :''}}>September</option>
-                  <option value="10" {{$bulan=='10' ? 'selected' :''}}>Oktober</option>
-                  <option value="11" {{$bulan=='11' ? 'selected' :''}}>November</option>
-                  <option value="12" {{$bulan=='12' ? 'selected' :''}}>Desember</option>
-                </select>
-              </div>
-            </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-            <div class="col-sm-5">
-              <div class="form-group">
-                <select class="form-control" name="tahun" required>
-                  <option value="">-pilih tahun-</option>
-                  <option value="2021" {{$tahun=='2021' ? 'selected' :''}}>2021</option>
-                  <option value="2022" {{$tahun=='2022' ? 'selected' :''}}>2022</option>
-                  <option value="2023" {{$tahun=='2023' ? 'selected' :''}}>2023</option>
-                </select>
-              </div>
-            </div>
-            <div class="col-sm-2">
-              <div class="form-group">
-                <button type="submit" name="button" value="1" class="btn btn-danger">Print</button>
-                <button type="submit" name="button" value="2" class="btn btn-warning">Tampilkan</button>
-              </div>
-            </div>
-          </div>
-        </form>
+@if (Auth::user()->username == '1.01.01.')
 
-        <table class="table table-hover table-striped table-bordered text-nowrap table-sm  table-responsive">
+<div class="row">
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-header">
+        Laporan presensi Per Bulan TU Sekolah
+      </div>
+      <div class="card-body">
+        <table class="table table-hover table-striped text-nowrap table-sm">
           <thead>
             <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
-              <th rowspan=2>No</th>
-              <th rowspan=2>NIP</th>
-              <th rowspan=2>Nama</th>
-              <th rowspan=2>Jabatan</th>
-              <th rowspan=2>Jum Hari</th>
-              <th rowspan=2>Jum Jam</th>
-              <th colspan=2 class="text-center">Hadir Di Hari</th>
-              <th colspan=8 class="text-center">Ketidakhadiran*</th>
-              <th colspan=2>Total Absensi</th>
-              <th rowspan=2>Jam <br />Kerja <br />Pegawai</th>
-              <th rowspan=2>Datang <br />Lambat<br />(Jam)</th>
-              <th rowspan=2>Pulang <br />Cepat<br />(Jam)</th>
-              <th rowspan=2>% Hadir</th>
-              <th rowspan=2>Total Hari Kerja</th>
-            </tr>
-
-            <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif" class="bg-gradient-primary">
-              <th>Kerja</th>
-              <th>Libur</th>
-              <th>A</th>
-              <th>S</th>
-              <th>TR</th>
-              <th>D</th>
-              <th>I</th>
-              <th>C</th>
-              <th>L</th>
-              <th>O</th>
-              <th>Masuk</th>
-              <th>Keluar</th>
+              <th>#</th>
+              <th>Bulan</th>
+              <th>Tahun</th>
+              <th>Aksi</th>
             </tr>
           </thead>
           @php
           $no =1;
           @endphp
           <tbody>
-            @foreach ($data as $key => $item)
+            @foreach (bulanTahun() as $key => $item)
             <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
               <td>{{$no++}}</td>
-              <td>{{$item->nip}}</td>
-              <td>{{$item->nama}}</td>
-              <td>{{$item->jabatan}}</td>
-              <td>{{$item->jumlah_hari}}</td>
-              <td>{{intdiv($item->jumlah_jam, 60)}}:{{$item->jumlah_jam % 60}}</td>
-              <td>0</td>
-              <td>0</td>
-              <td>{{$item->a == null ? '0': $item->a}}</td>
-              <td>{{$item->s == null ? '0': $item->s}}</td>
-              <td>{{$item->tr == null ? '0': $item->tr}}</td>
-              <td>{{$item->d == null ? '0': $item->d}}</td>
-              <td>{{$item->i == null ? '0': $item->i}}</td>
-              <td>{{$item->c == null ? '0': $item->c}}</td>
-              <td>{{$item->l == null ? '0': $item->l}}</td>
-              <td>{{$item->o == null ? '0': $item->o}}</td>
-              <td>0</td>
-              <td>0</td>
-              <td>{{intdiv(($item->jumlah_jam - $item->datang_lambat - $item->pulang_cepat), 60)}}:{{($item->jumlah_jam
-                - $item->datang_lambat - $item->pulang_cepat) % 60}}</td>
-              <td>{{intdiv($item->datang_lambat, 60)}}:{{$item->datang_lambat % 60}}</td>
-              <td>{{intdiv($item->pulang_cepat, 60)}}:{{$item->pulang_cepat % 60}}</td>
-              <td>{{$item->persen_kehadiran}}</td>
-              <td>0</td>
+              <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}}</td>
+              <td>{{$item->tahun}}</td>
+              <td><a href="/admin/laporan/rekap/{{$item->bulan}}/{{$item->tahun}}/tu/sekolah"
+                  class="btn btn-xs btn-success"><i class="fas fa-eye"></i> Detail</a></td>
             </tr>
             @endforeach
           </tbody>
-        </table> --}}
+        </table>
       </div>
     </div>
   </div>
 </div>
-
+@endif
 @endsection
 
 @push('js')

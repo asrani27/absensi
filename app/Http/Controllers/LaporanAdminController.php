@@ -140,6 +140,18 @@ class LaporanAdminController extends Controller
         return view('admin.laporan.bulantahun', compact('bulan', 'tahun', 'data'));
     }
 
+
+    public function bulanTahunSekolah($bulan, $tahun)
+    {
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('skpd_id', Auth::user()->skpd->id)->get()
+            ->map(function ($item) {
+                $check = Pegawai::where('nip', $item->nip)->first();
+                $item->urut = $check == null ? 0 : $check->urutan;
+                return $item;
+            })->sortByDesc('urut');
+        return view('admin.laporan.bulantahunsekolah', compact('bulan', 'tahun', 'data'));
+    }
+
     public function bulanPdf($bulan, $tahun)
     {
         $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', null)->where('skpd_id', Auth::user()->skpd->id)->get()

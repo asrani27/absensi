@@ -129,6 +129,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('laporan', [LaporanAdminController::class, 'index']);
         Route::get('laporan/rekap/{bulan}/{tahun}', [LaporanAdminController::class, 'bulanTahun']);
         Route::get('laporan/rekap/{bulan}/{tahun}/pdf', [LaporanAdminController::class, 'bulanPdf']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/tu/sekolah', [LaporanAdminController::class, 'bulanTahunSekolah']);
         Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggal']);
         Route::get('laporan/tanggal/excel', [LaporanAdminController::class, 'excel']);
         Route::get('laporan/rekap', [LaporanAdminController::class, 'bulan']);
@@ -137,9 +138,16 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::post('ringkasan/create', [RingkasanController::class, 'tambahPegawai']);
         Route::get('ringkasan/{id}/delete/{bulan}/{tahun}', [RingkasanController::class, 'delete']);
         Route::get('ringkasan/{id}/hitung/{bulan}/{tahun}', [RingkasanController::class, 'hitung']);
+
+        //Pegawai SKPD presensi 5 hari kerja
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungsemua', [RingkasanController::class, 'hitungSemua']);
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungtotalharikerja', [RingkasanController::class, 'hitungtotalharikerja']);
         Route::get('laporan/rekap/{bulan}/{tahun}/masukkanpegawai', [RingkasanController::class, 'masukkanPegawai']);
+
+        //Pegawai TU Di sekolah presensi 6 hari kerja
+        Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/hitungsemua', [RingkasanController::class, 'hitungSemuaSekolah']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/hitungtotalharikerja', [RingkasanController::class, 'hitungtotalharikerjaSekolah']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/masukkanpegawai', [RingkasanController::class, 'masukkanPegawaiSekolah']);
     });
 });
 
