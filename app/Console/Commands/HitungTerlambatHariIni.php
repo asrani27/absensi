@@ -54,8 +54,16 @@ class HitungTerlambatHariIni extends Command
         $data = Presensi::where('tanggal', $tanggal)->get();
 
         foreach ($data as $item) {
-            $checkJenisPresensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
+            if (Pegawai::where('nip', $item->nip)->first() == null) {
+                $er = new ErrorData;
+                $er->nip = $item->nip;
+                $er->keterangan = 'menghitung terlambat tanggal ' . $tanggal;
+                $er->save();
+            } else {
+                $checkJenisPresensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
+            }
             //cek dia jenis presensi 5 hari kerja gak?
+
             if ($checkJenisPresensi == 1) {
                 //cek dia tanggalnya weekend gak?
                 if (Carbon::parse($item->tanggal)->isWeekend() == true) {
