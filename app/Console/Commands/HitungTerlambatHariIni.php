@@ -8,6 +8,7 @@ use App\Models\Jam6;
 use App\Models\Komando;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use App\Models\ErrorData;
 use App\Jobs\HitungTerlambat;
 use App\Models\LiburNasional;
 use Illuminate\Console\Command;
