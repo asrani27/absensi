@@ -19,7 +19,7 @@ class HitungTerlambatHariIni extends Command
      *
      * @var string
      */
-    protected $signature = 'terlambat:tanggal {--tanggal=}';
+    protected $signature = 'terlambat {--tanggal=}';
 
     /**
      * The console command description.
