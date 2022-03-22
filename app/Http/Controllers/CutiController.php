@@ -98,18 +98,36 @@ class CutiController extends Controller
             }
 
             foreach ($period as $date) {
-                if ($date->translatedFormat('l') == 'Minggu') {
-                } else {
-                    if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
-                        //simpan cuti tahun di presensi
-                        $n = new DetailCuti;
-                        $n->cuti_id             = $cuti->id;
-                        $n->nip                 = $request->nip;
-                        $n->skpd_id             = $pegawai->skpd_id;
-                        $n->tanggal             = $date->format('Y-m-d');
-                        $n->jenis_keterangan_id = $request->jenis_keterangan_id;
-                        $n->save();
+                if ($pegawai->jenis_presensi == 1) {
+                    if ($date->translatedFormat('l') == 'Sabtu') {
+                    } elseif ($date->translatedFormat('l') == 'Minggu') {
                     } else {
+                        if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
+                            //simpan cuti tahun di presensi
+                            $n = new DetailCuti;
+                            $n->cuti_id             = $cuti->id;
+                            $n->nip                 = $request->nip;
+                            $n->skpd_id             = $pegawai->skpd_id;
+                            $n->tanggal             = $date->format('Y-m-d');
+                            $n->jenis_keterangan_id = $request->jenis_keterangan_id;
+                            $n->save();
+                        } else {
+                        }
+                    }
+                } else {
+                    if ($date->translatedFormat('l') == 'Minggu') {
+                    } else {
+                        if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
+                            //simpan cuti tahun di presensi
+                            $n = new DetailCuti;
+                            $n->cuti_id             = $cuti->id;
+                            $n->nip                 = $request->nip;
+                            $n->skpd_id             = $pegawai->skpd_id;
+                            $n->tanggal             = $date->format('Y-m-d');
+                            $n->jenis_keterangan_id = $request->jenis_keterangan_id;
+                            $n->save();
+                        } else {
+                        }
                     }
                 }
             }
