@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Pegawai;
+use App\Models\Presensi;
 use Illuminate\Console\Command;
 
 class PerbaikanJamKerja extends Command
@@ -11,14 +13,14 @@ class PerbaikanJamKerja extends Command
      *
      * @var string
      */
-    protected $signature = 'perbaikanjam {--jenispresensi=} {--bulantahun=}';
+    protected $signature = 'perbaikanjam {--jenispresensi=} {--bulan=} {--tahun=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Perbaikan Jam Kerja';
 
     /**
      * Create a new command instance.
@@ -37,6 +39,19 @@ class PerbaikanJamKerja extends Command
      */
     public function handle()
     {
-        return 0;
+        $jenispresensi = $this->option('jenispresensi');
+        $bulan = $this->option('bulan');
+        $tahun = $this->option('tahun');
+
+        $pegawai = Pegawai::where('jenis_presensi', $jenispresensi)->get();
+        foreach ($pegawai as $p) {
+            $presensi = Presensi::where('nip', $p->nip)->get();
+            foreach ($presensi as $pre) {
+                $pre->update([
+                    'terlambat' => 0,
+                    'lebih_awal' => 0,
+                ]);
+            }
+        }
     }
 }
