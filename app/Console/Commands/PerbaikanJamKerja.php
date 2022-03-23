@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
+use App\Models\Komando;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use Illuminate\Console\Command;
@@ -53,5 +55,10 @@ class PerbaikanJamKerja extends Command
                 ]);
             }
         }
+
+        $com['nama_command'] = 'Perbaikan Jam, jenis Presensi ' . $jenispresensi;
+        $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
+
+        Komando::create($com);
     }
 }
