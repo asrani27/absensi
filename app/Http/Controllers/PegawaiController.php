@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Jam;
+use App\Models\Jam6;
 use App\Models\Role;
 use App\Models\User;
 use App\Jobs\SyncUrut;
@@ -262,8 +263,14 @@ class PegawaiController extends Controller
         $data = Presensi::find($id_presensi);
 
         $hari = Carbon::parse($data->tanggal)->translatedFormat('l');
+        $pegawai = Pegawai::find($id);
 
-        $jam = Jam::where('hari', $hari)->first();
+        if ($pegawai->jenis_presensi == 1) {
+            $jam = Jam::where('hari', $hari)->first();
+        } elseif ($pegawai->jenis_presensi == 2) {
+            $jam = Jam6::where('hari', $hari)->first();
+        } else {
+        }
 
         if ($data->jam_masuk == '00:00:00') {
             if (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 1) {
