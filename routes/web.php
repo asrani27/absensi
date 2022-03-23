@@ -138,6 +138,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::post('ringkasan/create', [RingkasanController::class, 'tambahPegawai']);
         Route::get('ringkasan/{id}/delete/{bulan}/{tahun}', [RingkasanController::class, 'delete']);
         Route::get('ringkasan/{id}/hitung/{bulan}/{tahun}', [RingkasanController::class, 'hitung']);
+        Route::get('ringkasan/{id}/nol/{bulan}/{tahun}', [RingkasanController::class, 'nol']);
 
         //Pegawai SKPD presensi 5 hari kerja
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungsemua', [RingkasanController::class, 'hitungSemua']);

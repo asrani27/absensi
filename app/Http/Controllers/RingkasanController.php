@@ -136,6 +136,36 @@ class RingkasanController extends Controller
         }
     }
 
+    public function nol($id, $bulan, $tahun)
+    {
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
+        Ringkasan::find($id)->update([
+            'jumlah_hari' => 0,
+            'jumlah_jam' => 0,
+            'kerja' => 0,
+            'libur' => 0,
+            'masuk' => 0,
+            'keluar' => 0,
+            'datang_lambat' => 0,
+            'pulang_cepat' => 0,
+            'persen_kehadiran' => 0,
+            'total_hari_kerja' => 0,
+            's' => 0,
+            'tr' => 0,
+            'd' => 0,
+            'c' => 0,
+            'l' => 0,
+            'i' => 0,
+            'a' => 0,
+            'o' => 0,
+        ]);
+        toastr()->success('Data di 0 kan');
+        return back();
+    }
+
     public function masukkanPegawai($bulan, $tahun)
     {
 

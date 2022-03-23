@@ -128,6 +128,11 @@
                                         class="badge badge-danger">Hapus</span></a> |
                                 <a href="/admin/ringkasan/{{$item->id}}/hitung/{{$bulan}}/{{$tahun}}"><span
                                         class="badge badge-primary">Hitung</span></a>
+                                |
+
+                                <a href="/admin/ringkasan/{{$item->id}}/nol/{{$bulan}}/{{$tahun}}"><span
+                                        class="badge badge-warning"
+                                        onclick="return confirm('Data Ini akan di 0 kan?');">NOL Kan</span></a>
                             </td>
                         </tr>
                         @endforeach
