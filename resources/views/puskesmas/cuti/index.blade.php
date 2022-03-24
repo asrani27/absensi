@@ -15,6 +15,18 @@ CUTI/TL/IZIN/SAKIT
         <div class="card">
             <div class="card-header">
                 <h3 class="card-title">Data Cuti</h3>
+                <div class="card-tools">
+                    <form method="get" action="/puskesmas/cuti/search">
+                        <div class="input-group input-group-sm" style="width: 250px;">
+                            <input type="text" name="search" class="form-control float-right" value="{{old('search')}}"
+                                placeholder="Nama / NIP">
+
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">

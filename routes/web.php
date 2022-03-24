@@ -221,6 +221,7 @@ Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
         Route::get('cuti/{id}/delete', [PuskesmasController::class, 'deletecuti']);
         Route::get('cuti/create', [PuskesmasController::class, 'createcuti']);
         Route::post('cuti/create', [PuskesmasController::class, 'storecuti']);
+        Route::get('cuti/search', [PuskesmasController::class, 'searchcuti']);
         Route::get('gantipass', [PuskesmasController::class, 'gantipass']);
         Route::post('gantipass', [PuskesmasController::class, 'updatepass']);
         Route::get('laporan', [PuskesmasController::class, 'laporan']);

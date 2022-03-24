@@ -580,4 +580,19 @@ class PuskesmasController extends Controller
         toastr()->success('Password Berhasil Diubah');
         return redirect('/admin/puskesmas');
     }
+
+    public function searchcuti()
+    {
+        $puskesmas_id = Auth::user()->puskesmas->id;
+        $search = request()->get('search');
+
+        $data   = Cuti::where('puskesmas_id', $puskesmas_id)
+            ->where('nama', 'LIKE', '%' . $search . '%')
+            ->orWhere(function ($query) use ($search, $puskesmas_id) {
+                $query->where('puskesmas_id', $puskesmas_id)->where('nip', 'LIKE', '%' . $search . '%');
+            })->paginate(10);
+        $data->appends(['search' => $search])->links();
+        request()->flash();
+        return view('puskesmas.cuti.index', compact('data'));
+    }
 }
