@@ -64,13 +64,16 @@ class HitungCuti extends Command
                     }
                 } else {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
-                    $presensi->update([
-                        'jam_masuk' => '00:00:00',
-                        'jam_pulang' => '00:00:00',
-                        'terlambat' => 0,
-                        'lebih_awal' => 0,
-                        'jenis_keterangan_id' => $d->jenis_keterangan_id,
-                    ]);
+                    if ($presensi != null) {
+                        $presensi->update([
+                            'jam_masuk' => '00:00:00',
+                            'jam_pulang' => '00:00:00',
+                            'terlambat' => 0,
+                            'lebih_awal' => 0,
+                            'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                        ]);
+                    } else {
+                    }
                 }
             } else {
                 if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu') {
@@ -81,19 +84,22 @@ class HitungCuti extends Command
                             'lebih_awal' => 0,
                             'jam_masuk' => 0,
                             'jam_pulang' => 0,
-                            'jenis_keterangan_id' => null,
+                            'jenis_keterangan_id' => NULL,
                         ]);
                     } else {
                     }
                 } else {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
-                    $presensi->update([
-                        'jam_masuk' => '00:00:00',
-                        'jam_pulang' => '00:00:00',
-                        'terlambat' => 0,
-                        'lebih_awal' => 0,
-                        'jenis_keterangan_id' => $d->jenis_keterangan_id,
-                    ]);
+                    if ($presensi != null) {
+                        $presensi->update([
+                            'jam_masuk' => '00:00:00',
+                            'jam_pulang' => '00:00:00',
+                            'terlambat' => 0,
+                            'lebih_awal' => 0,
+                            'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                        ]);
+                    } else {
+                    }
                 }
             }
         }
