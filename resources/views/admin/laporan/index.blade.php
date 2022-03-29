@@ -83,7 +83,7 @@
             @foreach (bulanTahun() as $key => $item)
             <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
               <td>{{$no++}}</td>
-              <td>{{\Carbon\Carbon::createFromFormat('m',$item->bulan)->translatedFormat('F')}}</td>
+              <td>{{convertBulan($item->bulan)}}</td>
               <td>{{$item->tahun}}</td>
               <td><a href="/admin/laporan/rekap/{{$item->bulan}}/{{$item->tahun}}" class="btn btn-xs btn-success"><i
                     class="fas fa-eye"></i> Detail</a></td>
