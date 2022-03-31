@@ -259,7 +259,6 @@ class PegawaiController extends Controller
         $data = Presensi::find($id_presensi);
 
         if (LiburNasional::where('tanggal', $data->tanggal)->first() != null) {
-
             Presensi::find($id_presensi)->update([
                 'jam_masuk' => '00:00:00',
                 'jam_pulang' => '00:00:00',
@@ -272,6 +271,7 @@ class PegawaiController extends Controller
         Presensi::find($id_presensi)->update([
             'jam_masuk' => $req->jam_masuk,
             'jam_pulang' => $req->jam_pulang,
+            'jenis_keterangan_id' => null,
         ]);
 
 
