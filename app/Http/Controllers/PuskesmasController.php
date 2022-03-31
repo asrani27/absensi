@@ -285,6 +285,19 @@ class PuskesmasController extends Controller
     public function updatePresensi(Request $req, $id, $bulan, $tahun, $id_presensi)
     {
 
+        $dataawal = Presensi::find($id_presensi);
+
+        if (LiburNasional::where('tanggal', $dataawal->tanggal)->first() != null) {
+            Presensi::find($id_presensi)->update([
+                'jam_masuk' => '00:00:00',
+                'jam_pulang' => '00:00:00',
+                'terlambat' => 0,
+                'lebih_awal' => 0,
+            ]);
+            toastr()->error('Tanggal Ini termasuk Libur Nasional');
+            return redirect('/puskesmas/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
+        }
+
         $tanggalPresensi = Presensi::find($id_presensi);
 
         $hari = Carbon::parse($tanggalPresensi->tanggal)->translatedFormat('l');
@@ -294,6 +307,7 @@ class PuskesmasController extends Controller
         Presensi::find($id_presensi)->update([
             'jam_masuk' => $req->jam_masuk,
             'jam_pulang' => $req->jam_pulang,
+            'jenis_keterangan_id' => null,
         ]);
 
         $data = Presensi::find($id_presensi);
