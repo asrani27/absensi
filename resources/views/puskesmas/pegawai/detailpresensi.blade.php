@@ -67,9 +67,9 @@
                             <td>
                                 @if ($item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 ||
                                 $item->jenis_keterangan_id == 9)
-                                {{$item->jenis_keterangan->keterangan}}
+                                {{$item->jenis_keterangan == null ? '': $item->jenis_keterangan->keterangan}}
                                 @else
-                                {{$item->keterangan}}
+                                {{$item->jenis_keterangan == null ? '': $item->jenis_keterangan->keterangan}}
                                 @endif
                             </td>
                             <td>{{$item->terlambat}}</td>
