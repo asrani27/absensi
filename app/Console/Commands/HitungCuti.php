@@ -3,12 +3,15 @@
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
+use App\Models\Jam;
 use App\Models\Cuti;
+use App\Models\Jam6;
 use App\Models\Komando;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use Carbon\CarbonPeriod;
 use App\Models\DetailCuti;
+use App\Jobs\HitungTerlambat;
 use App\Models\LiburNasional;
 use Illuminate\Console\Command;
 
@@ -52,12 +55,12 @@ class HitungCuti extends Command
             if ($pegawai->jenis_presensi == 1) {
                 if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu' || Carbon::parse($d->tanggal)->translatedFormat('l') == 'Sabtu') {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
-                    if ($presensi != null) {
+                    if ($presensi != null || LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
                         $presensi->update([
                             'terlambat' => 0,
                             'lebih_awal' => 0,
-                            'jam_masuk' => 0,
-                            'jam_pulang' => 0,
+                            'jam_masuk' => '00:00:00',
+                            'jam_pulang' => '00:00:00',
                             'jenis_keterangan_id' => null,
                         ]);
                     } else {
@@ -65,42 +68,86 @@ class HitungCuti extends Command
                 } else {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
                     if ($presensi != null) {
-                        $presensi->update([
-                            'jam_masuk' => '00:00:00',
-                            'jam_pulang' => '00:00:00',
-                            'terlambat' => 0,
-                            'lebih_awal' => 0,
-                            'jenis_keterangan_id' => $d->jenis_keterangan_id,
-                        ]);
+                        if (LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
+                            $presensi->update([
+                                'terlambat' => 0,
+                                'lebih_awal' => 0,
+                                'jam_masuk' => '00:00:00',
+                                'jam_pulang' => '00:00:00',
+                                'jenis_keterangan_id' => null,
+                            ]);
+                        } else {
+                            if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9) {
+                                $presensi->update([
+                                    'jam_masuk' => '00:00:00',
+                                    'jam_pulang' => '00:00:00',
+                                    'terlambat' => 0,
+                                    'lebih_awal' => 0,
+                                    'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                                ]);
+                            } else {
+                                $presensi->update([
+                                    'jam_masuk' => '00:00:00',
+                                    'jam_pulang' => '00:00:00',
+                                    'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                                ]);
+                                $hari = Carbon::parse($d->tanggal)->translatedFormat('l');
+                                $jam = Jam::where('hari', $hari)->first();
+                                HitungTerlambat::dispatch($presensi, $jam);
+                            }
+                        }
                     } else {
                     }
                 }
-            } else {
+            } elseif ($pegawai->jenis_presensi == 2) {
                 if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu') {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
-                    if ($presensi != null) {
+                    if ($presensi != null || LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
                         $presensi->update([
                             'terlambat' => 0,
                             'lebih_awal' => 0,
-                            'jam_masuk' => 0,
-                            'jam_pulang' => 0,
-                            'jenis_keterangan_id' => NULL,
+                            'jam_masuk' => '00:00:00',
+                            'jam_pulang' => '00:00:00',
+                            'jenis_keterangan_id' => null,
                         ]);
                     } else {
                     }
                 } else {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
                     if ($presensi != null) {
-                        $presensi->update([
-                            'jam_masuk' => '00:00:00',
-                            'jam_pulang' => '00:00:00',
-                            'terlambat' => 0,
-                            'lebih_awal' => 0,
-                            'jenis_keterangan_id' => $d->jenis_keterangan_id,
-                        ]);
+                        if (LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
+                            $presensi->update([
+                                'terlambat' => 0,
+                                'lebih_awal' => 0,
+                                'jam_masuk' => '00:00:00',
+                                'jam_pulang' => '00:00:00',
+                                'jenis_keterangan_id' => null,
+                            ]);
+                        } else {
+                            if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9) {
+                                $presensi->update([
+                                    'jam_masuk' => '00:00:00',
+                                    'jam_pulang' => '00:00:00',
+                                    'terlambat' => 0,
+                                    'lebih_awal' => 0,
+                                    'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                                ]);
+                            } else {
+                                $presensi->update([
+                                    'jam_masuk' => '00:00:00',
+                                    'jam_pulang' => '00:00:00',
+                                    'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                                ]);
+                                $hari = Carbon::parse($d->tanggal)->translatedFormat('l');
+                                $jam = Jam6::where('hari', $hari)->first();
+                                HitungTerlambat::dispatch($presensi, $jam);
+                            }
+                        }
                     } else {
                     }
                 }
+            } else {
+                //Presensi Jenis SHIFT
             }
         }
 
