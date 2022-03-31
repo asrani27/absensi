@@ -51,7 +51,8 @@ class HitungTerlambatHariIni extends Command
         } else {
             $tanggal = Carbon::now()->format('Y-m-d');
         }
-
+        // $d = Carbon::create()->startOfMonth()->month('02')->startOfMonth()->translatedFormat('F');
+        // dd($d);
         $data = Presensi::where('tanggal', $tanggal)->get();
 
         foreach ($data as $item) {
