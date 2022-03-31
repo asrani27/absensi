@@ -431,7 +431,6 @@ class PuskesmasController extends Controller
 
     public function hitungSemua($bulan, $tahun)
     {
-        //dd($bulan, $tahun);
         $ringkasan = Ringkasan::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($ringkasan as $item) {
             if (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 1) {
@@ -448,7 +447,6 @@ class PuskesmasController extends Controller
                 $countTugas = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 5)->get());
                 $countIzin = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get());
                 $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
-
 
                 $item->update([
                     'jumlah_hari' => $jml_hari,
