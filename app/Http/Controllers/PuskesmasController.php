@@ -11,13 +11,17 @@ use App\Models\Skpd;
 use App\Models\User;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use Carbon\CarbonPeriod;
 use App\Models\Puskesmas;
 use App\Models\Ringkasan;
+use App\Models\DetailCuti;
 use App\Jobs\SyncPuskesmas;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\LiburNasional;
 use App\Models\JenisKeterangan;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -101,34 +105,113 @@ class PuskesmasController extends Controller
 
     public function storecuti(Request $request)
     {
-        $attr            = $request->all();
-        $attr['skpd_id'] = 34;
-        $pegawai         = Pegawai::where('nip', $request->nip)->first();
-        $attr['nama']    = $pegawai->nama;
-        $attr['puskesmas_id']    = $pegawai->puskesmas_id;
+        DB::beginTransaction();
+        try {
 
-        $validator = Validator::make($request->all(), [
-            'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
-        ]);
+            $attr            = $request->all();
+            $attr['skpd_id'] = 34;
+            $pegawai         = Pegawai::where('nip', $request->nip)->first();
+            $attr['nama']    = $pegawai->nama;
+            $attr['puskesmas_id']    = $pegawai->puskesmas_id;
 
-        if ($validator->fails()) {
-            toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
+            $period = CarbonPeriod::create($request->tanggal_mulai, $request->tanggal_selesai);
+            if (count($period) > 180) {
+                toastr()->error('Cuti tidak bisa lebih dari 180 hari');
+                $request->flash();
+                return back();
+            }
+
+            $today = Carbon::now();
+            if ($today->format('m') == Carbon::parse($request->tanggal_mulai)->format('m')) {
+                $validator = Validator::make($request->all(), [
+                    'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
+                ]);
+
+                if ($validator->fails()) {
+                    toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
+                    return back();
+                }
+
+                if ($request->hasFile('file')) {
+                    $filename = $request->file->getClientOriginalName();
+                    $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
+                    $request->file->storeAs('/public/cuti', $filename);
+                    $attr['file'] = $filename;
+                } else {
+                    $attr['file'] = null;
+                }
+
+                $cuti = Cuti::create($attr);
+            } else {
+                // if ($today->diffInDays(Carbon::parse($request->tanggal_mulai)) > 5) {
+                //     toastr()->error('Tidak bisa Menambah Data karena data ini telah di rekap pada tanggal 5 setiap bulan');
+                //     return back();
+                // } else {
+
+                $validator = Validator::make($request->all(), [
+                    'file' => 'mimes:pdf,png,jpg,jpeg|max:5128'
+                ]);
+
+                if ($validator->fails()) {
+                    toastr()->error('File Harus Berupa pdf/png/jpg/jpeg dan Maks 5MB');
+                    return back();
+                }
+
+                if ($request->hasFile('file')) {
+                    $filename = $request->file->getClientOriginalName();
+                    $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
+                    $request->file->storeAs('/public/cuti', $filename);
+                    $attr['file'] = $filename;
+                } else {
+                    $attr['file'] = null;
+                }
+
+                $cuti = Cuti::create($attr);
+            }
+
+            foreach ($period as $date) {
+                if ($pegawai->jenis_presensi == 1) {
+                    if ($date->translatedFormat('l') == 'Sabtu') {
+                    } elseif ($date->translatedFormat('l') == 'Minggu') {
+                    } else {
+                        if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
+                            //simpan cuti tahun di presensi
+                            $n = new DetailCuti;
+                            $n->cuti_id             = $cuti->id;
+                            $n->nip                 = $request->nip;
+                            $n->skpd_id             = $pegawai->skpd_id;
+                            $n->tanggal             = $date->format('Y-m-d');
+                            $n->jenis_keterangan_id = $request->jenis_keterangan_id;
+                            $n->save();
+                        } else {
+                        }
+                    }
+                } else {
+                    if ($date->translatedFormat('l') == 'Minggu') {
+                    } else {
+                        if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
+                            //simpan cuti tahun di presensi
+                            $n = new DetailCuti;
+                            $n->cuti_id             = $cuti->id;
+                            $n->nip                 = $request->nip;
+                            $n->skpd_id             = $pegawai->skpd_id;
+                            $n->tanggal             = $date->format('Y-m-d');
+                            $n->jenis_keterangan_id = $request->jenis_keterangan_id;
+                            $n->save();
+                        } else {
+                        }
+                    }
+                }
+            }
+            DB::commit();
+            toastr()->success('Berhasil Menyimpan Cuti');
+            return redirect('puskesmas/cuti');
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Sistem Gagal');
+            $request->flash();
             return back();
         }
-
-        if ($request->hasFile('file')) {
-            $filename = $request->file->getClientOriginalName();
-            $filename = date('d-m-Y-') . rand(1, 9999) . $filename;
-            $request->file->storeAs('/public/cuti', $filename);
-            $attr['file'] = $filename;
-        } else {
-            $attr['file'] = null;
-        }
-
-        Cuti::create($attr);
-
-        toastr()->success('Data Di Simpan');
-        return redirect('puskesmas/cuti');
     }
 
     public function gantipass()
