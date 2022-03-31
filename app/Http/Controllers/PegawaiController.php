@@ -14,6 +14,7 @@ use App\Models\Pegawai;
 use App\Models\Presensi;
 use Carbon\CarbonPeriod;
 use App\Jobs\SyncPegawai;
+use App\Models\LiburNasional;
 use App\Models\Puskesmas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -255,12 +256,24 @@ class PegawaiController extends Controller
             return back();
         }
 
+        $data = Presensi::find($id_presensi);
+
+        if (LiburNasional::where('tanggal', $data->tanggal)->first() != null) {
+
+            Presensi::find($id_presensi)->update([
+                'jam_masuk' => '00:00:00',
+                'jam_pulang' => '00:00:00',
+                'terlambat' => 0,
+                'lebih_awal' => 0,
+            ]);
+            return redirect('/admin/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
+            return back();
+        }
         Presensi::find($id_presensi)->update([
             'jam_masuk' => $req->jam_masuk,
             'jam_pulang' => $req->jam_pulang,
         ]);
 
-        $data = Presensi::find($id_presensi);
 
         $hari = Carbon::parse($data->tanggal)->translatedFormat('l');
         $pegawai = Pegawai::find($id);
