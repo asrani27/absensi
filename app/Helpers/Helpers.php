@@ -105,8 +105,10 @@ function jumlahHari6($bulan, $tahun)
 {
     $tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->pluck('tanggal')->toArray();
     $weekends = [];
-    $start = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->startOfMonth();
-    $end = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth();
+
+    $start = Carbon::createFromFormat('/m/Y', $bulan . '/' . $tahun)->startOfMonth();
+    $end = Carbon::createFromFormat('/m/Y', $bulan . '/' . $tahun)->endOfMonth();
+
     $period = CarbonPeriod::create($start, $end);
     $dates = [];
     foreach ($period as $date) {

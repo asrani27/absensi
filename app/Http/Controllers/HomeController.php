@@ -62,13 +62,13 @@ class HomeController extends Controller
 
         $check = Presensi::where('tanggal', $today)->where('skpd_id', $user->id)->get();
 
-        $data  = Presensi::where('tanggal', $today)->where('skpd_id', $user->id)->where('puskesmas_id', null)->get()->map(function ($item) use ($check) {
-            $item->hapus = $check->where('nip', $item->nip)->count();
-            $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
-            return $item;
-        })->sortByDesc('urut');
+        // $data  = Presensi::where('tanggal', $today)->where('skpd_id', $user->id)->where('puskesmas_id', null)->get()->map(function ($item) use ($check) {
+        //     $item->hapus = $check->where('nip', $item->nip)->count();
+        //     $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+        //     return $item;
+        // })->sortByDesc('urut');
 
-        return view('admin.home', compact('data'));
+        return view('admin.home');
     }
 
     public function superadmin()
