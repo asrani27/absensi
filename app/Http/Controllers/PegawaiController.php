@@ -256,9 +256,9 @@ class PegawaiController extends Controller
             return back();
         }
 
-        $data = Presensi::find($id_presensi);
+        $dataawal = Presensi::find($id_presensi);
 
-        if (LiburNasional::where('tanggal', $data->tanggal)->first() != null) {
+        if (LiburNasional::where('tanggal', $dataawal->tanggal)->first() != null) {
             Presensi::find($id_presensi)->update([
                 'jam_masuk' => '00:00:00',
                 'jam_pulang' => '00:00:00',
@@ -274,6 +274,7 @@ class PegawaiController extends Controller
             'jenis_keterangan_id' => null,
         ]);
 
+        $data = Presensi::find($id_presensi);
 
         $hari = Carbon::parse($data->tanggal)->translatedFormat('l');
         $pegawai = Pegawai::find($id);
