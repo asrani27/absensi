@@ -9,7 +9,10 @@ use App\Models\Skpd;
 use App\Models\User;
 use App\Models\Lokasi;
 use App\Models\Pegawai;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class SkpdController extends Controller
 {
@@ -17,6 +20,17 @@ class SkpdController extends Controller
     {
         $data = Skpd::get();
         return view('superadmin.skpd.index', compact('data'));
+    }
+
+    public function login($id)
+    {
+        $user = Skpd::find($id)->user;
+
+        $uuid = Str::random(40);
+        if (Auth::loginUsingId($user->id)) {
+            Session::put('uuid', $uuid);
+            return redirect('/home/admin');
+        }
     }
 
     public function resetpass($id)

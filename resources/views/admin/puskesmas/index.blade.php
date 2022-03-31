@@ -50,9 +50,9 @@ ADMIN
                                         class="fas fa-key"></i> Reset Pass</a>
                                 <a href="/admin/puskesmas/{{$item->id}}/gantipass" class="btn btn-xs btn-warning"><i
                                         class="fas fa-lock"></i> Ganti Pass</a>
-                                {{-- <a href="/admin/puskesmas/{{$item->id}}/presensi"
-                                    class="btn btn-xs bg-gradient-primary"><i class="fas fa-calendar"></i> Login</a>
-                                --}}
+                                <a href="/admin/puskesmas/{{$item->id}}/login" class="btn btn-xs bg-gradient-danger">
+                                    Masuk <i class="fas fa-arrow-right"></i></a>
+
                                 @endif
                             </td>
                         </tr>

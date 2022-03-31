@@ -7,6 +7,7 @@ use App\Models\Jam;
 use App\Models\Cuti;
 use App\Models\Jam6;
 use App\Models\Role;
+use App\Models\Skpd;
 use App\Models\User;
 use App\Models\Pegawai;
 use App\Models\Presensi;
@@ -19,6 +20,7 @@ use App\Models\JenisKeterangan;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class PuskesmasController extends Controller
@@ -313,7 +315,7 @@ class PuskesmasController extends Controller
         $mulai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->firstOfMonth()->format('d-m-Y');
         $sampai = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth()->format('d-m-Y');
 
-        $pdf = PDF::loadView('puskesmas.laporan.bulanpdf', compact('data', 'skpd', 'mulai', 'sampai'))->setPaper('legal', 'landscape');
+        $pdf = PDF::loadView('puskesmas.laporan.bulanpdf', compact('data', 'skpd', 'mulai', 'sampai', 'bulan', 'tahun'))->setPaper('legal', 'landscape');
         return $pdf->stream();
     }
 
@@ -594,5 +596,20 @@ class PuskesmasController extends Controller
         $data->appends(['search' => $search])->links();
         request()->flash();
         return view('puskesmas.cuti.index', compact('data'));
+    }
+
+    public function keDinkes($uuid)
+    {
+        $session_id = session()->get('uuid');
+        $dinkes_id = Skpd::find(34)->user->id;
+        if ($uuid == $session_id) {
+            if (Auth::loginUsingId($dinkes_id)) {
+                Session::forget('uuid');
+                return redirect('/home/admin');
+            }
+        } else {
+            toastr()->error('Kegagalan Sistem, harap hubungi programmer');
+            return back();
+        }
     }
 }

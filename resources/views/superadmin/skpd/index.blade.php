@@ -46,6 +46,8 @@ SKPD
                                 @endif
                                 <a href="/superadmin/skpd/{{$item->id}}/detail" class="btn btn-xs btn-primary"><i
                                         class="fas fa-eye"></i> Detail</a>
+                                <a href="/superadmin/skpd/{{$item->id}}/login" class="btn btn-xs btn-danger">Login <i
+                                        class="fas fa-arrow-right"></i></a>
                             </td>
                         </tr>
                         @endforeach

@@ -30,6 +30,8 @@ Route::get('/', function () {
             return redirect('/home/admin');
         } elseif (Auth::user()->hasRole('superadmin')) {
             return redirect('/home/superadmin');
+        } elseif (Auth::user()->hasRole('puskesmas')) {
+            return redirect('/home/puskesmas');
         }
     }
     return view('welcome');
@@ -86,6 +88,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::prefix('admin')->group(function () {
         Route::resource('lokasi', LokasiController::class);
         Route::get('gantipass', [AdminController::class, 'gantipassword']);
+        Route::get('superadmin/{uuid}', [AdminController::class, 'keSuperadmin']);
+        Route::get('puskesmas/{skpd_id}/login', [AdminController::class, 'loginPuskesmas']);
         Route::get('puskesmas', [PuskesmasController::class, 'index']);
         Route::get('puskesmas/{id}/createuser', [PuskesmasController::class, 'createuser']);
         Route::get('puskesmas/{id}/resetpass', [PuskesmasController::class, 'resetpass']);
@@ -165,6 +169,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('skpd/{skpd_id}/resetpass', [SkpdController::class, 'resetpass']);
         Route::get('skpd/{skpd_id}/buatakun', [SkpdController::class, 'buatakun']);
         Route::get('skpd/{skpd_id}/detail', [SkpdController::class, 'detail']);
+        Route::get('skpd/{skpd_id}/login', [SkpdController::class, 'login']);
         Route::get('skpd/{skpd_id}/pegawai', [SkpdController::class, 'pegawai']);
         Route::get('skpd/{skpd_id}/pegawai/search', [SkpdController::class, 'searchPegawai']);
         Route::get('skpd/{skpd_id}/laporan', [SkpdController::class, 'laporan']);
@@ -208,6 +213,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
 
 Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
     Route::prefix('puskesmas')->group(function () {
+        Route::get('admin/{uuid}', [PuskesmasController::class, 'keDinkes']);
         Route::get('pegawai', [PuskesmasController::class, 'pegawai']);
         Route::get('pegawai/search', [PuskesmasController::class, 'searchpegawai']);
         Route::get('pegawai/{id}/resetpass', [PegawaiController::class, 'resetpass']);

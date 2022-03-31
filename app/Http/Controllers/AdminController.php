@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use App\Models\Puskesmas;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -124,7 +127,6 @@ class AdminController extends Controller
             $jam_pulang = $req->jam_pulang;
         }
 
-
         Presensi::find($id)->update([
             'jam_masuk' => $jam_masuk,
             'jam_pulang' => $jam_pulang,
@@ -151,5 +153,30 @@ class AdminController extends Controller
             toastr()->error('Password Lama Tidak Cocok');
         }
         return back();
+    }
+
+    public function keSuperadmin($uuid)
+    {
+        $session_id = session()->get('uuid');
+        if ($uuid == $session_id) {
+            if (Auth::loginUsingId(1)) {
+                Session::forget('uuid');
+                return redirect('/home/superadmin');
+            }
+        } else {
+            toastr()->error('Kegagalan Sistem, harap hubungi programmer');
+            return back();
+        }
+    }
+
+    public function loginPuskesmas($id)
+    {
+        $user = Puskesmas::find($id)->user;
+
+        $uuid = Str::random(40);
+        if (Auth::loginUsingId($user->id)) {
+            Session::put('uuid', $uuid);
+            return redirect('/home/puskesmas');
+        }
     }
 }

@@ -36,7 +36,8 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                Laporan presensi Bulan {{\Carbon\Carbon::createFromFormat('m', $bulan)->translatedFormat('F')}}
+                Laporan presensi Bulan
+                {{convertBulan($bulan)}}
                 {{$tahun}}
             </div>
             <div class="card-body">

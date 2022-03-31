@@ -42,6 +42,16 @@
                 </p>
             </a>
         </li>
+        @if (session()->get('uuid') != null)
+        <li class="nav-item">
+            <a href="/puskesmas/admin/{{session()->get('uuid')}}" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>
+                    Kembali Ke Admin Dinkes
+                </p>
+            </a>
+        </li>
+        @else
         <li class="nav-item">
             <a href="/logout" class="nav-link">
                 <i class="nav-icon fas fa-sign-out-alt"></i>
@@ -50,5 +60,6 @@
                 </p>
             </a>
         </li>
+        @endif
     </ul>
 </nav>
