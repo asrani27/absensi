@@ -53,13 +53,17 @@ class hitungdetailcuti extends Command
                     } else {
                         if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
                             //simpan cuti tahun di presensi
-                            $n = new DetailCuti;
-                            $n->cuti_id             = $c->id;
-                            $n->nip                 = $c->nip;
-                            $n->skpd_id             = $pegawai->skpd_id;
-                            $n->tanggal             = $date->format('Y-m-d');
-                            $n->jenis_keterangan_id = $c->jenis_keterangan_id;
-                            $n->save();
+                            $checkDetailCuti = DetailCuti::where('nip', $c->nip)->where('tanggal', $date->format('Y-m-d'))->first();
+                            if ($checkDetailCuti == null) {
+                                $n = new DetailCuti;
+                                $n->cuti_id             = $c->id;
+                                $n->nip                 = $c->nip;
+                                $n->skpd_id             = $pegawai->skpd_id;
+                                $n->tanggal             = $date->format('Y-m-d');
+                                $n->jenis_keterangan_id = $c->jenis_keterangan_id;
+                                $n->save();
+                            } else {
+                            }
                         } else {
                         }
                     }
@@ -68,13 +72,17 @@ class hitungdetailcuti extends Command
                     } else {
                         if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
                             //simpan cuti tahun di presensi
-                            $n = new DetailCuti;
-                            $n->cuti_id             = $c->id;
-                            $n->nip                 = $c->nip;
-                            $n->skpd_id             = $pegawai->skpd_id;
-                            $n->tanggal             = $date->format('Y-m-d');
-                            $n->jenis_keterangan_id = $c->jenis_keterangan_id;
-                            $n->save();
+                            $checkDetailCuti = DetailCuti::where('nip', $c->nip)->where('tanggal', $date->format('Y-m-d'))->first();
+                            if ($checkDetailCuti == null) {
+                                $n = new DetailCuti;
+                                $n->cuti_id             = $c->id;
+                                $n->nip                 = $c->nip;
+                                $n->skpd_id             = $pegawai->skpd_id;
+                                $n->tanggal             = $date->format('Y-m-d');
+                                $n->jenis_keterangan_id = $c->jenis_keterangan_id;
+                                $n->save();
+                            } else {
+                            }
                         } else {
                         }
                     }
