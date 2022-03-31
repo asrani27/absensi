@@ -266,8 +266,8 @@ class PegawaiController extends Controller
                 'terlambat' => 0,
                 'lebih_awal' => 0,
             ]);
+            toastr()->error('Tanggal Ini termasuk Libur Nasional');
             return redirect('/admin/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
-            return back();
         }
         Presensi::find($id_presensi)->update([
             'jam_masuk' => $req->jam_masuk,
