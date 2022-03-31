@@ -86,6 +86,7 @@ class HitungTerlambatHariIni extends Command
                             $item->update([
                                 'terlambat' => 0,
                                 'lebih_awal' => 0,
+                                'jenis_keterangan_id' => $item->jenis_keterangan_id,
                             ]);
                         } else {
                             $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
@@ -111,10 +112,11 @@ class HitungTerlambatHariIni extends Command
                         ]);
                     } else {
                         //cek dia TL / Cuti Tahunan gak?
-                        if ($item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 9 || $item->jenis_keterangan_id == 4) {
+                        if ($item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 9) {
                             $item->update([
                                 'terlambat' => 0,
                                 'lebih_awal' => 0,
+                                'jenis_keterangan_id' => $item->jenis_keterangan_id,
                             ]);
                         } else {
                             $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
