@@ -80,7 +80,7 @@ class HitungTerlambatRamadhan implements ShouldQueue
                 if (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 1) {
                     if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
                         $this->presensi->update([
-                            'lebih_awal' => 755,
+                            'lebih_awal' => 75,
                         ]);
                     } else {
                         $this->presensi->update([
