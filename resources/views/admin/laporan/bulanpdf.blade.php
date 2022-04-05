@@ -78,7 +78,8 @@
     </header>
     <footer>
         <hr>
-        <p>*Ketidakhadiran: A=Alpha ; S=Sakit ; TR=Training / Diklat ; D=Tugas Kantor / Dinas / SPPD ; I=Ijin ; C=Cuti ;
+        <p>*Ketidakhadiran: A=Alpha ; S=Sakit ; SC=Sakit Covid; TR=Training / Diklat ; D=Tugas Kantor / Dinas / SPPD ;
+            I=Ijin ; C=Cuti ;
             L=Lain-lain ; O=Off / Hari Libur
         </p>
     </footer>
@@ -92,7 +93,7 @@
                     <th rowspan="2">Jabatan</th>
                     <th rowspan="2">Jum<br /> hari</th>
                     <th colspan="2">Hadir di hari</th>
-                    <th colspan="8">ketidakhadiran</th>
+                    <th colspan="9">ketidakhadiran</th>
                     <th colspan="2">Total Absensi</th>
                     <th rowspan="2">Jam Kerja<br /> Pegawai</th>
                     <th rowspan="2">Datang<br /> Lambat</th>
@@ -105,6 +106,7 @@
                     <th>Libur</th>
                     <th>A</th>
                     <th>S</th>
+                    <th>SC</th>
                     <th>TR</th>
                     <th>D</th>
                     <th>I</th>
@@ -130,6 +132,7 @@
                     <td>0</td>
                     <td align="center">{{$item->a == null ? '0': $item->a}}</td>
                     <td align="center">{{$item->s == null ? '0': $item->s}}</td>
+                    <td align="center">{{$item->sc == null ? '0': $item->sc}}</td>
                     <td align="center">{{$item->tr == null ? '0': $item->tr}}</td>
                     <td align="center">{{$item->d == null ? '0': $item->d}}</td>
                     <td align="center">{{$item->i == null ? '0': $item->i}}</td>

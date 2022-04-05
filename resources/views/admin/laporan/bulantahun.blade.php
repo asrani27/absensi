@@ -65,7 +65,7 @@
                             <th rowspan=2>Jum Hari</th>
                             <th rowspan=2>Jum Jam</th>
                             <th colspan=2 class="text-center">Hadir Di Hari</th>
-                            <th colspan=8 class="text-center">Ketidakhadiran*</th>
+                            <th colspan=9 class="text-center">Ketidakhadiran*</th>
                             <th colspan=2>Total Absensi</th>
                             <th rowspan=2>Jam <br />Kerja <br />Pegawai</th>
                             <th rowspan=2>Datang <br />Lambat<br />(Jam)</th>
@@ -81,6 +81,7 @@
                             <th>Libur</th>
                             <th>A</th>
                             <th>S</th>
+                            <th>SC</th>
                             <th>TR</th>
                             <th>D</th>
                             <th>I</th>
@@ -107,6 +108,7 @@
                             <td>0</td>
                             <td>{{$item->a == null ? '0': $item->a}}</td>
                             <td>{{$item->s == null ? '0': $item->s}}</td>
+                            <td>{{$item->sc == null ? '0': $item->sc}}</td>
                             <td>{{$item->tr == null ? '0': $item->tr}}</td>
                             <td>{{$item->d == null ? '0': $item->d}}</td>
                             <td>{{$item->i == null ? '0': $item->i}}</td>
