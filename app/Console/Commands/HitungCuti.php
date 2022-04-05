@@ -48,7 +48,7 @@ class HitungCuti extends Command
      */
     public function handle()
     {
-        $data = DetailCuti::get();
+        $data = DetailCuti::where('validasi', null)->get();
 
         foreach ($data as $d) {
             $pegawai    = Pegawai::where('nip', $d->nip)->first();
