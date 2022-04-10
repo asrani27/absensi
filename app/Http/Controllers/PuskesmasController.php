@@ -420,6 +420,7 @@ class PuskesmasController extends Controller
                 $n->jabatan = $item->jabatan;
                 $n->skpd_id = $item->skpd_id;
                 $n->puskesmas_id = $puskesmas_id;
+                $n->jenis_presensi = $item->jenis_presensi;
                 $n->bulan = $bulan;
                 $n->tahun = $tahun;
                 $n->save();
@@ -427,6 +428,7 @@ class PuskesmasController extends Controller
                 $check->update([
                     'jabatan' => $item->jabatan,
                     'puskesmas_id' => $puskesmas_id,
+                    'jenis_presensi' => $item->jenis_presensi,
                 ]);
             }
         }
@@ -640,7 +642,7 @@ class PuskesmasController extends Controller
                 $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
                 $item->jenis_presensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
                 return $item;
-            })->where('jenis_presensi', '!=', 3)->sortByDesc('urut');
+            })->where('jenis_presensi', 3)->sortByDesc('urut');
 
 
         return view('puskesmas.laporan.bulantahun', compact('bulan', 'tahun', 'data'));
