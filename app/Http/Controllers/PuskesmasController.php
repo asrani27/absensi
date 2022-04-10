@@ -542,7 +542,7 @@ class PuskesmasController extends Controller
                 'l' => $countCutiLain,
                 'i' => $countIzin,
                 'a' => $countAlpa,
-                'o' => jumlahHari($bulan, $tahun)['off'],
+                'o' => 0,
             ]);
         }
 
