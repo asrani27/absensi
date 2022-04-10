@@ -645,7 +645,7 @@ class PuskesmasController extends Controller
             })->where('jenis_presensi', 3)->sortByDesc('urut');
 
 
-        return view('puskesmas.laporan.bulantahun', compact('bulan', 'tahun', 'data'));
+        return view('puskesmas.laporan.bulantahunshift', compact('bulan', 'tahun', 'data'));
     }
 
     public function gantipasspuskesmas($id)
