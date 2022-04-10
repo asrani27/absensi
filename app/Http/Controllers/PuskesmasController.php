@@ -374,21 +374,12 @@ class PuskesmasController extends Controller
 
     public function bulanTahun($bulan, $tahun)
     {
-        if (Auth::user()->puskesmas->id == 8) {
-            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('jabatan', '!=', null)->get()
-                ->map(function ($item) {
-                    $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
-                    $item->jenis_presensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
-                    return $item;
-                })->where('jenis_presensi', '!=', 3)->sortByDesc('urut');
-        } else {
-            $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('jabatan', '!=', null)->get()
-                ->map(function ($item) {
-                    $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
-                    return $item;
-                })->sortByDesc('urut');
-        }
-
+        $data = Ringkasan::where('bulan', $bulan)->where('tahun', $tahun)->where('puskesmas_id', Auth::user()->puskesmas->id)->where('jabatan', '!=', null)->get()
+            ->map(function ($item) {
+                $item->urut = Pegawai::where('nip', $item->nip)->first()->urutan;
+                $item->jenis_presensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
+                return $item;
+            })->where('jenis_presensi', '!=', 3)->sortByDesc('urut');
         return view('puskesmas.laporan.bulantahun', compact('bulan', 'tahun', 'data'));
     }
 
