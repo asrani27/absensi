@@ -529,7 +529,6 @@ class PuskesmasController extends Controller
             $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
 
             $item->update([
-                'jumlah_hari' => $jml_hari,
                 'jumlah_jam' => $jml_jam,
                 'datang_lambat' => $terlambat,
                 'pulang_cepat' => $lebih_awal,
