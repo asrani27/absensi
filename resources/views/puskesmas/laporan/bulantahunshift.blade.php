@@ -46,10 +46,12 @@
 
                 <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
-                    Semua Pegawai & Update Jabatan</a>
+                    Semua Pegawai Shift & Update Jabatan</a>
 
-                <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/hitungsemua" class="btn btn-xs btn-primary"
-                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Semua</a>
+                <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/hitungsemua/shift"
+                    class="btn btn-xs btn-primary"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Semua
+                    Shift</a>
                 <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/hitungtotalharikerja"
                     class="btn btn-xs btn-primary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung Total Hari
