@@ -48,7 +48,8 @@ class HitungCuti extends Command
      */
     public function handle()
     {
-        $data = DetailCuti::where('validasi', null)->get();
+        //$data = DetailCuti::where('validasi', null)->get();
+        $data = DetailCuti::where('jenis_keterangan_id', 4)->get();
 
         foreach ($data as $d) {
             $pegawai    = Pegawai::where('nip', $d->nip)->first();
@@ -78,7 +79,7 @@ class HitungCuti extends Command
                                 'jenis_keterangan_id' => null,
                             ]);
                         } else {
-                            if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9) {
+                            if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
                                 $presensi->update([
                                     'jam_masuk' => '00:00:00',
                                     'jam_pulang' => '00:00:00',
@@ -125,7 +126,7 @@ class HitungCuti extends Command
                                 'jenis_keterangan_id' => null,
                             ]);
                         } else {
-                            if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9) {
+                            if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
                                 $presensi->update([
                                     'jam_masuk' => '00:00:00',
                                     'jam_pulang' => '00:00:00',
