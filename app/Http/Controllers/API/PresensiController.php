@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Carbon\Carbon;
+use App\Models\Absensi;
 use App\Models\Rentang;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
@@ -28,10 +29,39 @@ class PresensiController extends Controller
         return response()->json($data);
     }
 
+    public function lokasiAbsen()
+    {
+        $lokasi = Auth::user()->pegawai->skpd->lokasi;
+        $data['message_error'] = 200;
+        $data['message']       = 'Data Ditemukan';
+        $data['data']          = $lokasi;
+        return response()->json($data);
+    }
+
+    public function absenMasuk(Request $req)
+    {
+        $attr = $req->all();
+        return response()->json($attr);
+    }
+
+    public function absenPulang(Request $req)
+    {
+        $attr = $req->all();
+        return response()->json($attr);
+    }
+
     public function presensiSeminggu()
     {
         $nip = Auth::user()->pegawai->nip;
-        $data = Presensi::where('nip', $nip)->orderBy('tanggal', 'DESC')->limit(7)->get();
+        $absensi = Absensi::where('nip', $nip)->orderBy('tanggal', 'DESC')->limit(7)->get()->map(function ($item) {
+            $item->jam_masuk = $item->jam_masuk == null ? null : Carbon::parse($item->jam_masuk)->format('H:i');
+            $item->jam_pulang = $item->jam_pulang == null ? null : Carbon::parse($item->jam_pulang)->format('H:i');
+            return $item;
+        });
+
+        $data['message_error'] = 200;
+        $data['message']       = 'Data Ditemukan';
+        $data['data']          = $absensi;
         return response()->json($data);
     }
 
