@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
+use App\Models\Absensi;
 use App\Models\Komando;
 use App\Models\Pegawai;
 use App\Models\Presensi;
@@ -50,7 +51,7 @@ class generateAbsensi extends Command
         $pegawai = Pegawai::where('is_aktif', 1)->get();
 
         foreach ($pegawai as $item) {
-            $p = Presensi::where('nip', $item->nip)->where('tanggal', $tanggal)->first();
+            $p = Absensi::where('nip', $item->nip)->where('tanggal', $tanggal)->first();
             if ($p == null) {
                 $attr['nip'] = $item->nip;
                 $attr['nama'] = $item->nama;
@@ -62,7 +63,7 @@ class generateAbsensi extends Command
                 $attr['puskesmas_id'] = $item->puskesmas_id;
                 $attr['sekolah_id'] = $item->sekolah_id;
 
-                Presensi::create($attr);
+                Absensi::create($attr);
             } else {
             }
         }
