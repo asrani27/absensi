@@ -31,7 +31,6 @@ class PresensiController extends Controller
 
     public function lokasiAbsen()
     {
-        $check = auth('sanctum')->check();
 
         return response()->json($check);
         // $lokasi = Auth::user()->pegawai->skpd->lokasi;
