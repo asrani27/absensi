@@ -44,15 +44,14 @@ class PresensiController extends Controller
         $pegawai = Auth::user()->pegawai;
         $today = Carbon::now()->format('Y-m-d');
         $lokasi = Lokasi::find($req->id_lokasi);
+        $myLocation['lat'] = $req->myLat;
+        $myLocation['long'] = $req->myLong;
         $param['nip']               = $pegawai->nip;
         $param['skpd_id']           = $pegawai->skpd_id;
         $param['puskesmas_id']      = $pegawai->puskesmas_id;
         $param['sekolah_id']        = $pegawai->sekolah_id;
         $param['jenis_presensi']    = $pegawai->jenis_presensi;
-        $param['latlong_masuk']     = [
-            "lat" => $req->myLat,
-            "long" => $req->myLong
-        ];
+        $param['latlong_masuk']     = json_encode($myLocation);
         $param['id_lokasi_masuk']   = $lokasi->id;
         $param['nama_lokasi_masuk'] = $lokasi->nama;
         $param['tanggal']           = $today;
