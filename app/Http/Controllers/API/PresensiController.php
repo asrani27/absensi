@@ -79,8 +79,35 @@ class PresensiController extends Controller
 
     public function absenPulang(Request $req)
     {
-        $attr = $req->all();
-        return response()->json($attr);
+        $pegawai = Auth::user()->pegawai;
+        $today = Carbon::now()->format('Y-m-d');
+        $lokasi = Lokasi::find($req->id_lokasi);
+        $myLocation['lat'] = $req->myLat;
+        $myLocation['long'] = $req->myLong;
+        $param['nip']               = $pegawai->nip;
+        $param['skpd_id']           = $pegawai->skpd_id;
+        $param['puskesmas_id']      = $pegawai->puskesmas_id;
+        $param['sekolah_id']        = $pegawai->sekolah_id;
+        $param['jenis_presensi']    = $pegawai->jenis_presensi;
+        $param['latlong_pulang']     = json_encode($myLocation);
+        $param['id_lokasi_pulang']   = $lokasi->id;
+        $param['nama_lokasi_pulang'] = $lokasi->nama;
+        $param['tanggal']            = $today;
+        $param['jam_pulang']         = Carbon::now()->format('Y-m-d H:i:s');
+        $param['request']            = $req->all();
+
+        $check = Absensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
+        if ($check == null) {
+            Absensi::create($param);
+            $data['message_error'] = 200;
+            $data['message']       = 'Berhasil Di Simpan';
+        } else {
+            $check->update($param);
+            $data['message_error'] = 200;
+            $data['message']       = 'Berhasil Di Update';
+        }
+
+        return response()->json($data);
     }
 
     public function presensiSeminggu()
