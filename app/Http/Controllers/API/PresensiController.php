@@ -61,9 +61,14 @@ class PresensiController extends Controller
             $data['message_error'] = 200;
             $data['message']       = 'Berhasil Di Simpan';
         } else {
-            $check->update($param);
-            $data['message_error'] = 200;
-            $data['message']       = 'Berhasil Di Update';
+            if ($check->jam_masuk == null) {
+                $check->update($param);
+                $data['message_error'] = 200;
+                $data['message']       = 'Berhasil Di Update';
+            } else {
+                $data['message_error'] = 200;
+                $data['message']       = 'Anda Sudah Absen';
+            }
         }
 
         return response()->json($data);
