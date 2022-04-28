@@ -49,7 +49,10 @@ class PresensiController extends Controller
         $param['puskesmas_id']      = $pegawai->puskesmas_id;
         $param['sekolah_id']        = $pegawai->sekolah_id;
         $param['jenis_presensi']    = $pegawai->jenis_presensi;
-        $param['latlong_masuk']     = json_encode($req->myLat, $req->myLong);
+        $param['latlong_masuk']     = [
+            "lat" => $req->myLat,
+            "long" => $req->myLong
+        ];
         $param['id_lokasi_masuk']   = $lokasi->id;
         $param['nama_lokasi_masuk'] = $lokasi->nama;
         $param['tanggal']           = $today;
