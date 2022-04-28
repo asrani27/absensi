@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Carbon\Carbon;
+use App\Models\Lokasi;
 use App\Models\Absensi;
 use App\Models\Rentang;
 use App\Models\Presensi;
