@@ -40,8 +40,18 @@ class PresensiController extends Controller
 
     public function absenMasuk(Request $req)
     {
-        $attr = $req->all();
-        return response()->json($attr);
+        $pegawai = Auth::user()->pegawai;
+
+        $param['nip']               = $pegawai->nip;
+        $param['skpd_id']           = $pegawai->skpd_id;
+        $param['puskesmas_id']      = $pegawai->puskesmas_id;
+        $param['sekolah_id']        = $pegawai->sekolah_id;
+        $param['jenis_presensi']    = $pegawai->jenis_presensi;
+        $param['tanggal']           = Carbon::now()->format('Y-m-d');
+        $param['jam_masuk']         = Carbon::now()->format('Y-m-d H:i:s');
+        $param['request'] = $req->all();
+
+        return response()->json($param);
     }
 
     public function absenPulang(Request $req)
