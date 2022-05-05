@@ -37,13 +37,8 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                Panduan Edit Presensi Pegawai
             </div>
             <div class="card-body">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/GjggZkQOXFQ"
-                    title="YouTube video player" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
                 {{-- Pilih Menu Pegawai<br />
                 <img src="/theme/panduan.png" width="20%" height="90"><br />
                 KLik Tombol Presensi<br />

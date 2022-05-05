@@ -158,6 +158,7 @@ class CutiController extends Controller
 
     public function upload($id)
     {
+        $this->authorize('upload', Cuti::find($id));
         return view('admin.cuti.upload', compact('id'));
     }
 
@@ -191,6 +192,9 @@ class CutiController extends Controller
     }
     public function destroy($id)
     {
+
+        $this->authorize('delete', Cuti::find($id));
+
         $data = Cuti::find($id);
 
         $period = CarbonPeriod::create($data->tanggal_mulai, $data->tanggal_selesai);

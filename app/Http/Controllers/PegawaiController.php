@@ -114,6 +114,7 @@ class PegawaiController extends Controller
 
     public function resetpass($id)
     {
+        $this->authorize('edit', Pegawai::find($id));
         $p = Pegawai::find($id);
         User::where('id', $p->user_id)->first()->update(['password' => bcrypt(Carbon::parse($p->tanggal_lahir)->format('dmY'))]);
         toastr()->success('Password Baru : ' . Carbon::parse($p->tanggal_lahir)->format('dmY'));
@@ -129,6 +130,8 @@ class PegawaiController extends Controller
 
     public function editlokasi($id)
     {
+        $this->authorize('edit', Pegawai::find($id));
+
         $data = Pegawai::find($id);
         $lokasi = Lokasi::where('skpd_id', $this->skpd()->id)->get();
         return view('admin.pegawai.editlokasi', compact('data', 'lokasi'));
@@ -154,6 +157,8 @@ class PegawaiController extends Controller
 
     public function presensi($id)
     {
+        $this->authorize('edit', Pegawai::find($id));
+
         $pegawai = Pegawai::find($id);
         $data = null;
 
@@ -207,6 +212,8 @@ class PegawaiController extends Controller
 
     public function jenispresensi($id)
     {
+        $this->authorize('edit', Pegawai::find($id));
+
         $data = Pegawai::find($id);
         return view('admin.pegawai.jenispresensi', compact('data'));
     }
