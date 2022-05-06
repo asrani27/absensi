@@ -32,7 +32,7 @@ class PresensiController extends Controller
 
     public function lokasiAbsen()
     {
-        $lokasi = Auth::user()->pegawai->skpd->lokasi;
+        $lokasi = Auth::user()->pegawai->lokasipegawai;
         $data['message_error'] = 200;
         $data['message']       = 'Data Ditemukan';
         $data['data']          = $lokasi;

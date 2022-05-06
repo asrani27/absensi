@@ -16,5 +16,9 @@ class Lokasi extends Model
     {
         return $this->hasMany(Pegawai::class, 'lokasi_id');
     }
-    
+
+    public function pegawailokasi()
+    {
+        return $this->belongsToMany(Pegawai::class, 'lokasi_pegawai', 'lokasi_id', 'pegawai_id');
+    }
 }

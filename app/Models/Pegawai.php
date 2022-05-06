@@ -30,4 +30,9 @@ class Pegawai extends Model
     {
         return $this->belongsTo(Lokasi::class, 'lokasi_id');
     }
+
+    public function lokasipegawai()
+    {
+        return $this->belongsToMany(Lokasi::class, 'lokasi_pegawai', 'pegawai_id', 'lokasi_id');
+    }
 }
