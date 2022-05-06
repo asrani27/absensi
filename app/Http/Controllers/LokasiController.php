@@ -74,6 +74,7 @@ class LokasiController extends Controller
     public function lokasiPegawai($id)
     {
         $this->authorize('update', Lokasi::find($id));
+        dd('d');
         $data = Lokasi::find($id);
         $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->get();
         return view('admin.lokasi.pegawai', compact('data', 'pegawai', 'id'));
