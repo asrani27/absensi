@@ -90,7 +90,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         // Route::get('lokasi/{id}/pegawai/hapuslokasi/{pegawai_id}', [LokasiController::class, 'hapusLokasi']);
         Route::resource('lokasi', LokasiController::class);
         Route::get('lokasi/{id}/pegawai', [LokasiController::class, 'lokasiPegawai']);
-        Route::get('lokasipegawai/{id}', fucntion(){
+        Route::get('lokasipegawai/{id}', function () {
             return dd('d');
         });
         Route::get('gantipass', [AdminController::class, 'gantipassword']);
