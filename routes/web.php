@@ -90,6 +90,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         // Route::get('lokasi/{id}/pegawai/hapuslokasi/{pegawai_id}', [LokasiController::class, 'hapusLokasi']);
         Route::resource('lokasi', LokasiController::class);
         Route::get('lokasi/{id}/pegawai', [LokasiController::class, 'lokasiPegawai']);
+        Route::get('lokasipegawai/{id}', fucntion(){
+            return dd('d');
+        });
         Route::get('gantipass', [AdminController::class, 'gantipassword']);
         Route::get('superadmin/{uuid}', [AdminController::class, 'keSuperadmin']);
         Route::get('puskesmas/{skpd_id}/login', [AdminController::class, 'loginPuskesmas']);
