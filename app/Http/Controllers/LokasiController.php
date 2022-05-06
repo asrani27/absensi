@@ -96,7 +96,6 @@ class LokasiController extends Controller
 
     public function hapusLokasi($id, $pegawai_id)
     {
-
         $pegawai = Pegawai::find($pegawai_id);
         $pegawai->lokasiPegawai()->detach($id);
         toastr()->success('Berhasil Di Hapus');
