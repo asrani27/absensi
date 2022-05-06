@@ -86,12 +86,10 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
 Route::group(['middleware' => ['auth', 'role:admin']], function () {
     Route::post('/admin/updatelocation', [AdminController::class, 'updatelocation']);
     Route::prefix('admin')->group(function () {
-        Route::get('lokasi/{id}/list', function () {
-            return dd('test');
-        });
         // Route::get('lokasi/{id}/pegawai/masukkan', [LokasiController::class, 'masukkanSemuaPegawai']);
         // Route::get('lokasi/{id}/pegawai/hapuslokasi/{pegawai_id}', [LokasiController::class, 'hapusLokasi']);
         Route::resource('lokasi', LokasiController::class);
+        Route::get('lokasi/{id}/pegawai', [LokasiController::class, 'lokasiPegawai']);
         Route::get('gantipass', [AdminController::class, 'gantipassword']);
         Route::get('superadmin/{uuid}', [AdminController::class, 'keSuperadmin']);
         Route::get('puskesmas/{skpd_id}/login', [AdminController::class, 'loginPuskesmas']);
