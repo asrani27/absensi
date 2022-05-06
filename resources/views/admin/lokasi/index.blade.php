@@ -44,7 +44,7 @@ ADMIN
                             <td>{{$item->radius}} Meter</td>
                             <td>
 
-                                <a href="/admin/lokasi/{{$item->id}}/list" class="btn btn-xs btn-info"><i
+                                <a href="/admin/lokasi/{{$item->id}}/pegawai" class="btn btn-xs btn-info"><i
                                         class="fas fa-users"></i> Pegawai</a>
                                 <form action="/admin/lokasi/{{$item->id}}" method="post">
                                     <a href="/admin/lokasi/{{$item->id}}/edit" class="btn btn-xs btn-success"><i
