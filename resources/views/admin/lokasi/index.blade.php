@@ -45,7 +45,7 @@ ADMIN
                             <td>
 
                                 <form action="/admin/lokasi/{{$item->id}}" method="post">
-                                    <a href="/admin/lokasi/{{$item->id}}/pegawai" class="btn btn-xs btn-info"><i
+                                    <a href="/admin/lokasi/{{$item->id}}/list" class="btn btn-xs btn-info"><i
                                             class="fas fa-users"></i> Pegawai</a>
                                     <a href="/admin/lokasi/{{$item->id}}/edit" class="btn btn-xs btn-success"><i
                                             class="fas fa-edit"></i> Edit</a>
