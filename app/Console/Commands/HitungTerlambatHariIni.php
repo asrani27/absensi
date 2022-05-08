@@ -85,7 +85,7 @@ class HitungTerlambatHariIni extends Command
                         ]);
                     } else {
                         //cek dia TL / Cuti Tahunan gak?
-                        if ($item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 9) {
+                        if ($item->jenis_keterangan_id == 4 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 9) {
                             $item->update([
                                 'terlambat' => 0,
                                 'lebih_awal' => 0,
@@ -123,7 +123,7 @@ class HitungTerlambatHariIni extends Command
                         ]);
                     } else {
                         //cek dia TL / Cuti Tahunan gak?
-                        if ($item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 9) {
+                        if ($item->jenis_keterangan_id == 4 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 9) {
                             $item->update([
                                 'terlambat' => 0,
                                 'lebih_awal' => 0,
@@ -134,7 +134,7 @@ class HitungTerlambatHariIni extends Command
                             $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
                             if ($ramadhan != null) {
                                 $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
-                                $jam = JamRamadhan::where('hari', $hari)->first();
+                                $jam = Jam6Ramadhan::where('hari', $hari)->first();
                                 HitungTerlambatRamadhan::dispatch($item, $jam);
                             } else {
                                 $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
