@@ -11,6 +11,7 @@ use App\Models\Presensi;
 use App\Models\Ramadhan;
 use App\Models\ErrorData;
 use App\Models\JamRamadhan;
+use App\Models\Jam6Ramadhan;
 use App\Jobs\HitungTerlambat;
 use App\Models\LiburNasional;
 use Illuminate\Console\Command;
