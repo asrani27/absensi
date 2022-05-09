@@ -135,7 +135,6 @@ class CutiController extends Controller
             toastr()->success('Berhasil Menyimpan Cuti');
             return redirect('/admin/cuti');
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
             toastr()->error('Sistem Gagal');
             $request->flash();
