@@ -53,7 +53,6 @@ class HitungCuti extends Command
 
         foreach ($data as $d) {
             $pegawai    = Pegawai::where('nip', $d->nip)->first();
-            $d->update(['validasi' => 1]);
             if ($pegawai->jenis_presensi == 1) {
                 if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu' || Carbon::parse($d->tanggal)->translatedFormat('l') == 'Sabtu') {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
@@ -151,6 +150,8 @@ class HitungCuti extends Command
             } else {
                 //Presensi Jenis SHIFT
             }
+
+            $d->update(['validasi' => 1]);
         }
 
 
