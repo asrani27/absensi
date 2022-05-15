@@ -45,9 +45,8 @@ class LoginController extends Controller
                         $data['data']          = Auth::user()->pegawai;
                         $data['api_token']     = $token;
                     } else {
-                        $user->where('android_id', $req->android_id)->first();
                         $data['message_error'] = 201;
-                        $data['message']       = 'Device Ini Telah Di gunakan oleh ' . $user->name;
+                        $data['message']       = 'Presensi hanya boleh single device, 1 nip 1 device, silahkan hub admin untuk reset device';
                         $data['data']          = null;
                     }
                 }
