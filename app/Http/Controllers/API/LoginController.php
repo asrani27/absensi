@@ -11,6 +11,29 @@ use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
+
+    public function gantipass(Request $req)
+    {
+        if (!Hash::check($req->password_lama, Auth::user()->password)) {
+            $data['message_error'] = 201;
+            $data['message']       = 'password lama tidak sesuai';
+            $data['data']          = null;
+        }
+        if ($req->password_baru != $req->confirm_password_baru) {
+            $data['message_error'] = 201;
+            $data['message']       = 'konfirmasi password tidak sama';
+            $data['data']          = null;
+        } else {
+            Auth::user()->update([
+                'password' => bcrypt($req->password),
+            ]);
+            $data['message_error'] = 200;
+            $data['message']       = 'Berhasil Di ubah';
+            $data['data']          = null;
+        }
+        return response()->json($data);
+    }
+
     public function login(Request $req)
     {
         if ($req->username == null || $req->password == null) {
