@@ -21,7 +21,7 @@ class PresensiController extends Controller
     public function profil()
     {
         $profil = $this->pegawai();
-        $profil['skpd'] = $this->pegawai()->skpd->nama;
+        // $profil['skpd'] = $this->pegawai()->skpd->nama;
 
         $data['message_error'] = 200;
         $data['message']       = 'Data Ditemukan';
