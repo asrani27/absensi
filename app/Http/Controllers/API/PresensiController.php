@@ -68,9 +68,9 @@ class PresensiController extends Controller
         $param['jam_masuk']         = Carbon::now()->format('Y-m-d H:i:s');
         $param['request']           = $req->all();
 
-        $check = Absensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
+        $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
         if ($check == null) {
-            Absensi::create($param);
+            Presensi::create($param);
             $data['message_error'] = 200;
             $data['message']       = 'Berhasil Di Simpan';
         } else {
@@ -123,7 +123,7 @@ class PresensiController extends Controller
     public function presensiSeminggu()
     {
         $nip = Auth::user()->pegawai->nip;
-        $absensi = Absensi::where('nip', $nip)->orderBy('tanggal', 'DESC')->limit(7)->get()->map(function ($item) {
+        $absensi = Presensi::where('nip', $nip)->orderBy('tanggal', 'DESC')->limit(7)->get()->map(function ($item) {
             $item->tanggal = Carbon::parse($item->tanggal)->format('d M Y');
             $item->jam_masuk = $item->jam_masuk == null ? null : Carbon::parse($item->jam_masuk)->format('H:i');
             $item->jam_pulang = $item->jam_pulang == null ? null : Carbon::parse($item->jam_pulang)->format('H:i');

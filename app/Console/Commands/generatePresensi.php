@@ -51,8 +51,8 @@ class generatePresensi extends Command
                 $attr['nip'] = $item->nip;
                 $attr['nama'] = $item->nama;
                 $attr['tanggal'] = $today;
-                $attr['jam_masuk'] = '00:00:00';
-                $attr['jam_pulang'] = '00:00:00';
+                $attr['jam_masuk'] = null;
+                $attr['jam_pulang'] = null;
                 $attr['skpd_id'] = $item->skpd_id;
                 $attr['jenis_presensi'] = $item->jenis_presensi;
                 $attr['puskesmas_id'] = $item->puskesmas_id;
@@ -60,13 +60,13 @@ class generatePresensi extends Command
 
                 Presensi::create($attr);
             } else {
-                if ($p->jam_masuk == null) {
-                    $p->update(['jam_masuk' => '00:00:00']);
-                }
+                // if ($p->jam_masuk == null) {
+                //     $p->update(['jam_masuk' => '00:00:00']);
+                // }
 
-                if ($p->jam_pulang == null) {
-                    $p->update(['jam_pulang' => '00:00:00']);
-                }
+                // if ($p->jam_pulang == null) {
+                //     $p->update(['jam_pulang' => '00:00:00']);
+                // }
 
                 if ($p->skpd_id == null) {
                     $p->update(['skpd_id' => $item->skpd_id]);

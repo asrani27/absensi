@@ -36,32 +36,31 @@ class PresensiProcessMasuk implements ShouldQueue
     public function handle()
     {
         $date      = Carbon::now();
-        $tanggal   = $date->format('Y-m-d');  
+        $tanggal   = $date->format('Y-m-d');
         $jam_masuk = $date->format('H:i:s');
 
         $check     = Presensi::where('nip', $this->pegawai->nip)->where('tanggal', $tanggal)->first();
 
-        if($check == null){
+        if ($check == null) {
             $attr['nip'] = $this->pegawai->nip;
             $attr['nama'] = $this->pegawai->nama;
             $attr['tanggal'] = $tanggal;
-            $attr['jam_masuk'] = $jam_masuk;
+            $attr['jam_masuk'] = $tanggal . ' ' . $jam_masuk;
             $attr['skpd_id'] = $this->pegawai->skpd_id;
             Presensi::create($attr);
-        }else{
-            if($check->jam_masuk == '00:00:00'){
+        } else {
+            if ($check->jam_masuk == '00:00:00') {
                 $check->update([
-                    'jam_masuk' => $jam_masuk,
+                    'jam_masuk' => $tanggal . ' ' . $jam_masuk,
                     'skpd_id' => $this->pegawai->skpd_id,
                 ]);
-            }elseif($check->jam_masuk == null){
+            } elseif ($check->jam_masuk == null) {
                 $check->update([
-                    'jam_masuk' => $jam_masuk,
+                    'jam_masuk' => $tanggal . ' ' . $jam_masuk,
                     'skpd_id' => $this->pegawai->skpd_id,
                 ]);
-            }else{
-
+            } else {
             }
-        }   
+        }
     }
 }
