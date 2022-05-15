@@ -29,15 +29,23 @@ class LoginController extends Controller
                 }
 
                 if ($user->android_id == null) {
-                    $user->update([
-                        'android_id' => $req->android_id,
-                        'device_info' => $req->device_info,
-                    ]);
+                    //check device digunakan oleh nip lain
+                    $checkDevice = User::where('android_id', $req->android_id)->first();
+                    if ($checkDevice == null) {
+                        $user->update([
+                            'android_id' => $req->android_id,
+                            'device_info' => $req->device_info,
+                        ]);
 
-                    $data['message_error'] = 200;
-                    $data['message']       = 'Data Ditemukan';
-                    $data['data']          = Auth::user()->pegawai;
-                    $data['api_token']     = $token;
+                        $data['message_error'] = 200;
+                        $data['message']       = 'Data Ditemukan';
+                        $data['data']          = Auth::user()->pegawai;
+                        $data['api_token']     = $token;
+                    } else {
+                        $data['message_error'] = 201;
+                        $data['message']       = 'Device Ini telah di gunakan oleh ' . $checkDevice->name;
+                        $data['data']          = null;
+                    }
                 } else {
                     if ($user->where('username', $req->username) && $user->where('android_id', $req->android_id)) {
                         $data['message_error'] = 200;
