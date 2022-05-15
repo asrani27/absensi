@@ -14,7 +14,7 @@ use App\Http\Controllers\API\PresensiController;
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/user', [LoginController::class, 'user']);
     Route::get('/profil', [PresensiController::class, 'profil']);
-    Route::get('/gantipass', [LoginController::class, 'gantipass']);
+    Route::post('/gantipass', [LoginController::class, 'gantipass']);
     // Route::post('/pegawai/radius', [PresensiController::class, 'storeRadius']);
     //Route::get('/pegawai', [PresensiController::class, 'pegawai']);
     Route::get('/pegawai/presensi/seminggu', [PresensiController::class, 'presensiSeminggu']);
