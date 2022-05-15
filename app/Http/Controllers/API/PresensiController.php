@@ -18,6 +18,16 @@ class PresensiController extends Controller
         return Auth::user()->pegawai;
     }
 
+    public function profil()
+    {
+        $profil = $this->pegawai();
+        $profil['skpd'] = $this->pegawai()->skpd->nama;
+
+        $data['message_error'] = 200;
+        $data['message']       = 'Data Ditemukan';
+        $data['data']          = $profil;
+        return response()->json($data);
+    }
     public function radius()
     {
         $pegawai = Auth::user()->pegawai;
