@@ -38,7 +38,7 @@ class HitungTerlambat implements ShouldQueue
     {
         if (Pegawai::where('nip', $this->presensi->nip)->first() == null) {
         } else {
-            if ($this->presensi->jam_masuk == '00:00:00') {
+            if ($this->presensi->jam_masuk == null) {
                 if (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 1) {
                     if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
                         $this->presensi->update([
@@ -76,7 +76,7 @@ class HitungTerlambat implements ShouldQueue
                 ]);
             }
 
-            if ($this->presensi->jam_pulang == '00:00:00') {
+            if ($this->presensi->jam_pulang == null) {
                 if (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 1) {
                     if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
                         $this->presensi->update([
