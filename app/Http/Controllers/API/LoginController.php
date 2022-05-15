@@ -18,11 +18,13 @@ class LoginController extends Controller
             $data['message_error'] = 201;
             $data['message']       = 'password lama tidak sesuai';
             $data['data']          = null;
+            return response()->json($data);
         }
         if ($req->password_baru != $req->confirm_password_baru) {
             $data['message_error'] = 201;
             $data['message']       = 'konfirmasi password tidak sama';
             $data['data']          = null;
+            return response()->json($data);
         } else {
             Auth::user()->update([
                 'password' => bcrypt($req->password_baru),
@@ -30,8 +32,8 @@ class LoginController extends Controller
             $data['message_error'] = 200;
             $data['message']       = 'Berhasil Di ubah';
             $data['data']          = null;
+            return response()->json($data);
         }
-        return response()->json($data);
     }
 
     public function login(Request $req)
