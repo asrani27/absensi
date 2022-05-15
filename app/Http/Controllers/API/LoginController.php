@@ -41,10 +41,12 @@ class LoginController extends Controller
                         $data['message']       = 'Data Ditemukan';
                         $data['data']          = Auth::user()->pegawai;
                         $data['api_token']     = $token;
+                        return response()->json($data);
                     } else {
                         $data['message_error'] = 201;
                         $data['message']       = 'Device Ini telah di gunakan oleh ' . $checkDevice->name;
                         $data['data']          = null;
+                        return response()->json($data);
                     }
                 } else {
                     if ($user->where('username', $req->username) && $user->where('android_id', $req->android_id)) {
@@ -52,13 +54,14 @@ class LoginController extends Controller
                         $data['message']       = 'Data Ditemukan';
                         $data['data']          = Auth::user()->pegawai;
                         $data['api_token']     = $token;
+                        return response()->json($data);
                     } else {
                         $data['message_error'] = 201;
                         $data['message']       = 'Presensi hanya boleh single device, 1 nip 1 device, silahkan hub admin untuk reset device';
                         $data['data']          = null;
+                        return response()->json($data);
                     }
                 }
-                return response()->json($data);
             } else {
                 $data['message_error'] = 201;
                 $data['message']       = 'username atau password anda tidak ditemukan';
