@@ -50,7 +50,7 @@ class LoginController extends Controller
                         return response()->json($data);
                     }
                 } else {
-                    if ($user->where('username', $req->username) && $user->where('android_id', $req->android_id)) {
+                    if ($user->username == $req->username && $user->android_id == $req->android_id) {
                         $data['message_error'] = 200;
                         $data['message']       = 'Data Ditemukan';
                         $data['data']          = Auth::user()->pegawai;
