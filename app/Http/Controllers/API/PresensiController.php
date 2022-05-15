@@ -18,6 +18,15 @@ class PresensiController extends Controller
         return Auth::user()->pegawai;
     }
 
+    public function history($bulan, $tahun)
+    {
+        $hasil = Presensi::where('nip', Auth::user()->username)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+
+        $data['message_error'] = 200;
+        $data['message']       = 'Data Ditemukan';
+        $data['data']          = $hasil;
+        return response()->json($data);
+    }
     public function profil()
     {
         $profil = $this->pegawai();
