@@ -25,7 +25,7 @@ class LoginController extends Controller
             $data['data']          = null;
         } else {
             Auth::user()->update([
-                'password' => bcrypt($req->password),
+                'password' => bcrypt($req->password_baru),
             ]);
             $data['message_error'] = 200;
             $data['message']       = 'Berhasil Di ubah';
