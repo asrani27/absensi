@@ -98,14 +98,14 @@
                             @endif
                             <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d')}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l')}}</td>
-                            <td class="text-center">{{$item->jam_masuk}}<br />
+                            <td class="text-center">{{\Carbon\Carbon::parse($item->jam_masuk)->format('H:i:s')}}<br />
                                 @if ($item->photo_masuk == null)
 
                                 @else
                                 <img src="{{$item->photo_masuk}}" width="75px" height="25px">
                                 @endif
                             </td>
-                            <td class="text-center">{{$item->jam_pulang}}<br />
+                            <td class="text-center">{{\Carbon\Carbon::parse($item->jam_pulang)->format('H:i:s')}}<br />
                                 @if ($item->photo_pulang == null)
 
                                 @else

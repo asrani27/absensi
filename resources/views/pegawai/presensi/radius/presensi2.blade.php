@@ -99,12 +99,12 @@
           <input type="hidden" name="datajarak" id="datajarak">
           <div class="form-group row">
             <div class="col-6 text-center">
-              <strong>{{$jam_masuk == null ? '00:00:00': $jam_masuk}}</strong>
+              <strong>{{$jam_masuk == null ? '00:00:00': \Carbon\Carbon::parse($jam_masuk)->format('H:i:s')}}</strong>
               {{-- <input type="hidden" id="photo" name="photo"> --}}
               <input type="hidden" id="button" name="button">
             </div>
             <div class="col-6 text-center">
-              <strong>{{$jam_pulang == null ? '00:00:00': $jam_pulang}}</strong>
+              <strong>{{$jam_pulang == null ? '00:00:00': \Carbon\Carbon::parse($jam_pulang)->format('H:i:s')}}</strong>
             </div>
           </div>
           <div class="form-group row">
