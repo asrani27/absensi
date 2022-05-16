@@ -413,8 +413,8 @@ class PegawaiController extends Controller
                 $attr['nip'] = $pegawai->nip;
                 $attr['nama'] = $pegawai->nama;
                 $attr['tanggal'] = $date->format('Y-m-d');
-                $attr['jam_masuk'] = '00:00:00';
-                $attr['jam_pulang'] = '00:00:00';
+                $attr['jam_masuk'] = $date->format('Y-m-d') . ' 00:00:00';
+                $attr['jam_pulang'] = $date->format('Y-m-d') . ' 00:00:00';
                 $attr['skpd_id'] = $pegawai->skpd_id;
                 Presensi::create($attr);
             } else {

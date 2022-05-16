@@ -64,8 +64,10 @@
                             <td>{{$no++}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d M Y')}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal)->translatedFormat('l')}}</td>
-                            <td>{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
-                            <td>{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
+                            <td>{{$item->jam_masuk == null ? '00:00:00':
+                                \Carbon\Carbon::parse($item->jam_masuk)->format('H:i:s')}}</td>
+                            <td>{{$item->jam_pulang == null ? '00:00:00':
+                                \Carbon\Carbon::parse($item->jam_pulang)->format('H:i:s')}}</td>
                             <td>
 
                                 {{$item->jenis_keterangan == null ? '': $item->jenis_keterangan->keterangan}}
