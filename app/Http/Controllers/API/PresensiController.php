@@ -20,7 +20,11 @@ class PresensiController extends Controller
 
     public function history($bulan, $tahun)
     {
-        $hasil = Presensi::where('nip', Auth::user()->username)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+        $hasil = Presensi::where('nip', Auth::user()->username)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->map(function ($item) {
+            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H:i');
+            $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H:i');
+            return $item;
+        });
 
         $data['message_error'] = 200;
         $data['message']       = 'Data Ditemukan';
