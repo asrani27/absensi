@@ -130,6 +130,7 @@ class PresensiController extends Controller
             $check->update($param);
             $data['message_error'] = 200;
             $data['message']       = 'Berhasil Di Update';
+            $data['data']          = $check;
         }
 
         return response()->json($data);
