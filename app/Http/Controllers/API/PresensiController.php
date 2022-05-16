@@ -127,7 +127,9 @@ class PresensiController extends Controller
             $data['message_error'] = 200;
             $data['message']       = 'Berhasil Di Simpan';
         } else {
-            $check->update($param);
+            $update = $check;
+            $update->jam_pulang = Carbon::now()->format('Y-m-d H:i:s');
+            $update->save();
             $data['message_error'] = 200;
             $data['message']       = 'Berhasil Di Update';
             $data['data']          = $check;
