@@ -121,15 +121,13 @@ class PresensiController extends Controller
         $param['jam_pulang']         = Carbon::now()->format('Y-m-d H:i:s');
         $param['request']            = $req->all();
 
-        $check = Absensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
+        $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
         if ($check == null) {
-            Absensi::create($param);
+            Presensi::create($param);
             $data['message_error'] = 200;
             $data['message']       = 'Berhasil Di Simpan';
         } else {
-            $update = $check;
-            $update->jam_pulang = Carbon::now()->format('Y-m-d H:i:s');
-            $update->save();
+            $check->update($param);
             $data['message_error'] = 200;
             $data['message']       = 'Presensi Pulang Berhasil Di Update';
             $data['data']          = $check;
