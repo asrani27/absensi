@@ -92,7 +92,7 @@ class PresensiController extends Controller
             if ($check->jam_masuk == null) {
                 $check->update($param);
                 $data['message_error'] = 200;
-                $data['message']       = 'Berhasil Di Update';
+                $data['message']       = 'Presensi Masuk Berhasil Di Update';
             } else {
                 $data['message_error'] = 200;
                 $data['message']       = 'Anda Sudah Absen';
@@ -131,7 +131,7 @@ class PresensiController extends Controller
             $update->jam_pulang = Carbon::now()->format('Y-m-d H:i:s');
             $update->save();
             $data['message_error'] = 200;
-            $data['message']       = 'Berhasil Di Update';
+            $data['message']       = 'Presensi Pulang Berhasil Di Update';
             $data['data']          = $check;
         }
 
