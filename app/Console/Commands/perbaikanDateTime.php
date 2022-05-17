@@ -41,17 +41,20 @@ class perbaikanDateTime extends Command
     {
         $data = Presensi::get();
         foreach ($data as $item) {
-            if ($item->jam_masuk == null) {
+            if ($item->tanggal == null) {
             } else {
-                $item->update([
-                    'jam_masuk' => $item->tanggal . ' ' . Carbon::parse($item->jam_masuk)->format('H:i:s'),
-                ]);
-            }
-            if ($item->jam_pulang == null) {
-            } else {
-                $item->update([
-                    'jam_pulang' => $item->tanggal . ' ' . Carbon::parse($item->jam_pulang)->format('H:i:s'),
-                ]);
+                if ($item->jam_masuk == null) {
+                } else {
+                    $item->update([
+                        'jam_masuk' => $item->tanggal . ' ' . Carbon::parse($item->jam_masuk)->format('H:i:s'),
+                    ]);
+                }
+                if ($item->jam_pulang == null) {
+                } else {
+                    $item->update([
+                        'jam_pulang' => $item->tanggal . ' ' . Carbon::parse($item->jam_pulang)->format('H:i:s'),
+                    ]);
+                }
             }
         }
     }
