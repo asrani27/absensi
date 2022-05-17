@@ -292,14 +292,14 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::find($id);
 
         if ($pegawai->jenis_presensi == 1) {
-            $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
+            $ramadhan = Ramadhan::where('tanggal', $data->tanggal)->first();
             if ($ramadhan != null) {
                 $jam = JamRamadhan::where('hari', $hari)->first();
             } else {
                 $jam = Jam::where('hari', $hari)->first();
             }
         } elseif ($pegawai->jenis_presensi == 2) {
-            $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
+            $ramadhan = Ramadhan::where('tanggal', $data->tanggal)->first();
             if ($ramadhan != null) {
                 $jam = Jam6Ramadhan::where('hari', $hari)->first();
             } else {
