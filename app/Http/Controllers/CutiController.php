@@ -210,16 +210,16 @@ class CutiController extends Controller
                         $p->nama = $data->nama;
                         $p->skpd_id = $data->skpd_id;
                         $p->tanggal = $date->format('Y-m-d');
-                        $p->jam_masuk = '00:00:00';
-                        $p->jam_pulang = '00:00:00';
+                        $p->jam_masuk = $date->format('Y-m-d') . ' 00:00:00';
+                        $p->jam_pulang = $date->format('Y-m-d') . ' 00:00:00';
                         $p->terlambat = 0;
                         $p->lebih_awal = 0;
                         $p->jenis_keterangan_id = null;
                         $p->save();
                     } else {
                         $check->update([
-                            'jam_masuk' => '00:00:00',
-                            'jam_pulang' => '00:00:00',
+                            'jam_masuk' => $date->format('Y-m-d') . ' 00:00:00',
+                            'jam_pulang' => $date->format('Y-m-d') . ' 00:00:00',
                             'terlambat' => 0,
                             'lebih_awal' => 0,
                             'jenis_keterangan_id' => null,
