@@ -22,7 +22,7 @@ class HitungCuti extends Command
      *
      * @var string
      */
-    protected $signature = 'hitungcuti';
+    protected $signature = 'hitungcuti  {--bulan=} {--tahun=}';
 
     /**
      * The console command description.
@@ -48,8 +48,14 @@ class HitungCuti extends Command
      */
     public function handle()
     {
-        $month = Carbon::now()->month;
-        $year = Carbon::now()->year;
+        if ($this->option('bulan') != null) {
+            $month = $this->option('bulan');
+            $year = $this->option('tahun');
+        } else {
+            $month = Carbon::now()->month;
+            $year = Carbon::now()->year;
+        }
+
         $data = DetailCuti::whereMonth('created_at', $month)->whereYear('created_at', $year)->get();
         //dd($data, $month, $year);
         //$data = DetailCuti::where('jenis_keterangan_id', 4)->get();
