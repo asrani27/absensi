@@ -44,7 +44,8 @@
                             <div class="input-group date" id="timepicker" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input" data-target="#timepicker"
                                     name="jam_masuk"
-                                    value="{{$data->jam_masuk == null ? '00:00:00' : $data->jam_masuk}}" step="2">
+                                    value="{{$data->jam_masuk == null ? '00:00:00' : \Carbon\Carbon::parse($data->jam_masuk)->format('H:i:s')}}"
+                                    step="2">
                                 <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="far fa-clock"></i></div>
                                 </div>
@@ -59,7 +60,8 @@
                             <div class="input-group date" id="timepicker2" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input" data-target="#timepicker2"
                                     name="jam_pulang"
-                                    value="{{$data->jam_pulang == null ? '00:00:00' : $data->jam_pulang}}" step="2">
+                                    value="{{$data->jam_pulang == null ? '00:00:00' : \Carbon\Carbon::parse($data->jam_pulang)->format('H:i:s')}}"
+                                    step="2">
                                 <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="far fa-clock"></i></div>
                                 </div>

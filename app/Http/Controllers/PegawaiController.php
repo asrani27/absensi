@@ -267,8 +267,8 @@ class PegawaiController extends Controller
 
         if (LiburNasional::where('tanggal', $dataawal->tanggal)->first() != null) {
             Presensi::find($id_presensi)->update([
-                'jam_masuk' => '00:00:00',
-                'jam_pulang' => '00:00:00',
+                'jam_masuk' => $dataawal->tanggal . ' 00:00:00',
+                'jam_pulang' => $dataawal->tanggal . ' 00:00:00',
                 'terlambat' => 0,
                 'lebih_awal' => 0,
             ]);
@@ -276,12 +276,14 @@ class PegawaiController extends Controller
             return redirect('/admin/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
         }
         Presensi::find($id_presensi)->update([
-            'jam_masuk' => $req->jam_masuk,
-            'jam_pulang' => $req->jam_pulang,
+            'jam_masuk' => $dataawal->tanggal . ' ' . $req->jam_masuk,
+            'jam_pulang' => $dataawal->tanggal . ' ' . $req->jam_pulang,
             'jenis_keterangan_id' => null,
         ]);
 
         $data = Presensi::find($id_presensi);
+        // $data->format_jam_masuk = Carbon::parse($data->jam_masuk)->format('H:i:s');
+        // $data->format_jam_pulang = Carbon::parse($data->jam_pulang)->format('H:i:s');
 
         $hari = Carbon::parse($data->tanggal)->translatedFormat('l');
         $pegawai = Pegawai::find($id);
@@ -332,8 +334,8 @@ class PegawaiController extends Controller
                 }
             } else {
             }
-        } elseif ($data->jam_masuk > $jam->jam_masuk) {
-            $terlambat = floor(Carbon::parse($data->jam_masuk)->diffInSeconds($jam->jam_masuk) / 60);
+        } elseif (Carbon::parse($data->jam_masuk)->format('H:i:s') > $jam->jam_masuk) {
+            $terlambat = floor(Carbon::parse($data->jam_masuk)->diffInSeconds($data->tanggal . ' ' . $jam->jam_masuk) / 60);
             $data->update([
                 'terlambat' => $terlambat,
             ]);
@@ -382,9 +384,8 @@ class PegawaiController extends Controller
                 }
             } else {
             }
-        } elseif ($data->jam_pulang < $jam->jam_pulang) {
-            $lebih_awal = floor(Carbon::parse($data->jam_pulang)->diffInSeconds($jam->jam_pulang) / 60);
-
+        } elseif (Carbon::parse($data->jam_pulang)->format('H:i:s') < $jam->jam_pulang) {
+            $lebih_awal = floor(Carbon::parse($data->jam_pulang)->diffInSeconds($data->tanggal . ' ' . $jam->jam_pulang) / 60);
             $data->update([
                 'lebih_awal' => $lebih_awal,
             ]);
