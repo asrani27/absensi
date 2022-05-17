@@ -295,7 +295,7 @@ class PegawaiController extends Controller
         } else {
         }
 
-        if ($data->jam_masuk == '00:00:00') {
+        if (Carbon::parse($data->jam_masuk)->format('H:i:s') == '00:00:00' || $data->jam_masuk == null) {
             if (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 1) {
                 if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
                     $data->update([
@@ -345,7 +345,7 @@ class PegawaiController extends Controller
             ]);
         }
 
-        if ($data->jam_pulang == '00:00:00') {
+        if (Carbon::parse($data->jam_pulang)->format('H:i:s') == '00:00:00' || $data->jam_pulang == null) {
             if (Pegawai::where('nip', $data->nip)->first()->jenis_presensi == 1) {
                 if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
                     $data->update([
@@ -386,6 +386,7 @@ class PegawaiController extends Controller
             }
         } elseif (Carbon::parse($data->jam_pulang)->format('H:i:s') < $jam->jam_pulang) {
             $lebih_awal = floor(Carbon::parse($data->jam_pulang)->diffInSeconds($data->tanggal . ' ' . $jam->jam_pulang) / 60);
+
             $data->update([
                 'lebih_awal' => $lebih_awal,
             ]);
