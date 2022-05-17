@@ -14,9 +14,11 @@ use App\Models\Pegawai;
 use App\Models\Presensi;
 use Carbon\CarbonPeriod;
 use App\Jobs\SyncPegawai;
-use App\Models\LiburNasional;
 use App\Models\Puskesmas;
+use App\Models\JamRamadhan;
+use App\Models\Jam6Ramadhan;
 use Illuminate\Http\Request;
+use App\Models\LiburNasional;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -289,9 +291,19 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::find($id);
 
         if ($pegawai->jenis_presensi == 1) {
-            $jam = Jam::where('hari', $hari)->first();
+            $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
+            if ($ramadhan != null) {
+                $jam = JamRamadhan::where('hari', $hari)->first();
+            } else {
+                $jam = Jam::where('hari', $hari)->first();
+            }
         } elseif ($pegawai->jenis_presensi == 2) {
-            $jam = Jam6::where('hari', $hari)->first();
+            $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
+            if ($ramadhan != null) {
+                $jam = Jam6Ramadhan::where('hari', $hari)->first();
+            } else {
+                $jam = Jam6::where('hari', $hari)->first();
+            }
         } else {
         }
 

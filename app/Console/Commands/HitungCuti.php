@@ -131,7 +131,7 @@ class HitungCuti extends Command
                                 'lebih_awal' => 0,
                                 'jam_masuk' => $d->tanggal . ' 00:00:00',
                                 'jam_pulang' => $d->tanggal . ' 00:00:00',
-                                'jenis_keterangan_id' => null,
+                            'jenis_keterangan_id' => null,
                             ]);
                         } else {
                             if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
