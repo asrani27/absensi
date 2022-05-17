@@ -48,7 +48,9 @@ class HitungCuti extends Command
      */
     public function handle()
     {
-        $data = DetailCuti::where('validasi', null)->get();
+        $month = Carbon::now()->month();
+        $year = Carbon::now()->year();
+        $data = DetailCuti::whereMonth('created_at', $month)->whereYear('created_at', $year)->get();
         //$data = DetailCuti::where('jenis_keterangan_id', 4)->get();
 
         foreach ($data as $d) {
