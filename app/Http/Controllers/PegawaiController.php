@@ -12,6 +12,7 @@ use App\Models\Lokasi;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use App\Models\Ramadhan;
 use Carbon\CarbonPeriod;
 use App\Jobs\SyncPegawai;
 use App\Models\Puskesmas;
