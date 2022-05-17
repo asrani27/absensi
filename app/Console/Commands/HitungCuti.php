@@ -82,8 +82,8 @@ class HitungCuti extends Command
                             $presensi->update([
                                 'terlambat' => 0,
                                 'lebih_awal' => 0,
-                                'jam_masuk' => '00:00:00',
-                                'jam_pulang' => '00:00:00',
+                                'jam_masuk' =>  $d->tanggal . ' 00:00:00',
+                                'jam_pulang' =>  $d->tanggal . ' 00:00:00',
                                 'jenis_keterangan_id' => null,
                             ]);
                         } else {
