@@ -48,8 +48,8 @@ class HitungCuti extends Command
      */
     public function handle()
     {
-        $month = Carbon::now()->month();
-        $year = Carbon::now()->year();
+        $month = Carbon::now()->month;
+        $year = Carbon::now()->year;
         $data = DetailCuti::whereMonth('created_at', $month)->whereYear('created_at', $year)->get();
         dd($data, $month, $year);
         //$data = DetailCuti::where('jenis_keterangan_id', 4)->get();
