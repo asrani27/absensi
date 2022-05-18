@@ -76,7 +76,7 @@ class HitungTerlambat implements ShouldQueue
                 ]);
             }
 
-            if ($this->presensi->jam_pulang == null) {
+            if ($this->presensi->jam_pulang == null || Carbon::parse($this->presensi->jam_pulang)->format('H:i:s') == '00:00:00') {
                 if (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 1) {
                     if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
                         $this->presensi->update([
@@ -103,7 +103,7 @@ class HitungTerlambat implements ShouldQueue
                     }
                 } else {
                 }
-            } elseif ($this->presensi->jam_pulang < $this->jam->jam_pulang) {
+            } elseif ($this->presensi->jam_pulang < $this->presensi->tanggal . ' ' . $this->jam->jam_pulang) {
                 $lebih_awal = floor(Carbon::parse($this->presensi->jam_pulang)->diffInSeconds($this->jam->jam_pulang) / 60);
                 $this->presensi->update([
                     'lebih_awal' => $lebih_awal,
