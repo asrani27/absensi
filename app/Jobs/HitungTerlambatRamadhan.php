@@ -38,7 +38,7 @@ class HitungTerlambatRamadhan implements ShouldQueue
     {
         if (Pegawai::where('nip', $this->presensi->nip)->first() == null) {
         } else {
-            if ($this->presensi->jam_masuk == '00:00:00') {
+            if ($this->presensi->jam_masuk == null || Carbon::parse($this->presensi->jam_masuk)->format('H:i:s') == '00:00:00') {
                 if (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 1) {
                     if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
                         $this->presensi->update([
@@ -65,8 +65,8 @@ class HitungTerlambatRamadhan implements ShouldQueue
                     }
                 } else {
                 }
-            } elseif ($this->presensi->jam_masuk > $this->jam->jam_masuk) {
-                $terlambat = floor(Carbon::parse($this->presensi->jam_masuk)->diffInSeconds($this->jam->jam_masuk) / 60);
+            } elseif ($this->presensi->jam_masuk > $this->presensi->tanggal . ' ' . $this->jam->jam_masuk) {
+                $terlambat = floor(Carbon::parse($this->presensi->jam_masuk)->diffInSeconds($this->presensi->tanggal . ' ' . $this->jam->jam_masuk) / 60);
                 $this->presensi->update([
                     'terlambat' => $terlambat,
                 ]);
@@ -76,7 +76,7 @@ class HitungTerlambatRamadhan implements ShouldQueue
                 ]);
             }
 
-            if ($this->presensi->jam_pulang == '00:00:00') {
+            if ($this->presensi->jam_pulang == null || Carbon::parse($this->presensi->jam_pulang)->format('H:i:s') == '00:00:00') {
                 if (Pegawai::where('nip', $this->presensi->nip)->first()->jenis_presensi == 1) {
                     if (Carbon::parse($this->presensi->tanggal)->translatedFormat('l') == 'Jumat') {
                         $this->presensi->update([
@@ -103,8 +103,8 @@ class HitungTerlambatRamadhan implements ShouldQueue
                     }
                 } else {
                 }
-            } elseif ($this->presensi->jam_pulang < $this->jam->jam_pulang) {
-                $lebih_awal = floor(Carbon::parse($this->presensi->jam_pulang)->diffInSeconds($this->jam->jam_pulang) / 60);
+            } elseif ($this->presensi->jam_pulang < $this->presensi->tanggal . ' ' . $this->jam->jam_pulang) {
+                $lebih_awal = floor(Carbon::parse($this->presensi->jam_pulang)->diffInSeconds($this->presensi->tanggal . ' ' . $this->jam->jam_pulang) / 60);
                 $this->presensi->update([
                     'lebih_awal' => $lebih_awal,
                 ]);

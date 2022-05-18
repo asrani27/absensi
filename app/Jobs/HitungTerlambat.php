@@ -67,7 +67,6 @@ class HitungTerlambat implements ShouldQueue
                 }
             } elseif ($this->presensi->jam_masuk > $this->presensi->tanggal . ' ' . $this->jam->jam_masuk) {
                 $terlambat = floor(Carbon::parse($this->presensi->jam_masuk)->diffInSeconds($this->presensi->tanggal . ' ' . $this->jam->jam_masuk) / 60);
-                dd($terlambat, Carbon::parse($this->presensi->jam_masuk)->diffInSeconds($this->presensi->tanggal . ' ' . $this->jam->jam_masuk));
                 $this->presensi->update([
                     'terlambat' => $terlambat,
                 ]);
