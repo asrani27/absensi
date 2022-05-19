@@ -49,7 +49,7 @@ class PresensiProcessMasuk implements ShouldQueue
             $attr['skpd_id'] = $this->pegawai->skpd_id;
             Presensi::create($attr);
         } else {
-            if ($check->jam_masuk == '00:00:00') {
+            if (Carbon::parse($check->jam_masuk)->format('H:i:s') == '00:00:00') {
                 $check->update([
                     'jam_masuk' => $tanggal . ' ' . $jam_masuk,
                     'skpd_id' => $this->pegawai->skpd_id,

@@ -297,24 +297,6 @@ class PresensiController extends Controller
 
     public function storeRadius(Request $req)
     {
-
-        // $pegawai = Auth::user()->pegawai;
-        // $tanggal   = $date->format('Y-m-d');
-        // $check     = Presensi::where('nip', $pegawai->nip)->where('tanggal', $tanggal)->first();
-        // if ($check == null) {
-        //     $attr['nip'] = $pegawai->nip;
-        //     $attr['nama'] = $pegawai->nama;
-        //     $attr['tanggal'] = $tanggal;
-        //     $attr['jam_masuk'] = $jam_masuk;
-        //     $attr['skpd_id'] = $pegawai->skpd_id;
-        //     Presensi::create($attr);
-        // } else {
-        //     if ($check->jam_masuk == '00:00:00' || $check->jam_masuk == null) {
-        //         PresensiProcessMasuk::dispatch();
-        //     } else {
-        //         PresensiProcessPulang::dispatch();
-        //     }
-        // }
         if ($this->checkJam($req) == 'masuk') {
             PresensiProcessMasuk::dispatch();
             alert()->success('Presensi Masuk Berhasil DiSimpan');

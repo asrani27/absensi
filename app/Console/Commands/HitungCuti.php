@@ -78,6 +78,7 @@ class HitungCuti extends Command
                 } else {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
                     if ($presensi != null) {
+                        //check apakah libur nasional
                         if (LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
                             $presensi->update([
                                 'terlambat' => 0,
@@ -87,6 +88,7 @@ class HitungCuti extends Command
                                 'jenis_keterangan_id' => null,
                             ]);
                         } else {
+                            //check apakah cuti, perjalanan dinas, diklat, covid
                             if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
                                 $presensi->update([
                                     'jam_masuk' => $d->tanggal . ' 00:00:00',
@@ -131,7 +133,7 @@ class HitungCuti extends Command
                                 'lebih_awal' => 0,
                                 'jam_masuk' => $d->tanggal . ' 00:00:00',
                                 'jam_pulang' => $d->tanggal . ' 00:00:00',
-                            'jenis_keterangan_id' => null,
+                                'jenis_keterangan_id' => null,
                             ]);
                         } else {
                             if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
