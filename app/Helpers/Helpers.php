@@ -75,7 +75,8 @@ function persenKehadiran($nip, $bulan, $tahun)
 
 function jumlahHari($bulan, $tahun)
 {
-    $tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->pluck('tanggal')->toArray();
+    $tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', '!=', 'cuti bersama')->get()->pluck('tanggal')->toArray();
+    //$cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count();
     $weekends = [];
     $start = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->startOfMonth();
     $end = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth();
