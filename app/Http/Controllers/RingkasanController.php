@@ -291,8 +291,8 @@ class RingkasanController extends Controller
 
         foreach ($ringkasan as $item) {
 
-            $masuk = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', null)->where('jam_masuk', '!=', '%00:00:00%')->get();
-            $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', null)->where('jam_pulang', '!=', $item->tanggal . ' 00:00:00')->get());
+            $masuk = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', null)->where('jam_masuk', 'NOT LIKE', '%00:00:00%')->get();
+            $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', null)->where('jam_pulang', '!=', '00:00:00')->get());
 
             dd($masuk, $pulang, $item);
             $item->update([
