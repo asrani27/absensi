@@ -294,6 +294,7 @@ class RingkasanController extends Controller
             $masuk = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', null)->where('jam_masuk', '!=', $item->tanggal . ' 00:00:00')->get());
             $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', null)->where('jam_pulang', '!=', $item->tanggal . ' 00:00:00')->get());
 
+            dd($masuk, $pulang);
             $item->update([
                 'kerja' => $masuk,
                 'masuk' => $masuk,
