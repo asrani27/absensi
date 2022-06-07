@@ -435,6 +435,7 @@ class RingkasanController extends Controller
 
         $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
 
+        $cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->where('deskripsi', '=', 'cuti bersama')->whereYear('tanggal', $tahun)->get()->count();
         foreach ($ringkasan as $item) {
 
             // $masuk = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->get());
@@ -444,9 +445,9 @@ class RingkasanController extends Controller
             $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', null)->where('jam_pulang', 'NOT LIKE', '%00:00:00%')->get());
             //dd($hadirdiharikerja, $item->nama);
             $item->update([
-                'kerja' => $masuk,
-                'masuk' => $masuk,
-                'keluar' => $pulang,
+                'kerja' => $masuk + $cutibersama,
+                'masuk' => $masuk + $cutibersama,
+                'keluar' => $pulang + $cutibersama,
             ]);
         }
 
