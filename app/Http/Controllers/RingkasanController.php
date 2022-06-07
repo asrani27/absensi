@@ -293,14 +293,14 @@ class RingkasanController extends Controller
 
             $masuk = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', null)->get());
             $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', null)->get());
-            //dd($hadirdiharikerja, $item->nama);
+
             $item->update([
                 'kerja' => $masuk,
                 'masuk' => $masuk,
                 'keluar' => $pulang,
             ]);
         }
-
+        dd($ringkasan);
         toastr()->success('Selesai Di Hitung');
         return back();
     }
