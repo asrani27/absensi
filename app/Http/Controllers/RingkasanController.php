@@ -300,7 +300,7 @@ class RingkasanController extends Controller
                 'keluar' => $pulang,
             ]);
         }
-        dd($ringkasan);
+
         toastr()->success('Selesai Di Hitung');
         return back();
     }
