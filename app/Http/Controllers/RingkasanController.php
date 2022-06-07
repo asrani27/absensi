@@ -301,6 +301,7 @@ class RingkasanController extends Controller
             ]);
         }
 
+        dd($ringkasan);
         toastr()->success('Selesai Di Hitung');
         return back();
     }
