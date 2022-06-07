@@ -6,6 +6,7 @@ use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Models\Ringkasan;
 use Illuminate\Http\Request;
+use App\Models\LiburNasional;
 use Illuminate\Support\Facades\Auth;
 
 class RingkasanController extends Controller
@@ -289,15 +290,16 @@ class RingkasanController extends Controller
 
         $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
 
+        $cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->where('deskripsi', '=', 'cuti bersama')->whereYear('tanggal', $tahun)->get()->count();
         foreach ($ringkasan as $item) {
 
             $masuk = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', null)->where('jam_masuk', 'NOT LIKE', '%00:00:00%')->get());
             $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', null)->where('jam_pulang', 'NOT LIKE', '%00:00:00%')->get());
 
             $item->update([
-                'kerja' => $masuk,
-                'masuk' => $masuk,
-                'keluar' => $pulang,
+                'kerja' => $masuk + $cutibersama,
+                'masuk' => $masuk + $cutibersama,
+                'keluar' => $pulang + $cutibersama,
             ]);
         }
 
