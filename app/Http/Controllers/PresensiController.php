@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Alert;
 use App\Models\Qr;
 use Carbon\Carbon;
 use App\Models\Skpd;
+use App\Models\Lokasi;
 use GuzzleHttp\Client;
 use App\Models\Rentang;
 use App\Models\Presensi;
@@ -16,7 +18,6 @@ use App\Jobs\PresensiProcessPulang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Alert;
 
 class PresensiController extends Controller
 {
@@ -107,11 +108,12 @@ class PresensiController extends Controller
 
         $hari  = Carbon::now()->translatedFormat('l');
 
+        $pilih_lokasi = Lokasi::where('skpd_id', Auth::user()->pegawai->skpd_id)->get();
         $rentang = Rentang::where('hari', $hari)->first();
         if ($os == 'Safari') {
             return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
         } else {
-            return view('pegawai.presensi.radius.presensi2', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang'));
+            return view('pegawai.presensi.radius.presensi2', compact('skpd', 'pilih_lokasi', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang'));
         }
     }
 
@@ -297,6 +299,14 @@ class PresensiController extends Controller
 
     public function storeRadius(Request $req)
     {
+        $lat2 = Lokasi::find($req->lokasi_id)->lat;
+        $long2 = Lokasi::find($req->lokasi_id)->long;
+        $distance = distance($req->lat, $req->long, $lat2, $long2, "K");
+        if ($distance > 0.1) {
+            alert()->error('Jarak harus mencakup 100 meter');
+            return back();
+        }
+
         if ($this->checkJam($req) == 'masuk') {
             PresensiProcessMasuk::dispatch();
             alert()->success('Presensi Masuk Berhasil DiSimpan');
