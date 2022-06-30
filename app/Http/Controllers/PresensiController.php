@@ -110,11 +110,11 @@ class PresensiController extends Controller
 
         $pilih_lokasi = Lokasi::where('skpd_id', Auth::user()->pegawai->skpd_id)->get();
         $rentang = Rentang::where('hari', $hari)->first();
-        if ($os == 'Safari') {
-            return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
-        } else {
-            return view('pegawai.presensi.radius.presensi2', compact('skpd', 'pilih_lokasi', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang'));
-        }
+        // if ($os == 'Safari') {
+        //     return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
+        // } else {
+        return view('pegawai.presensi.radius.presensi2', compact('skpd', 'pilih_lokasi', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang', 'os'));
+        // }
     }
 
     public function barcode()
