@@ -304,7 +304,7 @@ class PresensiController extends Controller
         $distance = distance($req->lat, $req->long, $lat2, $long2, "K");
         $nama_lokasi = Lokasi::find($req->lokasi_id)->nama;
 
-        if ($distance > 0.1) {
+        if ($distance > 1) {
             alert()->error('Jarak ke ' . $nama_lokasi . ', ' . $distance . ' KM, harus mencakup 100 meter');
             return back();
         }
