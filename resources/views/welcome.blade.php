@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,83 +18,90 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <style>
-      .login-page {
-            background-image: url("/theme/bg3.jpg");
-            background-size: cover;
-            height:"10px";
-            }
-    </style>
-    
-@laravelPWA
+    .login-page {
+      background-image: url("/theme/bg3.jpg");
+      background-size: cover;
+      height: "10px";
+    }
+  </style>
+
+  @laravelPWA
 </head>
+
 <body class="hold-transition login-page">
-<div class="login-box">
-    
-  <!-- /.login-logo -->
-  @if((new \Jenssegers\Agent\Agent())->isMobile())
+  <div class="login-box">
+
+    <!-- /.login-logo -->
+    @if((new \Jenssegers\Agent\Agent())->isMobile())
     @if((new \Jenssegers\Agent\Agent())->browser() == 'Safari')
-    
+
     @else
-    {{-- <button type="button" class="btn btn-info btn-lg btn-block" id="install-button"><strong><i class="fas fa-file-download"></i> Install APP</strong></button><br/> --}}
+
+    <a href="https://play.google.com/store/apps/details?id=com.diskominfotik.banjarmasin"
+      class="btn btn-info btn-lg btn-block"><strong><i class="fas fa-file-download"></i> Install
+        APP</strong></a><br />
+    {{-- <button type="button" class="btn btn-info btn-lg btn-block" id="install-button"><strong><i
+          class="fas fa-file-download"></i> Install APP</strong></button><br /> --}}
     @endif
-  @endif
-  <div class="card">
-    <div class="card-body login-card-body">
-        
-    <div class="login-logo" style="margin-bottom:0px;">
-        <img src="/theme/logo.png" width="80px"><br/>
-        <a href="#"><b>PRESENSI</b>
-        </a>
-    </div>
-      <p class="login-box-msg"><b>PEMERINTAH KOTA BANJARMASIN</b></p>
+    @endif
+    <div class="card">
+      <div class="card-body login-card-body">
 
-      <form action="/login" method="post">
-        @csrf
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" name="username" placeholder="NIP"  value="{{old('username')}}">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+        <div class="login-logo" style="margin-bottom:0px;">
+          <img src="/theme/logo.png" width="80px"><br />
+          <a href="#"><b>PRESENSI</b>
+          </a>
+        </div>
+        <p class="login-box-msg"><b>PEMERINTAH KOTA BANJARMASIN</b></p>
+
+        <form action="/login" method="post">
+          @csrf
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" name="username" placeholder="NIP" value="{{old('username')}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" name="password" placeholder="Password"  value="{{old('password')}}">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control" name="password" placeholder="Password"
+              value="{{old('password')}}">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
             </div>
           </div>
-        </div>
-        <button type="submit" class='btn btn-block btn-primary'>Login</button>
-        {{-- <a href="https://absensi.banjarmasinkota.go.id" class='btn btn-block btn-primary'>web</a> --}}
-      </form>
+          <button type="submit" class='btn btn-block btn-primary'>Login</button>
+          {{-- <a href="https://absensi.banjarmasinkota.go.id" class='btn btn-block btn-primary'>web</a> --}}
+        </form>
 
-      {{-- <div class="social-auth-links text-center mb-3">
-        <p>- OR -</p>
-        <a href="#" class="btn btn-block btn-primary">
-          <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
-        </a>
-        <a href="#" class="btn btn-block btn-danger">
-          <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
-        </a>
-      </div> --}}
-      <!-- /.social-auth-links -->
+        {{-- <div class="social-auth-links text-center mb-3">
+          <p>- OR -</p>
+          <a href="#" class="btn btn-block btn-primary">
+            <i class="fab fa-facebook mr-2"></i> Sign in using Facebook
+          </a>
+          <a href="#" class="btn btn-block btn-danger">
+            <i class="fab fa-google-plus mr-2"></i> Sign in using Google+
+          </a>
+        </div> --}}
+        <!-- /.social-auth-links -->
+      </div>
+      <!-- /.login-card-body -->
     </div>
-    <!-- /.login-card-body -->
   </div>
-</div>
-<!-- /.login-box -->
+  <!-- /.login-box -->
 
-<!-- jQuery -->
-<script src="/theme/plugins/jquery/jquery.min.js"></script>
-<script src="/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="/theme/dist/js/adminlte.min.js"></script>
+  <!-- jQuery -->
+  <script src="/theme/plugins/jquery/jquery.min.js"></script>
+  <script src="/theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/theme/dist/js/adminlte.min.js"></script>
 
-@toastr_js
-@toastr_render
-<script>
-let installButton = document.getElementById('install-button');
+  @toastr_js
+  @toastr_render
+  <script>
+    let installButton = document.getElementById('install-button');
 let prompt;
 
 window.addEventListener('beforeinstallprompt', function(e){
@@ -142,6 +150,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
  });
  
-</script>
+  </script>
 </body>
+
 </html>

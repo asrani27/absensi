@@ -142,6 +142,24 @@
   crossorigin=""></script>
 
 <script>
+  //   function getLocation() {
+//   if (navigator.geolocation) {
+//     let giveUp = 1000 * 30;  //30 seconds
+//     let tooOld = 1000 * 60 * 60;  //one hour
+//         options ={
+//             enableHighAccuracy: true,
+//             timeout: giveUp,
+//             maximumAge: tooOld
+//         }
+//     navigator.geolocation.getCurrentPosition(showPosition,posFail, options);
+//   } else { 
+//     x.innerHTML = "Geolocation is not supported by this browser.";
+//   }
+// }
+// function showPosition(position) {
+//   console.log(position.coords.latitude, position.coords.longitude);
+// }
+
   navigator.geolocation.getCurrentPosition(function(location) {
     
       var latlng = new L.LatLng(location.coords.latitude, location.coords.longitude);
