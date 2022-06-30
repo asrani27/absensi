@@ -32,6 +32,14 @@
         <ul class="nav nav-pills flex-column">
           <li class="nav-item">
             <a href="#" class="nav-link">
+              TERSEDIA DI PLAYSTORE
+              <span class="float-right text-danger"><a
+                  href="https://play.google.com/store/apps/details?id=com.diskominfotik.banjarmasin">klik
+                  disini</a></span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
               Tanggal & Jam
               <span class="float-right text-danger">{{\Carbon\Carbon::now()->isoFormat('D MMMM Y HH:mm')}}</span>
             </a>
