@@ -69,7 +69,7 @@ LOKASI PEGAWAI
                 <!-- general form elements -->
                 <div class="card card-default">
                     <div class="card-header">
-                        <h3 class="card-title">Info Pegawai</h3>
+                        <h3 class="card-title">Masukkan Semua Pegawai</h3>
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
@@ -78,6 +78,9 @@ LOKASI PEGAWAI
                             <div class="form-group">
                                 <a href="/admin/lokasi/{{$id}}/pegawai/masukkan"
                                     class="btn btn-primary btn-block">Masukkan Semua Pegawai</a>
+
+                                <a href="/admin/lokasi/{{$id}}/pegawai/reset" class="btn btn-danger btn-block">Reset
+                                    Pegawai</a>
                             </div>
                             {{-- <div class="form-group">
                                 <label>Pegawai</label>
@@ -94,6 +97,47 @@ LOKASI PEGAWAI
                     </form>
                 </div>
 
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Masukkan Per Satu Pegawai</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" action="/admin/lokasi/{{$id}}/pegawai" method="post">
+                        @csrf
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>NIP Pegawai</label>
+                                <input type="text" class="form-control" name='nip'>
+                                <br />
+                                <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Masukkan Per Puskesmas</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form role="form" action="/admin/lokasi/{{$id}}/puskesmas" method="post">
+                        @csrf
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Puskesmas</label>
+                                <select name="puskesmas_id" class="form-control">
+                                    @foreach ($puskesmas as $item)
+                                    <option value="{{$item->id}}">{{$item->nama}}</option>
+                                    @endforeach
+                                </select>
+                                <br />
+                                <button type="submit" class="btn btn-primary btn-block">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>

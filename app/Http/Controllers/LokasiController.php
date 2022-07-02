@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Lokasi;
 use App\Models\Pegawai;
+use App\Models\Puskesmas;
 use Illuminate\Http\Request;
+use App\Models\LokasiPegawai;
 use Illuminate\Support\Facades\Auth;
 
 class LokasiController extends Controller
@@ -76,7 +78,9 @@ class LokasiController extends Controller
         $this->authorize('update', Lokasi::find($id));
         $data = Lokasi::find($id);
         $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->get();
-        return view('admin.lokasi.pegawai', compact('data', 'pegawai', 'id'));
+
+        $puskesmas = Puskesmas::get();
+        return view('admin.lokasi.pegawai', compact('data', 'pegawai', 'id', 'puskesmas'));
     }
 
     public function masukkanSemuaPegawai($id)
@@ -94,6 +98,51 @@ class LokasiController extends Controller
         return back();
     }
 
+    public function masukkanPuskesmas(Request $req, $id)
+    {
+        $this->authorize('update', Lokasi::find($id));
+
+        $lokasi = Lokasi::find($id);
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', $req->puskesmas_id)->where('sekolah_id', null)->get();
+        foreach ($pegawai as $p) {
+            if (!$p->lokasipegawai->contains($id)) {
+                $p->lokasipegawai()->attach($lokasi);
+            }
+        }
+        toastr()->success('Berhasil Di Simpan');
+        return back();
+    }
+
+    public function masukkanPerPegawai(Request $req, $id)
+    {
+        $p = Pegawai::where('nip', $req->nip)->first();
+        if ($p == null) {
+            toastr()->error('NIP tidak ditemukan');
+            return back();
+        }
+        $lokasi = Lokasi::find($id);
+        $checkIsExist = LokasiPegawai::where('pegawai_id', $p->id)->where('lokasi_id', $id)->first();
+
+        if ($checkIsExist != null) {
+            toastr()->error('NIP ini Sudah ada di lokasi ini');
+            return back();
+        }
+
+        $p->lokasipegawai()->attach($lokasi);
+
+        toastr()->success('Berhasil Ditambahkan');
+        return back();
+    }
+    public function resetSemuaPegawai($id)
+    {
+        $this->authorize('update', Lokasi::find($id));
+        $data = LokasiPegawai::where('lokasi_id', $id)->get();
+        foreach ($data as $d) {
+            $d->delete();
+        }
+        toastr()->success('Berhasil Di Reset');
+        return back();
+    }
     public function hapusLokasi($id, $pegawai_id)
     {
         $pegawai = Pegawai::find($pegawai_id);

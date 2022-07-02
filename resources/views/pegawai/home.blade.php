@@ -31,11 +31,9 @@
       <div class="card-footer bg-white p-0">
         <ul class="nav nav-pills flex-column">
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="https://play.google.com/store/apps/details?id=com.diskominfotik.banjarmasin" class="nav-link">
               TERSEDIA DI PLAYSTORE
-              <span class="float-right text-danger"><a
-                  href="https://play.google.com/store/apps/details?id=com.diskominfotik.banjarmasin">klik
-                  disini</a></span>
+              <span class="float-right text-primary"><strong>klik disini</strong></span>
             </a>
           </li>
           <li class="nav-item">
