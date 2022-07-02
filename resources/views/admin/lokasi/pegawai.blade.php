@@ -116,6 +116,7 @@ LOKASI PEGAWAI
                     </form>
                 </div>
 
+                @if (Auth::user()->skpd->id == 34)
                 <div class="card card-default">
                     <div class="card-header">
                         <h3 class="card-title">Masukkan Per Puskesmas</h3>
@@ -138,6 +139,7 @@ LOKASI PEGAWAI
                         </div>
                     </form>
                 </div>
+                @endif
             </div>
         </div>
     </div>
