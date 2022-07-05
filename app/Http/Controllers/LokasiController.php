@@ -88,7 +88,8 @@ class LokasiController extends Controller
         $this->authorize('update', Lokasi::find($id));
 
         $lokasi = Lokasi::find($id);
-        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->get();
+        $pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->get();
+        //$pegawai = Pegawai::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->get();
         foreach ($pegawai as $p) {
             if (!$p->lokasipegawai->contains($id)) {
                 $p->lokasipegawai()->attach($lokasi);
