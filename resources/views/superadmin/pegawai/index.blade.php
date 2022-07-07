@@ -57,7 +57,8 @@ PEGAWAI
                             <td>
                                 <a href="/superadmin/pegawai/{{$item->id}}/history" class="btn btn-xs btn-primary"><i
                                         class="fas fa-eye"></i> History</a>
-                                <a href="/superadmin/pegawai/{{$item->id}}/resetdevice" class="btn btn-xs btn-danger"><i
+                                <a href="/superadmin/pegawai/{{$item->id}}/resetdevice"
+                                    onclick="return confirm('Yakin ingin di reset?');" class="btn btn-xs btn-danger"><i
                                         class="fas fa-eye"></i> Reset Device</a>
                             </td>
                         </tr>
