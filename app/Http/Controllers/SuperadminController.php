@@ -37,6 +37,16 @@ class SuperadminController extends Controller
         return view('superadmin.pegawai.history', compact('pegawai', 'data'));
     }
 
+    public function resetdevice($id)
+    {
+        $pegawai = Pegawai::find($id)->user->update([
+            'android_id' => null,
+            'device_info' => null,
+        ]);
+        toastr()->success('Reset Device');
+        return back();
+    }
+
     public function tampilkanHistory($id)
     {
         if (request()->button == '1') {

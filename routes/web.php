@@ -168,6 +168,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('pegawai', [SuperadminController::class, 'pegawai']);
         Route::get('presensipegawai/{id}', [SuperadminController::class, 'deletePresensi']);
         Route::get('pegawai/{id}/history', [SuperadminController::class, 'history']);
+        Route::get('pegawai/{id}/resetdevice', [SuperadminController::class, 'resetdevice']);
         Route::get('pegawai/{id}/history/tampilkan', [SuperadminController::class, 'tampilkanHistory']);
         Route::get('pegawai/search', [SuperadminController::class, 'searchPegawai']);
         Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggalSuperadmin']);

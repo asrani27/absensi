@@ -37,6 +37,7 @@ PEGAWAI
                             <th>Nama/Nip/Pangkat</th>
                             <th>SKPD</th>
                             <th>Puskesmas</th>
+                            <th>Device ID</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -52,9 +53,12 @@ PEGAWAI
                                 {{$item->pangkat}} - {{$item->golongan}}</td>
                             <td>{{$item->skpd == null ? '' : $item->skpd->nama}} <br />{{$item->jabatan}}</td>
                             <td>{{$item->puskesmas_id == null ? '': $item->puskesmas->nama}}</td>
+                            <td>{{$item->user == null ? '': $item->user->android_id}}</td>
                             <td>
                                 <a href="/superadmin/pegawai/{{$item->id}}/history" class="btn btn-xs btn-primary"><i
                                         class="fas fa-eye"></i> History</a>
+                                <a href="/superadmin/pegawai/{{$item->id}}/resetdevice" class="btn btn-xs btn-danger"><i
+                                        class="fas fa-eye"></i> Reset Device</a>
                             </td>
                         </tr>
                         @endforeach
