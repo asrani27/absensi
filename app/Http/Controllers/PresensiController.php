@@ -108,7 +108,9 @@ class PresensiController extends Controller
 
         $hari  = Carbon::now()->translatedFormat('l');
 
-        $pilih_lokasi = Lokasi::where('skpd_id', Auth::user()->pegawai->skpd_id)->get();
+        $pilih_lokasi = Auth::user()->pegawai->lokasipegawai;
+
+        //$pilih_lokasi = Lokasi::where('skpd_id', Auth::user()->pegawai->skpd_id)->get();
         $rentang = Rentang::where('hari', $hari)->first();
         // if ($os == 'Safari') {
         //     return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
