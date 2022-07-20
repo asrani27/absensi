@@ -164,7 +164,7 @@ ADMIN
                             <th>NIP/Nama/Jabatan</th>
                             <th>Pangkat</th>
                             <th>Tgl Lahir</th>
-                            <th>Lokasi Presensi</th>
+                            {{-- <th>Lokasi Presensi</th> --}}
                             <th>Jenis Presensi</th>
                             <th>Aksi</th>
                         </tr>
@@ -183,7 +183,7 @@ ADMIN
                             <td>{{$item->nama}}<br />{{$item->nip}}<br />{{$item->jabatan}}</td>
                             <td>{{$item->pangkat}}<br />{{$item->golongan}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal_lahir)->format('d-m-Y')}}</td>
-                            <td>
+                            {{-- <td>
 
                                 @if ($item->is_aktif == 0)
                                 @else
@@ -196,7 +196,7 @@ ADMIN
                                     class="btn btn-xs bg-gradient-success"><i class="fas fa-pen"></i></a>
                                 @endif
                                 @endif
-                            </td>
+                            </td> --}}
                             <td>
                                 @if ($item->jenis_presensi == 1)
                                 5 Hari Kerja
