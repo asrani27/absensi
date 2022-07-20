@@ -442,14 +442,17 @@ class PresensiController extends Controller
         $hari  = Carbon::now()->translatedFormat('l');
 
         $rentang = Rentang::where('hari', $hari)->first();
-        if ($os == 'Safari') {
-            toastr()->success('Pengguna Iphone Masih dalam pengembangan, harap gunakan android untuk sementara');
-            return back();
 
-            //return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
-        } else {
-            return view('pegawai.presensi.radius.pagi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang'));
-        }
+        return view('pegawai.presensi.radius.pagi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang'));
+        // dd($os);
+        // if ($os == 'Safari') {
+        //     toastr()->success('Pengguna Iphone Masih dalam pengembangan, harap gunakan android untuk sementara');
+        //     return back();
+
+        //     //return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
+        // } else {
+        //     return view('pegawai.presensi.radius.pagi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang'));
+        // }
     }
 
     public function simpanpagi(Request $request)
@@ -546,14 +549,18 @@ class PresensiController extends Controller
         $hari  = Carbon::now()->translatedFormat('l');
 
         $rentang = Rentang::where('hari', $hari)->first();
-        if ($os == 'Safari') {
-            toastr()->success('Pengguna Iphone Masih dalam pengembangan, harap gunakan android untuk sementara');
-            return back();
 
-            //return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
-        } else {
-            return view('pegawai.presensi.radius.siang', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang'));
-        }
+
+        return view('pegawai.presensi.radius.siang', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang'));
+
+        // if ($os == 'Safari') {
+        //     toastr()->success('Pengguna Iphone Masih dalam pengembangan, harap gunakan android untuk sementara');
+        //     return back();
+
+        //     //return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
+        // } else {
+        //     return view('pegawai.presensi.radius.siang', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang'));
+        // }
     }
 
     public function simpansiang(Request $request)
@@ -654,14 +661,16 @@ class PresensiController extends Controller
         $hari  = Carbon::now()->translatedFormat('l');
 
         $rentang = Rentang::where('hari', $hari)->first();
-        if ($os == 'Safari') {
-            toastr()->success('Pengguna Iphone Masih dalam pengembangan, harap gunakan android untuk sementara');
-            return back();
 
-            //return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
-        } else {
-            return view('pegawai.presensi.radius.malam', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang', 'data'));
-        }
+        return view('pegawai.presensi.radius.malam', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang', 'data'));
+        // if ($os == 'Safari') {
+        //     toastr()->success('Pengguna Iphone Masih dalam pengembangan, harap gunakan android untuk sementara');
+        //     return back();
+
+        //     //return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
+        // } else {
+        //     return view('pegawai.presensi.radius.malam', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang', 'data'));
+        // }
     }
 
     public function simpanmalam(Request $request)
