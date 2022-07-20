@@ -740,7 +740,7 @@ class PresensiController extends Controller
         $today = Carbon::now()->format('Y-m-d');
         if ($presensi->shift == 'M' || $presensi->shift == null) {
             if (Carbon::parse($presensi->tanggal)->diffInDays($today) > 1) {
-                toastr()->error('Presensi Pulang Tidak bisa dilakukan karena sudah 2 hari');
+                toastr()->error('Presensi Pulang Tidak bisa dilakukan karena selisih 2 hari');
                 return back();
             } elseif ($presensi->tanggal == $today) {
                 toastr()->error('Presensi Pulang Shift Malam Hanya bisa di lakukan pada tanggal berikutnya');
@@ -761,11 +761,34 @@ class PresensiController extends Controller
 
     public function malam_masuk($id)
     {
-        Presensi::find($id)->update([
-            'shift_jam_masuk' => Carbon::now()->format('Y-m-d H:i:s'),
-            'shift' => 'M',
-        ]);
-        toastr()->success('Presensi Masuk Berhasil');
-        return back();
+        $presensi = Presensi::find($id);
+        $today = Carbon::now()->format('Y-m-d');
+        if (Carbon::parse($presensi->tanggal)->format('Y-m-d') != $today) {
+            toastr()->error('Tidak bisa absen masuk di hari berbeda');
+            return back();
+        }
+
+        if ($presensi->shift == 'M' || $presensi->shift == null) {
+            if (Carbon::parse($presensi->tanggal)->diffInDays($today) > 1) {
+                toastr()->error('Presensi Masuk Tidak bisa dilakukan karena selisih 2 hari');
+                return back();
+            } else {
+                $presensi->update([
+                    'shift_jam_masuk' => Carbon::now()->format('Y-m-d H:i:s'),
+                    'shift' => 'M',
+                ]);
+                toastr()->success('Presensi Masuk Berhasil');
+                return back();
+            }
+        } else {
+            toastr()->error('Tidak bisa absen, karena anda sudah absen shift pagi/siang');
+            return back();
+        }
+        // Presensi::find($id)->update([
+        //     'shift_jam_masuk' => Carbon::now()->format('Y-m-d H:i:s'),
+        //     'shift' => 'M',
+        // ]);
+        // toastr()->success('Presensi Masuk Berhasil');
+        // return back();
     }
 }

@@ -7,7 +7,7 @@
     crossorigin="" />
 <style>
     #mapid {
-        height: 40px;
+        height: 400px;
     }
 </style>
 
