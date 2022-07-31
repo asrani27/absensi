@@ -81,8 +81,8 @@ class PresensiController extends Controller
         // $data =  json_decode((string) $response->getBody())->data;
         // $skpd = Skpd::find($data->skpd_id);
         if (Auth::user()->android_id != null) {
-            toastr()->error('Silahkan Gunakan Versi Android');
-            return back();
+            toastr()->error('Anda Pernah Menginstall Versi Android, Silahkan Gunakan Versi Android');
+            return redirect('/home/pegawai');
         }
 
         $skpd = Skpd::find(Auth::user()->pegawai->skpd_id);
