@@ -3,78 +3,82 @@
 @push('css')
 
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  
+
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-crossorigin=""/>
+    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+    crossorigin="" />
 <style>
-    #mapid { height: 380px; }
+    #mapid {
+        height: 380px;
+    }
 </style>
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 @endpush
 @section('title')
-    TAMBAH LOKASI
+TAMBAH LOKASI
 @endsection
 @section('content')
-<br/>
+<br />
 <div class="row">
     <div class="col-12">
-        <a href="/admin/lokasi" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a><br/><br/>
-       
-        
-<div id="mapid"></div>
-<form method="post" action="/admin/lokasi">
-    @csrf
-    <div class="row">
-        <div class="col-lg-12 col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Nama</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="nama" required>
-                    </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Alamat</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="alamat" required>
-                    </div>
-                    </div>
+        <a href="/admin/lokasi" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-left"></i>
+            Kembali</a><br /><br />
 
-                    <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Latitude</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="lat" name="lat" readonly required>
-                    </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Longitude</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" id="long"  name="long" readonly required>
-                    </div>
-                    </div>
-                    
-                    <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Radius Jangkauan</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" name="radius" placeholder="100" required>
-                    </div>
-                    </div>
 
-                    <div class="form-group row">
-                    <label class="col-sm-2 col-form-label"></label>
-                    <div class="col-sm-10">
-                        <button type="submit" class="btn btn-block btn-primary"><strong>SIMPAN LOKASI PRESENSI</strong></button>
-                    </div>
+        <div id="mapid"></div>
+        <form method="post" action="/admin/lokasi">
+            @csrf
+            <div class="row">
+                <div class="col-lg-12 col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Nama</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="nama" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Alamat</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="alamat" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Latitude</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="lat" name="lat" readonly required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Longitude</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="long" name="long" readonly required>
+                                </div>
+                            </div>
+
+                            {{-- <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Radius Jangkauan</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="radius" placeholder="100" required>
+                                </div>
+                            </div> --}}
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <button type="submit" class="btn btn-block btn-primary"><strong>SIMPAN LOKASI
+                                            PRESENSI</strong></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</form>
+        </form>
     </div>
 </div>
 
@@ -82,12 +86,11 @@ crossorigin=""/>
 
 @push('js')
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-crossorigin=""></script>
+    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+    crossorigin=""></script>
 
 
 <script>
-    
     var map = L.map('mapid').setView([-3.327653847548605,114.5884147286779], 16);
     googleStreets = L.tileLayer('https://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
         maxZoom: 20,
