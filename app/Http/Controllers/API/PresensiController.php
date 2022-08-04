@@ -18,6 +18,15 @@ class PresensiController extends Controller
         return Auth::user()->pegawai;
     }
 
+    public function checkVersion($version)
+    {
+        if ($version != 3) {
+            //jika tidak sama please update
+            $data['message_error'] = 300;
+        } else {
+            $data['message_error'] = 200;
+        }
+    }
     public function history($bulan, $tahun)
     {
         $hasil = Presensi::where('nip', Auth::user()->username)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->map(function ($item) {
