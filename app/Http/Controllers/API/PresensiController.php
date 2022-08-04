@@ -21,8 +21,8 @@ class PresensiController extends Controller
     public function history($bulan, $tahun)
     {
         $hasil = Presensi::where('nip', Auth::user()->username)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->map(function ($item) {
-            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H:i');
-            $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H:i');
+            $item->jam_masuk = $item->jam_masuk == null ? '00:00' : Carbon::parse($item->jam_masuk)->format('H:i');
+            $item->jam_pulang = $item->jam_pulang == null ? '00:00' Carbon::parse($item->jam_pulang)->format('H:i');
             $tanggalFormat = Carbon::parse($item->tanggal);
             $item->tanggal = $tanggalFormat->translatedFormat('l') . ', ' . $tanggalFormat->format('d-m-Y');
             return $item;

@@ -16,7 +16,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/profil', [PresensiController::class, 'profil']);
     Route::get('/history/{bulan}/{tahun}', [PresensiController::class, 'history']);
     Route::post('/gantipass', [LoginController::class, 'gantipass']);
-
+    
     Route::get('/pegawai/presensi/seminggu', [PresensiController::class, 'presensiSeminggu']);
     Route::get('/pegawai/presensi/lokasi', [PresensiController::class, 'lokasiAbsen']);
     Route::post('/pegawai/presensi/masuk', [PresensiController::class, 'absenMasuk']);
