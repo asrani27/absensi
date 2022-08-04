@@ -26,6 +26,7 @@ class PresensiController extends Controller
         } else {
             $data['message_error'] = 200;
         }
+        return response()->json($data);
     }
     public function history($bulan, $tahun)
     {
