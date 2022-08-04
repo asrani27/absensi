@@ -125,7 +125,11 @@ class PresensiController extends Controller
         if ($check == null) {
             Presensi::create($param);
             $data['message_error'] = 200;
-            $data['message']       = 'Berhasil Di Simpan';
+            if (Auth::user()->update == null) {
+                $data['message']       = 'Mohon Segera Update Presensi';
+            } else {
+                $data['message']       = 'Berhasil Di Simpan';
+            }
         } else {
             $check->update($param);
             $data['message_error'] = 200;
