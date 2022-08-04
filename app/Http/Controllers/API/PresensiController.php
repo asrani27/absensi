@@ -87,20 +87,12 @@ class PresensiController extends Controller
         if ($check == null) {
             Presensi::create($param);
             $data['message_error'] = 200;
-            if (Auth::user()->update == null) {
-                $data['message']       = 'Mohon Segera Update Presensi';
-            } else {
-                $data['message']       = 'Berhasil Di Simpan';
-            }
+            $data['message']       = 'Berhasil Di Simpan';
         } else {
             if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i:s') == '00:00:00') {
                 $check->update($param);
                 $data['message_error'] = 200;
-                if (Auth::user()->update == null) {
-                    $data['message']       = 'Mohon Segera Update Presensi';
-                } else {
-                    $data['message']       = 'Presensi Masuk Berhasil Di Update';
-                }
+                $data['message']       = 'Presensi Masuk Berhasil Di Update';
             } else {
                 $data['message_error'] = 200;
                 $data['message']       = 'Anda Sudah Absen';
@@ -133,11 +125,7 @@ class PresensiController extends Controller
         if ($check == null) {
             Presensi::create($param);
             $data['message_error'] = 200;
-            if (Auth::user()->update == null) {
-                $data['message']       = 'Mohon Segera Update Presensi';
-            } else {
-                $data['message']       = 'Berhasil Di Simpan';
-            }
+            $data['message']       = 'Berhasil Di Simpan';
         } else {
             $check->update($param);
             $data['message_error'] = 200;
