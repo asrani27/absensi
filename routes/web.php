@@ -160,6 +160,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         //Pegawai TU Di sekolah presensi 6 hari kerja
         Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/hitungsemua', [RingkasanController::class, 'hitungSemuaSekolah']);
         Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/hitungtotalharikerja', [RingkasanController::class, 'hitungtotalharikerjaSekolah']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/hitungpersentase', [RingkasanController::class, 'persenakhirsekolah']);
         Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/masukkanpegawai', [RingkasanController::class, 'masukkanPegawaiSekolah']);
     });
 });

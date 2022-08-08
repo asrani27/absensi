@@ -365,6 +365,64 @@ class RingkasanController extends Controller
         return back();
     }
 
+    public function persenakhirsekolah($bulan, $tahun)
+    {
+        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+            return back();
+        }
+
+        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        foreach ($ringkasan as $item) {
+            $jumlahhari = $item->jumlah_hari;
+            $hadir = $item->masuk + $item->sc + $item->tr + $item->d + $item->c;
+
+            //datang lambat
+            if ($item->datang_lambat == 0) {
+                $kurangi_persen_terlambat = 0;
+            } elseif ($item->datang_lambat < 31) {
+                $kurangi_persen_terlambat = 0.5;
+            } elseif ($item->datang_lambat < 61) {
+                $kurangi_persen_terlambat = 1;
+            } elseif ($item->datang_lambat < 91) {
+                $kurangi_persen_terlambat = 1.25;
+            } elseif ($item->datang_lambat >= 91) {
+                $kurangi_persen_terlambat = 1.5;
+            } else {
+                $kurangi_persen_terlambat = 0;
+            }
+
+            //pulang cepat
+            if ($item->pulang_cepat == 0) {
+                $kurangi_persen_pulangcepat = 0;
+            } elseif ($item->pulang_cepat < 31) {
+                $kurangi_persen_pulangcepat = 0.5;
+            } elseif ($item->pulang_cepat < 61) {
+                $kurangi_persen_pulangcepat = 1;
+            } elseif ($item->pulang_cepat < 91) {
+                $kurangi_persen_pulangcepat = 1.25;
+            } elseif ($item->pulang_cepat >= 91) {
+                $kurangi_persen_pulangcepat = 1.55;
+            } else {
+                $kurangi_persen_pulangcepat = 0;
+            }
+            //dd($kurangi_persen_pulangcepat, $kurangi_persen_terlambat);
+            try {
+                $persen = round((($hadir / $jumlahhari) * 100), 2) - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
+                if ($persen < 0) {
+                    $updatepersen = 0;
+                } else {
+                    $updatepersen = $persen;
+                }
+                $item->update(['persen_kehadiran' => $updatepersen]);
+            } catch (\Exception $e) {
+                $item->update(['persen_kehadiran' => 0]);
+            }
+        }
+        toastr()->success('Persentase Selesai');
+        return back();
+    }
+
     public function masukkanPegawaiSekolah($bulan, $tahun)
     {
 
@@ -431,7 +489,7 @@ class RingkasanController extends Controller
                     'jumlah_jam' => $jml_jam,
                     'datang_lambat' => $terlambat,
                     'pulang_cepat' => $lebih_awal,
-                    'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
+                    //'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
                     's' => $countSakit,
                     'sc' => $countSakitKarenaCovid,
                     'tr' => $countTraining,
@@ -464,7 +522,7 @@ class RingkasanController extends Controller
                     'jumlah_jam' => $jml_jam,
                     'datang_lambat' => $terlambat,
                     'pulang_cepat' => $lebih_awal,
-                    'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
+                    //'persen_kehadiran' => round(($jml_jam - $terlambat - $lebih_awal) / $jml_jam * 100, 2),
                     's' => $countSakit,
                     'sc' => $countSakitKarenaCovid,
                     'tr' => $countTraining,

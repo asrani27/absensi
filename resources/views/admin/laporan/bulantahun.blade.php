@@ -104,7 +104,7 @@
                             <td>{{$no++}}</td>
                             <td>{{$item->nip}}</td>
                             <td>{{$item->nama}}</td>
-                            <td>{{$item->jabatan}}</td>
+                            <td>{{Str::limit($item->jabatan,50)}}</td>
                             <td>{{$item->jumlah_hari}}</td>
                             <td>{{intdiv($item->jumlah_jam, 60)}}:{{$item->jumlah_jam % 60}}</td>
                             <td>{{$item->kerja}}</td>
