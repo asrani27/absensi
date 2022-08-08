@@ -161,6 +161,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/hitungtotalharikerja', [RingkasanController::class, 'hitungtotalharikerjaSekolah']);
         Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/hitungpersentase', [RingkasanController::class, 'persenakhirsekolah']);
         Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/masukkanpegawai', [RingkasanController::class, 'masukkanPegawaiSekolah']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/sekolah/100', [RingkasanController::class, 'seratuspersen']);
     });
 });
 
