@@ -154,7 +154,6 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungsemua', [RingkasanController::class, 'hitungSemua']);
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungtotalharikerja', [RingkasanController::class, 'hitungtotalharikerja']);
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungpersentase', [RingkasanController::class, 'persenakhir']);
-
         Route::get('laporan/rekap/{bulan}/{tahun}/masukkanpegawai', [RingkasanController::class, 'masukkanPegawai']);
 
         //Pegawai TU Di sekolah presensi 6 hari kerja
@@ -244,8 +243,10 @@ Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
         Route::get('laporan/rekap/{bulan}/{tahun}', [PuskesmasController::class, 'bulanTahun']);
         Route::get('laporan/rekap/{bulan}/{tahun}/shift', [PuskesmasController::class, 'bulanTahunShift']);
         Route::get('laporan/rekap/{bulan}/{tahun}/pdf', [PuskesmasController::class, 'bulanPdf']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/hitungpersentase', [PuskesmasController::class, 'hitungpersen']);
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungsemua', [PuskesmasController::class, 'hitungSemua']);
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungsemua/shift', [PuskesmasController::class, 'hitungSemuaShift']);
+
         Route::get('laporan/rekap/{bulan}/{tahun}/masukkanpegawai', [PuskesmasController::class, 'masukkanPegawai']);
         Route::post('ringkasan/create', [PuskesmasController::class, 'tambahPegawai']);
         Route::get('ringkasan/{id}/delete', [PuskesmasController::class, 'deleteRingkasan']);
