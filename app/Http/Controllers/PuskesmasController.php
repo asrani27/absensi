@@ -438,10 +438,10 @@ class PuskesmasController extends Controller
 
     public function hitungpersen($bulan, $tahun)
     {
-        if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
-            toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
-            return back();
-        }
+        // if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
+        //     toastr()->error('Data Bulan Ini telah di kunci dan tidak bisa di ubah');
+        //     return back();
+        // }
 
         $ringkasan = Ringkasan::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($ringkasan as $item) {
@@ -543,7 +543,7 @@ class PuskesmasController extends Controller
                 $countTugas = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 5)->get());
                 $countIzin = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get());
                 $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
-
+                //dd($jml_hari);
                 $item->update([
                     'jumlah_hari' => $jml_hari,
                     'jumlah_jam' => $jml_jam,
