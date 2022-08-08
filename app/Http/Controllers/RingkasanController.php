@@ -425,7 +425,6 @@ class RingkasanController extends Controller
 
     public function seratuspersen($bulan, $tahun)
     {
-
         $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($ringkasan as $item) {
             $item->update(['persen_kehadiran' => 100]);
