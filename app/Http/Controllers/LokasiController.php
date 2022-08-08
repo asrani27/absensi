@@ -26,6 +26,7 @@ class LokasiController extends Controller
     {
         $attr = $request->all();
         $attr['skpd_id'] = Auth::user()->skpd->id;
+        $attr['radius'] = 100;
 
         Lokasi::create($attr);
 
