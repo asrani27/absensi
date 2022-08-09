@@ -48,7 +48,7 @@ class generateNULL extends Command
         }
         foreach ($pulang as $p) {
             $p->update([
-                'jam_masuk' => $p->tanggal . ' 00:00:00',
+                'jam_pulang' => $p->tanggal . ' 00:00:00',
             ]);
         }
     }
