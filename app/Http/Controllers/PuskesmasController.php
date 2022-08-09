@@ -615,8 +615,6 @@ class PuskesmasController extends Controller
             $jml_jam    = jumlahHari($bulan, $tahun)['jumlah_jam'];
             $terlambat  = telat($data->nip, $bulan, $tahun)->sum('terlambat');
             $lebih_awal = telat($data->nip, $bulan, $tahun)->sum('lebih_awal');
-
-
             $countSakit = count(Presensi::where('nip', $data->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 3)->get());
             $countSakitKarenaCovid = count(Presensi::where('nip', $data->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 9)->get());
             $countCutiTahun = count(Presensi::where('nip', $data->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 7)->get());
