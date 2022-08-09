@@ -446,7 +446,7 @@ class PuskesmasController extends Controller
         $ringkasan = Ringkasan::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($ringkasan as $item) {
             $jumlahhari = $item->jumlah_hari;
-            $hadir = $item->masuk + $item->sc + $item->tr + $item->d + $item->c;
+            $hadir = $item->kerja + $item->sc + $item->tr + $item->d + $item->c;
 
             //datang lambat
             if ($item->datang_lambat == 0) {
@@ -721,11 +721,15 @@ class PuskesmasController extends Controller
             $masuk = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', null)->where('jam_masuk', 'NOT LIKE', '%00:00:00%')->get());
             $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', null)->where('jam_pulang', 'NOT LIKE', '%00:00:00%')->get());
 
-            // $masuk = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->get());
-            // $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', '00:00:00')->get());
-            //dd($hadirdiharikerja, $item->nama);
+            if ($masuk > $pulang) {
+                $totalharikerja = $masuk;
+            } elseif ($masuk < $pulang) {
+                $totalharikerja = $pulang;
+            } else {
+                $totalharikerja = $masuk;
+            }
             $item->update([
-                'kerja' => $masuk,
+                'kerja' => $totalharikerja,
                 'masuk' => $masuk,
                 'keluar' => $pulang,
             ]);
