@@ -60,8 +60,8 @@
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung
                     Persentase</a>
 
-                <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/sekolah/100" class="btn btn-xs btn-primary"
-                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">100 %</a>
+                {{-- <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/sekolah/100" class="btn btn-xs btn-primary"
+                    onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">100 %</a> --}}
                 <br /><br />
                 <table class="table table-hover table-striped table-bordered text-nowrap table-sm  table-responsive">
                     <thead>
