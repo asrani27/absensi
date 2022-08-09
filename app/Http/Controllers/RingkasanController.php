@@ -296,8 +296,15 @@ class RingkasanController extends Controller
             $masuk = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', null)->where('jam_masuk', 'NOT LIKE', '%00:00:00%')->get());
             $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', null)->where('jam_pulang', 'NOT LIKE', '%00:00:00%')->get());
 
+            if ($masuk > $pulang) {
+                $totalharikerja = $masuk;
+            } elseif ($masuk < $pulang) {
+                $totalharikerja = $pulang;
+            } else {
+                $totalharikerja = $masuk;
+            }
             $item->update([
-                'kerja' => $masuk + $cutibersama,
+                'kerja' => $totalharikerja,
                 'masuk' => $masuk + $cutibersama,
                 'keluar' => $pulang + $cutibersama,
             ]);
