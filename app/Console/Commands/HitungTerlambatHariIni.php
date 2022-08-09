@@ -66,7 +66,8 @@ class HitungTerlambatHariIni extends Command
             if ($item->jam_pulang == null) {
                 $item->update(['jam_pulang' => $item->tanggal . ' 00:00:00']);
             }
-            
+
+
             if (Pegawai::where('nip', $item->nip)->first() == null) {
                 $er = new ErrorData;
                 $er->nip = $item->nip;
@@ -101,16 +102,25 @@ class HitungTerlambatHariIni extends Command
                                 'jenis_keterangan_id' => $item->jenis_keterangan_id,
                             ]);
                         } else {
-                            //check apakah ramadhan
-                            $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
-                            if ($ramadhan != null) {
-                                $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
-                                $jam = JamRamadhan::where('hari', $hari)->first();
-                                HitungTerlambatRamadhan::dispatch($item, $jam);
+                            $masuk = Carbon::parse($item->jam_masuk)->format('H:i');
+                            $pulang = Carbon::parse($item->jam_pulang)->format('H:i');
+                            if ($masuk == '00:00' && $pulang == '00:00') {
+                                $item->update([
+                                    'terlambat' => 0,
+                                    'lebih_awal' => 0,
+                                ]);
                             } else {
-                                $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
-                                $jam = Jam::where('hari', $hari)->first();
-                                HitungTerlambat::dispatch($item, $jam);
+                                //check apakah ramadhan
+                                $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
+                                if ($ramadhan != null) {
+                                    $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
+                                    $jam = JamRamadhan::where('hari', $hari)->first();
+                                    HitungTerlambatRamadhan::dispatch($item, $jam);
+                                } else {
+                                    $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
+                                    $jam = Jam::where('hari', $hari)->first();
+                                    HitungTerlambat::dispatch($item, $jam);
+                                }
                             }
                         }
                     }
@@ -139,16 +149,25 @@ class HitungTerlambatHariIni extends Command
                                 'jenis_keterangan_id' => $item->jenis_keterangan_id,
                             ]);
                         } else {
-                            //check apakah ramadhan
-                            $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
-                            if ($ramadhan != null) {
-                                $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
-                                $jam = Jam6Ramadhan::where('hari', $hari)->first();
-                                HitungTerlambatRamadhan::dispatch($item, $jam);
+                            $masuk = Carbon::parse($item->jam_masuk)->format('H:i');
+                            $pulang = Carbon::parse($item->jam_pulang)->format('H:i');
+                            if ($masuk == '00:00' && $pulang == '00:00') {
+                                $item->update([
+                                    'terlambat' => 0,
+                                    'lebih_awal' => 0,
+                                ]);
                             } else {
-                                $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
-                                $jam = Jam6::where('hari', $hari)->first();
-                                HitungTerlambat::dispatch($item, $jam);
+                                //check apakah ramadhan
+                                $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
+                                if ($ramadhan != null) {
+                                    $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
+                                    $jam = Jam6Ramadhan::where('hari', $hari)->first();
+                                    HitungTerlambatRamadhan::dispatch($item, $jam);
+                                } else {
+                                    $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
+                                    $jam = Jam6::where('hari', $hari)->first();
+                                    HitungTerlambat::dispatch($item, $jam);
+                                }
                             }
                         }
                     }
