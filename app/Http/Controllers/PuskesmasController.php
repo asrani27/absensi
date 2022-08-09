@@ -716,18 +716,28 @@ class PuskesmasController extends Controller
         $ringkasan = Ringkasan::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->get();
 
         foreach ($ringkasan as $item) {
+            $hadir = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->map(function ($item) {
+                if (Carbon::parse($item->jam_masuk)->format('H:i') != '00:00' || Carbon::parse($item->jam_pulang)->format('H:i') != '00:00') {
+                    $item->hadir = 1;
+                } else {
+                    $item->hadir = 0;
+                }
+                return $item;
+            })->where('hadir', 1);
+
+
             $masuk = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', null)->where('jam_masuk', 'NOT LIKE', '%00:00:00%')->get());
             $pulang = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_pulang', '!=', null)->where('jam_pulang', 'NOT LIKE', '%00:00:00%')->get());
 
-            if ($masuk > $pulang) {
-                $totalharikerja = $masuk;
-            } elseif ($masuk < $pulang) {
-                $totalharikerja = $pulang;
-            } else {
-                $totalharikerja = $masuk;
-            }
+            // if ($masuk > $pulang) {
+            //     $totalharikerja = $masuk;
+            // } elseif ($masuk < $pulang) {
+            //     $totalharikerja = $pulang;
+            // } else {
+            //     $totalharikerja = $masuk;
+            // }
             $item->update([
-                'kerja' => $totalharikerja,
+                'kerja' => $hadir->count(),
                 'masuk' => $masuk,
                 'keluar' => $pulang,
             ]);
