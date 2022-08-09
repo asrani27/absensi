@@ -59,6 +59,14 @@ class HitungTerlambatHariIni extends Command
         $data = Presensi::where('tanggal', $tanggal)->get();
 
         foreach ($data as $item) {
+            if ($item->jam_masuk == null) {
+                $item->update(['jam_masuk' => $item->tanggal . ' 00:00:00']);
+            }
+
+            if ($item->jam_pulang == null) {
+                $item->update(['jam_pulang' => $item->tanggal . ' 00:00:00']);
+            }
+            
             if (Pegawai::where('nip', $item->nip)->first() == null) {
                 $er = new ErrorData;
                 $er->nip = $item->nip;
