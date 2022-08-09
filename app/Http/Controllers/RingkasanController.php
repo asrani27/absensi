@@ -324,7 +324,7 @@ class RingkasanController extends Controller
         $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($ringkasan as $item) {
             $jumlahhari = $item->jumlah_hari;
-            $hadir = $item->masuk + $item->sc + $item->tr + $item->d + $item->c;
+            $hadir = $item->kerja + $item->sc + $item->tr + $item->d + $item->c;
 
             //datang lambat
             if ($item->datang_lambat == 0) {
