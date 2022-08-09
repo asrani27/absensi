@@ -314,7 +314,7 @@ class RingkasanController extends Controller
             //     $totalharikerja = $masuk;
             // }
             $item->update([
-                'kerja' => $hadir,
+                'kerja' => $hadir->count(),
                 'masuk' => $masuk + $cutibersama,
                 'keluar' => $pulang + $cutibersama,
             ]);
