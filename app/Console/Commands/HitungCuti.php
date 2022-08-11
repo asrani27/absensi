@@ -89,7 +89,9 @@ class HitungCuti extends Command
                             ]);
                         } else {
                             //check apakah cuti, perjalanan dinas, diklat, covid
-                            if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
+
+                            // if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
+                            if ($d->jenis_keterangan_id != null) {
                                 $presensi->update([
                                     'jam_masuk' => $d->tanggal . ' 00:00:00',
                                     'jam_pulang' => $d->tanggal . ' 00:00:00',
@@ -101,7 +103,7 @@ class HitungCuti extends Command
                                 $presensi->update([
                                     'jam_masuk' => $d->tanggal . ' 00:00:00',
                                     'jam_pulang' => $d->tanggal . ' 00:00:00',
-                                    'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                                    //'jenis_keterangan_id' => $d->jenis_keterangan_id,
                                 ]);
                                 $hari = Carbon::parse($d->tanggal)->translatedFormat('l');
                                 $jam = Jam::where('hari', $hari)->first();
@@ -136,7 +138,8 @@ class HitungCuti extends Command
                                 'jenis_keterangan_id' => null,
                             ]);
                         } else {
-                            if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
+                            // if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
+                            if ($d->jenis_keterangan_id != null) {
                                 $presensi->update([
                                     'jam_masuk' => $d->tanggal . ' 00:00:00',
                                     'jam_pulang' => $d->tanggal . ' 00:00:00',
@@ -148,7 +151,7 @@ class HitungCuti extends Command
                                 $presensi->update([
                                     'jam_masuk' => $d->tanggal . ' 00:00:00',
                                     'jam_pulang' => $d->tanggal . ' 00:00:00',
-                                    'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                                    //'jenis_keterangan_id' => $d->jenis_keterangan_id,
                                 ]);
                                 $hari = Carbon::parse($d->tanggal)->translatedFormat('l');
                                 $jam = Jam6::where('hari', $hari)->first();

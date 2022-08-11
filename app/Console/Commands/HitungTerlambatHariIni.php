@@ -95,7 +95,8 @@ class HitungTerlambatHariIni extends Command
                         ]);
                     } else {
                         //cek dia TL / Cuti Tahunan gak?
-                        if ($item->jenis_keterangan_id == 4 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 9) {
+                        // if ($item->jenis_keterangan_id == 4 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 9) {
+                        if ($item->jenis_keterangan_id != null) {
                             $item->update([
                                 'terlambat' => 0,
                                 'lebih_awal' => 0,
@@ -142,7 +143,8 @@ class HitungTerlambatHariIni extends Command
                         ]);
                     } else {
                         //cek dia TL / Cuti Tahunan gak?
-                        if ($item->jenis_keterangan_id == 4 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 9) {
+                        // if ($item->jenis_keterangan_id == 4 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 9) {
+                        if ($item->jenis_keterangan_id != null) {
                             $item->update([
                                 'terlambat' => 0,
                                 'lebih_awal' => 0,
