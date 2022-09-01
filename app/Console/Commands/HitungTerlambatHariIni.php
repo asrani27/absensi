@@ -140,6 +140,8 @@ class HitungTerlambatHariIni extends Command
                     //cek dia tanggalnya Libur nasional gak?
                     if (LiburNasional::where('tanggal', $item->tanggal)->first() != null) {
                         $item->update([
+                            'jam_masuk' => $item->tanggal . ' 00:00:00',
+                            'jam_pulang' => $item->tanggal . ' 00:00:00',
                             'terlambat' => 0,
                             'lebih_awal' => 0,
                         ]);
