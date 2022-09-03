@@ -278,7 +278,12 @@ class PuskesmasController extends Controller
     }
     public function editPresensi($id, $bulan, $tahun, $id_presensi)
     {
-        $data = Presensi::find($id_presensi);
+        $data = Presensi::where('id', $id_presensi)->get()->map(function ($item) {
+            $item->jam_masuk = Carbon::parse($item->jam_masuk)->format('H:i:s');
+            $item->jam_pulang = Carbon::parse($item->jam_pulang)->format('H:i:s');
+            return $item;
+        })->first();
+
         return view('puskesmas.pegawai.editpresensi', compact('data', 'id', 'bulan', 'tahun'));
     }
 
@@ -289,8 +294,8 @@ class PuskesmasController extends Controller
 
         if (LiburNasional::where('tanggal', $dataawal->tanggal)->first() != null) {
             Presensi::find($id_presensi)->update([
-                'jam_masuk' => '00:00:00',
-                'jam_pulang' => '00:00:00',
+                'jam_masuk' => $dataawal->tanggal . ' 00:00:00',
+                'jam_pulang' => $dataawal->tanggal . ' 00:00:00',
                 'terlambat' => 0,
                 'lebih_awal' => 0,
             ]);
@@ -305,63 +310,75 @@ class PuskesmasController extends Controller
         $jam = Jam6::where('hari', $hari)->first();
 
         Presensi::find($id_presensi)->update([
-            'jam_masuk' => $req->jam_masuk,
-            'jam_pulang' => $req->jam_pulang,
+            'jam_masuk' => $dataawal->tanggal . ' ' . $req->jam_masuk,
+            'jam_pulang' => $dataawal->tanggal . ' ' . $req->jam_pulang,
             'jenis_keterangan_id' => null,
         ]);
 
         $data = Presensi::find($id_presensi);
-
-        if ($data->jam_masuk == '00:00:00') {
-            if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
-                $data->update([
-                    'terlambat' => 105,
-                ]);
-            } elseif (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Sabtu') {
-                $data->update([
-                    'terlambat' => 180,
-                ]);
-            } else {
-                $data->update([
-                    'terlambat' => 210,
-                ]);
-            }
-        } elseif ($data->jam_masuk > $jam->jam_masuk) {
-            $terlambat = floor(Carbon::parse($data->jam_masuk)->diffInSeconds($jam->jam_masuk) / 60);
-            $data->update([
-                'terlambat' => $terlambat,
-            ]);
-        } else {
+        $jm = Carbon::parse($data->jam_masuk)->format('H:i:s');
+        $jp = Carbon::parse($data->jam_pulang)->format('H:i:s');
+        if ($jm == '00:00:00' && $jp == '00:00:00') {
+            //di anggap tidak hadir
             $data->update([
                 'terlambat' => 0,
+                'lebih_awal' => 0,
             ]);
-        }
+        } else {
+            if ($jm == '00:00:00') {
+                if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
+                    $data->update([
+                        'terlambat' => 105,
+                    ]);
+                } elseif (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Sabtu') {
+                    $data->update([
+                        'terlambat' => 180,
+                    ]);
+                } else {
+                    $data->update([
+                        'terlambat' => 210,
+                    ]);
+                }
+            } elseif ($data->jam_masuk > $data->tanggal . ' ' . $jam->jam_masuk) {
 
-        if ($data->jam_pulang == '00:00:00') {
-            if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
+                $terlambat = floor(Carbon::parse($data->jam_masuk)->diffInSeconds($data->tanggal . ' ' . $jam->jam_masuk) / 60);
                 $data->update([
-                    'lebih_awal' => 105,
-                ]);
-            } elseif (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Sabtu') {
-                $data->update([
-                    'lebih_awal' => 180,
+                    'terlambat' => $terlambat,
                 ]);
             } else {
                 $data->update([
-                    'lebih_awal' => 210,
+                    'terlambat' => 0,
                 ]);
             }
-        } elseif ($data->jam_pulang < $jam->jam_pulang) {
-            $lebih_awal = floor(Carbon::parse($data->jam_pulang)->diffInSeconds($jam->jam_pulang) / 60);
-            //dd($lebih_awal, $item->jam_pulang, $jam->jam_pulang);
-            $data->update([
-                'lebih_awal' => $lebih_awal,
-            ]);
-        } else {
-            $data->update([
-                'lebih_awal' => 0,
-            ]);
+
+            if ($jp == '00:00:00') {
+                if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
+                    $data->update([
+                        'lebih_awal' => 105,
+                    ]);
+                } elseif (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Sabtu') {
+                    $data->update([
+                        'lebih_awal' => 180,
+                    ]);
+                } else {
+                    $data->update([
+                        'lebih_awal' => 210,
+                    ]);
+                }
+            } elseif ($data->jam_pulang < $data->tanggal . ' ' . $jam->jam_pulang) {
+
+                $lebih_awal = floor(Carbon::parse($data->jam_pulang)->diffInSeconds($data->tanggal . ' ' . $jam->jam_pulang) / 60);
+
+                $data->update([
+                    'lebih_awal' => $lebih_awal,
+                ]);
+            } else {
+                $data->update([
+                    'lebih_awal' => 0,
+                ]);
+            }
         }
+
 
         toastr()->success('Berhasil Di Ubah');
         return redirect('/puskesmas/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
