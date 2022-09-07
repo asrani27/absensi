@@ -46,6 +46,11 @@ JENIS PRESENSI
                                         <option value='2' {{$data->jenis_presensi == 2 ? 'selected':''}}>6 Hari Kerja
                                         </option>
                                         <option value='3' {{$data->jenis_presensi == 3 ? 'selected':''}}>Shift</option>
+
+                                        <option value='4' {{$data->jenis_presensi == 4 ? 'selected':''}}>5 Hari Kerja (Sekolah)
+                                        </option>
+                                        <option value='5' {{$data->jenis_presensi == 5 ? 'selected':''}}>6 Hari Kerja (Sekolah)
+                                        </option>
                                     </select>
                                 </div>
                             </div>
