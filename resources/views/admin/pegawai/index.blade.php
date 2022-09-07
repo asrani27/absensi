@@ -106,10 +106,6 @@ ADMIN
                                 5 Hari Kerja
                                 @elseif($item->jenis_presensi == 2)
                                 6 Hari kerja
-                                @elseif($item->jenis_presensi == 4)
-                                5 Hari kerja (Sekolah)
-                                @elseif($item->jenis_presensi == 5)
-                                6 Hari kerja (Sekolah)
                                 @else
                                 shift
                                 @endif
@@ -206,6 +202,10 @@ ADMIN
                                 5 Hari Kerja
                                 @elseif($item->jenis_presensi == 2)
                                 6 Hari kerja
+                                @elseif($item->jenis_presensi == 4)
+                                5 Hari kerja (Sekolah)
+                                @elseif($item->jenis_presensi == 5)
+                                6 Hari kerja (Sekolah)
                                 @else
                                 shift
                                 @endif
