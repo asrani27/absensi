@@ -99,6 +99,8 @@ class LoginController extends Controller
 
     public function user()
     {
-        return Auth::user();
+        $user = Auth::user();
+        $user['name'] = $user->pegawai->nama;
+        return $user;
     }
 }

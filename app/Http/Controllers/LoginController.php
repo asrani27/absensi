@@ -4,11 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use GuzzleHttp\Client;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    // public function user()
+    // {
+    //     $user = Auth::user();
+    //     $user['name'] = $user->pegawai->nama;
+
+    //     return $user;
+    // }
+
     public function login(Request $req)
     {
         if (Auth::attempt(['username' => $req->username, 'password' => $req->password], true)) {
