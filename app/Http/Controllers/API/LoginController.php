@@ -103,4 +103,8 @@ class LoginController extends Controller
         $user['name'] = $user->pegawai->nama;
         return $user;
     }
+    public function testing()
+    {
+        return response()->json('testing');
+    }
 }
