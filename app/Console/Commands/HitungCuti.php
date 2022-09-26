@@ -63,7 +63,7 @@ class HitungCuti extends Command
         foreach ($data as $d) {
             $pegawai    = Pegawai::where('nip', $d->nip)->first();
             if ($pegawai->jenis_presensi == 1) {
-                if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu') {
+                if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu' || Carbon::parse($d->tanggal)->translatedFormat('l') == 'Sabtu') {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
                     if ($presensi != null || LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
                         $presensi->update([
