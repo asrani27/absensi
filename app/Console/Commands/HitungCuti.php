@@ -65,7 +65,7 @@ class HitungCuti extends Command
             if ($pegawai->jenis_presensi == 1) {
                 if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu' || Carbon::parse($d->tanggal)->translatedFormat('l') == 'Sabtu') {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
-                    if ($presensi != null || LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
+                    if ($presensi != null) {
                         $presensi->update([
                             'terlambat' => 0,
                             'lebih_awal' => 0,
