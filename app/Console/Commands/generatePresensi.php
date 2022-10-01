@@ -51,8 +51,8 @@ class generatePresensi extends Command
                 $attr['nip'] = $item->nip;
                 $attr['nama'] = $item->nama;
                 $attr['tanggal'] = $today;
-                $attr['jam_masuk'] = null;
-                $attr['jam_pulang'] = null;
+                $attr['jam_masuk'] = $today . ' 00:00:00';
+                $attr['jam_pulang'] = $today . ' 00:00:00';
                 $attr['skpd_id'] = $item->skpd_id;
                 $attr['jenis_presensi'] = $item->jenis_presensi;
                 $attr['puskesmas_id'] = $item->puskesmas_id;
