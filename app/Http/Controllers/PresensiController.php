@@ -768,6 +768,7 @@ class PresensiController extends Controller
     {
         $presensi = Presensi::find($id);
         $today = Carbon::now()->format('Y-m-d');
+        dd($today);
         if (Carbon::parse($presensi->tanggal)->format('Y-m-d') != $today) {
             toastr()->error('Tidak bisa absen masuk di hari berbeda');
             return back();
