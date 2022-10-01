@@ -470,8 +470,8 @@ class PresensiController extends Controller
             $attr['nip'] = $pegawai->nip;
             $attr['nama'] = $pegawai->nama;
             $attr['tanggal'] = $today;
-            $attr['jam_masuk'] = '00:00:00';
-            $attr['jam_pulang'] = '00:00:00';
+            $attr['jam_masuk'] = $today . ' 00:00:00';
+            $attr['jam_pulang'] = $today . ' 00:00:00';
             $attr['skpd_id'] = $pegawai->skpd_id;
             $attr['shift_jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
             $attr['jenis_presensi'] = 3;
@@ -578,8 +578,8 @@ class PresensiController extends Controller
             $attr['nip'] = $pegawai->nip;
             $attr['nama'] = $pegawai->nama;
             $attr['tanggal'] = $today;
-            $attr['jam_masuk'] = '00:00:00';
-            $attr['jam_pulang'] = '00:00:00';
+            $attr['jam_masuk'] = $today . ' 00:00:00';
+            $attr['jam_pulang'] = $today . ' 00:00:00';
             $attr['skpd_id'] = $pegawai->skpd_id;
             $attr['shift_jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
             $attr['jenis_presensi'] = 3;
@@ -688,8 +688,8 @@ class PresensiController extends Controller
             $attr['nip'] = $pegawai->nip;
             $attr['nama'] = $pegawai->nama;
             $attr['tanggal'] = $today;
-            $attr['jam_masuk'] = '00:00:00';
-            $attr['jam_pulang'] = '00:00:00';
+            $attr['jam_masuk'] = $today . ' 00:00:00';
+            $attr['jam_pulang'] = $today . ' 00:00:00';
             $attr['skpd_id'] = $pegawai->skpd_id;
             $attr['shift_jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
             $attr['jenis_presensi'] = 3;
