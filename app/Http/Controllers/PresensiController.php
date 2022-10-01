@@ -631,7 +631,7 @@ class PresensiController extends Controller
     public function malam()
     {
         $skpd = Skpd::find(Auth::user()->pegawai->skpd_id);
-        $data = Presensi::where('nip', $this->pegawai()->nip)->whereMonth('tanggal', Carbon::now()->format('m'))->get();
+        $data = Presensi::where('nip', $this->pegawai()->nip)->whereMonth('tanggal', Carbon::now()->format('m'))->whereYear('tanggal', Carbon::now()->format('Y'))->get();
 
         if (Auth::user()->pegawai->lokasi == null) {
             $latlong2 = null;
