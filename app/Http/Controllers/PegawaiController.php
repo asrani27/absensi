@@ -291,7 +291,7 @@ class PegawaiController extends Controller
         $hari = Carbon::parse($data->tanggal)->translatedFormat('l');
         $pegawai = Pegawai::find($id);
 
-        if ($pegawai->jenis_presensi == 1) {
+        if ($pegawai->jenis_presensi == 1 || $pegawai->jenis_presensi == 4) {
             $ramadhan = Ramadhan::where('tanggal', $data->tanggal)->first();
             if ($ramadhan != null) {
                 $jam = JamRamadhan::where('hari', $hari)->first();
