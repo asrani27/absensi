@@ -47,9 +47,10 @@ class PerbaikanJamKerja extends Command
         $tahun = $this->option('tahun');
 
         $pegawai = Pegawai::where('sekolah_id', '!=', null)->get();
-        dd($pegawai);
+
         foreach ($pegawai as $p) {
             $presensi = Presensi::where('nip', $p->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+            dd($presensi);
             foreach ($presensi as $pre) {
                 $pre->update([
                     'terlambat' => 0,
