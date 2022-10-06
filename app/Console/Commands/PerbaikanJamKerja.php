@@ -15,7 +15,8 @@ class PerbaikanJamKerja extends Command
      *
      * @var string
      */
-    protected $signature = 'perbaikanjam {--jenispresensi=} {--bulan=} {--tahun=}';
+    //protected $signature = 'perbaikanjam {--jenispresensi=} {--bulan=} {--tahun=}';
+    protected $signature = 'perbaikanjam {--bulan=} {--tahun=}';
 
     /**
      * The console command description.
@@ -41,13 +42,13 @@ class PerbaikanJamKerja extends Command
      */
     public function handle()
     {
-        $jenispresensi = $this->option('jenispresensi');
+        //$jenispresensi = $this->option('jenispresensi');
         $bulan = $this->option('bulan');
         $tahun = $this->option('tahun');
 
-        $pegawai = Pegawai::where('jenis_presensi', $jenispresensi)->get();
+        $pegawai = Pegawai::where('sekolah_id', '!=', null)->get();
         foreach ($pegawai as $p) {
-            $presensi = Presensi::where('nip', $p->nip)->get();
+            $presensi = Presensi::where('nip', $p->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
             foreach ($presensi as $pre) {
                 $pre->update([
                     'terlambat' => 0,
@@ -56,7 +57,7 @@ class PerbaikanJamKerja extends Command
             }
         }
 
-        $com['nama_command'] = 'Perbaikan Jam, jenis Presensi ' . $jenispresensi;
+        $com['nama_command'] = 'Perbaikan Jam Disdik';
         $com['waktu_eksekusi'] = Carbon::now()->format('Y-m-d H:i:s');
 
         Komando::create($com);
