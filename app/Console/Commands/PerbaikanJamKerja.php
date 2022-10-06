@@ -50,7 +50,7 @@ class PerbaikanJamKerja extends Command
 
         foreach ($pegawai as $p) {
             $presensi = Presensi::where('nip', $p->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
-            dd($presensi);
+
             foreach ($presensi as $pre) {
                 $pre->update([
                     'terlambat' => 0,
