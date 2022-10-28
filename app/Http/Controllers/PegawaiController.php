@@ -117,7 +117,10 @@ class PegawaiController extends Controller
 
     public function resetpass($id)
     {
-        $this->authorize('edit', Pegawai::find($id));
+        if (Auth::user()->skpd != null) {
+            $this->authorize('edit', Pegawai::find($id));
+        }
+
         $p = Pegawai::find($id);
         User::where('id', $p->user_id)->first()->update(['password' => bcrypt(Carbon::parse($p->tanggal_lahir)->format('dmY'))]);
         toastr()->success('Password Baru : ' . Carbon::parse($p->tanggal_lahir)->format('dmY'));
