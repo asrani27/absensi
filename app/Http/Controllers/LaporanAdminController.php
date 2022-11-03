@@ -75,7 +75,7 @@ class LaporanAdminController extends Controller
                 }
                 return $item;
             });
-            dd($data);
+
 
             $pimpinan = $datapegawai->first();
             return view('admin.laporan.tanggal', compact('data', 'skpd', 'tanggal', 'pimpinan'));
