@@ -63,8 +63,8 @@ class LaporanAdminController extends Controller
                     $p->nama = $item->nama;
                     $p->skpd_id = $item->skpd_id;
                     $p->tanggal = $tanggal;
-                    $p->jam_masuk = '00:00:00';
-                    $p->jam_pulang = '00:00:00';
+                    $p->jam_masuk = $tanggal . ' 00:00:00';
+                    $p->jam_pulang = $tanggal . ' 00:00:00';
                     $p->save();
                 } else {
                     //Log Data Double 
@@ -75,7 +75,6 @@ class LaporanAdminController extends Controller
                 }
                 return $item;
             });
-            dd($data);
 
             $pimpinan = $datapegawai->first();
             return view('admin.laporan.tanggal', compact('data', 'skpd', 'tanggal', 'pimpinan'));
