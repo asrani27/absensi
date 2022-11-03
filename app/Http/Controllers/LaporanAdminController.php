@@ -47,7 +47,7 @@ class LaporanAdminController extends Controller
             return Excel::download(new PresensiExport($tanggal, $skpd), 'presensi.xlsx');
         } else {
 
-            $presensi = Presensi::where('skpd_id', $skpd->id)->where('tanggal', $tanggal)->get();
+            $presensi = Presensi::where('tanggal', $tanggal)->get();
 
             $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('puskesmas_id', null)->where('jabatan', '!=', null)->orderBy('urutan', 'DESC')->get();
 
