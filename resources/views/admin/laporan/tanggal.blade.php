@@ -71,7 +71,6 @@
 				<td class="auto-style4">{{$item->nama}} <br /> {{$item->nip}}</td>
 				<td class="auto-style3">{{$item->pangkat}}<br />({{$item->golongan}})</td>
 				<td class="auto-style3">{{$item->jabatan}}</td>
-				{{dd($item->presensi)}}
 				<td class="auto-style3">{{$item->presensi->jam_masuk == null ? '' :
 					\Carbon\Carbon::parse($item->presensi->jam_masuk)->format('H:i:s')}}</td>
 				<td class="auto-style3">{{$item->presensi->jam_pulang == null ? '' :
