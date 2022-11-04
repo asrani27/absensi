@@ -75,8 +75,8 @@ CUTI/TL/IZIN/SAKIT
                             <td>
 
                                 <form action="/admin/cuti/{{$item->id}}" method="post">
-                                    {{-- <a href="/admin/cuti/{{$item->id}}/edit" class="btn btn-xs btn-success"><i
-                                            class="fas fa-edit"></i> Edit</a> --}}
+                                    <a href="/admin/cuti/{{$item->id}}/rekap" class="btn btn-xs btn-success"><i
+                                            class="fas fa-file"></i> Rekap</a>
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-xs btn-danger"

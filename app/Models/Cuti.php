@@ -12,10 +12,15 @@ class Cuti extends Model
     protected $table = 'cuti';
     protected $guarded = ['id'];
 
-public function jenis_keterangan()
-{
-    return $this->belongsTo(JenisKeterangan::class, 'jenis_keterangan_id');
-}
+    public function jenis_keterangan()
+    {
+        return $this->belongsTo(JenisKeterangan::class, 'jenis_keterangan_id');
+    }
+
+    public function detailCuti()
+    {
+        return $this->hasMany(DetailCuti::class, 'cuti_id');
+    }
 
     public function puskesmas()
     {
