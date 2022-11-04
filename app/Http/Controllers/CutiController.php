@@ -358,6 +358,7 @@ class CutiController extends Controller
 
             $d->update(['validasi' => 1]);
         }
-        dd($data);
+        toastr()->success('Berhasil Di rekap');
+        return back();
     }
 }
