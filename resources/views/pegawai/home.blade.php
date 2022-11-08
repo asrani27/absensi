@@ -42,13 +42,13 @@
               <span class="float-right text-danger">{{\Carbon\Carbon::now()->isoFormat('D MMMM Y HH:mm')}}</span>
             </a>
           </li>
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a href="#" class="nav-link">
               Lokasi Presensi
               <span class="float-right text-success">{{Auth::user()->pegawai->lokasi == null ?
                 '-':Auth::user()->pegawai->lokasi->nama}}</span>
             </a>
-          </li>
+          </li> --}}
           <li class="nav-item">
             <a href="#" class="nav-link">
               Jenis Presensi
