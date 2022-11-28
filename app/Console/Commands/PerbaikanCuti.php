@@ -47,7 +47,7 @@ class PerbaikanCuti extends Command
      */
     public function handle()
     {
-        $cuti = Cuti::whereMonth('tanggal_mulai', '09')->whereYear('tanggal_mulai', '2022')->get();
+        $cuti = Cuti::whereMonth('tanggal_mulai', '11')->whereYear('tanggal_mulai', '2022')->where('jenis_keterangan_id', 5)->get();
 
         foreach ($cuti as $c) {
             $period = CarbonPeriod::create($c->tanggal_mulai, $c->tanggal_selesai);
