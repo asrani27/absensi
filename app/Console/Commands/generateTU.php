@@ -50,7 +50,7 @@ class generateTU extends Command
             $year = Carbon::now()->year;
         }
 
-        $pegawai = Pegawai::where('sekolah_id', '!=', null)->where('nip', '!=', '196911262001031001')->where('nip', '!=', '196502131988041002')->get();
+        $pegawai = Pegawai::where('sekolah_id', '!=', null)->get();
         foreach ($pegawai as $p) {
             $presensi = Presensi::where('nip', $p->nip)->whereMonth('tanggal', $month)->whereYear('tanggal', $year)->get();
             foreach ($presensi as $pre) {
