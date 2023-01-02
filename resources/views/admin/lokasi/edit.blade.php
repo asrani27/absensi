@@ -65,13 +65,13 @@ EDIT LOKASI
                                 </div>
                             </div>
 
-                            {{-- <div class="form-group row">
+                            <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Radius Jangkauan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="radius" placeholder="100" required
+                                    <input type="text" class="form-control" name="radius" readonly
                                         value="{{$data->radius}}">
                                 </div>
-                            </div> --}}
+                            </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label"></label>
