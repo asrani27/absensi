@@ -81,7 +81,7 @@ ADMIN
                                 5 Hari Kerja
                                 @elseif($item->jenis_presensi == 2)
                                 6 Hari kerja
-                                @else
+                                @elseif($item->jenis_presensi == 3)
                                 shift
                                 @endif
 
