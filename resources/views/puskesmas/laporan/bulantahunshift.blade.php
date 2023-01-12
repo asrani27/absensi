@@ -44,7 +44,7 @@
                 <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/pdf" target="_blank"
                     class="btn btn-xs btn-danger">Export PDF</a>
 
-                <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/masukkanpegawai" class="btn btn-xs btn-primary"
+                <a href="/puskesmas/laporan/rekap/{{$bulan}}/{{$tahun}}/masukkanpegawai/shift" class="btn btn-xs btn-primary"
                     onclick="return confirm('Yakin Ingin Memasukkan Semua Pegawai Pada Bulan Ini?');">Masukkan
                     Semua Pegawai Shift & Update Jabatan</a>
 

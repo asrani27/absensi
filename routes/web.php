@@ -250,6 +250,7 @@ Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungsemua/shift', [PuskesmasController::class, 'hitungSemuaShift']);
 
         Route::get('laporan/rekap/{bulan}/{tahun}/masukkanpegawai', [PuskesmasController::class, 'masukkanPegawai']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/masukkanpegawai/shift', [PuskesmasController::class, 'masukkanPegawaiShift']);
         Route::post('ringkasan/create', [PuskesmasController::class, 'tambahPegawai']);
         Route::get('ringkasan/{id}/delete', [PuskesmasController::class, 'deleteRingkasan']);
         Route::get('ringkasan/{id}/hitung/{bulan}/{tahun}', [PuskesmasController::class, 'hitung']);

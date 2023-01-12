@@ -427,7 +427,7 @@ class PuskesmasController extends Controller
     public function masukkanPegawai($bulan, $tahun)
     {
         $puskesmas_id = Auth::user()->puskesmas->id;
-        $pegawai = Pegawai::where('puskesmas_id', $puskesmas_id)->where('is_aktif', 1)->get();
+        $pegawai = Pegawai::where('puskesmas_id', $puskesmas_id)->where('is_aktif', 1)->where('jenis_presensi', 2)->get();
         foreach ($pegawai as $item) {
             $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             if ($check == null) {
@@ -452,7 +452,34 @@ class PuskesmasController extends Controller
         toastr()->success('Berhasil Di Masukkan');
         return back();
     }
-
+    public function masukkanPegawaiShift($bulan, $tahun)
+    {
+        $puskesmas_id = Auth::user()->puskesmas->id;
+        $pegawai = Pegawai::where('puskesmas_id', $puskesmas_id)->where('is_aktif', 1)->where('jenis_presensi', 3)->get();
+        foreach ($pegawai as $item) {
+            $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+            if ($check == null) {
+                $n = new Ringkasan;
+                $n->nip = $item->nip;
+                $n->nama = $item->nama;
+                $n->jabatan = $item->jabatan;
+                $n->skpd_id = $item->skpd_id;
+                $n->puskesmas_id = $puskesmas_id;
+                $n->jenis_presensi = $item->jenis_presensi;
+                $n->bulan = $bulan;
+                $n->tahun = $tahun;
+                $n->save();
+            } else {
+                $check->update([
+                    'jabatan' => $item->jabatan,
+                    'puskesmas_id' => $puskesmas_id,
+                    'jenis_presensi' => $item->jenis_presensi,
+                ]);
+            }
+        }
+        toastr()->success('Berhasil Di Masukkan');
+        return back();
+    }
     public function hitungpersen($bulan, $tahun)
     {
         // if (kunciSkpd(Auth::user()->skpd->id, $bulan, $tahun) == 1) {
