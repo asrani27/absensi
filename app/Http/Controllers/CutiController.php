@@ -278,6 +278,7 @@ class CutiController extends Controller
                         ]);
                     } else {
                     }
+                }
 
                 if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu') {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
