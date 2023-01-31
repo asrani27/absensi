@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
+use App\Models\Jam;
 use App\Models\Cuti;
+use App\Models\Jam6;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use Carbon\CarbonPeriod;
 use App\Models\DetailCuti;
 use Illuminate\Http\Request;
+use App\Jobs\HitungTerlambat;
 use App\Models\LiburNasional;
 use App\Models\JenisKeterangan;
 use Illuminate\Support\Facades\DB;
@@ -99,7 +102,15 @@ class CutiController extends Controller
 
             foreach ($period as $date) {
                 if ($pegawai->jenis_presensi == 1) {
-                    if ($date->translatedFormat('l') == 'Sabtu') {
+                    if ($date->translatedFormat('l') == 'Sabtu' && $request->jenis_keterangan_id == 5) {
+                        //simpan TL walaupun hari sabtu di presensi
+                        $n = new DetailCuti;
+                        $n->cuti_id             = $cuti->id;
+                        $n->nip                 = $request->nip;
+                        $n->skpd_id             = $pegawai->skpd_id;
+                        $n->tanggal             = $date->format('Y-m-d');
+                        $n->jenis_keterangan_id = $request->jenis_keterangan_id;
+                        $n->save();
                     } elseif ($date->translatedFormat('l') == 'Minggu') {
                     } else {
                         if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
@@ -254,7 +265,18 @@ class CutiController extends Controller
         foreach ($data as $d) {
             $pegawai    = Pegawai::where('nip', $d->nip)->first();
             if ($pegawai->jenis_presensi == 1) {
-                if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu' || Carbon::parse($d->tanggal)->translatedFormat('l') == 'Sabtu') {
+                if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Sabtu' && $d->jenis_keterangan_id == 5) {
+                    //simpan TL walaupun hari sabtu di presensi
+                    $n = new DetailCuti;
+                    $n->cuti_id             = $id;
+                    $n->nip                 = $d->nip;
+                    $n->skpd_id             = $d->skpd_id;
+                    $n->tanggal             = Carbon::parse($d->tanggal)->format('Y-m-d');
+                    $n->jenis_keterangan_id = $d->jenis_keterangan_id;
+                    $n->save();
+                }
+
+                if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu') {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
                     if ($presensi != null) {
                         $presensi->update([
