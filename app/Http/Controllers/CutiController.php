@@ -267,14 +267,17 @@ class CutiController extends Controller
             if ($pegawai->jenis_presensi == 1) {
                 if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Sabtu' && $d->jenis_keterangan_id == 5) {
                     //simpan TL walaupun hari sabtu di presensi
-                    $n = new DetailCuti;
-                    $n->cuti_id             = $id;
-                    $n->nip                 = $d->nip;
-                    $n->skpd_id             = $d->skpd_id;
-                    $n->tanggal             = Carbon::parse($d->tanggal)->format('Y-m-d');
-                    $n->jenis_keterangan_id = $d->jenis_keterangan_id;
-                    $n->save();
-                }
+                    $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
+                    if ($presensi != null) {
+                        $presensi->update([
+                            'terlambat' => 0,
+                            'lebih_awal' => 0,
+                            'jam_masuk' => $d->tanggal . ' 00:00:00',
+                            'jam_pulang' => $d->tanggal . ' 00:00:00',
+                            'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                        ]);
+                    } else {
+                    }
 
                 if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu') {
                     $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
