@@ -373,7 +373,7 @@ class RingkasanController extends Controller
                 if ($persen < 0) {
                     $updatepersen = 0;
                 } else {
-                    $updatepersen = $persen;
+                    $updatepersen = $persen > 100 ? 100 : $persen;
                 }
                 $item->update(['persen_kehadiran' => $updatepersen]);
             } catch (\Exception $e) {
@@ -431,7 +431,7 @@ class RingkasanController extends Controller
                 if ($persen < 0) {
                     $updatepersen = 0;
                 } else {
-                    $updatepersen = $persen;
+                    $updatepersen = $persen > 100 ? 100 : $persen;
                 }
                 $item->update(['persen_kehadiran' => $updatepersen]);
             } catch (\Exception $e) {
