@@ -10,8 +10,8 @@ ADMIN
 <br />
 <div class="row">
     <div class="col-12">
-        <a href="/admin/puskesmas/sync" class="btn btn-sm bg-gradient-purple"><i class="fas fa-sync"></i> Sinkronisasi
-            Puskemas</a>
+        {{-- <a href="/admin/puskesmas/sync" class="btn btn-sm bg-gradient-purple"><i class="fas fa-sync"></i> Sinkronisasi
+            Puskemas</a> --}}
         {{-- <a href="/admin/pegawai/sortir" class="btn btn-sm bg-gradient-info"><i class="fas fa-users"></i> Urutkan
             Pegawai</a> --}}
         <br /><br />
