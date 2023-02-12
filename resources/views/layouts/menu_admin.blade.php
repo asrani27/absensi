@@ -34,6 +34,14 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="/admin/perubahandata" class="nav-link {{Request::is('admin/perubahandata') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-history"></i>
+                <p>
+                    History Perubahan Data
+                </p>
+            </a>
+        </li>
 
         {{-- <li class="nav-item">
             <a href="/admin/qrcode" class="nav-link {{Request::is('admin/qrcode') ? 'active' : ''}}">

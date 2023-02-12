@@ -14,6 +14,7 @@ ADMIN
             Pegawai</a>
         <a href="/admin/pegawai/createuser" class="btn btn-sm bg-gradient-green"><i class="fas fa-key"></i> Buat Akun
             Login</a>
+        <a href="/admin/pegawai/verifikator" class="btn btn-sm bg-gradient-primary"><i class="fas fa-user"></i> Verifikator</a>
         {{-- <a href="/admin/pegawai/sortir" class="btn btn-sm bg-gradient-info"><i class="fas fa-users"></i> Urutkan
             Pegawai</a> --}}
         <br /><br />

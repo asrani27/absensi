@@ -104,6 +104,23 @@
   </div>
 </div>
 <div class="row">
+  
+  @if (isVerifikator(Auth::user()->username) == true)
+  <div class="col-12 col-sm-6 col-md-3">
+    <a href="/pegawai/presensi/verifikator" style="color:black">
+      <div class="info-box mb-3">
+        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">VERIFIKATOR</span>
+          <span class="info-box-number">Permohonan Perbaikan Data</span>
+        </div>
+      </div>
+    </a>
+  </div> 
+  @endif
+  
+
   @if (Auth::user()->pegawai->lokasi == null)
   <div class="col-12 col-sm-6 col-md-3">
     <div class="alert alert-danger alert-dismissible">
@@ -208,20 +225,7 @@
   <!-- fix for small devices only -->
   <div class="clearfix hidden-md-up"></div>
 
-  <div class="col-12 col-sm-6 col-md-3">
-    <a href="/pegawai/presensi/manual" style="color:black">
-      <div class="info-box mb-3">
-        <span class="info-box-icon bg-success elevation-1"><i class="fas fa-user"></i></span>
-
-        <div class="info-box-content">
-          <span class="info-box-text">PRESENSI MANUAL</span>
-          <span class="info-box-number">Oleh Admin SKPD</span>
-        </div>
-        <!-- /.info-box-content -->
-      </div>
-    </a>
-    <!-- /.info-box -->
-  </div>
+  
 
   <!-- /.col -->
   <div class="col-12 col-sm-6 col-md-3">
@@ -245,6 +249,7 @@
     </a>
     <!-- /.info-box -->
   </div>
+  
   @endif
   <!-- /.col -->
   <div class="col-12 col-sm-6 col-md-3">

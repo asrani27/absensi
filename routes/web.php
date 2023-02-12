@@ -15,9 +15,11 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\RentangController;
 use App\Http\Controllers\GenerateController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\PerbaikanController;
 use App\Http\Controllers\PuskesmasController;
 use App\Http\Controllers\RingkasanController;
 use App\Http\Controllers\SuperadminController;
+use App\Http\Controllers\VerifikatorController;
 use App\Http\Controllers\LaporanAdminController;
 use App\Http\Controllers\LiburNasionalController;
 use App\Http\Controllers\JenisKeteranganController;
@@ -59,6 +61,9 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::post('/pegawai/presensi/masuk', [PresensiController::class, 'storeMasuk']);
     Route::get('/pegawai/presensi/pulang', [PresensiController::class, 'pulang']);
     Route::prefix('pegawai/presensi')->group(function () {
+        Route::get('verifikator', [PerbaikanController::class, 'perubahandata']);
+        Route::get('verifikator/{id}/setujui', [PerbaikanController::class, 'setujui']);
+        Route::get('verifikator/{id}/tolak', [PerbaikanController::class, 'tolak']);
         Route::get('radius', [PresensiController::class, 'radius']);
         Route::post('radius', [PresensiController::class, 'storeRadius']);
         Route::get('barcode', [PresensiController::class, 'barcode']);
@@ -111,6 +116,9 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         // Route::post('pegawai/presensi/{id}/edit', [PegawaiController::class, 'updatePresensi']);
         Route::get('pegawai/sync', [PegawaiController::class, 'sync']);
         Route::get('pegawai/createuser', [PegawaiController::class, 'createuser']);
+        Route::get('pegawai/verifikator', [VerifikatorController::class, 'verifikator']);
+        Route::post('pegawai/verifikator', [VerifikatorController::class, 'update']);
+
         Route::get('pegawai/puskesmas', [PegawaiController::class, 'pegawaiPuskesmas']);
         Route::get('pegawai/sortir', [PegawaiController::class, 'sortir']);
         Route::post('pegawai/sortir', [PegawaiController::class, 'simpanSortir']);
@@ -126,6 +134,10 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('pegawai/{id}/presensi/{bulan}/{tahun}', [PegawaiController::class, 'detailPresensi']);
         Route::get('pegawai/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PegawaiController::class, 'editPresensi']);
         Route::post('pegawai/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PegawaiController::class, 'updatePresensi']);
+
+        Route::post('perbaikan-presensi/{id}', [PerbaikanController::class, 'perbaikan']);
+        Route::get('perubahandata', [PerbaikanController::class, 'index']);
+
         Route::get('pegawai/{id}/presensi/tampilkan', [PegawaiController::class, 'tampilkanPresensi']);
         Route::resource('pegawai', PegawaiController::class);
         Route::get('qrcode/generate', [QrcodeController::class, 'generateQrcode']);

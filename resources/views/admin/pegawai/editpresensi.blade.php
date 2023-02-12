@@ -32,20 +32,24 @@
     <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                Edit Data Presensi
+               Data Sebelumnya
             </div>
-            <form method="post" action="/admin/pegawai/{{$id}}/presensi/{{$bulan}}/{{$tahun}}/{{$data->id}}/edit">
-                @csrf
+            
                 <div class="card-body">
                     <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Tanggal</label>
+                        <div class="col-sm-10">
+                            <input type="date" value="{{$data->tanggal}}" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Jam Mulai</label>
-
-                        <div class="col-sm-2">
+                        <div class="col-sm-10">
                             <div class="input-group date" id="timepicker" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input" data-target="#timepicker"
                                     name="jam_masuk"
                                     value="{{$data->jam_masuk == null ? '00:00:00' : \Carbon\Carbon::parse($data->jam_masuk)->format('H:i:s')}}"
-                                    step="2">
+                                    step="2" readonly>
                                 <div class="input-group-append" data-target="#timepicker" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="far fa-clock"></i></div>
                                 </div>
@@ -56,21 +60,65 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Jam Pulang</label>
 
-                        <div class="col-sm-2">
+                        <div class="col-sm-10">
                             <div class="input-group date" id="timepicker2" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input" data-target="#timepicker2"
                                     name="jam_pulang"
                                     value="{{$data->jam_pulang == null ? '00:00:00' : \Carbon\Carbon::parse($data->jam_pulang)->format('H:i:s')}}"
-                                    step="2">
+                                    step="2" readonly>
                                 <div class="input-group-append" data-target="#timepicker2" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="far fa-clock"></i></div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                </div>
+            </form>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                Perbaikan Data akan di kirim ke akun pimpinan untuk permintaan verifikasi / persetujuan
+            </div>
+            <form method="post" action="/admin/perbaikan-presensi/{{$data->id}}">
+                @csrf
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Jam Mulai</label>
+                        <div class="col-sm-10">
+                            <div class="input-group date" id="timepicker3" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#timepicker3"
+                                    name="jam_masuk"
+                                    value="{{$data->jam_masuk == null ? '00:00:00' : \Carbon\Carbon::parse($data->jam_masuk)->format('H:i:s')}}"
+                                    step="2">
+                                <div class="input-group-append" data-target="#timepicker3" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Jam Pulang</label>
+
+                        <div class="col-sm-10">
+                            <div class="input-group date" id="timepicker4" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#timepicker4"
+                                    name="jam_pulang"
+                                    value="{{$data->jam_pulang == null ? '00:00:00' : \Carbon\Carbon::parse($data->jam_pulang)->format('H:i:s')}}"
+                                    step="2">
+                                <div class="input-group-append" data-target="#timepicker4" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                     <div class="form-group row">
                         <label for="inputEmail3" class="col-sm-2 col-form-label"></label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-10">
                             <button type="submit" class="btn btn-block btn-primary">Update</button>
                             <a href="/admin/pegawai/{{$id}}/presensi/{{$bulan}}/{{$tahun}}"
                                 class="btn btn-block btn-secondary">Kembali</a>
@@ -98,6 +146,14 @@
       //format: 'hh:mm',
     })
     $('#timepicker2').datetimepicker({
+      format: 'HH:mm:ss',
+      //format: 'hh:mm',
+    })
+    $('#timepicker3').datetimepicker({
+      format: 'HH:mm:ss',
+      //format: 'hh:mm',
+    })
+    $('#timepicker4').datetimepicker({
       format: 'HH:mm:ss',
       //format: 'hh:mm',
     })

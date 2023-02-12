@@ -288,8 +288,6 @@ class PegawaiController extends Controller
         ]);
 
         $data = Presensi::find($id_presensi);
-        // $data->format_jam_masuk = Carbon::parse($data->jam_masuk)->format('H:i:s');
-        // $data->format_jam_pulang = Carbon::parse($data->jam_pulang)->format('H:i:s');
 
         $hari = Carbon::parse($data->tanggal)->translatedFormat('l');
         $pegawai = Pegawai::find($id);

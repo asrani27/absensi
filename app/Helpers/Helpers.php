@@ -1,7 +1,9 @@
 <?php
 
 use Carbon\Carbon;
+use App\Models\Skpd;
 use App\Models\Kunci;
+use App\Models\Pegawai;
 use App\Models\Presensi;
 use Carbon\CarbonPeriod;
 use App\Models\Ringkasan;
@@ -11,6 +13,17 @@ use App\Models\LiburNasional;
 function bulanTahun()
 {
     return BulanTahun::orderBy('id', 'DESC')->get();
+}
+
+function isVerifikator($param)
+{
+    $verifikator = Skpd::find(Auth::user()->pegawai->skpd_id)->kadis;
+    $result = $verifikator == $param ? true : false;
+    return $result;
+}
+function namaByNip($param)
+{
+    return Pegawai::where('nip', $param)->first();
 }
 
 function convertBulan($bulan)
