@@ -19,7 +19,7 @@ class PerbaikanController extends Controller
 {
     public function index()
     {
-        $data = Perubahan::orderBy('id', 'DESC')->paginate(20);
+        $data = Perubahan::where('skpd_id', Auth::user()->skpd->id)->orderBy('id', 'DESC')->paginate(20);
 
         return view('admin.perubahan.index', compact('data'));
     }
@@ -332,7 +332,7 @@ class PerbaikanController extends Controller
     }
     public function perubahandata()
     {
-        $data = Perubahan::orderBy('id', 'DESC')->paginate(20);
+        $data = Perubahan::where('verifikator', Auth::user()->username)->orderBy('id', 'DESC')->paginate(20);
 
         return view('pegawai.perubahan.index', compact('data'));
     }
