@@ -36,6 +36,7 @@ ADMIN
                             <th>Tanggal</th>
                             <th>Data Sebelumnya</th>
                             <th>Data Perubahan</th>
+                            <th>Keterangan</th>
                             <th>Status</th>
                             <th>Verifikator</th>
                         </tr>
@@ -60,6 +61,10 @@ ADMIN
                             <td>
                                 masuk : {{\Carbon\Carbon::parse($item->p_masuk)->format('H:i:s')}}<br />
                                 pulang : {{\Carbon\Carbon::parse($item->p_pulang)->format('H:i:s')}}
+                            </td>
+                            <td>
+                                Keterangan : {{$item->keterangan}}<br/>
+                                Data Dukung : <a href="/storage/perubahan/{{$item->file}}" target="_blank">Lihat</a>
                             </td>
                             <td>
                                 @if ($item->status == 0)

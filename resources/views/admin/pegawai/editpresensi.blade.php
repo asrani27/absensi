@@ -81,7 +81,7 @@
             <div class="card-header">
                 Perbaikan Data akan di kirim ke akun pimpinan untuk permintaan verifikasi / persetujuan
             </div>
-            <form method="post" action="/admin/perbaikan-presensi/{{$data->id}}">
+            <form method="post" action="/admin/perbaikan-presensi/{{$data->id}}" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     <div class="form-group row">
@@ -111,6 +111,24 @@
                                 <div class="input-group-append" data-target="#timepicker4" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="far fa-clock"></i></div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Keterangan</label>
+
+                        <div class="col-sm-10">
+                            <div>
+                                <input type="text" class="form-control" name="keterangan">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Data Dukung</label>
+
+                        <div class="col-sm-10">
+                            <div>
+                                <input type="file" class="form-control" name="file">
                             </div>
                         </div>
                     </div>

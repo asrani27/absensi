@@ -14,6 +14,7 @@ use App\Models\Jam6Ramadhan;
 use Illuminate\Http\Request;
 use App\Models\LiburNasional;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class PerbaikanController extends Controller
 {
@@ -344,6 +345,27 @@ class PerbaikanController extends Controller
         } else {
             $data = Presensi::find($id);
 
+            $validator = Validator::make($req->all(), [
+                'file'  => 'mimes:jpg,png,jpeg,bmp,pdf|max:10240',
+            ]);
+
+            if ($validator->fails()) {
+                $req->flash();
+                toastr()->error('File harus Gambar dan Maks 10MB');
+                return back();
+            }
+
+            if ($req->file == null) {
+                $filename = null;
+            } else {
+                $extension = $req->file->getClientOriginalExtension();
+                $filename = uniqid() . '.' . $extension;
+                $image = $req->file('file');
+                $realPath = public_path('storage') . '/perubahan';
+                $image->move($realPath, $filename);
+            }
+
+
             //simpan ke tabel perubahan
             $n = new Perubahan;
             $n->nip         = $data->nip;
@@ -353,6 +375,8 @@ class PerbaikanController extends Controller
             $n->p_masuk     = $data->tanggal . ' ' . $req->jam_masuk;
             $n->p_pulang    = $data->tanggal . ' ' . $req->jam_pulang;
             $n->skpd_id     = $data->skpd_id;
+            $n->keterangan  = $req->keterangan;
+            $n->file        = $filename;
             $n->verifikator = Auth::user()->skpd->kadis;
             $n->status      = 0;
             $n->save();
