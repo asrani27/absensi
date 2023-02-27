@@ -55,7 +55,12 @@ ADMIN
                             </td>
                             <td>
                                 Keterangan : {{$item->keterangan}}<br/>
-                                Data Dukung : <a href="/storage/perubahan/{{$item->file}}" target="_blank">Lihat</a>
+                                Data Dukung : 
+                                @if ($item->file == null)
+                                    -
+                                @else
+                                <a href="/storage/perubahan/{{$item->file}}" target="_blank">Lihat</a>
+                                @endif
                             </td>
                             <td>
                                 @if ($item->status == 0)
