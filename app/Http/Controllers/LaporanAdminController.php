@@ -138,6 +138,7 @@ class LaporanAdminController extends Controller
                 $item->urut = $check == null ? 0 : $check->urutan;
                 return $item;
             })->sortByDesc('urut');
+        dd($data);
         return view('admin.laporan.bulantahun', compact('bulan', 'tahun', 'data'));
     }
 
