@@ -48,8 +48,8 @@ class Perbaikan extends Command
                     'jam_masuk' => '2023-03-09 07:54:32',
                 ]);
             }
-
-            return 'sukses';
         }
+
+        return 'sukses';
     }
 }
