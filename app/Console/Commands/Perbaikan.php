@@ -2,6 +2,8 @@
 
 namespace App\Console\Commands;
 
+use App\Models\User;
+use App\Models\Presensi;
 use Illuminate\Console\Command;
 
 class Perbaikan extends Command
@@ -11,14 +13,14 @@ class Perbaikan extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'perbaikanabsen';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Perbaikan Absen Versi Web';
 
     /**
      * Create a new command instance.
@@ -37,6 +39,17 @@ class Perbaikan extends Command
      */
     public function handle()
     {
-        return 0;
+        $pegawai = User::where('android_id', null)->get();
+        foreach ($pegawai as $key => $item) {
+            $absen = Presensi::where('tanggal', '2023-03-09')->where('nip', $item->username)->first();
+            if ($absen == null) {
+            } else {
+                $absen->update([
+                    'jam_masuk' => '2023-03-09 07:54:32',
+                ]);
+            }
+
+            return 'sukses';
+        }
     }
 }
