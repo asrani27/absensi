@@ -427,7 +427,11 @@ class PuskesmasController extends Controller
     public function masukkanPegawai($bulan, $tahun)
     {
         $puskesmas_id = Auth::user()->puskesmas->id;
-        $pegawai = Pegawai::where('puskesmas_id', $puskesmas_id)->where('is_aktif', 1)->where('jenis_presensi', 2)->get();
+        if ($puskesmas_id == 36) {
+            $pegawai = Pegawai::where('puskesmas_id', $puskesmas_id)->where('is_aktif', 1)->get();
+        } else {
+            $pegawai = Pegawai::where('puskesmas_id', $puskesmas_id)->where('is_aktif', 1)->where('jenis_presensi', 2)->get();
+        }
         //dd(Pegawai::where('puskesmas_id', $puskesmas_id)->get());
         //dd($pegawai);
         foreach ($pegawai as $item) {
