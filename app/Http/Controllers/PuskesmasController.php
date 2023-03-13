@@ -548,7 +548,9 @@ class PuskesmasController extends Controller
 
     public function hitungSemua($bulan, $tahun)
     {
+
         $ringkasan = Ringkasan::where('puskesmas_id', Auth::user()->puskesmas->id)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        //dd($ringkasan);
         foreach ($ringkasan as $item) {
             //            dd(jumlahHari($bulan, $tahun)['jumlah_hari']);
             if (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 1) {

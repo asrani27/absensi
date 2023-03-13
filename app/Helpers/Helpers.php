@@ -88,9 +88,9 @@ function persenKehadiran($nip, $bulan, $tahun)
 
 function jumlahHari($bulan, $tahun)
 {
-    $cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->pluck('tanggal')->toArray();
-    $liburnasional = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->pluck('tanggal')->toArray();
-    $tanggalmerah = $cutibersama->merge($liburnasional);
+    $tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->pluck('tanggal')->toArray();
+    //$liburnasional = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->pluck('tanggal')->toArray();
+    //$tanggalmerah = $cutibersama->merge($liburnasional);
     //dd($tanggalmerah);
     ///$cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count();
     $weekends = [];
@@ -120,7 +120,12 @@ function jumlahHari($bulan, $tahun)
 
 function jumlahHari6($bulan, $tahun)
 {
-    $tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->where('deskripsi', 'cuti bersama')->whereYear('tanggal', $tahun)->get()->pluck('tanggal')->toArray();
+    $cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->where('deskripsi', 'cuti bersama')->whereYear('tanggal', $tahun)->get();
+    //$tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->pluck('tanggal')->toArray();
+    $liburnasional = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+    //dd($cutibersama, $liburnasional);
+    $tanggalmerah = $cutibersama->merge($liburnasional)->pluck('tanggal')->toArray();
+
     $weekends = [];
     $start = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->startOfMonth();
     $end = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth();
