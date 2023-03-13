@@ -208,7 +208,7 @@ class RingkasanController extends Controller
             return back();
         }
 
-        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->where('nip', '197508312010011005')->get();
+        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         //dd($ringkasan);
         foreach ($ringkasan as $item) {
             if (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 1) {
