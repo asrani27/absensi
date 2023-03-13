@@ -208,7 +208,8 @@ class RingkasanController extends Controller
             return back();
         }
 
-        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->where('nip', '197508312010011005')->get();
+        //dd($ringkasan);
         foreach ($ringkasan as $item) {
             if (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 1) {
                 $jml_hari   = jumlahHari($bulan, $tahun)['jumlah_hari'];
@@ -216,16 +217,38 @@ class RingkasanController extends Controller
                 $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
                 $lebih_awal = telat($item->nip, $bulan, $tahun)->sum('lebih_awal');
 
-                $countSakit = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 3)->get());
-                $countSakitKarenaCovid = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 9)->get());
-                $countCutiTahun = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 7)->get());
-                $countCutiLain = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 8)->get());
-                $countTraining = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 4)->get());
-                $countTugas = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 5)->get());
-                $countIzin = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get());
-                $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
-
-                //$hadirdiharikerja = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->orWhere('jam_pulang', '!=', '00:00:00')->get());
+                $countSakit = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 3)->get()->map(function ($item) {
+                    $item->libur = Carbon::parse($item->tanggal)->isWeekend();
+                    return $item;
+                })->where('libur', false)->count();
+                $countSakitKarenaCovid = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 9)->get()->map(function ($item) {
+                    $item->libur = Carbon::parse($item->tanggal)->isWeekend();
+                    return $item;
+                })->where('libur', false)->count();
+                $countCutiTahun = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 7)->get()->map(function ($item) {
+                    $item->libur = Carbon::parse($item->tanggal)->isWeekend();
+                    return $item;
+                })->where('libur', false)->count();
+                $countCutiLain = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 8)->get()->map(function ($item) {
+                    $item->libur = Carbon::parse($item->tanggal)->isWeekend();
+                    return $item;
+                })->where('libur', false)->count();
+                $countTraining = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 4)->get()->map(function ($item) {
+                    $item->libur = Carbon::parse($item->tanggal)->isWeekend();
+                    return $item;
+                })->where('libur', false)->count();
+                $countTugas = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 5)->get()->map(function ($item) {
+                    $item->libur = Carbon::parse($item->tanggal)->isWeekend();
+                    return $item;
+                })->where('libur', false)->count();
+                $countIzin = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get()->map(function ($item) {
+                    $item->libur = Carbon::parse($item->tanggal)->isWeekend();
+                    return $item;
+                })->where('libur', false)->count();
+                $countAlpa = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get()->map(function ($item) {
+                    $item->libur = Carbon::parse($item->tanggal)->isWeekend();
+                    return $item;
+                })->where('libur', false)->count();
 
                 $item->update([
                     'jumlah_hari' => $jml_hari,
