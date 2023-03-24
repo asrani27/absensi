@@ -10,8 +10,8 @@
 <br/>
 <div class="row">
     <div class="col-12">
-        <a href="/superadmin/libur" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a><br/><br/>
-<form method="post" action="/superadmin/libur/{{$data->id}}">
+        <a href="/superadmin/ramadhan" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-left"></i> Kembali</a><br/><br/>
+<form method="post" action="/superadmin/ramadhan/{{$data->id}}">
     @csrf
     @method('PUT')
     <div class="row">
@@ -19,16 +19,16 @@
             <div class="card">
                 <div class="card-body">                    
                     <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Jenis Keterangan</label>
+                    <label class="col-sm-2 col-form-label">Tanggal</label>                 
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" name="keterangan"  value="{{$data->keterangan}}" required>
+                        <input type="date" class="form-control" name="tanggal" value="{{$data->tanggal}}" required>
                     </div>
                     </div>
 
                     <div class="form-group row">
                     <label class="col-sm-2 col-form-label"></label>
                     <div class="col-sm-10">
-                        <button type="submit" class="btn btn-block btn-primary"><strong>UPDATE JENIS KETERANGAN</strong></button>
+                        <button type="submit" class="btn btn-block btn-primary"><strong>SIMPAN TANGGAL RAMADHAN</strong></button>
                     </div>
                     </div>
                 </div>

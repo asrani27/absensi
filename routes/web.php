@@ -15,10 +15,12 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\RentangController;
 use App\Http\Controllers\GenerateController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\RamadhanController;
 use App\Http\Controllers\PerbaikanController;
 use App\Http\Controllers\PuskesmasController;
 use App\Http\Controllers\RingkasanController;
 use App\Http\Controllers\SuperadminController;
+use App\Http\Controllers\JamRamadhanController;
 use App\Http\Controllers\VerifikatorController;
 use App\Http\Controllers\LaporanAdminController;
 use App\Http\Controllers\LiburNasionalController;
@@ -189,6 +191,11 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('pegawai/search', [SuperadminController::class, 'searchPegawai']);
         Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggalSuperadmin']);
         Route::resource('jam', JamController::class);
+        Route::get('jamramadhan', [JamRamadhanController::class, 'index']);
+        Route::get('jam5ramadhan/{id}/edit', [JamRamadhanController::class, 'edit5']);
+        Route::post('jam5ramadhan/{id}', [JamRamadhanController::class, 'update5']);
+        Route::get('jam6ramadhan/{id}/edit', [JamRamadhanController::class, 'edit6']);
+        Route::post('jam6ramadhan/{id}', [JamRamadhanController::class, 'update6']);
         Route::get('skpd/{skpd_id}/resetpass', [SkpdController::class, 'resetpass']);
         Route::get('skpd/{skpd_id}/buatakun', [SkpdController::class, 'buatakun']);
         Route::get('skpd/{skpd_id}/detail', [SkpdController::class, 'detail']);
@@ -198,6 +205,8 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('skpd/{skpd_id}/laporan', [SkpdController::class, 'laporan']);
         Route::get('skpd/{skpd_id}/lokasi', [SkpdController::class, 'lokasi']);
         Route::get('skpd/{skpd_id}/pegawai/{id_pegawai}/resetpass', [SkpdController::class, 'resetPassPegawai']);
+
+        Route::resource('ramadhan', RamadhanController::class);
 
         Route::get('skpd/{skpd_id}/cuti', [SkpdController::class, 'cuti']);
         Route::resource('skpd', SkpdController::class);

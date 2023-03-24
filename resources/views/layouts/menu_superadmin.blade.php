@@ -71,7 +71,7 @@
         </li>
 
         <li class="nav-item">
-            <a href="/superadmin/libur" class="nav-link {{ Request::is('superadmin/profil*') ? 'active' : '' }}">
+            <a href="/superadmin/libur" class="nav-link {{ Request::is('superadmin/libur*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-calendar"></i>
                 <p>
                     Libur Nasional
@@ -79,6 +79,22 @@
             </a>
         </li>
 
+        <li class="nav-item">
+            <a href="/superadmin/ramadhan" class="nav-link {{ Request::is('superadmin/ramadhan*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-calendar"></i>
+                <p>
+                    Tanggal Ramadhan
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/superadmin/jamramadhan" class="nav-link {{ Request::is('superadmin/jamramadhan*') ? 'active' : '' }}">
+                <i class="nav-icon fas fa-clock"></i>
+                <p>
+                    Jam Ramadhan
+                </p>
+            </a>
+        </li>
         <li class="nav-item">
             <a href="/superadmin/jenis" class="nav-link {{ Request::is('superadmin/profil*') ? 'active' : '' }}">
                 <i class="nav-icon fas fa-list"></i>
