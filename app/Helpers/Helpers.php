@@ -94,8 +94,8 @@ function jumlahHari($bulan, $tahun)
     //dd($tanggalmerah);
     ///$cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count();
     $weekends = [];
-    $start = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->startOfMonth();
-    $end = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth();
+    $start = Carbon::createFromFormat('d/m/Y', '1/' . $bulan . '/' . $tahun)->startOfMonth();
+    $end =   Carbon::createFromFormat('d/m/Y', '1/' . $bulan . '/' . $tahun)->endOfMonth();
     $period = CarbonPeriod::create($start, $end);
     $dates = [];
     foreach ($period as $date) {
@@ -106,7 +106,7 @@ function jumlahHari($bulan, $tahun)
     }
     $array_merge = array_merge($weekends, $tanggalmerah);
     $jumlah_hari_kerja = collect($dates)->diff($array_merge);
-
+    //dd($jumlah_hari_kerja, $start, $end, $bulan);
     $jumlah_jam = [];
     foreach ($jumlah_hari_kerja as $item) {
         $jumlah_jam[] = Carbon::parse($item)->format('l') == 'Friday' ? 210 : 510;
@@ -127,8 +127,8 @@ function jumlahHari6($bulan, $tahun)
     $tanggalmerah = $cutibersama->merge($liburnasional)->pluck('tanggal')->toArray();
 
     $weekends = [];
-    $start = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->startOfMonth();
-    $end = Carbon::createFromFormat('m/Y', $bulan . '/' . $tahun)->endOfMonth();
+    $start = Carbon::createFromFormat('d/m/Y', '1/' . $bulan . '/' . $tahun)->startOfMonth();
+    $end = Carbon::createFromFormat('d/m/Y', '1/' . $bulan . '/' . $tahun)->endOfMonth();
     $period = CarbonPeriod::create($start, $end);
     $dates = [];
     foreach ($period as $date) {
