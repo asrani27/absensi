@@ -427,7 +427,7 @@ class PuskesmasController extends Controller
     public function masukkanPegawai($bulan, $tahun)
     {
         $puskesmas_id = Auth::user()->puskesmas->id;
-        if ($puskesmas_id == 36) {
+        if ($puskesmas_id == 36 || $puskesmas_id == 37) {
             $pegawai = Pegawai::where('puskesmas_id', $puskesmas_id)->where('is_aktif', 1)->get();
         } else {
             $pegawai = Pegawai::where('puskesmas_id', $puskesmas_id)->where('is_aktif', 1)->where('jenis_presensi', 2)->get();
