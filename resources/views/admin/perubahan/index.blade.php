@@ -32,8 +32,9 @@ ADMIN
                     <thead>
                         <tr>
                             <th>#</th>
+                            <th>Tanggal Pengajuan</th>
                             <th>Nip/Nama</th>
-                            <th>Tanggal</th>
+                            <th>Tanggal Yg Diubah</th>
                             <th>Data Sebelumnya</th>
                             <th>Data Perubahan</th>
                             <th>Keterangan</th>
@@ -52,6 +53,7 @@ ADMIN
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif; ">
                             @endif
                             <td>{{$key + $data->firstitem()}}</td>
+                            <td>{{\Carbon\Carbon::parse($item->created_at)->format('d-m-Y')}}</td>
                             <td>{{$item->nip}}<br/>{{namaByNip($item->nip)->nama}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal)->format('d-m-Y')}}</td>
                             <td>
