@@ -415,10 +415,11 @@ class RingkasanController extends Controller
             return back();
         }
 
+        $cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->where('deskripsi', '=', 'cuti bersama')->whereYear('tanggal', $tahun)->get()->count();
         $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($ringkasan as $item) {
             $jumlahhari = $item->jumlah_hari;
-            $hadir = $item->kerja + $item->sc + $item->tr + $item->d + $item->c;
+            $hadir = $item->kerja + $item->sc + $item->tr + $item->d + $item->c + $cutibersama;
 
             //datang lambat
             if ($item->datang_lambat == 0) {
