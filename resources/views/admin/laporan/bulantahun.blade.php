@@ -130,10 +130,7 @@
                             <td>
                                 <a href="/admin/ringkasan/{{$item->id}}/delete/{{$bulan}}/{{$tahun}}"
                                     onclick="return confirm('Yakin Ingin Dihapus?');"><span
-                                        class="badge badge-danger">Hapus</span></a> |
-                                <a href="/admin/ringkasan/{{$item->id}}/hitung/{{$bulan}}/{{$tahun}}"><span
-                                        class="badge badge-primary">Hitung</span></a>
-                                |
+                                        class="badge badge-danger">Hapus</span></a> 
 
                                 <a href="/admin/ringkasan/{{$item->id}}/nol/{{$bulan}}/{{$tahun}}"><span
                                         class="badge badge-warning"
