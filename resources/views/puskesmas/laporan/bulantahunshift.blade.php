@@ -125,8 +125,9 @@
                             <td>{{$item->persen_kehadiran}}</td>
                             <td>{{$item->kerja}}</td>
                             <td>
-                                <a href="/puskesmas/ringkasan/{{$item->id}}/hitung/{{$bulan}}/{{$tahun}}"><span
-                                        class="badge badge-primary">Hitung</span></a>
+                                <a href="/puskesmas/ringkasan/{{$item->id}}/delete"
+                                    onclick="return confirm('Yakin Ingin Dihapus?');"><span
+                                        class="badge badge-danger">Hapus</span></a> 
                             </td>
                         </tr>
                         @endforeach
