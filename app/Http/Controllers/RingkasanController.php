@@ -213,6 +213,7 @@ class RingkasanController extends Controller
         foreach ($ringkasan as $item) {
             if (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 1) {
                 $jml_hari   = jumlahHari($bulan, $tahun)['jumlah_hari'];
+
                 $jml_jam    = jumlahHari($bulan, $tahun)['jumlah_jam'];
                 $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
                 $lebih_awal = telat($item->nip, $bulan, $tahun)->sum('lebih_awal');
@@ -340,8 +341,8 @@ class RingkasanController extends Controller
             // }
             $item->update([
                 'kerja' => $hadir->count(),
-                'masuk' => $masuk + $cutibersama,
-                'keluar' => $pulang + $cutibersama,
+                'masuk' => $masuk,
+                'keluar' => $pulang,
             ]);
         }
 
@@ -360,8 +361,8 @@ class RingkasanController extends Controller
         $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($ringkasan as $item) {
             $jumlahhari = $item->jumlah_hari;
-            $hadir = $item->kerja + $item->sc + $item->tr + $item->d + $item->c + $cutibersama;
-
+            $hadir = $item->kerja + $item->sc + $item->tr + $item->d + $item->c;
+            //dd($jumlahhari, $hadir);
             //datang lambat
             if ($item->datang_lambat == 0) {
                 $kurangi_persen_terlambat = 0;

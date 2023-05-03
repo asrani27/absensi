@@ -88,9 +88,9 @@ function persenKehadiran($nip, $bulan, $tahun)
 
 function jumlahHari($bulan, $tahun)
 {
-    $tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->pluck('tanggal')->toArray();
-    //$liburnasional = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->pluck('tanggal')->toArray();
-    //$tanggalmerah = $cutibersama->merge($liburnasional);
+    //$tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->pluck('tanggal')->toArray();
+    $tanggalmerah = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->pluck('tanggal')->toArray();
+    //$tanggalmerah = array_merge($cutibersama, $liburnasional);
     //dd($tanggalmerah);
     ///$cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('deskripsi', 'cuti bersama')->get()->count();
     $weekends = [];
@@ -104,7 +104,9 @@ function jumlahHari($bulan, $tahun)
         }
         $dates[] = $date->format('Y-m-d');
     }
-    $array_merge = array_merge($weekends, $tanggalmerah);
+
+    $array_merge = collect(array_merge($weekends, $tanggalmerah))->unique()->toArray();
+
     $jumlah_hari_kerja = collect($dates)->diff($array_merge);
     //dd($jumlah_hari_kerja, $start, $end, $bulan);
     $jumlah_jam = [];
@@ -115,6 +117,7 @@ function jumlahHari($bulan, $tahun)
     $data['jumlah_hari'] = count($jumlah_hari_kerja);
     $data['jumlah_jam'] = array_sum($jumlah_jam);
     $data['off'] = count($dates) -  count($jumlah_hari_kerja);
+    //dd($data);
     return $data;
 }
 
