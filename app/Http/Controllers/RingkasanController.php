@@ -522,8 +522,10 @@ class RingkasanController extends Controller
 
         $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', '!=', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($ringkasan as $item) {
+            //dd(Pegawai::where('nip', $item->nip)->first()->jenis_presensi);
             if (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 1 || Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 4) {
                 $jml_hari   = jumlahHari($bulan, $tahun)['jumlah_hari'];
+
                 $jml_jam    = jumlahHari($bulan, $tahun)['jumlah_jam'];
                 $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
                 $lebih_awal = telat($item->nip, $bulan, $tahun)->sum('lebih_awal');
@@ -538,6 +540,7 @@ class RingkasanController extends Controller
                 $countAlpa = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 1)->get());
 
                 //$hadirdiharikerja = count(Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jam_masuk', '!=', '00:00:00')->orWhere('jam_pulang', '!=', '00:00:00')->get());
+
 
                 $item->update([
                     'jumlah_hari' => $jml_hari,
@@ -555,7 +558,7 @@ class RingkasanController extends Controller
                     'a' => $countAlpa,
                     'o' => jumlahHari($bulan, $tahun)['off'],
                 ]);
-            } elseif (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 2) {
+            } elseif (Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 2 || Pegawai::where('nip', $item->nip)->first()->jenis_presensi == 5) {
                 $jml_hari   = jumlahHari6($bulan, $tahun)['jumlah_hari'];
                 $jml_jam    = jumlahHari6($bulan, $tahun)['jumlah_jam'];
                 $terlambat  = telat($item->nip, $bulan, $tahun)->sum('terlambat');
