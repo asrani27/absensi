@@ -148,6 +148,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('cuti/upload/{id}', [CutiController::class, 'upload']);
         Route::post('cuti/upload/{id}', [CutiController::class, 'storeUpload']);
         Route::get('cuti/search', [CutiController::class, 'search']);
+        Route::get('cuti/rekap', [CutiController::class, 'rekapSemua']);
         Route::get('cuti/{id}/rekap', [CutiController::class, 'rekap']);
         Route::resource('cuti', CutiController::class);
 
