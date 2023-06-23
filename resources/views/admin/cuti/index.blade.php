@@ -13,7 +13,7 @@ CUTI/TL/IZIN/SAKIT
         <a href="/admin/cuti/create" class="btn btn-sm btn-primary"><i class="fas fa-calendar"></i> Tambah
             Data</a> 
             @if (Auth::user()->username == '1.01.01.')
-        <a href="/admin/cuti/rekap" class="btn btn-sm btn-success"><i class="fas fa-file"></i> Rekap Semua</a>
+               <a href="/admin/cuti/rekap" class="btn btn-sm btn-success"><i class="fas fa-file"></i> Rekap Semua</a>
             @endif
             <br /><br />
         <div class="card">
