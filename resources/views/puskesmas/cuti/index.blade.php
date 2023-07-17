@@ -59,7 +59,7 @@ CUTI/TL/IZIN/SAKIT
                             @endif
                             <td>{{\Carbon\Carbon::parse($item->tanggal_mulai)->isoFormat('D MMMM Y')}}</td>
                             <td>{{\Carbon\Carbon::parse($item->tanggal_selesai)->isoFormat('D MMMM Y')}}</td>
-                            <td>{{$item->jenis_keterangan->keterangan}}</td>
+                            <td>{{$item->jenis_keterangan == null ? '': $item->jenis_keterangan->keterangan}}</td>
                             <td>
                                 @if ($item->file == null)
                                 <a href="/puskesmas/cuti/upload/{{$item->id}}" class="btn btn-xs btn-info"
