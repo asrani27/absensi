@@ -69,13 +69,7 @@
                             <td>{{$item->jam_pulang == null ? '00:00:00':
                                 \Carbon\Carbon::parse($item->jam_pulang)->format('H:i:s')}}</td>
                             <td>
-
                                 {{$item->jenis_keterangan == null ? '': $item->jenis_keterangan->keterangan}}
-                                {{-- @if ($item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 ||
-                                $item->jenis_keterangan_id == 9)
-                                @else
-                                {{$item->keterangan}}
-                                @endif --}}
                             </td>
                             <td>{{$item->terlambat}}</td>
                             <td>{{$item->lebih_awal}}</td>

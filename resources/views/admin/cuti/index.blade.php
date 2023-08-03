@@ -79,7 +79,7 @@ CUTI/TL/IZIN/SAKIT
                             <td>
 
                                 <form action="/admin/cuti/{{$item->id}}" method="post">
-                                    <a href="/admin/cuti/{{$item->id}}/rekap" class="btn btn-xs btn-success"><i
+                                    <a href="/admin/cuti/{{$item->id}}/rekap" class="btn btn-xs btn-success" onclick="return confirm('Yakin ingin direkap?');"><i
                                             class="fas fa-file"></i> Rekap</a>
                                     @csrf
                                     @method('delete')

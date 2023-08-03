@@ -101,46 +101,53 @@ class CutiController extends Controller
             }
 
             foreach ($period as $date) {
-                if ($pegawai->jenis_presensi == 1) {
-                    if ($date->translatedFormat('l') == 'Sabtu' && $request->jenis_keterangan_id == 5) {
-                        //simpan TL walaupun hari sabtu di presensi
-                        $n = new DetailCuti;
-                        $n->cuti_id             = $cuti->id;
-                        $n->nip                 = $request->nip;
-                        $n->skpd_id             = $pegawai->skpd_id;
-                        $n->tanggal             = $date->format('Y-m-d');
-                        $n->jenis_keterangan_id = $request->jenis_keterangan_id;
-                        $n->save();
-                    } elseif ($date->translatedFormat('l') == 'Minggu') {
-                    } else {
-                        if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
-                            //simpan cuti tahun di presensi
-                            $n = new DetailCuti;
-                            $n->cuti_id             = $cuti->id;
-                            $n->nip                 = $request->nip;
-                            $n->skpd_id             = $pegawai->skpd_id;
-                            $n->tanggal             = $date->format('Y-m-d');
-                            $n->jenis_keterangan_id = $request->jenis_keterangan_id;
-                            $n->save();
-                        } else {
-                        }
-                    }
-                } else {
-                    if ($date->translatedFormat('l') == 'Minggu') {
-                    } else {
-                        if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
-                            //simpan cuti tahun di presensi
-                            $n = new DetailCuti;
-                            $n->cuti_id             = $cuti->id;
-                            $n->nip                 = $request->nip;
-                            $n->skpd_id             = $pegawai->skpd_id;
-                            $n->tanggal             = $date->format('Y-m-d');
-                            $n->jenis_keterangan_id = $request->jenis_keterangan_id;
-                            $n->save();
-                        } else {
-                        }
-                    }
-                }
+                $n = new DetailCuti;
+                $n->cuti_id             = $cuti->id;
+                $n->nip                 = $request->nip;
+                $n->skpd_id             = $pegawai->skpd_id;
+                $n->tanggal             = $date->format('Y-m-d');
+                $n->jenis_keterangan_id = $request->jenis_keterangan_id;
+                $n->save();
+                // if ($pegawai->jenis_presensi == 1) {
+                //     if ($request->jenis_keterangan_id == 4 || $request->jenis_keterangan_id == 5) {
+                //         //simpan TL walaupun hari sabtu di presensi
+                //         $n = new DetailCuti;
+                //         $n->cuti_id             = $cuti->id;
+                //         $n->nip                 = $request->nip;
+                //         $n->skpd_id             = $pegawai->skpd_id;
+                //         $n->tanggal             = $date->format('Y-m-d');
+                //         $n->jenis_keterangan_id = $request->jenis_keterangan_id;
+                //         $n->save();
+                //     } elseif ($date->translatedFormat('l') == 'Minggu') {
+                //     } else {
+                //         if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
+                //             //simpan cuti tahun di presensi
+                //             $n = new DetailCuti;
+                //             $n->cuti_id             = $cuti->id;
+                //             $n->nip                 = $request->nip;
+                //             $n->skpd_id             = $pegawai->skpd_id;
+                //             $n->tanggal             = $date->format('Y-m-d');
+                //             $n->jenis_keterangan_id = $request->jenis_keterangan_id;
+                //             $n->save();
+                //         } else {
+                //         }
+                //     }
+                // } else {
+                //     if ($date->translatedFormat('l') == 'Minggu') {
+                //     } else {
+                //         if (LiburNasional::where('tanggal', $date->format('Y-m-d'))->first() == null) {
+                //             //simpan cuti tahun di presensi
+                //             $n = new DetailCuti;
+                //             $n->cuti_id             = $cuti->id;
+                //             $n->nip                 = $request->nip;
+                //             $n->skpd_id             = $pegawai->skpd_id;
+                //             $n->tanggal             = $date->format('Y-m-d');
+                //             $n->jenis_keterangan_id = $request->jenis_keterangan_id;
+                //             $n->save();
+                //         } else {
+                //         }
+                //     }
+                // }
             }
             DB::commit();
             toastr()->success('Berhasil Menyimpan Cuti');
@@ -263,124 +270,134 @@ class CutiController extends Controller
     {
         $data = Cuti::find($id)->detailCuti;
         foreach ($data as $d) {
-            $pegawai    = Pegawai::where('nip', $d->nip)->first();
-            if ($pegawai->jenis_presensi == 1) {
-                if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Sabtu' && $d->jenis_keterangan_id == 5) {
-                    //simpan TL walaupun hari sabtu di presensi
-                    $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
-                    if ($presensi != null) {
-                        $presensi->update([
-                            'terlambat' => 0,
-                            'lebih_awal' => 0,
-                            'jam_masuk' => $d->tanggal . ' 00:00:00',
-                            'jam_pulang' => $d->tanggal . ' 00:00:00',
-                            'jenis_keterangan_id' => $d->jenis_keterangan_id,
-                        ]);
-                    } else {
-                    }
-                }
-
-                if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu') {
-                    $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
-                    if ($presensi != null) {
-                        $presensi->update([
-                            'terlambat' => 0,
-                            'lebih_awal' => 0,
-                            'jam_masuk' => $d->tanggal . ' 00:00:00',
-                            'jam_pulang' => $d->tanggal . ' 00:00:00',
-                            'jenis_keterangan_id' => null,
-                        ]);
-                    } else {
-                    }
-                } else {
-                    $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
-                    if ($presensi != null) {
-                        //check apakah libur nasional
-                        if (LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
-                            $presensi->update([
-                                'terlambat' => 0,
-                                'lebih_awal' => 0,
-                                'jam_masuk' =>  $d->tanggal . ' 00:00:00',
-                                'jam_pulang' =>  $d->tanggal . ' 00:00:00',
-                                'jenis_keterangan_id' => null,
-                            ]);
-                        } else {
-                            //check apakah cuti, perjalanan dinas, diklat, covid
-
-                            // if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
-                            if ($d->jenis_keterangan_id != null) {
-                                $presensi->update([
-                                    'jam_masuk' => $d->tanggal . ' 00:00:00',
-                                    'jam_pulang' => $d->tanggal . ' 00:00:00',
-                                    'terlambat' => 0,
-                                    'lebih_awal' => 0,
-                                    'jenis_keterangan_id' => $d->jenis_keterangan_id,
-                                ]);
-                            } else {
-                                $presensi->update([
-                                    'jam_masuk' => $d->tanggal . ' 00:00:00',
-                                    'jam_pulang' => $d->tanggal . ' 00:00:00',
-                                    //'jenis_keterangan_id' => $d->jenis_keterangan_id,
-                                ]);
-                                $hari = Carbon::parse($d->tanggal)->translatedFormat('l');
-                                $jam = Jam::where('hari', $hari)->first();
-                                HitungTerlambat::dispatch($presensi, $jam);
-                            }
-                        }
-                    } else {
-                    }
-                }
-            } elseif ($pegawai->jenis_presensi == 2) {
-                if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu') {
-                    $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
-                    if ($presensi != null || LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
-                        $presensi->update([
-                            'terlambat' => 0,
-                            'lebih_awal' => 0,
-                            'jam_masuk' => $d->tanggal . ' 00:00:00',
-                            'jam_pulang' => $d->tanggal . ' 00:00:00',
-                            'jenis_keterangan_id' => null,
-                        ]);
-                    } else {
-                    }
-                } else {
-                    $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
-                    if ($presensi != null) {
-                        if (LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
-                            $presensi->update([
-                                'terlambat' => 0,
-                                'lebih_awal' => 0,
-                                'jam_masuk' => $d->tanggal . ' 00:00:00',
-                                'jam_pulang' => $d->tanggal . ' 00:00:00',
-                                'jenis_keterangan_id' => null,
-                            ]);
-                        } else {
-                            // if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
-                            if ($d->jenis_keterangan_id != null) {
-                                $presensi->update([
-                                    'jam_masuk' => $d->tanggal . ' 00:00:00',
-                                    'jam_pulang' => $d->tanggal . ' 00:00:00',
-                                    'terlambat' => 0,
-                                    'lebih_awal' => 0,
-                                    'jenis_keterangan_id' => $d->jenis_keterangan_id,
-                                ]);
-                            } else {
-                                $presensi->update([
-                                    'jam_masuk' => $d->tanggal . ' 00:00:00',
-                                    'jam_pulang' => $d->tanggal . ' 00:00:00',
-                                    //'jenis_keterangan_id' => $d->jenis_keterangan_id,
-                                ]);
-                                $hari = Carbon::parse($d->tanggal)->translatedFormat('l');
-                                $jam = Jam6::where('hari', $hari)->first();
-                                HitungTerlambat::dispatch($presensi, $jam);
-                            }
-                        }
-                    } else {
-                    }
-                }
+            $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
+            if ($presensi != null) {
+                $presensi->update([
+                    'terlambat' => 0,
+                    'lebih_awal' => 0,
+                    'jam_masuk' => $d->tanggal . ' 00:00:00',
+                    'jam_pulang' => $d->tanggal . ' 00:00:00',
+                    'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                ]);
             } else {
-                //Presensi Jenis SHIFT
             }
+            // if ($pegawai->jenis_presensi == 1) {
+            //     if ($d->jenis_keterangan_id == 4 || $d->jenis_keterangan_id == 5) {
+            //         //simpan TL walaupun hari sabtu/minggu di presensi
+            //         $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
+            //         if ($presensi != null) {
+            //             $presensi->update([
+            //                 'terlambat' => 0,
+            //                 'lebih_awal' => 0,
+            //                 'jam_masuk' => $d->tanggal . ' 00:00:00',
+            //                 'jam_pulang' => $d->tanggal . ' 00:00:00',
+            //                 'jenis_keterangan_id' => $d->jenis_keterangan_id,
+            //             ]);
+            //         } else {
+            //         }
+            //     }
+
+            //     if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu') {
+            //         $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
+            //         if ($presensi != null) {
+            //             $presensi->update([
+            //                 'terlambat' => 0,
+            //                 'lebih_awal' => 0,
+            //                 'jam_masuk' => $d->tanggal . ' 00:00:00',
+            //                 'jam_pulang' => $d->tanggal . ' 00:00:00',
+            //                 'jenis_keterangan_id' => null,
+            //             ]);
+            //         } else {
+            //         }
+            //     } else {
+            //         $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
+            //         if ($presensi != null) {
+            //             //check apakah libur nasional
+            //             if (LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
+            //                 $presensi->update([
+            //                     'terlambat' => 0,
+            //                     'lebih_awal' => 0,
+            //                     'jam_masuk' =>  $d->tanggal . ' 00:00:00',
+            //                     'jam_pulang' =>  $d->tanggal . ' 00:00:00',
+            //                     'jenis_keterangan_id' => null,
+            //                 ]);
+            //             } else {
+            //                 //check apakah cuti, perjalanan dinas, diklat, covid
+
+            //                 // if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
+            //                 if ($d->jenis_keterangan_id != null) {
+            //                     $presensi->update([
+            //                         'jam_masuk' => $d->tanggal . ' 00:00:00',
+            //                         'jam_pulang' => $d->tanggal . ' 00:00:00',
+            //                         'terlambat' => 0,
+            //                         'lebih_awal' => 0,
+            //                         'jenis_keterangan_id' => $d->jenis_keterangan_id,
+            //                     ]);
+            //                 } else {
+            //                     $presensi->update([
+            //                         'jam_masuk' => $d->tanggal . ' 00:00:00',
+            //                         'jam_pulang' => $d->tanggal . ' 00:00:00',
+            //                         //'jenis_keterangan_id' => $d->jenis_keterangan_id,
+            //                     ]);
+            //                     $hari = Carbon::parse($d->tanggal)->translatedFormat('l');
+            //                     $jam = Jam::where('hari', $hari)->first();
+            //                     HitungTerlambat::dispatch($presensi, $jam);
+            //                 }
+            //             }
+            //         } else {
+            //         }
+            //     }
+            // } elseif ($pegawai->jenis_presensi == 2) {
+            //     if (Carbon::parse($d->tanggal)->translatedFormat('l') == 'Minggu') {
+            //         $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
+            //         if ($presensi != null || LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
+            //             $presensi->update([
+            //                 'terlambat' => 0,
+            //                 'lebih_awal' => 0,
+            //                 'jam_masuk' => $d->tanggal . ' 00:00:00',
+            //                 'jam_pulang' => $d->tanggal . ' 00:00:00',
+            //                 'jenis_keterangan_id' => null,
+            //             ]);
+            //         } else {
+            //         }
+            //     } else {
+            //         $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
+            //         if ($presensi != null) {
+            //             if (LiburNasional::where('tanggal', $d->tanggal)->first() != null) {
+            //                 $presensi->update([
+            //                     'terlambat' => 0,
+            //                     'lebih_awal' => 0,
+            //                     'jam_masuk' => $d->tanggal . ' 00:00:00',
+            //                     'jam_pulang' => $d->tanggal . ' 00:00:00',
+            //                     'jenis_keterangan_id' => null,
+            //                 ]);
+            //             } else {
+            //                 // if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
+            //                 if ($d->jenis_keterangan_id != null) {
+            //                     $presensi->update([
+            //                         'jam_masuk' => $d->tanggal . ' 00:00:00',
+            //                         'jam_pulang' => $d->tanggal . ' 00:00:00',
+            //                         'terlambat' => 0,
+            //                         'lebih_awal' => 0,
+            //                         'jenis_keterangan_id' => $d->jenis_keterangan_id,
+            //                     ]);
+            //                 } else {
+            //                     $presensi->update([
+            //                         'jam_masuk' => $d->tanggal . ' 00:00:00',
+            //                         'jam_pulang' => $d->tanggal . ' 00:00:00',
+            //                         //'jenis_keterangan_id' => $d->jenis_keterangan_id,
+            //                     ]);
+            //                     $hari = Carbon::parse($d->tanggal)->translatedFormat('l');
+            //                     $jam = Jam6::where('hari', $hari)->first();
+            //                     HitungTerlambat::dispatch($presensi, $jam);
+            //                 }
+            //             }
+            //         } else {
+            //         }
+            //     }
+            // } else {
+            //     //Presensi Jenis SHIFT
+            // }
 
             $d->update(['validasi' => 1]);
         }

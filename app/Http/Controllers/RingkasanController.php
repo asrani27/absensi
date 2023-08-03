@@ -240,8 +240,10 @@ class RingkasanController extends Controller
                 })->where('libur', false)->count();
                 $countTugas = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 5)->get()->map(function ($item) {
                     $item->libur = Carbon::parse($item->tanggal)->isWeekend();
+                    $item->libur_nasional = LiburNasional::where('tanggal', $item->tanggal)->first();
                     return $item;
-                })->where('libur', false)->count();
+                })->where('libur', false)->where('libur_nasional', '=', null)->count();
+
                 $countIzin = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('jenis_keterangan_id', 6)->get()->map(function ($item) {
                     $item->libur = Carbon::parse($item->tanggal)->isWeekend();
                     return $item;
@@ -250,7 +252,7 @@ class RingkasanController extends Controller
                     $item->libur = Carbon::parse($item->tanggal)->isWeekend();
                     return $item;
                 })->where('libur', false)->count();
-                //dd($item);
+
                 $item->update([
                     'jumlah_hari' => $jml_hari,
                     'jumlah_jam' => $jml_jam,
@@ -358,11 +360,11 @@ class RingkasanController extends Controller
         }
 
         $cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->where('deskripsi', '=', 'cuti bersama')->whereYear('tanggal', $tahun)->get()->count();
-        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->where('nip', '000000111111111111')->get();
+        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
         foreach ($ringkasan as $item) {
             $jumlahhari = $item->jumlah_hari;
             $hadir = $item->kerja + $item->sc + $item->tr + $item->d + $item->c;
-            //dd($jumlahhari, $hadir);
+            //dd($jumlahhari, $hadir, $item->kerja, $item->d);
             //datang lambat
             if ($item->datang_lambat == 0) {
                 $kurangi_persen_terlambat = 0;
@@ -392,15 +394,17 @@ class RingkasanController extends Controller
             } else {
                 $kurangi_persen_pulangcepat = 0;
             }
-            //dd($kurangi_persen_pulangcepat, $kurangi_persen_terlambat);
+            //dd($kurangi_persen_pulangcepat, $kurangi_persen_terlambat, round((($hadir / $jumlahhari) * 100), 2));
+            //dd((14 / 15)  * 100);
             if ($hadir == 0) {
             } else {
                 try {
-                    $persen = round((($hadir / $jumlahhari) * 100), 2) - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
+                    $persen = round((($hadir / $jumlahhari) * 100), 2);
                     if ($persen < 0) {
                         $updatepersen = 0;
                     } else {
                         $updatepersen = $persen > 100 ? 100 : $persen;
+                        $updatepersen = $updatepersen - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
                     }
                     $item->update(['persen_kehadiran' => $updatepersen]);
                 } catch (\Exception $e) {
