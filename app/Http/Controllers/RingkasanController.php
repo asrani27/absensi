@@ -358,7 +358,7 @@ class RingkasanController extends Controller
         }
 
         $cutibersama = LiburNasional::whereMonth('tanggal', $bulan)->where('deskripsi', '=', 'cuti bersama')->whereYear('tanggal', $tahun)->get()->count();
-        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->get();
+        $ringkasan = Ringkasan::where('skpd_id', Auth::user()->skpd->id)->where('puskesmas_id', null)->where('sekolah_id', null)->where('bulan', $bulan)->where('tahun', $tahun)->where('nip', '000000111111111111')->get();
         foreach ($ringkasan as $item) {
             $jumlahhari = $item->jumlah_hari;
             $hadir = $item->kerja + $item->sc + $item->tr + $item->d + $item->c;
@@ -393,16 +393,19 @@ class RingkasanController extends Controller
                 $kurangi_persen_pulangcepat = 0;
             }
             //dd($kurangi_persen_pulangcepat, $kurangi_persen_terlambat);
-            try {
-                $persen = round((($hadir / $jumlahhari) * 100), 2) - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
-                if ($persen < 0) {
-                    $updatepersen = 0;
-                } else {
-                    $updatepersen = $persen > 100 ? 100 : $persen;
+            if ($hadir == 0) {
+            } else {
+                try {
+                    $persen = round((($hadir / $jumlahhari) * 100), 2) - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
+                    if ($persen < 0) {
+                        $updatepersen = 0;
+                    } else {
+                        $updatepersen = $persen > 100 ? 100 : $persen;
+                    }
+                    $item->update(['persen_kehadiran' => $updatepersen]);
+                } catch (\Exception $e) {
+                    $item->update(['persen_kehadiran' => 0]);
                 }
-                $item->update(['persen_kehadiran' => $updatepersen]);
-            } catch (\Exception $e) {
-                $item->update(['persen_kehadiran' => 0]);
             }
         }
         toastr()->success('Persentase Selesai');
@@ -451,7 +454,6 @@ class RingkasanController extends Controller
             } else {
                 $kurangi_persen_pulangcepat = 0;
             }
-
             try {
                 $persen = round((($hadir / $jumlahhari) * 100), 2) - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
                 if ($persen < 0) {
