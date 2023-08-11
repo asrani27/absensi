@@ -44,7 +44,7 @@ ADMIN
                             <td>{{$item->alamat}}</td>
                             <td>{{$item->lat}}</td>
                             <td>{{$item->long}}</td>
-                            <td>{{$item->radius}} Meter</td>
+                            <td>25 Meter</td>
                             <td>
 
                                 <form action="/admin/lokasi/{{$item->id}}" method="post">
