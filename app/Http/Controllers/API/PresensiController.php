@@ -184,7 +184,7 @@ class PresensiController extends Controller
             $item->jam_masuk = $item->jam_masuk == null ? null : Carbon::parse($item->jam_masuk)->format('H:i');
             $item->jam_pulang = $item->jam_pulang == null ? null : Carbon::parse($item->jam_pulang)->format('H:i');
             return $item;
-        });
+        })->first();
 
         $data['message_error'] = 200;
         $data['message']       = 'Data Ditemukan';
