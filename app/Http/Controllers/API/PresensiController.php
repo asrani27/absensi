@@ -164,7 +164,8 @@ class PresensiController extends Controller
     public function newPresensiSeminggu()
     {
         $nip = Auth::user()->pegawai->nip;
-        $absensi = Presensi::where('nip', $nip)->orderBy('tanggal', 'DESC')->limit(8)->get()->map(function ($item) {
+        $absensi = Presensi::where('nip', $nip)->orderBy('tanggal', 'DESC')->limit(8)->get()->map(function ($item, $key) {
+            $item->index = $key;
             $item->tanggal = Carbon::parse($item->tanggal)->format('d M Y');
             $item->jam_masuk = $item->jam_masuk == null ? null : Carbon::parse($item->jam_masuk)->format('H:i');
             $item->jam_pulang = $item->jam_pulang == null ? null : Carbon::parse($item->jam_pulang)->format('H:i');
