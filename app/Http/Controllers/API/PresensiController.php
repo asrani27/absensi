@@ -172,7 +172,7 @@ class PresensiController extends Controller
         })->where('tanggal', '!=', Carbon::now()->format('d M Y'));
 
         $data['message_error'] = 200;
-        $data['message']       = 'Data Ditemukan';
+        $data['message']       = 'Data Ditemukan..';
         $data['data']          = $absensi;
         return response()->json($data);
     }
