@@ -29,3 +29,4 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/newlogin', [LoginController::class, 'newlogin']);
 Route::get('/testing', [LoginController::class, 'testing']);
+Route::get('/checkversioon', [PresensiController::class, 'version']);

@@ -53,6 +53,14 @@ class PresensiController extends Controller
         $data['data']          = $profil;
         return response()->json($data);
     }
+    public function version()
+    {
+        $data['message_error'] = 200;
+        $data['message']       = 'Data Ditemukan';
+        $data['data']          = '1.0.8';
+
+        return response()->json($data);
+    }
     public function radius()
     {
         $pegawai = Auth::user()->pegawai;
