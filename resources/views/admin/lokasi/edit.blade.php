@@ -69,7 +69,7 @@ EDIT LOKASI
                                 <label class="col-sm-2 col-form-label">Radius Jangkauan</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="radius" readonly
-                                        value="{{$data->radius}}">
+                                        value="25">
                                 </div>
                             </div>
 
