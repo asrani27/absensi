@@ -20,6 +20,7 @@ class LoginController extends Controller
 
     public function login(Request $req)
     {
+
         if (Auth::attempt(['username' => $req->username, 'password' => $req->password], true)) {
 
             if (Auth::user()->hasRole('pegawai')) {
@@ -36,27 +37,13 @@ class LoginController extends Controller
                 return redirect('/home/superadmin');
             } elseif (Auth::user()->hasRole('puskesmas')) {
                 return redirect('/home/puskesmas');
+            } elseif (Auth::user()->hasRole('mod')) {
+                return redirect('/home/mod');
             }
-            //  else {
-            //     $role = Role::where('name', 'pegawai')->first();
-            //     $u = Auth::user();
-            //     $u->roles()->attach($role);
-            //     return redirect('/home/pegawai');
-            // }
         } else {
             toastr()->error('Username / Password Tidak Ditemukan');
             $req->flash();
             return back();
         }
-
-        // $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/']);
-        // $options = [
-        //     'form_params' => [
-        //         "username" => $req->username,
-        //         "password" => $req->password,
-        //        ]
-        //    ]; 
-        // $response = $client->request('POST', 'login',$options);
-        // return $response->getBody();
     }
 }

@@ -25,6 +25,7 @@ use App\Http\Controllers\VerifikatorController;
 use App\Http\Controllers\LaporanAdminController;
 use App\Http\Controllers\LiburNasionalController;
 use App\Http\Controllers\JenisKeteranganController;
+use App\Http\Controllers\ModController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -36,6 +37,8 @@ Route::get('/', function () {
             return redirect('/home/superadmin');
         } elseif (Auth::user()->hasRole('puskesmas')) {
             return redirect('/home/puskesmas');
+        } elseif (Auth::user()->hasRole('mod')) {
+            return redirect('/home/mod');
         }
     }
     return view('welcome');
@@ -55,6 +58,10 @@ Route::get('/login', function () {
 
 Route::post('/login', [LoginController::class, 'login']);
 
+Route::group(['middleware' => ['auth', 'role:mod']], function () {
+    Route::get('/home/mod', [ModController::class, 'index']);
+    Route::post('/mod/absensi', [ModController::class, 'absensi']);
+});
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/presensi/masuk', [PresensiController::class, 'masuk']);
     Route::get('/pegawai/gantipass', [PresensiController::class, 'gantipassword']);
