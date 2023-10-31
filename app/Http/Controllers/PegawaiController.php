@@ -44,6 +44,7 @@ class PegawaiController extends Controller
         $response = $client->request('get', $this->skpd()->kode_skpd, ['verify' => false]);
         $data =  json_decode($response->getBody())->data;
 
+
         DB::beginTransaction();
         try {
             foreach ($data as $item) {

@@ -39,8 +39,8 @@ class SyncPegawai implements ShouldQueue
 
     public function handle()
     {
-        $check = Pegawai::where('nip', $this->pegawai->nip)->first();
 
+        $check = Pegawai::where('nip', $this->pegawai->nip)->first();
         if ($check == null) {
             //simpan data
             $p = new Pegawai;
@@ -56,6 +56,7 @@ class SyncPegawai implements ShouldQueue
             $p->puskesmas_id = $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->rs_puskesmas_id;
             $p->sekolah_id = $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->sekolah_id;
             $p->save();
+            Log::info('save');
         } else {
             $check->update([
                 'jabatan'       => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->nama,
@@ -69,6 +70,7 @@ class SyncPegawai implements ShouldQueue
                 'puskesmas_id'  => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->rs_puskesmas_id,
                 'sekolah_id'    => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->sekolah_id,
             ]);
+            Log::info('save');
         }
 
         // $rekap = Ringkasan::where('nip', $this->pegawai->nip)->get();
