@@ -76,6 +76,7 @@ class PresensiController extends Controller
 
     public function radiustest()
     {
+
         $agent = new Agent();
         $windows = $agent->is('Windows');
         $firefox = $agent->is('Firefox');
@@ -96,48 +97,57 @@ class PresensiController extends Controller
         // $response = $client->request('get', Auth::user()->username);
         // $data =  json_decode((string) $response->getBody())->data;
         // $skpd = Skpd::find($data->skpd_id);
-        if (Auth::user()->android_id != null) {
-            toastr()->error('Anda Pernah Menginstall Versi Android, Silahkan Gunakan Versi Android');
+        $agent = new Agent();
+
+        if ($agent->platform() == "iOS") {
+            //setujui
+            if (Auth::user()->android_id != null) {
+                toastr()->error('Anda Pernah Menginstall Versi Android, Silahkan Gunakan Versi Android');
+                return redirect('/home/pegawai');
+            }
+
+            $skpd = Skpd::find(Auth::user()->pegawai->skpd_id);
+            if (Auth::user()->pegawai->lokasi == null) {
+                $latlong2 = null;
+            } else {
+                $lokasi = Auth::user()->pegawai->lokasi;
+                $lat        = (float)$skpd->lat;
+                $long       = (float)$skpd->long;
+                $radius     = (float)$skpd->radius;
+                $latlong2 = [
+                    'lat' => $lokasi->lat,
+                    'lng' => $lokasi->long
+                ];
+            }
+
+            $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', Carbon::today()->format('Y-m-d'))->first();
+            if ($check == null) {
+                $jam_masuk = '00:00:00';
+                $jam_pulang = '00:00:00';
+            } else {
+                $jam_masuk = $check->jam_masuk;
+                $jam_pulang = $check->jam_pulang;
+            }
+
+            $agent = new Agent();
+            $os = $agent->browser();
+
+            $hari  = Carbon::now()->translatedFormat('l');
+
+            $pilih_lokasi = Auth::user()->pegawai->lokasipegawai;
+
+            $rentang = Rentang::where('hari', $hari)->first();
+            // if ($os == 'Safari') {
+            //return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
+            // } else {
+            return view('pegawai.presensi.radius.presensi2', compact('skpd', 'pilih_lokasi', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang', 'os'));
+            // }
+
+        } else {
+            //kasih notif
+            toastr()->error('Silahkan install versi android');
             return redirect('/home/pegawai');
         }
-
-        $skpd = Skpd::find(Auth::user()->pegawai->skpd_id);
-        if (Auth::user()->pegawai->lokasi == null) {
-            $latlong2 = null;
-        } else {
-            $lokasi = Auth::user()->pegawai->lokasi;
-            $lat        = (float)$skpd->lat;
-            $long       = (float)$skpd->long;
-            $radius     = (float)$skpd->radius;
-            $latlong2 = [
-                'lat' => $lokasi->lat,
-                'lng' => $lokasi->long
-            ];
-        }
-
-        $check = Presensi::where('nip', $this->pegawai()->nip)->where('tanggal', Carbon::today()->format('Y-m-d'))->first();
-        if ($check == null) {
-            $jam_masuk = '00:00:00';
-            $jam_pulang = '00:00:00';
-        } else {
-            $jam_masuk = $check->jam_masuk;
-            $jam_pulang = $check->jam_pulang;
-        }
-
-        $agent = new Agent();
-        $os = $agent->browser();
-
-        $hari  = Carbon::now()->translatedFormat('l');
-
-        $pilih_lokasi = Auth::user()->pegawai->lokasipegawai;
-
-        //$pilih_lokasi = Lokasi::where('skpd_id', Auth::user()->pegawai->skpd_id)->get();
-        $rentang = Rentang::where('hari', $hari)->first();
-        // if ($os == 'Safari') {
-        //     return view('pegawai.presensi.radius.presensi', compact('skpd', 'latlong2', 'jam_masuk', 'jam_pulang', 'os', 'rentang'));
-        // } else {
-        return view('pegawai.presensi.radius.presensi2', compact('skpd', 'pilih_lokasi', 'latlong2', 'jam_masuk', 'jam_pulang', 'rentang', 'os'));
-        // }
     }
 
     public function barcode()
