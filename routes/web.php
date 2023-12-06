@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
         Route::get('verifikator/{id}/setujui', [PerbaikanController::class, 'setujui']);
         Route::get('verifikator/{id}/tolak', [PerbaikanController::class, 'tolak']);
         Route::get('radius', [PresensiController::class, 'radius']);
+        Route::get('radiustest', [PresensiController::class, 'radiustest']);
         Route::post('radius', [PresensiController::class, 'storeRadius']);
         Route::get('barcode', [PresensiController::class, 'barcode']);
         Route::get('barcode/front', [PresensiController::class, 'frontCamera']);

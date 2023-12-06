@@ -74,6 +74,22 @@ class PresensiController extends Controller
         }
     }
 
+    public function radiustest()
+    {
+        $agent = new Agent();
+        $windows = $agent->is('Windows');
+        $firefox = $agent->is('Firefox');
+        $iphone  = $agent->is('iPhone');
+        $macos   = $agent->is('OS X');
+        $isandroid = $agent->isAndroidOS();
+        $isnexus = $agent->isNexus();
+        $issafari = $agent->isSafari();
+        $browser = $agent->browser();
+        $platform = $agent->platform();
+        $isdesktop = $agent->isDesktop();
+
+        dd($windows, $firefox, $iphone, $macos, $isandroid, $isnexus, $issafari, $browser, $platform, $isdesktop);
+    }
     public function radius()
     {
         // $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/']);
