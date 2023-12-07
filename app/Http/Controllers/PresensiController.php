@@ -76,7 +76,6 @@ class PresensiController extends Controller
 
     public function radiustest()
     {
-
         $agent = new Agent();
         $windows = $agent->is('Windows');
         $firefox = $agent->is('Firefox');
@@ -99,7 +98,7 @@ class PresensiController extends Controller
         // $skpd = Skpd::find($data->skpd_id);
         $agent = new Agent();
 
-        if ($agent->platform() == "iOS") {
+        if ($agent->platform() == "iOS" || $agent->platform() == "OS X") {
             //setujui
             if (Auth::user()->android_id != null) {
                 toastr()->error('Anda Pernah Menginstall Versi Android, Silahkan Gunakan Versi Android');
