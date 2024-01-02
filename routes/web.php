@@ -25,6 +25,7 @@ use App\Http\Controllers\VerifikatorController;
 use App\Http\Controllers\LaporanAdminController;
 use App\Http\Controllers\LiburNasionalController;
 use App\Http\Controllers\JenisKeteranganController;
+use App\Http\Controllers\LossController;
 use App\Http\Controllers\ModController;
 
 Route::get('/', function () {
@@ -57,6 +58,7 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::post('/login', [LoginController::class, 'login']);
+Route::get('/listloss', [LossController::class, 'index']);
 
 Route::group(['middleware' => ['auth', 'role:mod']], function () {
     Route::get('/home/mod', [ModController::class, 'index']);
