@@ -56,7 +56,7 @@ class HitungTerlambatHariIni extends Command
             $tanggal = Carbon::now()->format('Y-m-d');
         }
 
-        $data = Presensi::where('tanggal', $tanggal)->get();
+        $data = Presensi::where('tanggal', $tanggal)->where('nip', '199606272019031003')->get();
 
         foreach ($data as $item) {
             if ($item->jam_masuk == null) {
@@ -122,6 +122,7 @@ class HitungTerlambatHariIni extends Command
                                 } else {
                                     $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
                                     $jam = Jam::where('hari', $hari)->first();
+                                    dd($hari, $jam);
                                     HitungTerlambat::dispatch($item, $jam);
                                 }
                             }
