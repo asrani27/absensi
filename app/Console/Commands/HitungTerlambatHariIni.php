@@ -105,7 +105,7 @@ class HitungTerlambatHariIni extends Command
                                 'jenis_keterangan_id' => $item->jenis_keterangan_id,
                             ]);
                         } else {
-                            dd('d');
+
                             $masuk = Carbon::parse($item->jam_masuk)->format('H:i');
                             $pulang = Carbon::parse($item->jam_pulang)->format('H:i');
                             if ($masuk == '00:00' && $pulang == '00:00') {
