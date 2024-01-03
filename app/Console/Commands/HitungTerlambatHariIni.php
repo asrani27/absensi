@@ -77,7 +77,7 @@ class HitungTerlambatHariIni extends Command
                 $checkJenisPresensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
             }
             //cek dia jenis presensi 5 hari kerja gak?
-            dd($item);
+            dd($item, $checkJenisPresensi);
             if ($checkJenisPresensi == 1) {
                 //cek dia tanggalnya weekend gak?
                 if (Carbon::parse($item->tanggal)->isWeekend() == true) {
