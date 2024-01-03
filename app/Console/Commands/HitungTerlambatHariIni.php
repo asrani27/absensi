@@ -118,6 +118,7 @@ class HitungTerlambatHariIni extends Command
                                 if ($ramadhan != null) {
                                     $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
                                     $jam = JamRamadhan::where('hari', $hari)->first();
+                                    dd($hari, $jam, ' ramadhan');
                                     HitungTerlambatRamadhan::dispatch($item, $jam);
                                 } else {
                                     $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
