@@ -122,7 +122,7 @@ class HitungTerlambatHariIni extends Command
                                 } else {
                                     $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
                                     $jam = Jam::where('hari', $hari)->first();
-                                    dd($hari, $jam);
+                                    dd($hari, $jam, 'bukan ramadhan');
                                     HitungTerlambat::dispatch($item, $jam);
                                 }
                             }
