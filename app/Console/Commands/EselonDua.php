@@ -95,7 +95,7 @@ class EselonDua extends Command
                         $b = rand(10, 29);
                         $c = rand(10, 59);
                         $masuk = $pre->tanggal . ' ' . $a . ':' . $b . ':' . $c;
-                        $d = '16';
+                        $d = '17';
                         $e = rand(10, 29);
                         $f = rand(10, 59);
                         $pulang = $pre->tanggal . ' ' . $d . ':' . $e . ':' . $f;
