@@ -40,6 +40,7 @@ class Perbaikan extends Command
     public function handle()
     {
         $presensi = Presensi::where('tanggal', '2024-01-25')->get();
+        dd($presensi);
         foreach ($presensi as $key => $item) {
             if ($item->jenis_keterangan_id == null) {
                 $item->update([
