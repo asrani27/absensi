@@ -39,17 +39,15 @@ class Perbaikan extends Command
      */
     public function handle()
     {
-        $pegawai = User::where('android_id', null)->get();
-        foreach ($pegawai as $key => $item) {
-            $absen = Presensi::where('tanggal', '2023-03-09')->where('nip', $item->username)->first();
-            if ($absen == null) {
-            } else {
-                $absen->update([
-                    'jam_masuk' => '2023-03-09 07:54:32',
+        $presensi = Presensi::where('tanggal', '2024-01-25')->get();
+        foreach ($presensi as $key => $item) {
+            if ($item->jenis_keterangan_id == null) {
+                $item->update([
+                    'jam_masuk' => "2024-01-25 07:10:01"
                 ]);
+            } else {
             }
         }
-
         return 'sukses';
     }
 }

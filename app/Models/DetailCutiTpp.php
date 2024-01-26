@@ -13,7 +13,7 @@ class DetailCutiTpp extends Model
     protected $guarded = ['id'];
 
     public function jenis_keterangan()
-    {
+    {;
         return $this->belongsTo(JenisKeterangan::class, 'jenis_keterangan_id');
     }
     public function skpd()
