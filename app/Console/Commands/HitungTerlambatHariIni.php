@@ -56,7 +56,7 @@ class HitungTerlambatHariIni extends Command
             $tanggal = Carbon::now()->format('Y-m-d');
         }
 
-        $data = Presensi::where('tanggal', $tanggal)->where('nip', '199606272019031003')->get();
+        $data = Presensi::where('tanggal', $tanggal)->get();
 
         foreach ($data as $item) {
             if ($item->jam_masuk == null) {
