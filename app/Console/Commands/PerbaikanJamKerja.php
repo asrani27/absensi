@@ -16,7 +16,7 @@ class PerbaikanJamKerja extends Command
      * @var string
      */
     //protected $signature = 'perbaikanjam {--jenispresensi=} {--bulan=} {--tahun=}';
-    protected $signature = 'perbaikanjam {--bulan=} {--tahun=}';
+    protected $signature = 'perbaikanjam {--bulan=} {--tahun=} {--skpd_id=}';
 
     /**
      * The console command description.
@@ -45,17 +45,28 @@ class PerbaikanJamKerja extends Command
         //$jenispresensi = $this->option('jenispresensi');
         $bulan = $this->option('bulan');
         $tahun = $this->option('tahun');
+        $skpd_id = $this->option('skpd_id');
 
-        $pegawai = Pegawai::where('sekolah_id', '!=', null)->get();
+        $pegawai = Pegawai::where('skpd_id', $skpd_id)->get();
 
         foreach ($pegawai as $p) {
             $presensi = Presensi::where('nip', $p->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
 
             foreach ($presensi as $pre) {
-                $pre->update([
-                    'terlambat' => 0,
-                    'lebih_awal' => 0,
-                ]);
+                if ($pre->telambat > 0) {
+                    $pre->update([
+                        'terlambat' => 0,
+                        'jam_masuk' => $pre->tanggal . ' 07:23:09',
+                    ]);
+                } else {
+                }
+                if ($pre->lebih_awal > 0) {
+                    $pre->update([
+                        'jam_pulang' => $pre->tanggal . ' 17:23:09',
+                        'lebih_awal' => 0,
+                    ]);
+                } else {
+                }
             }
         }
 
