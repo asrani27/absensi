@@ -53,7 +53,7 @@ class PerbaikanJamKerja extends Command
             $presensi = Presensi::where('nip', $p->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
 
             foreach ($presensi as $pre) {
-                if ($pre->telambat > 0) {
+                if ($pre->terlambat > 0) {
                     $pre->update([
                         'terlambat' => 0,
                         'jam_masuk' => $pre->tanggal . ' 07:23:09',
