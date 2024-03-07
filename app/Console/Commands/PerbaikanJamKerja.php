@@ -55,6 +55,7 @@ class PerbaikanJamKerja extends Command
             $presensi = Presensi::where('nip', $p->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
             //dd($presensi, 'asd');
             foreach ($presensi as $pre) {
+                dd($pre);
                 if ($pre->jenis_keterangan_id != null) {
                     return 'cuti';
                 }
