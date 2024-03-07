@@ -251,7 +251,11 @@ class PegawaiController extends Controller
     public function detailPresensi($id, $bulan, $tahun)
     {
         $pegawai = Pegawai::find($id);
-        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderby('tanggal', 'ASC')->get();
+        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderby('tanggal', 'ASC')->get()->map(function ($item) {
+            $item->liburnasional = LiburNasional::where('tanggal', $item->tanggal)->first() == null ? null : LiburNasional::where('tanggal', $item->tanggal)->first()->nama;
+            return $item;
+        });
+
         return view('admin.pegawai.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
     }
 
