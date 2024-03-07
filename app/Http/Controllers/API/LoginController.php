@@ -83,7 +83,7 @@ class LoginController extends Controller
                         return response()->json($data);
                     } else {
                         $data['message_error'] = 201;
-                        $data['message']       = 'Presensi hanya boleh single device, 1 nip 1 device, silahkan hub admin untuk reset device';
+                        $data['message']       = 'Presensi hanya boleh single device, 1 nip 1 device, silahkan hub admin BKD untuk reset device';
                         $data['data']          = null;
                         return response()->json($data);
                     }

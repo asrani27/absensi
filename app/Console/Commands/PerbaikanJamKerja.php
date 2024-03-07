@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Komando;
 use App\Models\Pegawai;
 use App\Models\Presensi;
+use App\Models\LiburNasional;
 use Illuminate\Console\Command;
 
 class PerbaikanJamKerja extends Command
@@ -42,6 +43,7 @@ class PerbaikanJamKerja extends Command
      */
     public function handle()
     {
+
         //$jenispresensi = $this->option('jenispresensi');
         $bulan = $this->option('bulan');
         $tahun = $this->option('tahun');
@@ -51,8 +53,20 @@ class PerbaikanJamKerja extends Command
 
         foreach ($pegawai as $p) {
             $presensi = Presensi::where('nip', $p->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
-
+            //dd($presensi, 'asd');
             foreach ($presensi as $pre) {
+                if ($pre->jenis_keterangan_id != null) {
+                    return 'cuti';
+                }
+
+                if (Carbon::parse($pre->tanggal)->isWeekend()) {
+                    return 'weekend';
+                }
+
+                if (LiburNasional::where('tanggal', $pre->tanggal)->first() != null) {
+                    return 'libur nasional';
+                }
+
                 if ($pre->terlambat > 0) {
                     $pre->update([
                         'terlambat' => 0,
