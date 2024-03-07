@@ -50,7 +50,7 @@ class PerbaikanJamKerja extends Command
         $skpd_id = $this->option('skpd_id');
 
         $pegawai = Pegawai::where('skpd_id', $skpd_id)->get();
-        dd($pegawai);
+
         foreach ($pegawai as $p) {
             $presensi = Presensi::where('nip', $p->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
             //dd($presensi, 'asd');
@@ -66,7 +66,7 @@ class PerbaikanJamKerja extends Command
                 if (LiburNasional::where('tanggal', $pre->tanggal)->first() != null) {
                     return 'libur nasional';
                 }
-
+                dd($pre);
                 if ($pre->terlambat > 0) {
                     $pre->update([
                         'terlambat' => 0,
