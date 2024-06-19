@@ -59,6 +59,7 @@ Route::get('/login', function () {
 
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/listloss', [LossController::class, 'index']);
+Route::get('/hitung', [LossController::class, 'hitung']);
 
 Route::group(['middleware' => ['auth', 'role:mod']], function () {
     Route::get('/home/mod', [ModController::class, 'index']);
