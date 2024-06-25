@@ -39,14 +39,14 @@ class Perbaikan extends Command
      */
     public function handle()
     {
-        $presensi = Presensi::where('tanggal', '2024-02-13')->get();
+        $presensi = Presensi::where('tanggal', '2024-06-25')->get();
 
         foreach ($presensi as $key => $item) {
             if ($item->jenis_keterangan_id == null) {
                 if ($item->terlambat != 0) {
                     $item->update([
-                        'jam_masuk' => "2024-02-13 07:10:01",
-                        'terlambat' => 0,
+                        'jam_pulang' => "2024-06-25 07:10:01",
+                        'lebih_awal' => 0,
                     ]);
                 } else {
                 }
