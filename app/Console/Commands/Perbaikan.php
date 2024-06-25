@@ -39,6 +39,7 @@ class Perbaikan extends Command
      */
     public function handle()
     {
+
         $presensi = Presensi::where('tanggal', '2024-06-25')->get();
 
         foreach ($presensi as $key => $item) {
