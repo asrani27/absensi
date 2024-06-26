@@ -44,13 +44,13 @@ class Perbaikan extends Command
 
         foreach ($presensi as $key => $item) {
             if ($item->jenis_keterangan_id == null) {
-                if ($item->terlambat != 0) {
-                    $item->update([
-                        'jam_pulang' => "2024-06-25 07:10:01",
-                        'lebih_awal' => 0,
-                    ]);
-                } else {
-                }
+                // if ($item->terlambat != 0) {
+                $item->update([
+                    'jam_pulang' => "2024-06-25 07:10:01",
+                    'lebih_awal' => 0,
+                ]);
+                // } else {
+                // }
             } else {
             }
         }
