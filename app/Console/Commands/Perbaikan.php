@@ -46,7 +46,7 @@ class Perbaikan extends Command
             if ($item->jenis_keterangan_id == null) {
                 // if ($item->terlambat != 0) {
                 $item->update([
-                    'jam_pulang' => "2024-06-25 07:10:01",
+                    'jam_pulang' => "2024-06-25 17:10:01",
                     'lebih_awal' => 0,
                 ]);
                 // } else {
