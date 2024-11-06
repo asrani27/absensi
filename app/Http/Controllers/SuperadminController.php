@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\laporan2024;
 use Carbon\Carbon;
 use App\Models\Cuti;
 use App\Models\Skpd;
@@ -13,9 +14,15 @@ use App\Models\Ringkasan;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SuperadminController extends Controller
 {
+    public function laporan2024()
+    {
+        return Excel::download(new laporan2024, 'absensi2024.xlsx');
+    }
+
     public function pegawai()
     {
         $data = Pegawai::orderBy('urutan', 'DESC')->paginate(10);

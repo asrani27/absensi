@@ -21,6 +21,8 @@
         </div>
     </div>
 </div>
+<a href="/laporan2024"
+    class="btn btn-md btn-success"><i class="fas fa-file"></i> Laporan 2024</a><br/><br/>
 <div class="row">
     <div class="col-lg-12">
         <div class="card">

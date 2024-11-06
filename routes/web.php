@@ -194,6 +194,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
 
 Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
+    Route::get('laporan2024', [SuperadminController::class, 'laporan2024']);
     Route::prefix('superadmin')->group(function () {
         Route::get('pegawai', [SuperadminController::class, 'pegawai']);
         Route::get('presensipegawai/{id}', [SuperadminController::class, 'deletePresensi']);
