@@ -258,6 +258,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
 
 Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
     Route::prefix('puskesmas')->group(function () {
+        Route::get('cuti/{id}/rekap', [CutiController::class, 'rekap_puskesmas']);
         Route::get('admin/{uuid}', [PuskesmasController::class, 'keDinkes']);
         Route::get('pegawai', [PuskesmasController::class, 'pegawai']);
         Route::get('pegawai/search', [PuskesmasController::class, 'searchpegawai']);

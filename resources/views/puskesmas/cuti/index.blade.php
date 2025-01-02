@@ -73,7 +73,9 @@ CUTI/TL/IZIN/SAKIT
                             </td>
                             <td>{{$item->keterangan}}</td>
                             <td>
-
+                                <a href="/puskesmas/cuti/{{$item->id}}/rekap" class="btn btn-xs btn-success"
+                                    onclick="return confirm('Yakin ingin direkap?');"><i class="fas fa-file"></i>
+                                    Rekap</a>
                                 <a href="/puskesmas/cuti/{{$item->id}}/delete" class="btn btn-xs btn-danger"
                                     onclick="return confirm('yakin DI Hapus?');"><i class="fas fa-trash"></i> Delete</a>
 

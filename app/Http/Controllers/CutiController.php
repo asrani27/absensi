@@ -165,13 +165,9 @@ class CutiController extends Controller
         //
     }
 
-    public function edit($id)
-    {
-    }
+    public function edit($id) {}
 
-    public function update(Request $request, $id)
-    {
-    }
+    public function update(Request $request, $id) {}
 
     public function upload($id)
     {
@@ -264,6 +260,26 @@ class CutiController extends Controller
         $data->appends(['search' => $search])->links();
         request()->flash();
         return view('admin.cuti.index', compact('data'));
+    }
+    public function rekap_puskesmas($id)
+    {
+        $data = Cuti::find($id)->detailCuti;
+        foreach ($data as $d) {
+            $presensi = Presensi::where('nip', $d->nip)->where('tanggal', $d->tanggal)->first();
+            if ($presensi != null) {
+                $presensi->update([
+                    'terlambat' => 0,
+                    'lebih_awal' => 0,
+                    'jam_masuk' => $d->tanggal . ' 00:00:00',
+                    'jam_pulang' => $d->tanggal . ' 00:00:00',
+                    'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                ]);
+            } else {
+            }
+            $d->update(['validasi' => 1]);
+        }
+        toastr()->success('Berhasil Di rekap');
+        return back();
     }
 
     public function rekap($id)
