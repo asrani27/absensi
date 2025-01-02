@@ -40,15 +40,15 @@ class Perbaikan extends Command
     public function handle()
     {
 
-        $presensi = Presensi::where('tanggal', '2024-09-27')->get();
+        $presensi = Presensi::where('tanggal', '2024-12-31')->get();
 
         foreach ($presensi as $key => $item) {
             if ($item->jenis_keterangan_id == null) {
                 // if ($item->terlambat != 0) {
-                if ($item->jam_pulang == '2024-09-27 00:00:00') {
+                if ($item->jam_masuk == '2024-12-31 00:00:00') {
                     $item->update([
-                        'jam_pulang' => "2024-09-27 12:10:01",
-                        'lebih_awal' => 0,
+                        'jam_masuk' => "2024-12-31 07:54:01",
+                        'terlambat' => 0,
                     ]);
                 } else {
                 }
