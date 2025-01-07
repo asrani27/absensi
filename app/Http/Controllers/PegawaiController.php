@@ -256,6 +256,7 @@ class PegawaiController extends Controller
             $item->liburnasional = LiburNasional::where('tanggal', $item->tanggal)->first() == null ? null : LiburNasional::where('tanggal', $item->tanggal)->first()->deskripsi;
             return $item;
         });
+        dd($data);
         //dd($data, LiburNasional::where('tanggal', '2023-05-01')->get());
         return view('admin.pegawai.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
     }
