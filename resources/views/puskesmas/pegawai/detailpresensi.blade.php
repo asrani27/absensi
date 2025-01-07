@@ -65,11 +65,10 @@
                             <td>{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}</td>
                             <td>{{$item->jam_pulang == null ? '00:00:00': $item->jam_pulang}}</td>
                             <td>
-                                @if ($item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 ||
-                                $item->jenis_keterangan_id == 9)
+                                @if ($item->liburnasional == null)
                                 {{$item->jenis_keterangan == null ? '': $item->jenis_keterangan->keterangan}}
                                 @else
-                                {{$item->jenis_keterangan == null ? '': $item->jenis_keterangan->keterangan}}
+                                {{$item->liburnasional}}
                                 @endif
                             </td>
                             <td>{{$item->terlambat}}</td>

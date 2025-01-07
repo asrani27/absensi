@@ -278,7 +278,7 @@ class PuskesmasController extends Controller
             $item->liburnasional = LiburNasional::where('tanggal', $item->tanggal)->first() == null ? null : LiburNasional::where('tanggal', $item->tanggal)->first()->deskripsi;
             return $item;
         });
-        dd($data->toArray());
+
         return view('puskesmas.pegawai.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
     }
     public function editPresensi($id, $bulan, $tahun, $id_presensi)
