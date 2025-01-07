@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Presensi;
+use App\Models\LiburNasional;
 use Illuminate\Console\Command;
 
 class LiburNasional extends Command
