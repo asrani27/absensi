@@ -273,7 +273,11 @@ class PuskesmasController extends Controller
     public function detailPresensi($id, $bulan, $tahun)
     {
         $pegawai = Pegawai::find($id);
-        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+        $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderby('tanggal', 'ASC')->get()->map(function ($item) {
+            //dd($item);
+            $item->liburnasional = LiburNasional::where('tanggal', $item->tanggal)->first() == null ? null : LiburNasional::where('tanggal', $item->tanggal)->first()->deskripsi;
+            return $item;
+        });
         return view('puskesmas.pegawai.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
     }
     public function editPresensi($id, $bulan, $tahun, $id_presensi)
