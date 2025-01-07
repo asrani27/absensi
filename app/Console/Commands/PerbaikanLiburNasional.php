@@ -43,7 +43,7 @@ class PerbaikanLiburNasional extends Command
         foreach ($data as $item) {
             $check = Presensi::where('tanggal', $item->tanggal)->get();
             foreach ($check as $item2) {
-                $item->update([
+                $item2->update([
                     'jam_masuk' => $item->tanggal . ' 00:00:00',
                     'jam_pulang' => $item->tanggal . ' 00:00:00',
                     'terlambat' => 0,
