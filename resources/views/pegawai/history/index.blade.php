@@ -41,7 +41,7 @@
                                 <option value="2022" {{old('tahun')=='2022' ? 'selected' :''}}>2022</option>
                                 <option value="2023" {{old('tahun')=='2023' ? 'selected' :''}}>2023</option>
                                 <option value="2024" {{old('tahun')=='2024' ? 'selected' :''}}>2024</option>
-                                <option value="2024" {{old('tahun')=='2025' ? 'selected' :''}}>2025</option>
+                                <option value="2025" {{old('tahun')=='2025' ? 'selected' :''}}>2025</option>
                             </select>
                         </div>
                     </div>
