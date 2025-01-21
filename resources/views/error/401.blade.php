@@ -1,15 +1,15 @@
 @extends('layouts.error')
 @push('css')
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 @endpush
 @section('title')
-    PRESENSI
+PRESENSI
 @endsection
 @section('content')
-<br/>
+<br />
 <div class="row">
     <div class="col-12 text-center">
-        401<br/>
+        401<br />
         <a href="/pegawai/presensi/radius" class="btn btn-lg btn-primary">REFRESH KLIK DISINI</a>
     </div>
 </div>
