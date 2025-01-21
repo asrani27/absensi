@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -128,6 +129,21 @@ class LoginController extends Controller
     }
     public function testing()
     {
-        return response()->json('testing');
+        $currentTime = Carbon::now()->format('H:i');
+
+        // Batasan waktu absensi
+        $startTime = '16:30';
+        $endTime = '20:00';
+
+        if ($currentTime < $startTime || $currentTime > $endTime) {
+            return response()->json([
+                'message_error' => 200,
+                'message' => 'Absen hanya bisa dilakukan antara jam 16:30 hingga 20:00'
+            ]);
+        }
+        return response()->json([
+            'message_error' => 200,
+            'message' => 'Aanda bisa absen'
+        ]);
     }
 }

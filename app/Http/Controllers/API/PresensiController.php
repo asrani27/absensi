@@ -95,7 +95,7 @@ class PresensiController extends Controller
         if ($currentTime < $startTime || $currentTime > $endTime) {
             return response()->json([
                 'message_error' => 200,
-                'message' => 'Absen hanya bisa dilakukan antara jam 06:00 hingga 08:00'
+                'message' => 'Absen Masuk hanya bisa dilakukan antara jam 06:00 hingga 08:00'
             ]);
         }
 
@@ -146,7 +146,7 @@ class PresensiController extends Controller
         if ($currentTime < $startTime || $currentTime > $endTime) {
             return response()->json([
                 'message_error' => 200,
-                'message' => 'Absen hanya bisa dilakukan antara jam 16:30 hingga 20:00'
+                'message' => 'Absen Pulang hanya bisa dilakukan antara jam 16:30 hingga 20:00'
             ]);
         }
 
