@@ -409,6 +409,22 @@ class PresensiController extends Controller
 
     public function testing()
     {
+        if (Auth::user()->pegawai->puskesmas_id != 8) {
+            $currentTime = Carbon::now()->format('H:i');
+
+            // Batasan waktu absensi
+            $startTime = '06:30';
+            $endTime = '08:00';
+
+            if ($currentTime < $startTime || $currentTime > $endTime) {
+                return response()->json([
+                    'message_error' => 200,
+                    'message' => 'Absen hanya bisa dilakukan antara jam 16:30 hingga 20:00'
+                ]);
+            }
+            dd(true);
+        }
+        dd(false);
         return view('pegawai.presensi.testing');
     }
 
