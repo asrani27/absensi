@@ -90,12 +90,12 @@ class PresensiController extends Controller
 
         // Batasan waktu absensi
         $startTime = '06:00';
-        $endTime = '08:00';
+        $endTime = '20:00';
         if ($pegawai->jenis_presensi == 1) {
             if ($currentTime < $startTime || $currentTime > $endTime) {
                 return response()->json([
                     'message_error' => 200,
-                    'message' => 'Absen Masuk hanya bisa dilakukan antara jam 06:00 hingga 08:00'
+                    'message' => 'Absen Masuk hanya bisa dilakukan antara jam 06:00 hingga 20:00'
                 ]);
             }
         }
@@ -141,14 +141,14 @@ class PresensiController extends Controller
         $currentTime = Carbon::now()->format('H:i');
 
         // Batasan waktu absensi
-        $startTime = '16:30';
+        $startTime = '08:00';
         $endTime = '20:00';
 
         if ($pegawai->jenis_presensi == 1) {
             if ($currentTime < $startTime || $currentTime > $endTime) {
                 return response()->json([
                     'message_error' => 200,
-                    'message' => 'Absen Pulang hanya bisa dilakukan antara jam 16:30 hingga 20:00'
+                    'message' => 'Absen Pulang hanya bisa dilakukan antara jam 08:00 hingga 20:00'
                 ]);
             }
         }
