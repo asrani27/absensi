@@ -86,6 +86,19 @@ class PresensiController extends Controller
     {
         $pegawai = Auth::user()->pegawai;
         $today = Carbon::now()->format('Y-m-d');
+        $currentTime = Carbon::now()->format('H:i');
+
+        // Batasan waktu absensi
+        $startTime = '06:00';
+        $endTime = '08:00';
+
+        if ($currentTime < $startTime || $currentTime > $endTime) {
+            return response()->json([
+                'message_error' => 200,
+                'message' => 'Absen hanya bisa dilakukan antara jam 06:00 hingga 08:00'
+            ]);
+        }
+
         $lokasi = Lokasi::find($req->id_lokasi);
         $myLocation['lat'] = $req->myLat;
         $myLocation['long'] = $req->myLong;
@@ -124,6 +137,19 @@ class PresensiController extends Controller
     {
         $pegawai = Auth::user()->pegawai;
         $today = Carbon::now()->format('Y-m-d');
+        $currentTime = Carbon::now()->format('H:i');
+
+        // Batasan waktu absensi
+        $startTime = '16:30';
+        $endTime = '20:00';
+
+        if ($currentTime < $startTime || $currentTime > $endTime) {
+            return response()->json([
+                'message_error' => 200,
+                'message' => 'Absen hanya bisa dilakukan antara jam 16:30 hingga 20:00'
+            ]);
+        }
+
         $lokasi = Lokasi::find($req->id_lokasi);
         $myLocation['lat'] = $req->myLat;
         $myLocation['long'] = $req->myLong;
