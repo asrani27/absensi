@@ -132,8 +132,8 @@ class LoginController extends Controller
         $currentTime = Carbon::now()->format('H:i');
 
         // Batasan waktu absensi
-        $startTime = '16:30';
-        $endTime = '20:00';
+        $startTime = '06:30';
+        $endTime = '08:00';
 
         if ($currentTime < $startTime || $currentTime > $endTime) {
             return response()->json([
