@@ -91,7 +91,7 @@ class PresensiController extends Controller
         // Batasan waktu absensi
         $startTime = '06:00';
         $endTime = '08:00';
-        if ($pegawai->puskesmas_id == NULL) {
+        if ($pegawai->jenis_presensi == 1) {
             if ($currentTime < $startTime || $currentTime > $endTime) {
                 return response()->json([
                     'message_error' => 200,
@@ -144,7 +144,7 @@ class PresensiController extends Controller
         $startTime = '16:30';
         $endTime = '20:00';
 
-        if ($pegawai->puskesmas_id == NULL) {
+        if ($pegawai->jenis_presensi == 1) {
             if ($currentTime < $startTime || $currentTime > $endTime) {
                 return response()->json([
                     'message_error' => 200,
