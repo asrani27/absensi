@@ -139,9 +139,11 @@ class PresensiController extends Controller
         $pegawai = Auth::user()->pegawai;
         $today = Carbon::now()->format('Y-m-d');
         $currentTime = Carbon::now()->format('H:i');
+        $day = Carbon::now()->format('F');
+
 
         // Batasan waktu absensi
-        $startTime = '16.30 ';
+        $startTime = '10.30 ';
         $endTime = '20:00';
 
         if ($pegawai->jenis_presensi == 1) {
