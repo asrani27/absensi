@@ -39,17 +39,24 @@ class LokasiPegawaiCommand extends Command
      */
     public function handle()
     {
+        $this->info("Memulai proses update lokasi...");
         $p = Pegawai::select('id')->get();
 
         $existingPegawai = LokasiPegawai::where('lokasi_id', 1599)->pluck('pegawai_id')->toArray();
-
+        $addedCount = 0;
         foreach ($p as $item) {
             if (!in_array($item->id, $existingPegawai)) {
                 LokasiPegawai::create([
                     'pegawai_id' => $item->id,
                     'lokasi_id' => 1599
                 ]);
+                $addedCount++;
             }
+        }
+        if ($addedCount > 0) {
+            $this->info("Proses selesai! $addedCount pegawai berhasil ditambahkan.");
+        } else {
+            $this->warn("Tidak ada pegawai baru yang perlu ditambahkan.");
         }
     }
 }
