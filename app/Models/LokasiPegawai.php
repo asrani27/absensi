@@ -10,4 +10,5 @@ class LokasiPegawai extends Model
     use HasFactory;
     protected $table = 'lokasi_pegawai';
     protected $guarded = ['id'];
+    public $timestamps = false;
 }
