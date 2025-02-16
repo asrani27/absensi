@@ -336,7 +336,7 @@ class PresensiController extends Controller
         $distance = distance($req->lat, $req->long, $lat2, $long2, "K");
         $nama_lokasi = Lokasi::find($req->lokasi_id)->nama;
 
-        alert()->error('Pengguna iphone absen manual');
+        alert()->error('Pengguna iphone silahkan absen manual');
         return back();
         if (Auth::user()->username == '196906081997032006') {
             if ($this->checkJam($req) == 'masuk') {
