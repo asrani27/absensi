@@ -91,7 +91,7 @@ class PresensiController extends Controller
         // Batasan waktu absensi
         $startTime = '07:00';
         $endTime = '20:00';
-        if ($req->id_lokasi != 1600) {
+        if ($req->id_lokasi != 1599) {
             return response()->json([
                 'message_error' => 200,
                 'message' => '17 Feb 2024, Silahkan Absen Pada Lokasi Halaman Balai Kota'
