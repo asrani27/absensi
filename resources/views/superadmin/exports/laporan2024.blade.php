@@ -15,6 +15,7 @@
             <th>AGUSTUS</th>
             <th>SEPTEMBER</th>
             <th>OKTOBER</th>
+            <th>NOVEMBER</th>
             <th>DESEMBER</th>
         </tr>
     </thead>
