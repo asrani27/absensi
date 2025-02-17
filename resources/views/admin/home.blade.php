@@ -39,73 +39,8 @@
             <div class="card-header">
             </div>
             <div class="card-body">
-                {{-- Pilih Menu Pegawai<br />
-                <img src="/theme/panduan.png" width="20%" height="90"><br />
-                KLik Tombol Presensi<br />
-                <img src="/theme/panduan2.png" width="80%" height="60"> --}}
-                {{-- <form method="get" action="/admin/tampilgenerate">
-                    @csrf
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <div class="form-group">
-                                <input type="date" name="tanggal" class="form-control" id="inputSuccess"
-                                    value="{{old('tanggal') == null ? \Carbon\Carbon::today()->format('Y-m-d'):old('tanggal')}}">
-                            </div>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary" name="button" value="1">Tampilkan</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-
-                <div class=" table-responsive">
-                    <table class="table table-hover table-striped table-bordered text-nowrap table-sm">
-                        <thead>
-                            <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif"
-                                class="bg-gradient-primary">
-                                <th class="text-center">#</th>
-                                <th>Nama/NIP</th>
-                                <th class="text-center">Tanggal</th>
-                                <th class="text-center">Jam Masuk</th>
-                                <th class="text-center">Jam Pulang</th>
-                                <th>Keterangan</th>
-                                <th class="text-center">Aksi</th>
-                            </tr>
-                        </thead>
-                        @php
-                        $no =1;
-                        @endphp
-                        <tbody>
-                            @foreach ($data as $key => $item)
-                            <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
-                                <td class="text-center">{{$no++}}</td>
-                                <td>{{$item->nama}}<br />{{$item->nip}}</td>
-                                <td class="text-center">{{\Carbon\Carbon::parse($item->tanggal)->isoFormat('D MMMM
-                                    Y')}}
-                                </td>
-                                <td class="text-center">{{$item->jam_masuk == null ? '00:00:00': $item->jam_masuk}}
-                                </td>
-                                <td class="text-center">{{$item->jam_pulang == null ? '00:00:00':
-                                    $item->jam_pulang}}
-                                </td>
-                                <td>{{$item->keterangan}}</td>
-                                <td class="text-center">
-                                    @if ($item->hapus == 1)
-
-                                    <a href="/admin/presensi/{{$item->id}}" class="btn btn-xs btn-info">Presensi</a>
-                                    @else
-                                    <a href="/admin/presensi/{{$item->id}}" class="btn btn-xs btn-info">Presensi</a>
-                                    <a href="/admin/presensi/{{$item->id}}/delete" class="btn btn-xs btn-danger">X</a>
-
-                                    @endif
-                                </td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div> --}}
+                <a href="/laporan17feb2025" class="btn btn-md btn-success"><i class="fas fa-file"></i> Laporan
+                    PRESENSI 17 FEBRUARI 2025</a><br /><br />
             </div>
         </div>
     </div>

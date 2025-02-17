@@ -10,6 +10,7 @@ use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Rentang;
 use App\Models\Presensi;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\Ringkasan;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
@@ -17,6 +18,13 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    public function laporan17feb2025()
+    {
+
+        $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', '2025-02-17')->get();
+        $pdf = PDF::loadView('admin.laporan.korpripdf', compact('data'));
+        return $pdf->stream();
+    }
     public function pegawai()
     {
         $agent = new Agent();

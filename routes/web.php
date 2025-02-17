@@ -298,4 +298,6 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin|pegawai|puskesmas'
     Route::get('/home/admin', [HomeController::class, 'admin']);
     Route::get('/home/pegawai', [HomeController::class, 'pegawai']);
     Route::get('/home/puskesmas', [HomeController::class, 'puskesmas']);
+    Route::get('/laporan17feb2025', [HomeController::class, 'laporan17feb2025']);
+    
 });
