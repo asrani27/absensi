@@ -39,7 +39,8 @@
             <div class="card-header">
             </div>
             <div class="card-body">
-                <a href="/laporan17feb2025" class="btn btn-md btn-success"><i class="fas fa-file"></i> Laporan
+                <a href="/laporan17feb2025" class="btn btn-md btn-success" target="_blank"><i class="fas fa-file"></i>
+                    Laporan
                     PRESENSI 17 FEBRUARI 2025</a><br /><br />
             </div>
         </div>
