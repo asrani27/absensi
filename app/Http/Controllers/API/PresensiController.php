@@ -94,7 +94,7 @@ class PresensiController extends Controller
         $endTime = '20:00';
         $endTime2 = '09:15';
 
-        if ($req->id_lokasi != 1599) {
+        if ($req->id_lokasi == 1599) {
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
                 return response()->json([
                     'message_error' => 200,
