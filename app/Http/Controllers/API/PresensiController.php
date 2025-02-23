@@ -119,12 +119,16 @@ class PresensiController extends Controller
 
                 $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
                 if ($check == null) {
+                    $param['jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
                     Presensi::create($param);
                     $data['message_error'] = 200;
                     $data['message']       = 'Berhasil Di Simpan, presensi hari besar tidak di tampilkan di beranda anda';
                 } else {
                     if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
                         $check->update($param);
+                        if ($check->jam_masuk == null) {
+                            $check->update(['jam_masuk' => Carbon::now()->format('Y-m-d H:i:s')]);
+                        }
                         $data['message_error'] = 200;
                         $data['message']       = 'Presensi Masuk Berhasil Di Update, presensi hari besar tidak di tampilkan di beranda anda';
                     } else {
