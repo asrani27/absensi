@@ -114,7 +114,7 @@ class PresensiController extends Controller
                 $param['id_lokasi_masuk']   = $lokasi->id;
                 $param['nama_lokasi_masuk'] = $lokasi->nama;
                 $param['tanggal']           = $today;
-                $param['jam_masuk']         = Carbon::now()->format('Y-m-d H:i:s');
+                $param['jam_masuk_hari_besar'] = Carbon::now()->format('Y-m-d H:i:s');
                 $param['request']           = $req->all();
 
                 $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
@@ -123,7 +123,7 @@ class PresensiController extends Controller
                     $data['message_error'] = 200;
                     $data['message']       = 'Berhasil Di Simpan, presensi hari besar tidak di tampilkan di beranda anda';
                 } else {
-                    if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i:s') == '00:00:00') {
+                    if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
                         $check->update($param);
                         $data['message_error'] = 200;
                         $data['message']       = 'Presensi Masuk Berhasil Di Update';
