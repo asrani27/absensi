@@ -126,7 +126,7 @@ class PresensiController extends Controller
                     if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
                         $check->update($param);
                         $data['message_error'] = 200;
-                        $data['message']       = 'Presensi Masuk Berhasil Di Update';
+                        $data['message']       = 'Presensi Masuk Berhasil Di Update, presensi hari besar tidak di tampilkan di beranda anda';
                     } else {
                         $data['message_error'] = 200;
                         $data['message']       = 'Anda Sudah Absen, presensi hari besar tidak di tampilkan di beranda anda';
