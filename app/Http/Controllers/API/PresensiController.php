@@ -98,7 +98,7 @@ class PresensiController extends Controller
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
                 return response()->json([
                     'message_error' => 200,
-                    'message' => '25 Feb 2025, Hanya bisa absen mulai 08:45 s/d 09:15 WITA'
+                    'message' => '24 Feb 2025, Hanya bisa absen mulai 08:45 s/d 09:15 WITA'
                 ]);
             } else {
 
