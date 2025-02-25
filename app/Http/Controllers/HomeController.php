@@ -10,11 +10,13 @@ use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Rentang;
 use App\Models\Presensi;
-use Barryvdh\DomPDF\Facade as PDF;
 use App\Models\Ringkasan;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
+use App\Exports\AbsensiExport;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
@@ -33,6 +35,10 @@ class HomeController extends Controller
             ->get();
         $pdf = PDF::loadView('admin.laporan.haribesarpdf', compact('data'));
         return $pdf->stream();
+    }
+    public function laporan24feb2025semua()
+    {
+        return Excel::download(new AbsensiExport, 'absensi24feb2025.xlsx');
     }
     public function pegawai()
     {

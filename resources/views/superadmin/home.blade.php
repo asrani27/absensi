@@ -21,8 +21,10 @@
         </div>
     </div>
 </div>
-<a href="/laporan2024"
-    class="btn btn-md btn-success"><i class="fas fa-file"></i> Laporan 2024</a><br/><br/>
+<a href="/laporan2024" class="btn btn-md btn-success"><i class="fas fa-file"></i> Laporan 2024</a><br /><br />
+<a href="/laporan24feb2025semua" class="btn btn-md btn-success" target="_blank"><i class="fas fa-file"></i>
+    Laporan
+    PRESENSI 24 FEBRUARI 2025</a>
 <div class="row">
     <div class="col-lg-12">
         <div class="card">
