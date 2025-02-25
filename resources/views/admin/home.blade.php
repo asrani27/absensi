@@ -42,6 +42,9 @@
                 <a href="/laporan17feb2025" class="btn btn-md btn-success" target="_blank"><i class="fas fa-file"></i>
                     Laporan
                     PRESENSI 17 FEBRUARI 2025</a><br /><br />
+                <a href="/laporan24feb2025" class="btn btn-md btn-success" target="_blank"><i class="fas fa-file"></i>
+                    Laporan
+                    PRESENSI 24 FEBRUARI 2025</a>
             </div>
         </div>
     </div>
