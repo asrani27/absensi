@@ -14,7 +14,11 @@
             <tr>
                 <th>NO</th>
                 <th>NIP</th>
-                <th>Nama</th>
+                <th>NAMA</th>
+                <th>SKPD</th>
+                <th>PUSKESMAS</th>
+                <th>JAM ABSEN</th>
+                <th>LOKASI</th>
             </tr>
         </thead>
         <tbody>
@@ -24,6 +28,9 @@
                 <td>'{{ $item->nip }}</td>
                 <td>{{ strtoupper($item->nama) }}</td>
                 <td>{{ $item->skpd == null ? null : strtoupper($item->skpd->nama) }}</td>
+                <td>{{ strtoupper($item->puskesmas == null ? null : $item->puskesmas->nama) }}</td>
+                <td>{{ \Carbon\Carbon::parse($item->jam_masuk_hari_besar)->format('H:i') }}</td>
+                <td>{{$item->jam_masuk_hari_besar == null ? null : 'Halaman Balai Kota'}}</td>
             </tr>
             @endforeach
         </tbody>
