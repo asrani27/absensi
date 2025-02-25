@@ -16,7 +16,10 @@ class Presensi extends Model
     {
         return $this->belongsTo(Pegawai::class, 'pegawai_id');
     }
-
+    public function skpd()
+    {
+        return $this->belongsTo(Skpd::class, 'skpd_id');
+    }
     public function lokasiabsenmasuk()
     {
         return $this->belongsTo(Lokasi::class, 'id_lokasi_masuk', 'id');
