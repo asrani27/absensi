@@ -38,7 +38,7 @@
                     {{ \Carbon\Carbon::parse($item->jam_masuk_hari_besar)->format('H:i:s') }}
                     @endif
                 </td>
-                <td>{{$item->jam_masuk_hari_besar == null ? null : 'Halaman Balai Kota'}}</td>
+                <td>{{$item->jam_masuk_hari_besar == null ? null : 'HALAMAN BALAI KOTA'}}</td>
             </tr>
             @endforeach
         </tbody>
