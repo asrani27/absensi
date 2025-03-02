@@ -90,7 +90,7 @@ class PresensiController extends Controller
 
         // Batasan waktu absensi
         $startTime = '06:00';
-        $startTime2 = '08:30';
+        $startTime2 = '08:45';
         $endTime = '20:00';
         $endTime2 = '09:15';
 
@@ -98,7 +98,7 @@ class PresensiController extends Controller
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
                 return response()->json([
                     'message_error' => 200,
-                    'message' => '24 Feb 2025, Hanya bisa absen mulai 08:45 s/d 09:15 WITA'
+                    'message' => 'Hanya bisa absen mulai 08:45 s/d 09:15 WITA'
                 ]);
             } else {
 
@@ -126,7 +126,7 @@ class PresensiController extends Controller
                 } else {
                     if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
                         $check->update($param);
-                        if ($check->jam_masuk == null) {
+                        if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i') == '00:00') {
                             $check->update(['jam_masuk' => Carbon::now()->format('Y-m-d H:i:s')]);
                         }
                         $data['message_error'] = 200;
