@@ -93,7 +93,14 @@
                     <td>{{$item->nip}}</td>
                     <td>{{strtoupper($item->nama)}}</td>
                     <td style="text-align: center">
-                        {{\Carbon\Carbon::parse($item->jam_masuk_hari_besar)->format('H:i:s')}}</td>
+                        @if ($item->jam_masuk_hari_besar == null)
+
+                        {{\Carbon\Carbon::parse($item->jam_masuk)->format('H:i:s')}}
+                        @else
+
+                        {{\Carbon\Carbon::parse($item->jam_masuk_hari_besar)->format('H:i:s')}}
+                        @endif
+                    </td>
                     <td>{{$item->lokasiabsenmasuk == null ? '-' : $item->lokasiabsenmasuk->nama}}</td>
                 </tr>
                 @endforeach
