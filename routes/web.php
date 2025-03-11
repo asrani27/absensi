@@ -301,4 +301,5 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin|pegawai|puskesmas'
     Route::get('/laporan17feb2025', [HomeController::class, 'laporan17feb2025']);
     Route::get('/laporan24feb2025', [HomeController::class, 'laporan24feb2025']);
     Route::get('/laporan24feb2025semua', [HomeController::class, 'laporan24feb2025semua']);
+    Route::get('/laporan3mar2025', [HomeController::class, 'laporan3mar2025']);
 });

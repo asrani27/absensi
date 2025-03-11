@@ -66,7 +66,8 @@
 
 <body>
     <header>
-        <p style="text-align: center"><span class="auto-style1"><strong>LAPORAN PRESENSI 24 FEBRUARI 2025
+        <p style="text-align: center"><span class="auto-style1"><strong>LAPORAN PRESENSI
+                    {{\Carbon\Carbon::parse($tanggal)->format('d M Y')}}
                 </strong></span><strong><br class="auto-style1" />
             </strong><span class="auto-style1"><strong>{{strtoupper(Auth::user()->skpd->nama)}}</strong></span></p>
     </header>

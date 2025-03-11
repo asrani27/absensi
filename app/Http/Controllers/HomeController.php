@@ -36,6 +36,15 @@ class HomeController extends Controller
         $pdf = PDF::loadView('admin.laporan.haribesarpdf', compact('data'));
         return $pdf->stream();
     }
+    public function laporan3mar2025()
+    {
+
+        $tanggal = '2025-03-03';
+        $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', $tanggal)->orderBy('nama', 'asc') // 'asc' untuk ascending (A-Z), 'desc' untuk descending (Z-A)
+            ->get();
+        $pdf = PDF::loadView('admin.laporan.haribesarpdf', compact('data', 'tanggal'));
+        return $pdf->stream();
+    }
     public function laporan24feb2025semua()
     {
         return Excel::download(new AbsensiExport, 'absensi24feb2025.xlsx');
