@@ -23,10 +23,13 @@ class HomeController extends Controller
     public function laporan17feb2025()
     {
 
-        $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', '2025-02-17')->orderBy('nama', 'asc') // 'asc' untuk ascending (A-Z), 'desc' untuk descending (Z-A)
-            ->get();
-        $pdf = PDF::loadView('admin.laporan.korpripdf', compact('data'));
-        return $pdf->stream();
+        $tanggal = '2025-02-24';
+        return Excel::download(new AbsensiExport($tanggal), 'absensi24feb2025.xlsx');
+
+        // $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', '2025-02-17')->orderBy('nama', 'asc') // 'asc' untuk ascending (A-Z), 'desc' untuk descending (Z-A)
+        //     ->get();
+        // $pdf = PDF::loadView('admin.laporan.korpripdf', compact('data'));
+        // return $pdf->stream();
     }
     public function laporan24feb2025()
     {
