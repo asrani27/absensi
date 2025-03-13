@@ -15,6 +15,9 @@
                 <th>{{Auth::user()->skpd->nama}}</th>
             </tr>
             <tr>
+                <th>Tanggal : {{\Carbon\Carbon::parse($tanggal)->format('d M Y')}}</th>
+            </tr>
+            <tr>
                 <th>NO</th>
                 <th>NIP</th>
                 <th>NAMA</th>
@@ -32,7 +35,8 @@
                 <td>'{{ $item->nip }}</td>
                 <td>{{ strtoupper($item->nama) }}</td>
                 <td>{{ $item->skpd == null ? null : strtoupper($item->skpd->nama) }}</td>
-                <td>{{ strtoupper($item->puskesmas == null ? null : $item->puskesmas->nama) }}</td>
+                <td>{{$item->puskesmas_id}} {{ strtoupper($item->puskesmas == null ? null : $item->puskesmas->nama) }}
+                </td>
                 {{-- <td>{{ \Carbon\Carbon::parse($item->jam_masuk)->format('H:i:s') }}</td> --}}
                 <td>
                     @if ($item->jam_masuk_hari_besar == null)

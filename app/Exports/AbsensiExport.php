@@ -24,7 +24,8 @@ class AbsensiExport implements FromView, ShouldAutoSize
 
     public function view(): View
     {
+        $tanggal = $this->tanggal;
         $presensi = Presensi::where('tanggal', $this->tanggal)->where('skpd_id', Auth::user()->skpd->id)->orderBy('skpd_id', 'ASC')->orderBy('puskesmas_id', 'ASC')->get();
-        return view('exports.presensi', compact('presensi'));
+        return view('exports.presensi', compact('presensi', 'tanggal'));
     }
 }
