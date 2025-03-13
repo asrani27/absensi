@@ -22,7 +22,7 @@ class Presensi extends Model
     }
     public function puskemas()
     {
-        return $this->belongsTo(Puskesmas::class, 'puskemas_id');
+        return $this->belongsTo(Puskesmas::class, 'puskesmas_id');
     }
     public function lokasiabsenmasuk()
     {
