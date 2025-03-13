@@ -20,7 +20,7 @@ class Presensi extends Model
     {
         return $this->belongsTo(Skpd::class, 'skpd_id');
     }
-    public function puskemas()
+    public function puskesmas()
     {
         return $this->belongsTo(Puskesmas::class, 'puskesmas_id');
     }
