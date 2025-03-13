@@ -5,6 +5,7 @@ namespace App\Exports;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
