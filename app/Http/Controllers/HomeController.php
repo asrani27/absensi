@@ -23,8 +23,8 @@ class HomeController extends Controller
     public function laporan17feb2025()
     {
 
-        $tanggal = '2025-02-24';
-        return Excel::download(new AbsensiExport($tanggal), 'absensi24feb2025.xlsx');
+        $tanggal = '2025-02-17';
+        return Excel::download(new AbsensiExport($tanggal), 'absensi17feb2025.xlsx');
 
         // $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', '2025-02-17')->orderBy('nama', 'asc') // 'asc' untuk ascending (A-Z), 'desc' untuk descending (Z-A)
         //     ->get();
@@ -34,19 +34,23 @@ class HomeController extends Controller
     public function laporan24feb2025()
     {
 
-        $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', '2025-02-24')->orderBy('nama', 'asc') // 'asc' untuk ascending (A-Z), 'desc' untuk descending (Z-A)
-            ->get();
-        $pdf = PDF::loadView('admin.laporan.haribesarpdf', compact('data'));
-        return $pdf->stream();
+        $tanggal = '2025-02-24';
+        return Excel::download(new AbsensiExport($tanggal), 'absensi24feb2025.xlsx');
+        // $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', '2025-02-24')->orderBy('nama', 'asc') // 'asc' untuk ascending (A-Z), 'desc' untuk descending (Z-A)
+        //     ->get();
+        // $pdf = PDF::loadView('admin.laporan.haribesarpdf', compact('data'));
+        // return $pdf->stream();
     }
     public function laporan3mar2025()
     {
 
         $tanggal = '2025-03-03';
-        $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', $tanggal)->orderBy('nama', 'asc') // 'asc' untuk ascending (A-Z), 'desc' untuk descending (Z-A)
-            ->get();
-        $pdf = PDF::loadView('admin.laporan.haribesarpdf', compact('data', 'tanggal'));
-        return $pdf->stream();
+        return Excel::download(new AbsensiExport($tanggal), 'absensi03Mar2025.xlsx');
+        // $tanggal = '2025-03-03';
+        // $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', $tanggal)->orderBy('nama', 'asc') // 'asc' untuk ascending (A-Z), 'desc' untuk descending (Z-A)
+        //     ->get();
+        // $pdf = PDF::loadView('admin.laporan.haribesarpdf', compact('data', 'tanggal'));
+        // return $pdf->stream();
     }
     public function laporan24feb2025semua()
     {
