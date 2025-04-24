@@ -90,7 +90,7 @@ class PresensiController extends Controller
 
         // Batasan waktu absensi
         $startTime = '06:00';
-        $startTime2 = '08:25';
+        $startTime2 = '08:00';
         $endTime = '20:00';
         $endTime2 = '09:15';
 
@@ -98,7 +98,7 @@ class PresensiController extends Controller
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
                 return response()->json([
                     'message_error' => 200,
-                    'message' => 'Hanya bisa absen mulai 08:25 s/d 09:15 WITA'
+                    'message' => 'Lokasi ini Hanya bisa absen mulai pukul 08:00 WITA'
                 ]);
             } else {
 
