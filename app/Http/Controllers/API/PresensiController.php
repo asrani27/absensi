@@ -89,7 +89,7 @@ class PresensiController extends Controller
         $currentTime = Carbon::now()->format('H:i');
 
         // Batasan waktu absensi
-        $startTime = '06:00';
+        $startTime = '01:00';
         $startTime2 = '08:00';
         $endTime = '20:00';
         $endTime2 = '09:15';
