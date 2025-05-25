@@ -82,6 +82,112 @@ class PresensiController extends Controller
         return response()->json($data);
     }
 
+    public function presensiSekarang(Request $req)
+    {
+        $pegawai = Auth::user()->pegawai;
+        $today = Carbon::now()->format('Y-m-d');
+        $currentTime = Carbon::now()->format('H:i');
+
+        // Batasan waktu absensi
+        $startTime = '06:00';
+        $startTime2 = '08:00';
+        $endTime = '20:00';
+        $endTime2 = '09:15';
+
+        if ($req->id_lokasi == 1599) {
+            if ($currentTime < $startTime2 || $currentTime > $endTime2) {
+                return response()->json([
+                    'message_error' => 200,
+                    'message' => 'Lokasi ini Hanya bisa absen mulai pukul 08:00 WITA'
+                ]);
+            } else {
+
+                $lokasi = Lokasi::find($req->id_lokasi);
+                $myLocation['lat'] = $req->myLat;
+                $myLocation['long'] = $req->myLong;
+                $param['nip']               = $pegawai->nip;
+                $param['skpd_id']           = $pegawai->skpd_id;
+                $param['puskesmas_id']      = $pegawai->puskesmas_id;
+                $param['sekolah_id']        = $pegawai->sekolah_id;
+                $param['jenis_presensi']    = $pegawai->jenis_presensi;
+                $param['latlong_masuk']     = json_encode($myLocation);
+                $param['id_lokasi_masuk']   = $lokasi->id;
+                $param['nama_lokasi_masuk'] = $lokasi->nama;
+                $param['tanggal']           = $today;
+                $param['jam_masuk_hari_besar'] = Carbon::now()->format('Y-m-d H:i:s');
+                $param['request']           = $req->all();
+
+                $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
+                if ($check == null) {
+                    $param['jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
+                    Presensi::create($param);
+                    $data['message_error'] = 200;
+                    $data['message']       = 'Berhasil Di Simpan, presensi hari besar tidak di tampilkan di beranda anda';
+                } else {
+                    if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
+                        $check->update($param);
+                        if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i') == '00:00') {
+                            $check->update(['jam_masuk' => Carbon::now()->format('Y-m-d H:i:s')]);
+                        }
+                        $data['message_error'] = 200;
+                        $data['message']       = 'Presensi Masuk Berhasil Di Update, presensi hari besar tidak di tampilkan di beranda anda';
+                    } else {
+                        $data['message_error'] = 200;
+                        $data['message']       = 'Anda Sudah Absen, presensi hari besar tidak di tampilkan di beranda anda';
+                    }
+                }
+
+                return response()->json($data);
+            }
+        }
+
+        if ($pegawai->jenis_presensi == 1) {
+            if ($currentTime < $startTime || $currentTime > $endTime) {
+                return response()->json([
+                    'message_error' => 200,
+                    'message' => 'Presensi hanya bisa dilakukan antara jam 06:00 hingga 20:00'
+                ]);
+            }
+        }
+
+        $lokasi = Lokasi::find($req->id_lokasi);
+        $myLocation['lat'] = $req->myLat;
+        $myLocation['long'] = $req->myLong;
+        $param['nip']               = $pegawai->nip;
+        $param['skpd_id']           = $pegawai->skpd_id;
+        $param['puskesmas_id']      = $pegawai->puskesmas_id;
+        $param['sekolah_id']        = $pegawai->sekolah_id;
+        $param['jenis_presensi']    = $pegawai->jenis_presensi;
+        $param['latlong_masuk']     = json_encode($myLocation);
+        $param['id_lokasi_masuk']   = $lokasi->id;
+        $param['nama_lokasi_masuk'] = $lokasi->nama;
+        $param['tanggal']           = $today;
+        //$param['jam_masuk']         = Carbon::now()->format('Y-m-d H:i:s');
+        $param['request']           = $req->all();
+
+        $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
+        if ($check == null) {
+            $param['jam_masuk']     = Carbon::now()->format('Y-m-d H:i:s');
+            Presensi::create($param);
+            $data['message_error'] = 200;
+            $data['message']       = 'Berhasil Di Simpan';
+        } else {
+            if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i:s') == '00:00:00') {
+                $param['jam_masuk']      = Carbon::now()->format('Y-m-d H:i:s');
+                $check->update($param);
+                $data['message_error']   = 200;
+                $data['message']         = 'Presensi Masuk Berhasil Di Update';
+            } else {
+                $param['jam_pulang']     = Carbon::now()->format('Y-m-d H:i:s');
+                $check->update($param);
+                $data['message_error']   = 200;
+                $data['message']         =  'Presensi Pulang Berhasil Di Update';
+            }
+        }
+
+        return response()->json($data);
+    }
+
     public function absenMasuk(Request $req)
     {
         $pegawai = Auth::user()->pegawai;
@@ -145,7 +251,7 @@ class PresensiController extends Controller
             if ($currentTime < $startTime || $currentTime > $endTime) {
                 return response()->json([
                     'message_error' => 200,
-                    'message' => 'Absen Masuk hanya bisa dilakukan antara jam 06:00 hingga 20:00'
+                    'message' => 'Presensi hanya bisa dilakukan antara jam 06:00 hingga 20:00'
                 ]);
             }
         }
