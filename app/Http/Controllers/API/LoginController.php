@@ -84,7 +84,7 @@ class LoginController extends Controller
                         return response()->json($data);
                     } else {
                         $data['message_error'] = 201;
-                        $data['message']       = 'Presensi hanya boleh single device, 1 nip 1 device, silahkan hub admin BKD untuk reset device';
+                        $data['message']       = 'Presensi hanya boleh single device, 1 nip 1 device, silahkan reset device ke BKD';
                         $data['data']          = null;
                         return response()->json($data);
                     }
@@ -108,11 +108,40 @@ class LoginController extends Controller
                 $token = $user->createToken('myapptoken')->plainTextToken;
             }
 
-            $data['message_error'] = 200;
-            $data['message']       = 'Data Ditemukan';
-            $data['data']          = Auth::user()->pegawai;
-            $data['api_token']     = $token;
-            return response()->json($data);
+            if ($user->android_id == null) {
+                //check device digunakan oleh nip lain
+                $checkDevice = User::where('android_id', $req->android_id)->first();
+                if ($checkDevice == null) {
+                    $user->update([
+                        'android_id' => $req->android_id,
+                        'device_info' => $req->device_info,
+                    ]);
+
+                    $data['message_error'] = 200;
+                    $data['message']       = 'Data Ditemukan';
+                    $data['data']          = Auth::user()->pegawai;
+                    $data['api_token']     = $token;
+                    return response()->json($data);
+                } else {
+                    $data['message_error'] = 201;
+                    $data['message']       = 'Device Ini telah di gunakan oleh ' . $checkDevice->name;
+                    $data['data']          = null;
+                    return response()->json($data);
+                }
+            } else {
+                if ($user->username == $req->username && $user->android_id == $req->android_id) {
+                    $data['message_error'] = 200;
+                    $data['message']       = 'Data Ditemukan';
+                    $data['data']          = Auth::user()->pegawai;
+                    $data['api_token']     = $token;
+                    return response()->json($data);
+                } else {
+                    $data['message_error'] = 201;
+                    $data['message']       = 'Presensi hanya boleh single device, 1 nip 1 device, silahkan reset device ke BKD';
+                    $data['data']          = null;
+                    return response()->json($data);
+                }
+            }
         } else {
             $data['message_error'] = 201;
             $data['message']       = 'username atau password anda tidak ditemukan';
