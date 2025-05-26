@@ -108,13 +108,13 @@ class LoginController extends Controller
                 $token = $user->createToken('myapptoken')->plainTextToken;
             }
 
-            if ($user->android_id == null) {
+            if ($user->device_id == null) {
                 //check device digunakan oleh nip lain
-                $checkDevice = User::where('android_id', $req->android_id)->first();
+                $checkDevice = User::where('android_id', $req->device_id)->first();
                 if ($checkDevice == null) {
                     $user->update([
-                        'android_id' => $req->android_id,
-                        'device_info' => $req->device_info,
+                        'android_id' => $req->device_id,
+                        'device_info' => $req->device_id,
                     ]);
 
                     $data['message_error'] = 200;
@@ -129,7 +129,7 @@ class LoginController extends Controller
                     return response()->json($data);
                 }
             } else {
-                if ($user->username == $req->username && $user->android_id == $req->android_id) {
+                if ($user->username == $req->username && $user->android_id == $req->device_id) {
                     $data['message_error'] = 200;
                     $data['message']       = 'Data Ditemukan';
                     $data['data']          = Auth::user()->pegawai;
