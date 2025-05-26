@@ -108,7 +108,7 @@ class LoginController extends Controller
                 $token = $user->createToken('myapptoken')->plainTextToken;
             }
 
-            if ($user->device_id == null) {
+            if ($user->android_id == null) {
                 //check device digunakan oleh nip lain
                 $checkDevice = User::where('android_id', $req->device_id)->first();
                 if ($checkDevice == null) {
