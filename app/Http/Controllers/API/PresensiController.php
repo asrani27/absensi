@@ -374,6 +374,7 @@ class PresensiController extends Controller
     public function presensiToday()
     {
         $nip = Auth::user()->pegawai->nip;
+
         $absensi = Presensi::where('nip', $nip)->where('tanggal', Carbon::now()->format('d-m-Y'))->get()->map(function ($item) {
             $item->tanggal =  Carbon::parse($item->tanggal)->format('d M Y');
             $item->jam_masuk = $item->jam_masuk == null ? null : Carbon::parse($item->jam_masuk)->format('H:i');
@@ -383,7 +384,7 @@ class PresensiController extends Controller
 
         $data['message_error'] = 200;
         $data['message']       = 'Data Ditemukan';
-        $data['data']          = $absensi;
+        $data['data']          = Carbon::now()->format('d-m-Y');
         return response()->json($data);
     }
 
