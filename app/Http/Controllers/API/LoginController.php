@@ -124,7 +124,7 @@ class LoginController extends Controller
                     return response()->json($data);
                 } else {
                     $data['message_error'] = 201;
-                    $data['message']       = 'Device Ini telah di gunakan oleh ' . $checkDevice->name;
+                    $data['message']       = 'Device Ini telah di gunakan oleh ' . $checkDevice->name .  $req->device_id;
                     $data['data']          = null;
                     return response()->json($data);
                 }
