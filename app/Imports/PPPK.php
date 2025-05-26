@@ -35,6 +35,8 @@ class PPPK implements ToModel, WithStartRow
         $param['pangkat'] = $row[3];
         $param['skpd_id'] = 14;
         $param['status_asn'] = 'PPPK';
+        $param['jenis_presensi'] = 1;
+        $param['is_aktif'] = 1;
 
         $p = Pegawai::create($param);
 
