@@ -43,19 +43,30 @@ class PPPK implements ToModel, WithStartRow
 
         $rolePegawai = Role::where('name', 'pegawai')->first();
 
-        $u = new User;
-        $u->name = $row[2];
-        $u->username = $row[1];
-        $u->password = bcrypt('pppk');
-        $u->save();
-        $user_id = $u->id;
+        $checkUser = User::where('username', $row[1])->first();
+        if ($checkUser == null) {
 
-        $update = $p;
-        $update->user_id = $user_id;
-        $update->save();
+            $u = new User;
+            $u->name = $row[2];
+            $u->username = $row[1];
+            $u->password = bcrypt('pppk');
+            $u->save();
+            $user_id = $u->id;
+
+            $update = $p;
+            $update->user_id = $user_id;
+            $update->save();
+            $u->roles()->attach($rolePegawai);
+        } else {
+            $update = $p;
+            $update->user_id = $checkUser->id;
+            $update->status_asn = 'PPPK';
+            $update->jenis_presensi = 1;
+            $update->is_aktif = 1;
+            $update->save();
+        }
 
 
-        $u->roles()->attach($rolePegawai);
         $this->command->info("✔️ Berhasil import: {$row[1]} ({$row[0]})");
     }
 }
