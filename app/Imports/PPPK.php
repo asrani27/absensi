@@ -29,11 +29,12 @@ class PPPK implements ToModel, WithStartRow
     }
     public function model(array $row)
     {
-        $param['nip'] = $row[0];
-        $param['nama'] = $row[1];
-        $param['jabatan'] = $row[2];
-        $param['pangkat'] = $row[3];
-        $param['skpd_id'] = 14;
+
+        $param['nip'] = $row[1];
+        $param['nama'] = $row[2];
+        $param['jabatan'] = '-';
+        $param['pangkat'] = '-';
+        $param['skpd_id'] = $row[3];
         $param['status_asn'] = 'PPPK';
         $param['jenis_presensi'] = 1;
         $param['is_aktif'] = 1;
@@ -43,8 +44,8 @@ class PPPK implements ToModel, WithStartRow
         $rolePegawai = Role::where('name', 'pegawai')->first();
 
         $u = new User;
-        $u->name = $row[1];
-        $u->username = $row[0];
+        $u->name = $row[2];
+        $u->username = $row[1];
         $u->password = bcrypt('pppk');
         $u->save();
         $user_id = $u->id;
