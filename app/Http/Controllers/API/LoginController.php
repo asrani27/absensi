@@ -15,8 +15,7 @@ class LoginController extends Controller
 {
     public function pppk()
     {
-        $data['message_error'] = 200;
-        $data['message']       = 'Berhasil Di ubah';
+        $data['code'] = 200;
         $data['data']          = Pegawai::where('status_asn', 'PPPK')->get()->map(function ($item) {
             $item->skpd = $item->skpd == null ? null : $item->skpd->nama;
             return $item;
