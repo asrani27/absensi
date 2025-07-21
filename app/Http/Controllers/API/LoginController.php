@@ -7,12 +7,19 @@ use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Pegawai;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-
+    public function pppk()
+    {
+        $data['message_error'] = 200;
+        $data['message']       = 'Berhasil Di ubah';
+        $data['data']          = Pegawai::where('status_asn', 'PPPK')->get();
+        return response()->json($data);
+    }
     public function gantipass(Request $req)
     {
         if (!Hash::check($req->password_lama, Auth::user()->password)) {

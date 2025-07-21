@@ -6,11 +6,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\LoginController;
 use App\Http\Controllers\API\PresensiController;
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/checkversion/{version}', [PresensiController::class, 'checkVersion']);
     Route::get('/user', [LoginController::class, 'user']);
@@ -31,3 +26,4 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::post('/newlogin', [LoginController::class, 'newlogin']);
 Route::get('/testing', [LoginController::class, 'testing']);
 Route::get('/checkversion', [PresensiController::class, 'version']);
+Route::get('/pppk', [LoginController::class, 'pppk']);
