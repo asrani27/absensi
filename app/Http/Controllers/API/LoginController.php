@@ -17,7 +17,9 @@ class LoginController extends Controller
     {
         $data['message_error'] = 200;
         $data['message']       = 'Berhasil Di ubah';
-        $data['data']          = Pegawai::where('status_asn', 'PPPK')->get();
+        $data['data']          = Pegawai::where('status_asn', 'PPPK')->get()->map(function ($item) {
+            return $item->skpd = $item->skpd == null ? null : $item->skpd->nama;
+        });
         return response()->json($data);
     }
     public function gantipass(Request $req)

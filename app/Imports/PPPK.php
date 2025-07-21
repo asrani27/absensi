@@ -29,6 +29,7 @@ class PPPK implements ToModel, WithStartRow
     }
     public function model(array $row)
     {
+        dd($row);
 
         $param['nip'] = $row[1];
         $param['nama'] = $row[2];

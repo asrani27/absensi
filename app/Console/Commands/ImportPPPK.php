@@ -40,13 +40,13 @@ class ImportPPPK extends Command
      */
     public function handle()
     {
-        Pegawai::where('status_asn', 'PPPK')->get()->each(function ($item) {
-            if ($item->user) {
-                $item->user->delete();
-            }
-            $item->lokasiPegawai()->delete();
-        });
-        Pegawai::where('status_asn', 'PPPK')->delete();
+        // Pegawai::where('status_asn', 'PPPK')->get()->each(function ($item) {
+        //     if ($item->user) {
+        //         $item->user->delete();
+        //     }
+        //     $item->lokasiPegawai()->delete();
+        // });
+        // Pegawai::where('status_asn', 'PPPK')->delete();
         $skpd = public_path('excel/PPPK_ID.xlsx');
         Excel::import(new PPPK($this), $skpd);
     }
