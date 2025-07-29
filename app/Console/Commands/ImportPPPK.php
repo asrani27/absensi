@@ -47,7 +47,7 @@ class ImportPPPK extends Command
         //     $item->lokasiPegawai()->delete();
         // });
         // Pegawai::where('status_asn', 'PPPK')->delete();
-        $skpd = public_path('excel/PPPK_ID.xlsx');
+        $skpd = public_path('excel/PPPK_jabatan.xlsx');
         Excel::import(new PPPK($this), $skpd);
     }
 }
