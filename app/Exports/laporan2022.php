@@ -22,7 +22,7 @@ class laporan2022 implements FromView, WithEvents
 
         // Ambil data ringkasan yang relevan sekaligus untuk semua pegawai pada tahun 2023 dan seluruh bulan (Januari - Desember)
         $ringkasan = Ringkasan::whereIn('nip', $pegawai->pluck('nip'))
-            ->where('tahun', '2024')
+            ->where('tahun', '2022')
             ->whereIn('bulan', ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'])  // Menyaring untuk bulan 01 sampai 12
             ->get()
             ->keyBy(function ($item) {
