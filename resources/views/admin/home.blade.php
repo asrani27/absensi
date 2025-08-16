@@ -39,15 +39,9 @@
             <div class="card-header">
             </div>
             <div class="card-body">
-                <a href="/laporan17feb2025" class="btn btn-md btn-success" target="_blank"><i class="fas fa-file"></i>
+                <a href="/laporanharibesar" class="btn btn-md btn-success" target="_blank"><i class="fas fa-file"></i>
                     Laporan
-                    PRESENSI 17 FEBRUARI 2025</a><br /><br />
-                <a href="/laporan24feb2025" class="btn btn-md btn-success" target="_blank"><i class="fas fa-file"></i>
-                    Laporan
-                    PRESENSI 24 FEBRUARI 2025</a>
-                <a href="/laporan3mar2025" class="btn btn-md btn-success" target="_blank"><i class="fas fa-file"></i>
-                    Laporan
-                    PRESENSI 3 MARET 2025</a>
+                    Presensi 17 Agustus 2025</a>
             </div>
         </div>
     </div>

@@ -300,7 +300,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin|admin|pegawai|puskesmas'
     Route::get('/home/admin', [HomeController::class, 'admin']);
     Route::get('/home/pegawai', [HomeController::class, 'pegawai']);
     Route::get('/home/puskesmas', [HomeController::class, 'puskesmas']);
-    Route::get('/laporan17feb2025', [HomeController::class, 'laporan17feb2025']);
+    Route::get('/laporanharibesar', [HomeController::class, 'laporan17feb2025']);
     Route::get('/laporan24feb2025', [HomeController::class, 'laporan24feb2025']);
     Route::get('/laporan24feb2025semua', [HomeController::class, 'laporan24feb2025semua']);
     Route::get('/laporan3mar2025', [HomeController::class, 'laporan3mar2025']);
