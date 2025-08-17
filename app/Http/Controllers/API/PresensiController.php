@@ -123,7 +123,7 @@ class PresensiController extends Controller
                     $param['jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
                     Presensi::create($param);
                     $data['message_error'] = 200;
-                    $data['message']       = 'Berhasil Di Simpan, presensi hari besar tidak di tampilkan di beranda anda';
+                    $data['message']       = 'Berhasil Di Simpan';
                 } else {
                     if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
                         $check->update($param);
