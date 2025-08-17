@@ -133,7 +133,7 @@ class PresensiController extends Controller
                         $data['message']       = 'Presensi Masuk Berhasil Di Update';
                     } else {
                         $check->update([
-                            'jam_pulang' =>  Carbon::now()->format('Y-m-d H:i:s');
+                            'jam_pulang' =>  Carbon::now()->format('Y-m-d H:i:s'),
                         ]);
                         $data['message_error'] = 200;
                         $data['message']       = 'absen pulang berhasil di simpan';
