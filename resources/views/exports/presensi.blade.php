@@ -12,10 +12,10 @@
     <table>
         <thead>
             <tr>
-                <th>{{Auth::user()->skpd->nama}}</th>
+                <th colspan="7">{{Auth::user()->skpd->nama}}</th>
             </tr>
             <tr>
-                <th>Tanggal : {{\Carbon\Carbon::parse($tanggal)->format('d M Y')}}</th>
+                <th colspan="7">Tanggal : {{\Carbon\Carbon::parse($tanggal)->format('d M Y')}}</th>
             </tr>
             <tr>
                 <th>NO</th>
