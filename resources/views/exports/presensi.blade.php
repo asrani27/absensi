@@ -24,7 +24,8 @@
                 <th>SKPD</th>
                 <th>PUSKESMAS</th>
                 {{-- <th>ABSEN HARIAN</th> --}}
-                <th>ABSEN HARI BESAR</th>
+                <th>ABSEN PAGI</th>
+                <th>ABSEN SORE</th>
                 <th>LOKASI</th>
             </tr>
         </thead>
@@ -44,6 +45,9 @@
                     @else
                     {{ \Carbon\Carbon::parse($item->jam_masuk_hari_besar)->format('H:i:s') }}
                     @endif
+                </td>
+                <td>
+                    {{ \Carbon\Carbon::parse($item->jam_pulang)->format('H:i:s') }}
                 </td>
                 <td>{{$item->jam_masuk_hari_besar == null ? null : 'HALAMAN BALAI KOTA'}}</td>
             </tr>
