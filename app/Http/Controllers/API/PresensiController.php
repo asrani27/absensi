@@ -92,7 +92,7 @@ class PresensiController extends Controller
         $startTime = '06:00';
         $startTime2 = '08:00';
         $endTime = '20:00';
-        $endTime2 = '12:15';
+        $endTime2 = '18:15';
 
         if ($req->id_lokasi == 1599) {
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
@@ -114,7 +114,6 @@ class PresensiController extends Controller
                 $param['id_lokasi_masuk']   = $lokasi->id;
                 $param['nama_lokasi_masuk'] = $lokasi->nama;
                 $param['tanggal']           = $today;
-                $param['jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
                 $param['jam_masuk_hari_besar'] = Carbon::now()->format('Y-m-d H:i:s');
                 $param['request']           = $req->all();
 
@@ -133,8 +132,12 @@ class PresensiController extends Controller
                         $data['message_error'] = 200;
                         $data['message']       = 'Presensi Masuk Berhasil Di Update';
                     } else {
+
+                        $check->update([
+                            'jam_pulang_hari_besar' =>  Carbon::now()->format('Y-m-d H:i:s');
+                        ]);
                         $data['message_error'] = 200;
-                        $data['message']       = 'Anda Sudah Absen';
+                        $data['message']       = 'absen sore berhasil di simpan';
                     }
                 }
 
@@ -197,15 +200,15 @@ class PresensiController extends Controller
 
         // Batasan waktu absensi
         $startTime = '06:00';
-        $startTime2 = '16:30';
+        $startTime2 = '08:00';
         $endTime = '20:00';
-        $endTime2 = '18:15';
+        $endTime2 = '12:15';
 
         if ($req->id_lokasi == 1599) {
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
                 return response()->json([
                     'message_error' => 200,
-                    'message' => 'Lokasi ini Hanya bisa absen mulai pukul 16:30 WITA'
+                    'message' => 'Lokasi ini Hanya bisa absen mulai pukul 08:00 WITA'
                 ]);
             } else {
 
