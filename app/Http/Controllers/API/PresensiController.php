@@ -221,6 +221,7 @@ class PresensiController extends Controller
                 $param['id_lokasi_masuk']   = $lokasi->id;
                 $param['nama_lokasi_masuk'] = $lokasi->nama;
                 $param['tanggal']           = $today;
+                $param['jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
                 $param['jam_masuk_hari_besar'] = Carbon::now()->format('Y-m-d H:i:s');
                 $param['request']           = $req->all();
 
