@@ -92,7 +92,7 @@ class PresensiController extends Controller
         $startTime = '06:00';
         $startTime2 = '08:00';
         $endTime = '20:00';
-        $endTime2 = '10:15';
+        $endTime2 = '12:15';
 
         if ($req->id_lokasi == 1599) {
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
