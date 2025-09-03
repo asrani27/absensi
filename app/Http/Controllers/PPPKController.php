@@ -3,62 +3,27 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Jam;
-use App\Models\Jam6;
-use App\Models\Role;
 use App\Models\User;
-use App\Jobs\SyncUrut;
 use App\Models\Lokasi;
-use GuzzleHttp\Client;
 use App\Models\Pegawai;
-use App\Models\Presensi;
-use App\Models\Ramadhan;
-use Carbon\CarbonPeriod;
-use App\Jobs\SyncPegawai;
 use App\Models\Puskesmas;
-use App\Models\JamRamadhan;
-use App\Models\Jam6Ramadhan;
 use Illuminate\Http\Request;
-use App\Models\LiburNasional;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
-class PegawaiController extends Controller
-
+class PPPKController extends Controller
 {
+
     public function index()
     {
-        $data = Pegawai::where('skpd_id', $this->skpd()->id)->where('status_asn', null)->orderBy('urutan', 'DESC')->paginate(10);
+        $data = Pegawai::where('skpd_id', $this->skpd()->id)->where('status_asn', 'PPPK')->orderBy('urutan', 'DESC')->paginate(10);
         $puskesmas = Puskesmas::get();
-        return view('admin.pegawai.index', compact('data', 'puskesmas'));
+        return view('admin.pppk.index', compact('data', 'puskesmas'));
     }
 
     public function skpd()
     {
         return Auth::user()->skpd;
     }
-
-    public function sync()
-    {
-        $client = new Client(['base_uri' => 'https://tpp.banjarmasinkota.go.id/api/pegawai/skpd/']);
-        $response = $client->request('get', $this->skpd()->kode_skpd, ['verify' => false]);
-        $data =  json_decode($response->getBody())->data;
-
-        DB::beginTransaction();
-        try {
-            foreach ($data as $item) {
-                SyncPegawai::dispatch($item);
-            }
-            DB::commit();
-            toastr()->success('Sinkronisasi Berhasil');
-            return back();
-        } catch (\Exception $e) {
-            DB::rollback();
-            toastr()->error('Sinkronisasi Gagal');
-            return back();
-        }
-    }
-
     public function search()
     {
         $skpd_id = Auth::user()->skpd->id;
@@ -131,7 +96,7 @@ class PegawaiController extends Controller
     {
         $data = Pegawai::find($id);
         $lokasi = Lokasi::where('skpd_id', $this->skpd()->id)->get();
-        return view('admin.pegawai.lokasi', compact('data', 'lokasi'));
+        return view('admin.pppk.lokasi', compact('data', 'lokasi'));
     }
 
     public function editlokasi($id)
@@ -140,7 +105,7 @@ class PegawaiController extends Controller
 
         $data = Pegawai::find($id);
         $lokasi = Lokasi::where('skpd_id', $this->skpd()->id)->get();
-        return view('admin.pegawai.editlokasi', compact('data', 'lokasi'));
+        return view('admin.pppk.editlokasi', compact('data', 'lokasi'));
     }
 
     public function storeLokasi(Request $req, $id)
@@ -149,7 +114,7 @@ class PegawaiController extends Controller
             'lokasi_id' => $req->lokasi_id,
         ]);
         toastr()->success('Lokasi Presensi Berhasil Di Update');
-        return redirect('/admin/pegawai');
+        return redirect('/admin/pppk');
     }
 
     public function updateLokasi(Request $req, $id)
@@ -158,7 +123,7 @@ class PegawaiController extends Controller
             'lokasi_id' => $req->lokasi_id,
         ]);
         toastr()->success('Lokasi Presensi Berhasil Di Update');
-        return redirect('/admin/pegawai');
+        return redirect('/admin/pppk');
     }
 
     public function presensi($id)
@@ -168,7 +133,7 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::find($id);
         $data = null;
 
-        return view('admin.pegawai.presensi', compact('pegawai', 'data', 'id'));
+        return view('admin.pppk.presensi', compact('pegawai', 'data', 'id'));
     }
 
     public function tampilkanPresensi($id)
@@ -179,7 +144,7 @@ class PegawaiController extends Controller
         $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderBy('tanggal', 'ASC')->get();
         request()->flash();
 
-        return view('admin.pegawai.presensi', compact('data', 'pegawai'));
+        return view('admin.pppk.presensi', compact('data', 'pegawai'));
     }
 
     public function sortir()
@@ -221,7 +186,7 @@ class PegawaiController extends Controller
         $this->authorize('edit', Pegawai::find($id));
 
         $data = Pegawai::find($id);
-        return view('admin.pegawai.jenispresensi', compact('data'));
+        return view('admin.pppk.jenispresensi', compact('data'));
     }
 
     public function simpanjenispresensi(Request $req, $id)
@@ -230,7 +195,7 @@ class PegawaiController extends Controller
             'jenis_presensi' => $req->jenis_presensi,
         ]);
         toastr()->success('Jenis Presensi Berhasil Di Update');
-        return redirect('/admin/pegawai');
+        return redirect('/admin/pppk');
     }
 
     public function pegawaiPuskesmas(Request $req)
@@ -245,7 +210,7 @@ class PegawaiController extends Controller
         $data->appends(['puskesmas_id' => $puskesmas])->links();
         $puskesmas = Puskesmas::get();
         $req->flash();
-        return view('admin.pegawai.index', compact('data', 'puskesmas'));
+        return view('admin.pppk.index', compact('data', 'puskesmas'));
     }
 
     public function detailPresensi($id, $bulan, $tahun)
@@ -257,13 +222,13 @@ class PegawaiController extends Controller
             return $item;
         });
         //dd($data, LiburNasional::where('tanggal', '2023-05-01')->get());
-        return view('admin.pegawai.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
+        return view('admin.pppk.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
     }
 
     public function editPresensi($id, $bulan, $tahun, $id_presensi)
     {
         $data = Presensi::find($id_presensi);
-        return view('admin.pegawai.editpresensi', compact('data', 'id', 'bulan', 'tahun'));
+        return view('admin.pppk.editpresensi', compact('data', 'id', 'bulan', 'tahun'));
     }
 
     public function updatePresensi(Request $req, $id, $bulan, $tahun, $id_presensi)
@@ -416,7 +381,7 @@ class PegawaiController extends Controller
         }
 
         toastr()->success('Berhasil Di Ubah');
-        return redirect('/admin/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
+        return redirect('/admin/pppk/' . $id . '/presensi/' . $bulan . '/' . $tahun);
     }
 
     public function generateTanggal($id, $bulan, $tahun)

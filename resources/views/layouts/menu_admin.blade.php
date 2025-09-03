@@ -35,6 +35,14 @@
             </a>
         </li>
         <li class="nav-item">
+            <a href="/admin/pppk" class="nav-link {{Request::is('admin/pppk') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                    PPPK
+                </p>
+            </a>
+        </li>
+        <li class="nav-item">
             <a href="/admin/perubahandata" class="nav-link {{Request::is('admin/perubahandata') ? 'active' : ''}}">
                 <i class="nav-icon fas fa-history"></i>
                 <p>

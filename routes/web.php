@@ -27,6 +27,7 @@ use App\Http\Controllers\LiburNasionalController;
 use App\Http\Controllers\JenisKeteranganController;
 use App\Http\Controllers\LossController;
 use App\Http\Controllers\ModController;
+use App\Http\Controllers\PPPKController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -152,6 +153,19 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('perubahandata', [PerbaikanController::class, 'index']);
 
         Route::get('pegawai/{id}/presensi/tampilkan', [PegawaiController::class, 'tampilkanPresensi']);
+
+        Route::get('pppk/{id}/editlokasi', [PPPKController::class, 'editlokasi']);
+        Route::post('pppk/{id}/editlokasi', [PPPKController::class, 'updateLokasi']);
+        Route::get('pppk/{id}/jenispresensi', [PPPKController::class, 'jenispresensi']);
+        Route::post('pppk/{id}/jenispresensi', [PPPKController::class, 'simpanjenispresensi']);
+        Route::get('pppk/{id}/presensi', [PPPKController::class, 'presensi']);
+        Route::get('pppk/{id}/presensi/generate/{bulan}/{tahun}', [PPPKController::class, 'generateTanggal']);
+        Route::get('pppk/{id}/presensi/{bulan}/{tahun}', [PPPKController::class, 'detailPresensi']);
+        Route::get('pppk/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PPPKController::class, 'editPresensi']);
+        Route::post('pppk/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PPPKController::class, 'updatePresensi']);
+        Route::get('pppk/{id}/resetpass', [PPPKController::class, 'resetpass']);
+
+        Route::resource('pppk', PPPKController::class);
         Route::resource('pegawai', PegawaiController::class);
         Route::get('qrcode/generate', [QrcodeController::class, 'generateQrcode']);
         Route::get('qrcode/tampil/{id}', [QrcodeController::class, 'tampilQr']);
