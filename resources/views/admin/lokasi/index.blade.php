@@ -44,7 +44,12 @@ ADMIN
                             <td>{{$item->alamat}}</td>
                             <td>{{$item->lat}}</td>
                             <td>{{$item->long}}</td>
+                            @if (Auth::user()->username == "2.12.01.")
+                            <td>{{$item->radius}} Meter</td>
+                            @else
                             <td>25 Meter</td>
+                            @endif
+
                             <td>
 
                                 <form action="/admin/lokasi/{{$item->id}}" method="post">

@@ -68,8 +68,11 @@ EDIT LOKASI
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Radius Jangkauan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="radius" readonly
-                                        value="25">
+                                    @if (Auth::user()->username == "2.12.01.")
+                                    <input type="text" class="form-control" name="radius" value="{{$data->radius}}">
+                                    @else
+                                    <input type="text" class="form-control" name="radius" readonly value="25">
+                                    @endif
                                 </div>
                             </div>
 
@@ -95,6 +98,57 @@ EDIT LOKASI
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
 
+@if (Auth::user()->username == "2.12.01.")
+<script>
+    var latlng = {!! json_encode($latlong) !!}
+    var radius = {{$data->radius}}; // ambil radius dari database
+
+    var map = L.map('mapid').setView(latlng, 16);
+    googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{
+        maxZoom: 20,
+        subdomains:['mt0','mt1','mt2','mt3']
+    }).addTo(map);
+
+    // marker lokasi awal
+    var marker = L.marker([latlng.lat, latlng.lng]).addTo(map);
+
+    // lingkaran radius awal
+    var circle = L.circle([latlng.lat, latlng.lng], {
+        color: "blue",         // warna garis lingkaran
+        fillColor: "#3f8efc",  // warna dalam
+        fillOpacity: 0.3,      // transparansi
+        radius: radius         // dalam meter
+    }).addTo(map);
+
+    var theMarker = {};
+    var theCircle = circle; // simpan lingkaran biar bisa diganti saat klik
+
+    // event klik map
+    map.on('click', function(e) {
+        document.getElementById("lat").value = e.latlng.lat;
+        document.getElementById("long").value = e.latlng.lng;
+
+        // hapus marker lama
+        if (theMarker != undefined) {
+            map.removeLayer(theMarker);
+        }
+        theMarker = L.marker([e.latlng.lat,e.latlng.lng]).addTo(map);
+
+        // hapus lingkaran lama
+        if (theCircle != undefined) {
+            map.removeLayer(theCircle);
+        }
+        // tambahkan lingkaran baru sesuai posisi klik
+        theCircle = L.circle([e.latlng.lat, e.latlng.lng], {
+            color: "blue",
+            fillColor: "#3f8efc",
+            fillOpacity: 0.3,
+            radius: radius
+        }).addTo(map);
+    });
+</script>
+
+@else
 
 <script>
     var latlng = {!!json_encode($latlong)!!}
@@ -122,4 +176,5 @@ EDIT LOKASI
     });
     
 </script>
+@endif
 @endpush
