@@ -27,7 +27,7 @@ class HomeController extends Controller
     }
     public function spin()
     {
-        $pegawai = PresensiApel::with('skpd')
+        $pegawai = PresensiApel::with('skpd')->where('tanggal', Carbon::now()->format('Y-m-d'))
             ->inRandomOrder()
             ->limit(3)
             ->get(['id', 'nama', 'skpd_id']);
