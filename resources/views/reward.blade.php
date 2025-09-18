@@ -84,17 +84,23 @@
     $(".box-name").html('<div class="spinner"><i class="fas fa-spinner fa-spin"></i></div>');
     $(".box-instansi").html("");
 
-    $.get("{{ route('reward.spin.data') }}", function(data){
-      if(data.length === 3){
-        // tampilkan data bertahap
-        data.forEach((item, index) => {
-          setTimeout(() => {
-            let box = $(".info-box").eq(index).find(".info-box-content");
-            box.find(".box-name").text(item.nama);
-            box.find(".box-instansi").text(item.skpd);
-          }, (index+1) * 1000); // delay 1s, 2s, 3s
-        });
-      }
+   $.get("{{ route('reward.spin.data') }}", function(data){
+    // pastikan selalu 3 kotak diisi
+    for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+        let box = $(".info-box").eq(i).find(".info-box-content");
+
+        if (data[i]) {
+            // kalau ada data pegawai
+            box.find(".box-name").text(data[i].nama);
+            box.find(".box-instansi").text(data[i].skpd);
+        } else {
+            // kalau tidak ada data → strip
+            box.find(".box-name").text("-");
+            box.find(".box-instansi").text("-");
+        }
+        }, (i+1) * 1000); // delay bertahap 1s, 2s, 3s
+    }
     });
   });
 });
