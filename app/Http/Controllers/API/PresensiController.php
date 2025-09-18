@@ -96,6 +96,7 @@ class PresensiController extends Controller
         $endTime2 = '18:15';
 
         //presensi apel
+        return response()->json($req);
         if ($req->id_lokasi == 1957) {
             $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
             $lokasi = Lokasi::find($req->id_lokasi);
