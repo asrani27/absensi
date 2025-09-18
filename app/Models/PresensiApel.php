@@ -10,4 +10,8 @@ class PresensiApel extends Model
     use HasFactory;
     protected $table = 'presensi_apel';
     protected $guarded = ['id'];
+    public function skpd()
+    {
+        return $this->belongsTo(Skpd::class, 'skpd_id');
+    }
 }

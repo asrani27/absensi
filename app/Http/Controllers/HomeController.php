@@ -14,6 +14,7 @@ use App\Models\Ringkasan;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use App\Exports\AbsensiExport;
+use App\Models\PresensiApel;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -26,7 +27,7 @@ class HomeController extends Controller
     }
     public function spin()
     {
-        $pegawai = Pegawai::with('skpd')
+        $pegawai = PresensiApel::with('skpd')
             ->inRandomOrder()
             ->limit(3)
             ->get(['id', 'nama', 'skpd_id']);
