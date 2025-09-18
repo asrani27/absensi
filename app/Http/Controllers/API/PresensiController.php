@@ -96,7 +96,6 @@ class PresensiController extends Controller
         $endTime2 = '18:15';
 
         //presensi apel
-        return response()->json($req);
         if ($req->id_lokasi == 1957) {
             $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
             $lokasi = Lokasi::find($req->id_lokasi);
@@ -106,6 +105,7 @@ class PresensiController extends Controller
             $param['lokasi_id']         = $lokasi->id;
             $param['tanggal']           = $today;
             $param['jam_absen']         = Carbon::now()->format('Y-m-d H:i:s');
+            return response()->json($check);
             if ($check == null) {
                 PresensiApel::create($param);
                 $data['message_error'] = 200;
