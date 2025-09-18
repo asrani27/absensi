@@ -105,7 +105,6 @@ class PresensiController extends Controller
             $param['lokasi_id']         = $lokasi->id;
             $param['tanggal']           = $today;
             $param['jam_absen']         = Carbon::now()->format('Y-m-d H:i:s');
-            return response()->json($check);
             if ($check == null) {
                 PresensiApel::create($param);
                 $data['message_error'] = 200;
@@ -117,6 +116,7 @@ class PresensiController extends Controller
                 $data['message_error'] = 200;
                 $data['message']       = 'Presensi Apel berhasil di Update';
             }
+            return response()->json($data);
         }
         if ($req->id_lokasi == 1599) {
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
