@@ -20,6 +20,26 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class HomeController extends Controller
 {
+    public function reward()
+    {
+        return view('reward');
+    }
+    public function spin()
+    {
+        $pegawai = Pegawai::with('skpd')
+            ->inRandomOrder()
+            ->limit(3)
+            ->get(['id', 'nama', 'skpd_id']);
+
+        $result = $pegawai->map(function ($p) {
+            return [
+                'nama'     => $p->nama,
+                'skpd' => $p->skpd ? $p->skpd->nama : '-',
+            ];
+        });
+
+        return response()->json($result);
+    }
     public function laporan17feb2025()
     {
 

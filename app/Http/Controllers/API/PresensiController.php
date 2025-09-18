@@ -9,6 +9,7 @@ use App\Models\Rentang;
 use App\Models\Presensi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\PresensiApel;
 use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
@@ -94,6 +95,28 @@ class PresensiController extends Controller
         $endTime = '20:00';
         $endTime2 = '18:15';
 
+        //presensi apel
+        if ($req->id_lokasi == 1957) {
+            $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
+            $lokasi = Lokasi::find($req->id_lokasi);
+            $param['nama']              = $pegawai->nama;
+            $param['nip']               = $pegawai->nip;
+            $param['skpd_id']           = $pegawai->skpd_id;
+            $param['lokasi_id']         = $lokasi->id;
+            $param['tanggal']           = $today;
+            $param['jam_absen']         = Carbon::now()->format('Y-m-d H:i:s');
+            if ($check == null) {
+                PresensiApel::create($param);
+                $data['message_error'] = 200;
+                $data['message']       = 'Berhasil Di Simpan';
+            } else {
+                $check->update([
+                    'jam_absen' =>  Carbon::now()->format('Y-m-d H:i:s'),
+                ]);
+                $data['message_error'] = 200;
+                $data['message']       = 'Presensi Apel berhasil di Update';
+            }
+        }
         if ($req->id_lokasi == 1599) {
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
                 return response()->json([
