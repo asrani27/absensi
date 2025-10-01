@@ -44,7 +44,7 @@ class HomeController extends Controller
     public function laporan17feb2025()
     {
 
-        $tanggal = '2025-09-01';
+        $tanggal = '2025-10-01';
         return Excel::download(new AbsensiExport($tanggal), 'absensi_1_October_2025.xlsx');
 
         // $data = Presensi::where('skpd_id', Auth::user()->skpd->id)->where('tanggal', '2025-02-17')->orderBy('nama', 'asc') // 'asc' untuk ascending (A-Z), 'desc' untuk descending (Z-A)
