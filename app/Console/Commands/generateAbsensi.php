@@ -45,7 +45,7 @@ class generateAbsensi extends Command
         if ($this->option('tanggal') != null) {
             $tanggal = $this->option('tanggal');
         } else {
-            $tanggal = Carbon::now()->format('Y-m-d');
+            $tanggal = '2025-09-01';
         }
 
         $pegawai = Pegawai::where('is_aktif', 1)->get();
