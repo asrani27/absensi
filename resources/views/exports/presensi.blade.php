@@ -22,11 +22,8 @@
                 <th>NIP</th>
                 <th>NAMA</th>
                 <th>SKPD</th>
-                <th>PUSKESMAS</th>
-                {{-- <th>ABSEN HARIAN</th> --}}
-                <th>ABSEN PAGI</th>
-                <th>ABSEN SORE</th>
-                <th>LOKASI</th>
+                <th>ABSEN HARI BESAR (MASUK)</th>
+                <th>ABSEN HARI BESAR (PULANG)</th>
             </tr>
         </thead>
         <tbody>
@@ -36,10 +33,10 @@
                 <td>'{{ $item->nip }}</td>
                 <td>{{ strtoupper($item->nama) }}</td>
                 <td>{{ $item->skpd == null ? null : strtoupper($item->skpd->nama) }}</td>
-                <td>{{ strtoupper($item->puskesmas == null ? null : $item->puskesmas->nama) }}
-                </td>
+                {{-- <td>{{ strtoupper($item->puskesmas == null ? null : $item->puskesmas->nama) }}
+                </td> --}}
                 {{-- <td>{{ \Carbon\Carbon::parse($item->jam_masuk)->format('H:i:s') }}</td> --}}
-                <td>
+                {{-- <td>
                     @if ($item->jam_masuk_hari_besar == null)
                     {{ \Carbon\Carbon::parse($item->jam_masuk)->format('H:i:s') }}
                     @else
@@ -48,8 +45,9 @@
                 </td>
                 <td>
                     {{ \Carbon\Carbon::parse($item->jam_pulang)->format('H:i:s') }}
-                </td>
+                </td> --}}
                 <td>{{$item->jam_masuk_hari_besar == null ? null : 'HALAMAN BALAI KOTA'}}</td>
+                <td>{{$item->jam_pulang_hari_besar == null ? null : 'HALAMAN BALAI KOTA'}}</td>
             </tr>
             @endforeach
         </tbody>
