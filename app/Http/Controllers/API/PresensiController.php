@@ -150,7 +150,7 @@ class PresensiController extends Controller
                 } else {
                     if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
                         $check->update($param);
-                        if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i') == '00:00') {
+                        if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i') == '00:00') {
                             $check->update(['jam_masuk_hari_besar' => Carbon::now()->format('Y-m-d H:i:s')]);
                         }
                         $data['message_error'] = 200;
@@ -260,7 +260,7 @@ class PresensiController extends Controller
                 } else {
                     if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
                         $check->update($param);
-                        if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i') == '00:00') {
+                        if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i') == '00:00') {
                             $check->update(['jam_masuk_hari_besar' => Carbon::now()->format('Y-m-d H:i:s')]);
                         }
                         $data['message_error'] = 200;
