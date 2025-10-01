@@ -143,7 +143,7 @@ class PresensiController extends Controller
 
                 $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
                 if ($check == null) {
-                    $param['jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
+                    $param['jam_masuk_hari_besar'] = Carbon::now()->format('Y-m-d H:i:s');
                     Presensi::create($param);
                     $data['message_error'] = 200;
                     $data['message']       = 'Berhasil Di Simpan';
@@ -151,13 +151,13 @@ class PresensiController extends Controller
                     if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
                         $check->update($param);
                         if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i') == '00:00') {
-                            $check->update(['jam_masuk' => Carbon::now()->format('Y-m-d H:i:s')]);
+                            $check->update(['jam_masuk_hari_besar' => Carbon::now()->format('Y-m-d H:i:s')]);
                         }
                         $data['message_error'] = 200;
                         $data['message']       = 'Presensi Masuk Berhasil Di Update';
                     } else {
                         $check->update([
-                            'jam_pulang' =>  Carbon::now()->format('Y-m-d H:i:s'),
+                            'jam_pulang_hari_besar' =>  Carbon::now()->format('Y-m-d H:i:s'),
                         ]);
                         $data['message_error'] = 200;
                         $data['message']       = 'absen pulang berhasil di simpan';
