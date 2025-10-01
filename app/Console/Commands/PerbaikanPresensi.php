@@ -72,7 +72,7 @@ class PerbaikanPresensi extends Command
                 // Logika perbaikan jam_pulang dengan kondisi tambahan:
                 // 1. Hanya update jika jenis_keterangan_id NULL
                 // 2. Hanya update jika jam_masuk bukan 2025-09-01 00:00:00
-                // 3. Hanya update jika jenis_presensi_id = 1
+                // 3. Hanya update jika jenis_presensi = 1
 
                 $shouldUpdate = true;
 
@@ -88,10 +88,10 @@ class PerbaikanPresensi extends Command
                     $this->line("Skip NIP: {$item->nip} - {$item->nama} (jam_masuk = 2025-09-01 00:00:00)");
                 }
 
-                // Kondisi 3: Jika jenis_presensi_id != 1, skip
-                if ($shouldUpdate && $presensi->jenis_presensi_id != 1) {
+                // Kondisi 3: Jika jenis_presensi != 1, skip
+                if ($shouldUpdate && $presensi->jenis_presensi != 1) {
                     $shouldUpdate = false;
-                    $this->line("Skip NIP: {$item->nip} - {$item->nama} (jenis_presensi_id != 1)");
+                    $this->line("Skip NIP: {$item->nip} - {$item->nama} (jenis_presensi != 1)");
                 }
 
                 // Jika semua kondisi terpenuhi, lakukan update
