@@ -96,11 +96,20 @@ class PerbaikanPresensi extends Command
 
                 // Jika semua kondisi terpenuhi, lakukan update
                 if ($shouldUpdate) {
-                    $presensi->jam_pulang = '17:00:00';
+                    // Generate random jam_pulang antara 2025-09-01 16:35:01 s/d 2025-09-01 17:35:01
+                    $startTime = Carbon::createFromFormat('Y-m-d H:i:s', '2025-09-01 16:35:01');
+                    $endTime = Carbon::createFromFormat('Y-m-d H:i:s', '2025-09-01 17:35:01');
+                    
+                    // Generate random timestamp dalam range tersebut
+                    $randomTimestamp = Carbon::createFromTimestamp(
+                        rand($startTime->timestamp, $endTime->timestamp)
+                    );
+                    
+                    $presensi->jam_pulang = $randomTimestamp->format('Y-m-d H:i:s');
                     $presensi->save();
                     $fixed++;
-
-                    $this->line("Memperbaiki jam_pulang untuk NIP: {$item->nip} - {$item->nama}");
+                    
+                    $this->line("Memperbaiki jam_pulang untuk NIP: {$item->nip} - {$item->nama} -> {$presensi->jam_pulang}");
                 }
             } else {
                 // Jika tidak ada record presensi, bisa dibuat baru atau diabaikan
