@@ -18,12 +18,18 @@
                 <th colspan="7">Tanggal : {{\Carbon\Carbon::parse($tanggal)->format('d M Y')}}</th>
             </tr>
             <tr>
-                <th>NO</th>
-                <th>NIP</th>
-                <th>NAMA</th>
-                <th>SKPD</th>
-                <th>ABSEN HARI BESAR (MASUK)</th>
-                <th>ABSEN HARI BESAR (PULANG)</th>
+                <th rowspan="2">NO</th>
+                <th rowspan="2">NIP</th>
+                <th rowspan="2">NAMA</th>
+                <th rowspan="2">SKPD</th>
+                <th colspan="2">PRESENSI HARIAN</th>
+                <th colspan="2">PRESENSI HARI BESAR</th>
+            </tr>
+            <tr>
+                <td>Masuk</td>
+                <td>Pulang</td>
+                <td>Masuk</td>
+                <td>Pulang</td>
             </tr>
         </thead>
         <tbody>
@@ -35,7 +41,8 @@
                 <td>{{ $item->skpd == null ? null : strtoupper($item->skpd->nama) }}</td>
                 {{-- <td>{{ strtoupper($item->puskesmas == null ? null : $item->puskesmas->nama) }}
                 </td> --}}
-                {{-- <td>{{ \Carbon\Carbon::parse($item->jam_masuk)->format('H:i:s') }}</td> --}}
+                <td>{{ \Carbon\Carbon::parse($item->jam_masuk)->format('H:i:s') }}</td>
+                <td>{{ \Carbon\Carbon::parse($item->jam_pulang)->format('H:i:s') }}</td>
                 {{-- <td>
                     @if ($item->jam_masuk_hari_besar == null)
                     {{ \Carbon\Carbon::parse($item->jam_masuk)->format('H:i:s') }}
