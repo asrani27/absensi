@@ -143,6 +143,8 @@ class PresensiController extends Controller
 
                 $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
                 if ($check == null) {
+                    $param['jam_masuk'] = Carbon::now()->format('Y-m-d') . ' 00:00:00';
+                    $param['jam_pulang'] = Carbon::now()->format('Y-m-d') . ' 00:00:00';
                     $param['jam_masuk_hari_besar'] = Carbon::now()->format('Y-m-d H:i:s');
                     Presensi::create($param);
                     $data['message_error'] = 200;
