@@ -149,7 +149,7 @@ class PresensiController extends Controller
                     $data['message']       = 'Berhasil Di Simpan';
                 } else {
                     if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
-                        $check->update($param);
+                        $check->update(['jam_masuk_hari_besar' => Carbon::now()->format('Y-m-d H:i:s')]);
                         if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i') == '00:00') {
                             $check->update(['jam_masuk_hari_besar' => Carbon::now()->format('Y-m-d H:i:s')]);
                         }
