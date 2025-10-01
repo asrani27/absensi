@@ -53,8 +53,10 @@
                 <td>
                     {{ \Carbon\Carbon::parse($item->jam_pulang)->format('H:i:s') }}
                 </td> --}}
-                <td>{{$item->jam_masuk_hari_besar == null ? null : $item->jam_masuk_hari_besar}}</td>
-                <td>{{$item->jam_pulang_hari_besar == null ? null : $item->jam_pulang_hari_besar}}</td>
+                <td>{{$item->jam_masuk_hari_besar == null ? null :
+                    \Carbon\Carbon::parse($item->jam_masuk_hari_besar)->format('H:i:s')}}</td>
+                <td>{{$item->jam_pulang_hari_besar == null ? null :
+                    \Carbon\Carbon::parse($item->jam_pulang_hari_besar)->format('H:i:s')}}</td>
             </tr>
             @endforeach
         </tbody>
