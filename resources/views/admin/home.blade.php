@@ -41,7 +41,7 @@
             <div class="card-body">
                 <a href="/laporanharibesar" class="btn btn-md btn-success" target="_blank"><i class="fas fa-file"></i>
                     Laporan
-                    Presensi 17 Agustus 2025</a>
+                    Presensi 1 Oct 2025</a>
             </div>
         </div>
     </div>
