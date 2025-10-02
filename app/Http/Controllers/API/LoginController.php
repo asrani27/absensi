@@ -121,9 +121,9 @@ class LoginController extends Controller
                 //check device digunakan oleh nip lain
                 $checkDevice = User::where('android_id', $req->device_id)->first();
                 if ($checkDevice == null) {
-                    $user->update([
-                        'android_id' => $req->device_id,
-                    ]);
+                    // $user->update([
+                    //     'android_id' => $req->device_id,
+                    // ]);
 
                     $data['message_error'] = 200;
                     $data['message']       = 'Data Ditemukan';
