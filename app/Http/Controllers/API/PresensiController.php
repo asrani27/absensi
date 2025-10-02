@@ -10,6 +10,7 @@ use App\Models\Presensi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\PresensiApel;
+use App\Models\PresensiHariBesar;
 use Illuminate\Support\Facades\Auth;
 
 class PresensiController extends Controller
@@ -34,6 +35,34 @@ class PresensiController extends Controller
         $hasil = Presensi::where('nip', Auth::user()->username)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->map(function ($item) {
             $item->jam_masuk = $item->jam_masuk == null ? '00:00' : Carbon::parse($item->jam_masuk)->format('H:i');
             $item->jam_pulang = $item->jam_pulang == null ? '00:00' : Carbon::parse($item->jam_pulang)->format('H:i');
+            $tanggalFormat = Carbon::parse($item->tanggal);
+            $item->tanggal = $tanggalFormat->translatedFormat('l') . ', ' . $tanggalFormat->format('d-m-Y');
+            return $item;
+        });
+
+        $data['message_error'] = 200;
+        $data['message']       = 'Data Ditemukan';
+        $data['data']          = $hasil;
+        return response()->json($data);
+    }
+    public function historyApel($bulan, $tahun)
+    {
+        $hasil = PresensiApel::where('nip', Auth::user()->username)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->map(function ($item) {
+            $item->jam = $item->jam == null ? '00:00:00' : Carbon::parse($item->jam)->format('H:i:s');
+            $tanggalFormat = Carbon::parse($item->tanggal);
+            $item->tanggal = $tanggalFormat->translatedFormat('l') . ', ' . $tanggalFormat->format('d-m-Y');
+            return $item;
+        });
+
+        $data['message_error'] = 200;
+        $data['message']       = 'Data Ditemukan';
+        $data['data']          = $hasil;
+        return response()->json($data);
+    }
+    public function historyHariBesar($bulan, $tahun)
+    {
+        $hasil = PresensiHariBesar::where('nip', Auth::user()->username)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get()->map(function ($item) {
+            $item->jam = $item->jam == null ? '00:00:00' : Carbon::parse($item->jam)->format('H:i:s');
             $tanggalFormat = Carbon::parse($item->tanggal);
             $item->tanggal = $tanggalFormat->translatedFormat('l') . ', ' . $tanggalFormat->format('d-m-Y');
             return $item;
@@ -83,6 +112,64 @@ class PresensiController extends Controller
         return response()->json($data);
     }
 
+    public function presensiApel(Request $req)
+    {
+        $pegawai = Auth::user()->pegawai;
+        $tanggal = Carbon::today()->format('Y-m-d');
+
+        $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $tanggal)->first();
+        if ($check == null) {
+            //create new data
+            $new = new PresensiApel();
+            $new->tanggal   = $tanggal;
+            $new->nip       = $pegawai->nip;
+            $new->nama      = $pegawai->nama;
+            $new->jam       = Carbon::now()->format('H:i:s');
+            $new->skpd_id   = $pegawai->skpd_id;
+            $new->lokasi_id = $req->id_lokasi;
+            $new->save();
+            $data['message_error'] = 200;
+            $data['message']       = 'Presensi Apel Berhasil Disimpan';
+            return response()->json($data);
+        } else {
+            //update data
+            $update      = $check;
+            $update->jam = Carbon::now()->format('H:i:s');
+            $update->save();
+            $data['message_error'] = 200;
+            $data['message']       = 'Presensi Apel Berhasil Diupdate';
+            return response()->json($data);
+        }
+    }
+    public function presensiHariBesar(Request $req)
+    {
+        $pegawai = Auth::user()->pegawai;
+        $tanggal = Carbon::today()->format('Y-m-d');
+
+        $check = PresensiHariBesar::where('nip', $pegawai->nip)->where('tanggal', $tanggal)->first();
+        if ($check == null) {
+            //create new data
+            $new = new PresensiHariBesar();
+            $new->tanggal   = $tanggal;
+            $new->nip       = $pegawai->nip;
+            $new->nama      = $pegawai->nama;
+            $new->jam       = Carbon::now()->format('H:i:s');
+            $new->skpd_id   = $pegawai->skpd_id;
+            $new->lokasi_id = $req->id_lokasi;
+            $new->save();
+            $data['message_error'] = 200;
+            $data['message']       = 'Presensi Hari Besar Berhasil Disimpan';
+            return response()->json($data);
+        } else {
+            //update data
+            $update      = $check;
+            $update->jam = Carbon::now()->format('H:i:s');
+            $update->save();
+            $data['message_error'] = 200;
+            $data['message']       = 'Presensi Hari Besar Berhasil Diupdate';
+            return response()->json($data);
+        }
+    }
     public function presensiSekarang(Request $req)
     {
         $pegawai = Auth::user()->pegawai;
@@ -401,6 +488,35 @@ class PresensiController extends Controller
         $data['data']          = $absensi;
         return response()->json($data);
     }
+    public function presensiApelToday()
+    {
+        $nip = Auth::user()->pegawai->nip;
+
+        $absensi = PresensiApel::where('nip', $nip)->where('tanggal', Carbon::now()->format('Y-m-d'))->get()->map(function ($item) {
+            $item->tanggal =  Carbon::parse($item->tanggal)->format('d M Y');
+            $item->jam     =  $item->jam == null ? null : Carbon::parse($item->jam)->format('H:i:s');
+            return $item;
+        })->first();
+        $data['message_error'] = 200;
+        $data['message']       = 'Data Ditemukan';
+        $data['data']          = $absensi;
+        return response()->json($data);
+    }
+    public function presensiHariBesarToday()
+    {
+        $nip = Auth::user()->pegawai->nip;
+
+        $absensi = PresensiHariBesar::where('nip', $nip)->where('tanggal', Carbon::now()->format('Y-m-d'))->get()->map(function ($item) {
+            $item->tanggal =  Carbon::parse($item->tanggal)->format('d M Y');
+            $item->jam     =  $item->jam == null ? null : Carbon::parse($item->jam)->format('H:i:s');
+            return $item;
+        })->first();
+
+        $data['message_error'] = 200;
+        $data['message']       = 'Data Ditemukan';
+        $data['data']          = $absensi;
+        return response()->json($data);
+    }
     public function presensiToday()
     {
         $nip = Auth::user()->pegawai->nip;
@@ -417,7 +533,6 @@ class PresensiController extends Controller
         $data['data']          = $absensi;
         return response()->json($data);
     }
-
     // public function storeRadius(Request $req)
     // {
     //     $today = Carbon::now();

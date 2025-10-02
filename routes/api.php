@@ -11,6 +11,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/user', [LoginController::class, 'user']);
     Route::get('/profil', [PresensiController::class, 'profil']);
     Route::get('/history/{bulan}/{tahun}', [PresensiController::class, 'history']);
+    Route::get('/history-apel/{bulan}/{tahun}', [PresensiController::class, 'historyApel']);
+    Route::get('/history-hari-besar/{bulan}/{tahun}', [PresensiController::class, 'historyHariBesar']);
     Route::post('/gantipass', [LoginController::class, 'gantipass']);
 
     Route::get('/pegawai/presensi/seminggu', [PresensiController::class, 'presensiSeminggu']);
@@ -19,7 +21,12 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/pegawai/presensi/lokasi', [PresensiController::class, 'lokasiAbsen']);
     Route::post('/pegawai/presensi/masuk', [PresensiController::class, 'absenMasuk']);
     Route::post('/pegawai/presensi/pulang', [PresensiController::class, 'absenPulang']);
+
     Route::post('/pegawai/presensi/sekarang', [PresensiController::class, 'presensiSekarang']);
+    Route::post('/pegawai/presensi/apel', [PresensiController::class, 'presensiApel']);
+    Route::post('/pegawai/presensi/haribesar', [PresensiController::class, 'presensiHariBesar']);
+    Route::get('/pegawai/presensi/apel/today', [PresensiController::class, 'presensiApelToday']);
+    Route::get('/pegawai/presensi/haribesar/today', [PresensiController::class, 'presensiHariBesarToday']);
 });
 
 Route::post('/login', [LoginController::class, 'login']);
