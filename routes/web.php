@@ -58,10 +58,12 @@ Route::get('/login', function () {
     return view('welcome');
 })->name('login');
 
+Route::post('/spin', [HomeController::class, 'spin'])->name('spin');
 Route::post('/login', [LoginController::class, 'login']);
 Route::get('/listloss', [LossController::class, 'index']);
 Route::get('/hitung', [LossController::class, 'hitung']);
 Route::get('/reward', [HomeController::class, 'reward']);
+Route::get('/tombol', [HomeController::class, 'tombol']);
 Route::get('/reward/spin-data', [HomeController::class, 'spin'])->name('reward.spin.data');
 
 Route::group(['middleware' => ['auth', 'role:mod']], function () {

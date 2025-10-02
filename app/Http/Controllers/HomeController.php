@@ -10,11 +10,12 @@ use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Rentang;
 use App\Models\Presensi;
+use App\Events\SpinEvent;
 use App\Models\Ringkasan;
 use Jenssegers\Agent\Agent;
+use App\Models\PresensiApel;
 use Illuminate\Http\Request;
 use App\Exports\AbsensiExport;
-use App\Models\PresensiApel;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -25,21 +26,37 @@ class HomeController extends Controller
     {
         return view('reward');
     }
+
+    public function tombol()
+    {
+        return view('tombol');
+    }
     public function spin()
     {
-        $pegawai = PresensiApel::with('skpd')->where('tanggal', Carbon::now()->format('Y-m-d'))
-            ->inRandomOrder()
-            ->limit(3)
-            ->get(['id', 'nama', 'skpd_id']);
-
-        $result = $pegawai->map(function ($p) {
+        $winners = PresensiApel::with('skpd')->where('tanggal', Carbon::now()->format('Y-m-d'))->inRandomOrder()->limit(3)->get();
+        $winners = $winners->map(function ($p) {
             return [
                 'nama'     => $p->nama,
                 'skpd' => $p->skpd ? $p->skpd->nama : '-',
             ];
         });
+        broadcast(new SpinEvent($winners));
 
-        return response()->json($result);
+        return response()->json(['status' => 'ok', 'winners' => $winners]);
+
+        // $pegawai = PresensiApel::with('skpd')->where('tanggal', Carbon::now()->format('Y-m-d'))
+        //     ->inRandomOrder()
+        //     ->limit(3)
+        //     ->get(['id', 'nama', 'skpd_id']);
+
+        // $result = $pegawai->map(function ($p) {
+        //     return [
+        //         'nama'     => $p->nama,
+        //         'skpd' => $p->skpd ? $p->skpd->nama : '-',
+        //     ];
+        // });
+
+        // return response()->json($result);
     }
     public function laporan17feb2025()
     {

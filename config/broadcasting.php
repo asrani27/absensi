@@ -29,7 +29,6 @@ return [
     */
 
     'connections' => [
-
         'pusher' => [
             'driver' => 'pusher',
             'key' => env('PUSHER_APP_KEY'),
@@ -40,7 +39,6 @@ return [
                 'useTLS' => true,
             ],
         ],
-
         'ably' => [
             'driver' => 'ably',
             'key' => env('ABLY_KEY'),
