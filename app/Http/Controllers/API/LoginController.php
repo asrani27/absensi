@@ -121,9 +121,9 @@ class LoginController extends Controller
                 //check device digunakan oleh nip lain
                 $checkDevice = User::where('android_id', $req->device_id)->first();
                 if ($checkDevice == null) {
-                    $user->update([
-                        'android_id' => str_replace(' ', '', $req->device_id) . $user->id,
-                    ]);
+                    // $user->update([
+                    //     'android_id' => $req->device_id,
+                    // ]);
 
                     $data['message_error'] = 200;
                     $data['message']       = 'Data Ditemukan';
@@ -137,8 +137,7 @@ class LoginController extends Controller
                     return response()->json($data);
                 }
             } else {
-                $device_id = str_replace(' ', '', $req->device_id) . $user->id;
-                if ($user->username == $req->username && $user->android_id == $device_id) {
+                if ($user->username == $req->username && $user->android_id == $req->device_id) {
                     $data['message_error'] = 200;
                     $data['message']       = 'Data Ditemukan';
                     $data['data']          = Auth::user()->pegawai;
