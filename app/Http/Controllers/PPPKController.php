@@ -7,8 +7,20 @@ use App\Models\User;
 use App\Models\Lokasi;
 use App\Models\Pegawai;
 use App\Models\Puskesmas;
+use App\Models\Presensi;
+use App\Models\LiburNasional;
+use App\Models\Ramadhan;
+use App\Models\Jam;
+use App\Models\Jam6;
+use App\Models\JamRamadhan;
+use App\Models\Jam6Ramadhan;
+use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use GuzzleHttp\Client;
+use Carbon\CarbonPeriod;
+use App\Jobs\SyncUrut;
 
 class PPPKController extends Controller
 {
@@ -18,6 +30,37 @@ class PPPKController extends Controller
         $data = Pegawai::where('skpd_id', $this->skpd()->id)->where('status_asn', 'PPPK')->orderBy('urutan', 'DESC')->paginate(10);
         $puskesmas = Puskesmas::get();
         return view('admin.pppk.index', compact('data', 'puskesmas'));
+    }
+
+    public function create()
+    {
+        $lokasi = Lokasi::where('skpd_id', $this->skpd()->id)->get();
+        return view('admin.pppk.create', compact('lokasi'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nip' => 'required|string|unique:pegawai,nip',
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:L,P',
+            'lokasi_id' => 'nullable|exists:lokasi,id',
+        ]);
+
+        Pegawai::create([
+            'nama' => $request->nama,
+            'nip' => $request->nip,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'status_asn' => 'PPPK',
+            'skpd_id' => $this->skpd()->id,
+            'lokasi_id' => $request->lokasi_id,
+            'jenis_presensi' => 1, // Default value
+        ]);
+
+        toastr()->success('Data PPPK Berhasil Ditambahkan');
+        return redirect('/admin/pppk');
     }
 
     public function skpd()

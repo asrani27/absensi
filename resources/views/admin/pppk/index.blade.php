@@ -11,7 +11,7 @@ ADMIN
 <div class="row">
     <div class="col-12">
 
-        <a href="/admin/pppk/add" class="btn btn-sm bg-gradient-primary"><i class="fas fa-user"></i>
+        <a href="/admin/pppk/create" class="btn btn-sm bg-gradient-primary"><i class="fas fa-user"></i>
             Tambah PPPK</a>
 
         <br /><br />
