@@ -123,7 +123,7 @@ class PresensiController extends Controller
         if ($currentTime < $startTime2 || $currentTime > $endTime2) {
             return response()->json([
                 'message_error' => 200,
-                'message' => 'Lokasi ini Hanya bisa absen mulai pukul 08:00 WITA'
+                'message' => 'Lokasi ini Hanya bisa absen mulai pukul 07:55 WITA'
             ]);
         } else {
             $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $tanggal)->first();
@@ -226,7 +226,7 @@ class PresensiController extends Controller
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
                 return response()->json([
                     'message_error' => 200,
-                    'message' => 'Lokasi ini Hanya bisa absen mulai pukul 08:00 WITA'
+                    'message' => 'Lokasi ini Hanya bisa absen mulai pukul 07:55 WITA'
                 ]);
             } else {
 
