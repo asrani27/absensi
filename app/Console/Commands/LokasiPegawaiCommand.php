@@ -42,13 +42,13 @@ class LokasiPegawaiCommand extends Command
         $this->info("Memulai proses update lokasi...");
         $p = Pegawai::select('id')->get();
 
-        $existingPegawai = LokasiPegawai::where('lokasi_id', 1957)->pluck('pegawai_id')->toArray();
+        $existingPegawai = LokasiPegawai::where('lokasi_id', 1599)->pluck('pegawai_id')->toArray();
         $addedCount = 0;
         foreach ($p as $item) {
             if (!in_array($item->id, $existingPegawai)) {
                 LokasiPegawai::create([
                     'pegawai_id' => $item->id,
-                    'lokasi_id' => 1957
+                    'lokasi_id' => 1599
                 ]);
                 $addedCount++;
             }
