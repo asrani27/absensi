@@ -188,7 +188,7 @@ class PresensiController extends Controller
 
         // Batasan waktu absensi
         $startTime = '06:00';
-        $startTime2 = '08:00';
+        $startTime2 = '07:50';
         $endTime = '20:00';
         $endTime2 = '18:15';
 
