@@ -184,27 +184,34 @@ class PresensiController extends Controller
 
         //presensi apel
         if ($req->id_lokasi == 1957) {
-            $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
-            $lokasi = Lokasi::find($req->id_lokasi);
-            $param['nama']              = $pegawai->nama;
-            $param['nip']               = $pegawai->nip;
-            $param['skpd_id']           = $pegawai->skpd_id;
-            $param['lokasi_id']         = $lokasi->id;
-            $param['tanggal']           = $today;
-            $param['jam_absen']         = Carbon::now()->format('Y-m-d H:i:s');
+            $pegawai = Auth::user()->pegawai;
+            $tanggal = Carbon::today()->format('Y-m-d');
+
+            $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $tanggal)->first();
             if ($check == null) {
-                PresensiApel::create($param);
+                //create new data
+                $new = new PresensiApel();
+                $new->tanggal   = $tanggal;
+                $new->nip       = $pegawai->nip;
+                $new->nama      = $pegawai->nama;
+                $new->jam       = Carbon::now()->format('H:i:s');
+                $new->skpd_id   = $pegawai->skpd_id;
+                $new->lokasi_id = $req->id_lokasi;
+                $new->save();
                 $data['message_error'] = 200;
-                $data['message']       = 'Berhasil Di Simpan';
+                $data['message']       = 'Presensi Apel Berhasil Disimpan';
+                return response()->json($data);
             } else {
-                $check->update([
-                    'jam_absen' =>  Carbon::now()->format('Y-m-d H:i:s'),
-                ]);
+                //update data
+                $update      = $check;
+                $update->jam = Carbon::now()->format('H:i:s');
+                $update->save();
                 $data['message_error'] = 200;
-                $data['message']       = 'Presensi Apel berhasil di Update';
+                $data['message']       = 'Presensi Apel Berhasil Diupdate';
+                return response()->json($data);
             }
-            return response()->json($data);
         }
+
         if ($req->id_lokasi == 1599) {
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
                 return response()->json([
@@ -315,6 +322,35 @@ class PresensiController extends Controller
         $startTime2 = '08:00';
         $endTime = '20:00';
         $endTime2 = '18:15';
+
+        if ($req->id_lokasi == 1957) {
+            $pegawai = Auth::user()->pegawai;
+            $tanggal = Carbon::today()->format('Y-m-d');
+
+            $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $tanggal)->first();
+            if ($check == null) {
+                //create new data
+                $new = new PresensiApel();
+                $new->tanggal   = $tanggal;
+                $new->nip       = $pegawai->nip;
+                $new->nama      = $pegawai->nama;
+                $new->jam       = Carbon::now()->format('H:i:s');
+                $new->skpd_id   = $pegawai->skpd_id;
+                $new->lokasi_id = $req->id_lokasi;
+                $new->save();
+                $data['message_error'] = 200;
+                $data['message']       = 'Presensi Apel Berhasil Disimpan';
+                return response()->json($data);
+            } else {
+                //update data
+                $update      = $check;
+                $update->jam = Carbon::now()->format('H:i:s');
+                $update->save();
+                $data['message_error'] = 200;
+                $data['message']       = 'Presensi Apel Berhasil Diupdate';
+                return response()->json($data);
+            }
+        }
 
         if ($req->id_lokasi == 1599) {
             if ($currentTime < $startTime2 || $currentTime > $endTime2) {
