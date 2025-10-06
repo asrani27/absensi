@@ -76,6 +76,18 @@ EDIT LOKASI
                                 </div>
                             </div>
 
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Jenis Presensi</label>
+                                <div class="col-sm-10">
+                                    <select name="jenis">
+                                        <option value="">-pilih-</option>
+                                        <option value="harian" {{$data->jenis == 'harian' ? 'selected':''}}>Harian
+                                        </option>
+                                        <option value="apel" {{$data->jenis == 'apel' ? 'selected':''}}>Apel</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
