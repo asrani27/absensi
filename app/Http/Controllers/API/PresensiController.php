@@ -118,12 +118,12 @@ class PresensiController extends Controller
         $tanggal = Carbon::today()->format('Y-m-d');
 
         $currentTime = Carbon::now()->format('H:i');
-        $startTime2 = '07:55';
-        $endTime2 = '09:15';
+        $startTime2 = '07:50';
+        $endTime2 = '08:15';
         if ($currentTime < $startTime2 || $currentTime > $endTime2) {
             return response()->json([
                 'message_error' => 200,
-                'message' => 'Lokasi ini Hanya bisa absen mulai pukul 07:50 WITA'
+                'message' => 'Lokasi ini Hanya bisa absen mulai pukul 07:50 - 08:15 WITA'
             ]);
         } else {
             $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $tanggal)->first();
