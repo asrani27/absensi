@@ -63,7 +63,7 @@ TAMBAH LOKASI
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Jenis Presensi</label>
                                 <div class="col-sm-10">
-                                    <select name="jenis">
+                                    <select name="jenis" class="form-control">
                                         <option value="">-pilih-</option>
                                         <option value="harian">Harian</option>
                                         <option value="apel">Apel</option>
