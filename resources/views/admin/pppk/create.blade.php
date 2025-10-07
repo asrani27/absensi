@@ -20,14 +20,16 @@ TAMBAH DATA PPPK
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Nama Lengkap</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="nama" placeholder="Masukkan nama lengkap" required>
+                                    <input type="text" class="form-control" name="nama"
+                                        placeholder="Masukkan nama lengkap" required>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">NIP</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="nip" placeholder="Masukkan NIP" required>
+                                    <input type="text" class="form-control" name="nip" placeholder="Masukkan NIP"
+                                        required>
                                 </div>
                             </div>
 
@@ -50,22 +52,10 @@ TAMBAH DATA PPPK
                             </div>
 
                             <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Lokasi Presensi</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control" name="lokasi_id">
-                                        <option value="">-- Pilih Lokasi Presensi --</option>
-                                        @foreach($lokasi as $item)
-                                            <option value="{{ $item->id }}">{{ $item->nama }} - {{ $item->alamat }}</option>
-                                        @endforeach
-                                    </select>
-                                    <small class="form-text text-muted">Kosongkan jika tidak ada lokasi khusus</small>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
-                                    <button type="submit" class="btn btn-block btn-primary"><strong>SIMPAN DATA PPPK</strong></button>
+                                    <button type="submit" class="btn btn-block btn-primary"><strong>SIMPAN DATA
+                                            PPPK</strong></button>
                                 </div>
                             </div>
                         </div>

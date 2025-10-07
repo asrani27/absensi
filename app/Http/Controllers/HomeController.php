@@ -33,7 +33,7 @@ class HomeController extends Controller
     }
     public function spin()
     {
-        $winners = PresensiApel::with('skpd')->where('tanggal', Carbon::now()->format('Y-m-d'))->inRandomOrder()->limit(3)->get();
+        $winners = PresensiApel::with('skpd')->where('lokasi_id', 1957)->where('tanggal', Carbon::now()->format('Y-m-d'))->inRandomOrder()->limit(3)->get();
         $winners = $winners->map(function ($p) {
             return [
                 'nama'     => $p->nama,
