@@ -119,7 +119,7 @@ class PresensiController extends Controller
 
         $currentTime = Carbon::now()->format('H:i');
         $startTime2 = '07:50';
-        $endTime2 = '20:15';
+        $endTime2 = '08:15';
         if ($currentTime < $startTime2 || $currentTime > $endTime2) {
             return response()->json([
                 'message_error' => 200,
