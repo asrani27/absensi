@@ -119,7 +119,7 @@ class PresensiController extends Controller
 
         $currentTime = Carbon::now()->format('H:i');
         $startTime2 = '07:50';
-        $endTime2 = '08:15';
+        $endTime2 = '20:15';
         if ($currentTime < $startTime2 || $currentTime > $endTime2) {
             return response()->json([
                 'message_error' => 200,
@@ -274,14 +274,14 @@ class PresensiController extends Controller
             }
         }
 
-        if ($pegawai->jenis_presensi == 1) {
-            if ($currentTime < $startTime || $currentTime > $endTime) {
-                return response()->json([
-                    'message_error' => 200,
-                    'message' => 'Presensi hanya bisa dilakukan antara jam 06:00 hingga 20:00'
-                ]);
-            }
-        }
+        // if ($pegawai->jenis_presensi == 1) {
+        //     if ($currentTime < $startTime || $currentTime > $endTime) {
+        //         return response()->json([
+        //             'message_error' => 200,
+        //             'message' => 'Presensi hanya bisa dilakukan antara jam 06:00 hingga 20:00'
+        //         ]);
+        //     }
+        // }
 
         $lokasi = Lokasi::find($req->id_lokasi);
         $myLocation['lat'] = $req->myLat;
