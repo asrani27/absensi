@@ -321,188 +321,188 @@ class PresensiController extends Controller
         return response()->json($data);
     }
 
-    public function absenMasuk(Request $req)
-    {
-        $pegawai = Auth::user()->pegawai;
-        $today = Carbon::now()->format('Y-m-d');
-        $currentTime = Carbon::now()->format('H:i');
+    // public function absenMasuk(Request $req)
+    // {
+    //     $pegawai = Auth::user()->pegawai;
+    //     $today = Carbon::now()->format('Y-m-d');
+    //     $currentTime = Carbon::now()->format('H:i');
 
-        // Batasan waktu absensi
-        $startTime = '06:00';
-        $startTime2 = '08:00';
-        $endTime = '20:00';
-        $endTime2 = '18:15';
+    //     // Batasan waktu absensi
+    //     $startTime = '06:00';
+    //     $startTime2 = '08:00';
+    //     $endTime = '20:00';
+    //     $endTime2 = '18:15';
 
-        if ($req->id_lokasi == 1957) {
-            $pegawai = Auth::user()->pegawai;
-            $tanggal = Carbon::today()->format('Y-m-d');
+    //     if ($req->id_lokasi == 1957) {
+    //         $pegawai = Auth::user()->pegawai;
+    //         $tanggal = Carbon::today()->format('Y-m-d');
 
-            $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $tanggal)->first();
-            if ($check == null) {
-                //create new data
-                $new = new PresensiApel();
-                $new->tanggal   = $tanggal;
-                $new->nip       = $pegawai->nip;
-                $new->nama      = $pegawai->nama;
-                $new->jam       = Carbon::now()->format('H:i:s');
-                $new->skpd_id   = $pegawai->skpd_id;
-                $new->lokasi_id = $req->id_lokasi;
-                $new->save();
-                $data['message_error'] = 200;
-                $data['message']       = 'Presensi Apel Berhasil Disimpan';
-                return response()->json($data);
-            } else {
-                //update data
-                $update      = $check;
-                $update->jam = Carbon::now()->format('H:i:s');
-                $update->save();
-                $data['message_error'] = 200;
-                $data['message']       = 'Presensi Apel Berhasil Diupdate';
-                return response()->json($data);
-            }
-        }
+    //         $check = PresensiApel::where('nip', $pegawai->nip)->where('tanggal', $tanggal)->first();
+    //         if ($check == null) {
+    //             //create new data
+    //             $new = new PresensiApel();
+    //             $new->tanggal   = $tanggal;
+    //             $new->nip       = $pegawai->nip;
+    //             $new->nama      = $pegawai->nama;
+    //             $new->jam       = Carbon::now()->format('H:i:s');
+    //             $new->skpd_id   = $pegawai->skpd_id;
+    //             $new->lokasi_id = $req->id_lokasi;
+    //             $new->save();
+    //             $data['message_error'] = 200;
+    //             $data['message']       = 'Presensi Apel Berhasil Disimpan';
+    //             return response()->json($data);
+    //         } else {
+    //             //update data
+    //             $update      = $check;
+    //             $update->jam = Carbon::now()->format('H:i:s');
+    //             $update->save();
+    //             $data['message_error'] = 200;
+    //             $data['message']       = 'Presensi Apel Berhasil Diupdate';
+    //             return response()->json($data);
+    //         }
+    //     }
 
-        if ($req->id_lokasi == 1599) {
-            if ($currentTime < $startTime2 || $currentTime > $endTime2) {
-                return response()->json([
-                    'message_error' => 200,
-                    'message' => 'Lokasi ini Hanya bisa absen mulai pukul 08:00 WITA'
-                ]);
-            } else {
+    //     if ($req->id_lokasi == 1599) {
+    //         if ($currentTime < $startTime2 || $currentTime > $endTime2) {
+    //             return response()->json([
+    //                 'message_error' => 200,
+    //                 'message' => 'Lokasi ini Hanya bisa absen mulai pukul 08:00 WITA'
+    //             ]);
+    //         } else {
 
-                $lokasi = Lokasi::find($req->id_lokasi);
-                $myLocation['lat'] = $req->myLat;
-                $myLocation['long'] = $req->myLong;
-                $param['nip']               = $pegawai->nip;
-                $param['skpd_id']           = $pegawai->skpd_id;
-                $param['puskesmas_id']      = $pegawai->puskesmas_id;
-                $param['sekolah_id']        = $pegawai->sekolah_id;
-                $param['jenis_presensi']    = $pegawai->jenis_presensi;
-                $param['latlong_masuk']     = json_encode($myLocation);
-                $param['id_lokasi_masuk']   = $lokasi->id;
-                $param['nama_lokasi_masuk'] = $lokasi->nama;
-                $param['tanggal']           = $today;
-                $param['jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
-                $param['jam_masuk_hari_besar'] = Carbon::now()->format('Y-m-d H:i:s');
-                $param['request']           = $req->all();
+    //             $lokasi = Lokasi::find($req->id_lokasi);
+    //             $myLocation['lat'] = $req->myLat;
+    //             $myLocation['long'] = $req->myLong;
+    //             $param['nip']               = $pegawai->nip;
+    //             $param['skpd_id']           = $pegawai->skpd_id;
+    //             $param['puskesmas_id']      = $pegawai->puskesmas_id;
+    //             $param['sekolah_id']        = $pegawai->sekolah_id;
+    //             $param['jenis_presensi']    = $pegawai->jenis_presensi;
+    //             $param['latlong_masuk']     = json_encode($myLocation);
+    //             $param['id_lokasi_masuk']   = $lokasi->id;
+    //             $param['nama_lokasi_masuk'] = $lokasi->nama;
+    //             $param['tanggal']           = $today;
+    //             $param['jam_masuk'] = Carbon::now()->format('Y-m-d H:i:s');
+    //             $param['jam_masuk_hari_besar'] = Carbon::now()->format('Y-m-d H:i:s');
+    //             $param['request']           = $req->all();
 
-                $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
-                if ($check == null) {
-                    $param['jam_masuk_hari_besar'] = Carbon::now()->format('Y-m-d H:i:s');
-                    Presensi::create($param);
-                    $data['message_error'] = 200;
-                    $data['message']       = 'Berhasil Di Simpan';
-                } else {
-                    if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
-                        $check->update($param);
-                        if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i') == '00:00') {
-                            $check->update(['jam_masuk_hari_besar' => Carbon::now()->format('Y-m-d H:i:s')]);
-                        }
-                        $data['message_error'] = 200;
-                        $data['message']       = 'Presensi Masuk Berhasil Di Update';
-                    } else {
-                        $data['message_error'] = 200;
-                        $data['message']       = 'Anda Sudah Absen';
-                    }
-                }
+    //             $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
+    //             if ($check == null) {
+    //                 $param['jam_masuk_hari_besar'] = Carbon::now()->format('Y-m-d H:i:s');
+    //                 Presensi::create($param);
+    //                 $data['message_error'] = 200;
+    //                 $data['message']       = 'Berhasil Di Simpan';
+    //             } else {
+    //                 if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i:s') == '00:00:00') {
+    //                     $check->update($param);
+    //                     if ($check->jam_masuk_hari_besar == null || Carbon::parse($check->jam_masuk_hari_besar)->format('H:i') == '00:00') {
+    //                         $check->update(['jam_masuk_hari_besar' => Carbon::now()->format('Y-m-d H:i:s')]);
+    //                     }
+    //                     $data['message_error'] = 200;
+    //                     $data['message']       = 'Presensi Masuk Berhasil Di Update';
+    //                 } else {
+    //                     $data['message_error'] = 200;
+    //                     $data['message']       = 'Anda Sudah Absen';
+    //                 }
+    //             }
 
-                return response()->json($data);
-            }
-        }
+    //             return response()->json($data);
+    //         }
+    //     }
 
-        if ($pegawai->jenis_presensi == 1) {
-            if ($currentTime < $startTime || $currentTime > $endTime) {
-                return response()->json([
-                    'message_error' => 200,
-                    'message' => 'Presensi hanya bisa dilakukan antara jam 06:00 hingga 20:00'
-                ]);
-            }
-        }
+    //     if ($pegawai->jenis_presensi == 1) {
+    //         if ($currentTime < $startTime || $currentTime > $endTime) {
+    //             return response()->json([
+    //                 'message_error' => 200,
+    //                 'message' => 'Presensi hanya bisa dilakukan antara jam 06:00 hingga 20:00'
+    //             ]);
+    //         }
+    //     }
 
-        $lokasi = Lokasi::find($req->id_lokasi);
-        $myLocation['lat'] = $req->myLat;
-        $myLocation['long'] = $req->myLong;
-        $param['nip']               = $pegawai->nip;
-        $param['skpd_id']           = $pegawai->skpd_id;
-        $param['puskesmas_id']      = $pegawai->puskesmas_id;
-        $param['sekolah_id']        = $pegawai->sekolah_id;
-        $param['jenis_presensi']    = $pegawai->jenis_presensi;
-        $param['latlong_masuk']     = json_encode($myLocation);
-        $param['id_lokasi_masuk']   = $lokasi->id;
-        $param['nama_lokasi_masuk'] = $lokasi->nama;
-        $param['tanggal']           = $today;
-        $param['jam_masuk']         = Carbon::now()->format('Y-m-d H:i:s');
-        $param['request']           = $req->all();
+    //     $lokasi = Lokasi::find($req->id_lokasi);
+    //     $myLocation['lat'] = $req->myLat;
+    //     $myLocation['long'] = $req->myLong;
+    //     $param['nip']               = $pegawai->nip;
+    //     $param['skpd_id']           = $pegawai->skpd_id;
+    //     $param['puskesmas_id']      = $pegawai->puskesmas_id;
+    //     $param['sekolah_id']        = $pegawai->sekolah_id;
+    //     $param['jenis_presensi']    = $pegawai->jenis_presensi;
+    //     $param['latlong_masuk']     = json_encode($myLocation);
+    //     $param['id_lokasi_masuk']   = $lokasi->id;
+    //     $param['nama_lokasi_masuk'] = $lokasi->nama;
+    //     $param['tanggal']           = $today;
+    //     $param['jam_masuk']         = Carbon::now()->format('Y-m-d H:i:s');
+    //     $param['request']           = $req->all();
 
-        $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
-        if ($check == null) {
-            Presensi::create($param);
-            $data['message_error'] = 200;
-            $data['message']       = 'Berhasil Di Simpan';
-        } else {
-            if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i:s') == '00:00:00') {
-                $check->update($param);
-                $data['message_error'] = 200;
-                $data['message']       = 'Presensi Masuk Berhasil Di Update';
-            } else {
-                $data['message_error'] = 200;
-                $data['message']       = 'Anda Sudah Absen';
-            }
-        }
+    //     $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
+    //     if ($check == null) {
+    //         Presensi::create($param);
+    //         $data['message_error'] = 200;
+    //         $data['message']       = 'Berhasil Di Simpan';
+    //     } else {
+    //         if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i:s') == '00:00:00') {
+    //             $check->update($param);
+    //             $data['message_error'] = 200;
+    //             $data['message']       = 'Presensi Masuk Berhasil Di Update';
+    //         } else {
+    //             $data['message_error'] = 200;
+    //             $data['message']       = 'Anda Sudah Absen';
+    //         }
+    //     }
 
-        return response()->json($data);
-    }
+    //     return response()->json($data);
+    // }
 
-    public function absenPulang(Request $req)
-    {
-        $pegawai = Auth::user()->pegawai;
-        $today = Carbon::now()->format('Y-m-d');
-        $currentTime = Carbon::now()->format('H:i');
-        $day = Carbon::now()->format('F');
+    // public function absenPulang(Request $req)
+    // {
+    //     $pegawai = Auth::user()->pegawai;
+    //     $today = Carbon::now()->format('Y-m-d');
+    //     $currentTime = Carbon::now()->format('H:i');
+    //     $day = Carbon::now()->format('F');
 
 
-        // Batasan waktu absensi
-        $startTime = '10.30 ';
-        $endTime = '20:00';
+    //     // Batasan waktu absensi
+    //     $startTime = '10.30 ';
+    //     $endTime = '20:00';
 
-        if ($pegawai->jenis_presensi == 1) {
-            if ($currentTime < $startTime || $currentTime > $endTime) {
-                return response()->json([
-                    'message_error' => 200,
-                    'message' => 'Absen Pulang hanya bisa dilakukan antara jam 16.30  hingga 20:00'
-                ]);
-            }
-        }
+    //     if ($pegawai->jenis_presensi == 1) {
+    //         if ($currentTime < $startTime || $currentTime > $endTime) {
+    //             return response()->json([
+    //                 'message_error' => 200,
+    //                 'message' => 'Absen Pulang hanya bisa dilakukan antara jam 16.30  hingga 20:00'
+    //             ]);
+    //         }
+    //     }
 
-        $lokasi = Lokasi::find($req->id_lokasi);
-        $myLocation['lat'] = $req->myLat;
-        $myLocation['long'] = $req->myLong;
-        $param['nip']               = $pegawai->nip;
-        $param['skpd_id']           = $pegawai->skpd_id;
-        $param['puskesmas_id']      = $pegawai->puskesmas_id;
-        $param['sekolah_id']        = $pegawai->sekolah_id;
-        $param['jenis_presensi']    = $pegawai->jenis_presensi;
-        $param['latlong_pulang']     = json_encode($myLocation);
-        $param['id_lokasi_pulang']   = $lokasi->id;
-        $param['nama_lokasi_pulang'] = $lokasi->nama;
-        $param['tanggal']            = $today;
-        $param['jam_pulang']         = Carbon::now()->format('Y-m-d H:i:s');
-        $param['request']            = $req->all();
+    //     $lokasi = Lokasi::find($req->id_lokasi);
+    //     $myLocation['lat'] = $req->myLat;
+    //     $myLocation['long'] = $req->myLong;
+    //     $param['nip']               = $pegawai->nip;
+    //     $param['skpd_id']           = $pegawai->skpd_id;
+    //     $param['puskesmas_id']      = $pegawai->puskesmas_id;
+    //     $param['sekolah_id']        = $pegawai->sekolah_id;
+    //     $param['jenis_presensi']    = $pegawai->jenis_presensi;
+    //     $param['latlong_pulang']     = json_encode($myLocation);
+    //     $param['id_lokasi_pulang']   = $lokasi->id;
+    //     $param['nama_lokasi_pulang'] = $lokasi->nama;
+    //     $param['tanggal']            = $today;
+    //     $param['jam_pulang']         = Carbon::now()->format('Y-m-d H:i:s');
+    //     $param['request']            = $req->all();
 
-        $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
-        if ($check == null) {
-            Presensi::create($param);
-            $data['message_error'] = 200;
-            $data['message']       = 'Berhasil Di Simpan';
-        } else {
-            $check->update($param);
-            $data['message_error'] = 200;
-            $data['message']       = 'Presensi Pulang Berhasil Di Update';
-            $data['data']          = $check;
-        }
+    //     $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
+    //     if ($check == null) {
+    //         Presensi::create($param);
+    //         $data['message_error'] = 200;
+    //         $data['message']       = 'Berhasil Di Simpan';
+    //     } else {
+    //         $check->update($param);
+    //         $data['message_error'] = 200;
+    //         $data['message']       = 'Presensi Pulang Berhasil Di Update';
+    //         $data['data']          = $check;
+    //     }
 
-        return response()->json($data);
-    }
+    //     return response()->json($data);
+    // }
 
     public function presensiSeminggu()
     {
