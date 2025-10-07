@@ -116,6 +116,8 @@ ADMIN
                                 <strong>STATUS : PENSIUN</strong>
 
                                 @else
+                                <a href="/admin/pppk/{{$item->id}}/edit" class="btn btn-xs bg-gradient-info"><i
+                                        class="fas fa-edit"></i> Edit</a>
                                 @if ($item->user == null)
                                 <a href="/admin/pppk/{{$item->id}}/createuser"
                                     class="btn btn-xs bg-gradient-success">Buat Akun</a>
@@ -216,9 +218,11 @@ ADMIN
                                 <strong>STATUS : PENSIUN</strong>
 
                                 @else
+                                <a href="/admin/pppk/{{$item->id}}/edit" class="btn btn-xs bg-gradient-info"><i
+                                        class="fas fa-edit"></i> Edit</a>
                                 @if ($item->user == null)
-                                {{-- <a href="/admin/pppk/{{$item->id}}/createuser"
-                                    class="btn btn-xs bg-gradient-success">Buat Akun</a> --}}
+                                <a href="/admin/pppk/{{$item->id}}/createuser"
+                                    class="btn btn-xs bg-gradient-success">Buat Akun</a>
                                 @else
                                 <a href="/admin/pppk/{{$item->id}}/presensi" class="btn btn-xs bg-gradient-warning"><i
                                         class="fas fa-calendar"></i> Presensi</a>

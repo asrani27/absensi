@@ -168,6 +168,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('pppk/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PPPKController::class, 'editPresensi']);
         Route::post('pppk/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PPPKController::class, 'updatePresensi']);
         Route::get('pppk/{id}/resetpass', [PPPKController::class, 'resetpass']);
+        Route::get('pppk/{id}/createuser', [PPPKController::class, 'createUserSingle']);
 
         Route::resource('pppk', PPPKController::class);
         Route::resource('pegawai', PegawaiController::class);

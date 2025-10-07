@@ -38,6 +38,12 @@ class PPPKController extends Controller
         return view('admin.pppk.create', compact('lokasi'));
     }
 
+    public function edit($id)
+    {
+        $data = Pegawai::find($id);
+        return view('admin.pppk.edit', compact('data'));
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -51,15 +57,39 @@ class PPPKController extends Controller
         Pegawai::create([
             'nama' => $request->nama,
             'nip' => $request->nip,
+            'pangkat' => $request->pangkat,
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
             'status_asn' => 'PPPK',
             'skpd_id' => $this->skpd()->id,
             'lokasi_id' => $request->lokasi_id,
             'jenis_presensi' => 1, // Default value
+            'is_aktif' => 1,
         ]);
 
         toastr()->success('Data PPPK Berhasil Ditambahkan');
+        return redirect('/admin/pppk');
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'nip' => 'required|string|unique:pegawai,nip,' . $id,
+            'tanggal_lahir' => 'required|date',
+            'jenis_kelamin' => 'required|in:L,P',
+        ]);
+
+        $pegawai = Pegawai::find($id);
+        $pegawai->update([
+            'nama' => $request->nama,
+            'nip' => $request->nip,
+            'pangkat' => $request->pangkat,
+            'tanggal_lahir' => $request->tanggal_lahir,
+            'jenis_kelamin' => $request->jenis_kelamin,
+        ]);
+
+        toastr()->success('Data PPPK Berhasil Diupdate');
         return redirect('/admin/pppk');
     }
 
@@ -119,6 +149,49 @@ class PPPKController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             toastr()->error('Create User Gagal');
+            return back();
+        }
+    }
+
+    public function createUserSingle($id)
+    {
+        $pegawai = Pegawai::find($id);
+        
+        if ($pegawai->user_id != null) {
+            toastr()->error('User sudah ada untuk pegawai ini');
+            return back();
+        }
+
+        $rolePegawai = Role::where('name', 'pegawai')->first();
+        
+        DB::beginTransaction();
+        try {
+            $check = User::where('username', $pegawai->nip)->first();
+            if ($check == null) {
+                $user = new User;
+                $user->name = $pegawai->nama;
+                $user->username = $pegawai->nip;
+                $user->password = bcrypt('pppk');
+                $user->save();
+
+                $pegawai->update([
+                    'user_id' => $user->id,
+                ]);
+
+                //Create Role
+                $user->roles()->attach($rolePegawai);
+            } else {
+                $pegawai->update([
+                    'user_id' => $check->id,
+                ]);
+            }
+            
+            DB::commit();
+            toastr()->success('User Berhasil Dibuat. Username: ' . $pegawai->nip . ', Password: pppk');
+            return back();
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Create User Gagal: ' . $e->getMessage());
             return back();
         }
     }
