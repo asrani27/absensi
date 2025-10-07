@@ -28,8 +28,9 @@ TAMBAH DATA PPPK
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">NIP</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="nip" placeholder="Masukkan NIP"
-                                        required>
+                                    <input type="text" class="form-control" name="nip" placeholder="Masukkan NIP (18 digit, tanpa spasi)"
+                                        pattern="[0-9]{18}" maxlength="18" title="NIP harus 18 digit angka tanpa spasi" required>
+                                    <small class="form-text text-muted">NIP harus 18 digit angka tanpa spasi</small>
                                 </div>
                             </div>
 

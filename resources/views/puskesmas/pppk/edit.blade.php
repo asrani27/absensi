@@ -8,10 +8,10 @@ EDIT DATA PPPK
 <br />
 <div class="row">
     <div class="col-12">
-        <a href="/admin/pppk" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-left"></i>
+        <a href="/puskesmas/pppk" class="btn btn-sm btn-secondary"><i class="fas fa-arrow-left"></i>
             Kembali</a><br /><br />
 
-        <form method="post" action="/admin/pppk/{{$data->id}}">
+        <form method="post" action="/puskesmas/pppk/{{$data->id}}">
             @csrf
             @method('PUT')
             <div class="row">

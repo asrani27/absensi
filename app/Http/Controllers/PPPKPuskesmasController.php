@@ -22,26 +22,25 @@ use GuzzleHttp\Client;
 use Carbon\CarbonPeriod;
 use App\Jobs\SyncUrut;
 
-class PPPKController extends Controller
+class PPPKPuskesmasController extends Controller
 {
 
     public function index()
     {
-        $data = Pegawai::where('skpd_id', $this->skpd()->id)->where('status_asn', 'PPPK')->orderBy('urutan', 'DESC')->paginate(10);
+        $data = Pegawai::where('puskesmas_id', Auth::user()->puskesmas->id)->where('status_asn', 'PPPK')->orderBy('urutan', 'DESC')->paginate(10);
         $puskesmas = Puskesmas::get();
-        return view('admin.pppk.index', compact('data', 'puskesmas'));
+        return view('puskesmas.pppk.index', compact('data', 'puskesmas'));
     }
 
     public function create()
     {
-        $lokasi = Lokasi::where('skpd_id', $this->skpd()->id)->get();
-        return view('admin.pppk.create', compact('lokasi'));
+        return view('puskesmas.pppk.create');
     }
 
     public function edit($id)
     {
         $data = Pegawai::find($id);
-        return view('admin.pppk.edit', compact('data'));
+        return view('puskesmas.pppk.edit', compact('data'));
     }
 
     public function store(Request $request)
@@ -50,8 +49,6 @@ class PPPKController extends Controller
             'nama' => 'required|string|max:255',
             'nip' => 'required|string|regex:/^[0-9]{18}$/|unique:pegawai,nip',
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:L,P',
-            'lokasi_id' => 'nullable|exists:lokasi,id',
         ], [
             'nip.regex' => 'NIP harus 18 digit angka tanpa spasi',
             'nip.size' => 'NIP harus 18 digit',
@@ -62,16 +59,15 @@ class PPPKController extends Controller
             'nip' => $request->nip,
             'pangkat' => $request->pangkat,
             'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
             'status_asn' => 'PPPK',
-            'skpd_id' => $this->skpd()->id,
-            'lokasi_id' => $request->lokasi_id,
+            'skpd_id' => 34, // Dinas Kesehatan
             'jenis_presensi' => 1, // Default value
             'is_aktif' => 1,
+            'puskesmas_id' => Auth::user()->puskesmas->id,
         ]);
 
         toastr()->success('Data PPPK Berhasil Ditambahkan');
-        return redirect('/admin/pppk');
+        return redirect('/puskesmas/pppk');
     }
 
     public function update(Request $request, $id)
@@ -80,7 +76,6 @@ class PPPKController extends Controller
             'nama' => 'required|string|max:255',
             'nip' => 'required|string|regex:/^[0-9]{18}$/|unique:pegawai,nip,' . $id,
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:L,P',
         ], [
             'nip.regex' => 'NIP harus 18 digit angka tanpa spasi',
             'nip.size' => 'NIP harus 18 digit',
@@ -92,17 +87,26 @@ class PPPKController extends Controller
             'nip' => $request->nip,
             'pangkat' => $request->pangkat,
             'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
         ]);
 
         toastr()->success('Data PPPK Berhasil Diupdate');
-        return redirect('/admin/pppk');
+        return redirect('/puskesmas/pppk');
+    }
+
+    public function destroy($id)
+    {
+        $pegawai = Pegawai::find($id);
+        $pegawai->delete();
+
+        toastr()->success('Data PPPK Berhasil Dihapus');
+        return redirect('/puskesmas/pppk');
     }
 
     public function skpd()
     {
-        return Auth::user()->skpd;
+        return Auth::user()->puskesmas->skpd;
     }
+
     public function search()
     {
         $skpd_id = Auth::user()->skpd->id;
@@ -116,7 +120,7 @@ class PPPKController extends Controller
         request()->flash();
 
         $puskesmas = Puskesmas::get();
-        return view('admin.pegawai.index', compact('data', 'puskesmas'))->withInput(request()->all());
+        return view('puskesmas.pppk.index', compact('data', 'puskesmas'))->withInput(request()->all());
     }
 
     public function createuser()
@@ -218,7 +222,7 @@ class PPPKController extends Controller
     {
         $data = Pegawai::find($id);
         $lokasi = Lokasi::where('skpd_id', $this->skpd()->id)->get();
-        return view('admin.pppk.lokasi', compact('data', 'lokasi'));
+        return view('puskesmas.pppk.lokasi', compact('data', 'lokasi'));
     }
 
     public function editlokasi($id)
@@ -227,7 +231,7 @@ class PPPKController extends Controller
 
         $data = Pegawai::find($id);
         $lokasi = Lokasi::where('skpd_id', $this->skpd()->id)->get();
-        return view('admin.pppk.editlokasi', compact('data', 'lokasi'));
+        return view('puskesmas.pppk.editlokasi', compact('data', 'lokasi'));
     }
 
     public function storeLokasi(Request $req, $id)
@@ -236,7 +240,7 @@ class PPPKController extends Controller
             'lokasi_id' => $req->lokasi_id,
         ]);
         toastr()->success('Lokasi Presensi Berhasil Di Update');
-        return redirect('/admin/pppk');
+        return redirect('/puskesmas/pppk');
     }
 
     public function updateLokasi(Request $req, $id)
@@ -245,7 +249,7 @@ class PPPKController extends Controller
             'lokasi_id' => $req->lokasi_id,
         ]);
         toastr()->success('Lokasi Presensi Berhasil Di Update');
-        return redirect('/admin/pppk');
+        return redirect('/puskesmas/pppk');
     }
 
     public function presensi($id)
@@ -255,7 +259,7 @@ class PPPKController extends Controller
         $pegawai = Pegawai::find($id);
         $data = null;
 
-        return view('admin.pppk.presensi', compact('pegawai', 'data', 'id'));
+        return view('puskesmas.pppk.presensi', compact('pegawai', 'data', 'id'));
     }
 
     public function tampilkanPresensi($id)
@@ -266,7 +270,7 @@ class PPPKController extends Controller
         $data = Presensi::where('nip', $pegawai->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->orderBy('tanggal', 'ASC')->get();
         request()->flash();
 
-        return view('admin.pppk.presensi', compact('data', 'pegawai'));
+        return view('puskesmas.pppk.presensi', compact('data', 'pegawai'));
     }
 
     public function sortir()
@@ -308,7 +312,7 @@ class PPPKController extends Controller
         $this->authorize('edit', Pegawai::find($id));
 
         $data = Pegawai::find($id);
-        return view('admin.pppk.jenispresensi', compact('data'));
+        return view('puskesmas.pppk.jenispresensi', compact('data'));
     }
 
     public function simpanjenispresensi(Request $req, $id)
@@ -317,7 +321,7 @@ class PPPKController extends Controller
             'jenis_presensi' => $req->jenis_presensi,
         ]);
         toastr()->success('Jenis Presensi Berhasil Di Update');
-        return redirect('/admin/pppk');
+        return redirect('/puskesmas/pppk');
     }
 
     public function pegawaiPuskesmas(Request $req)
@@ -332,7 +336,7 @@ class PPPKController extends Controller
         $data->appends(['puskesmas_id' => $puskesmas])->links();
         $puskesmas = Puskesmas::get();
         $req->flash();
-        return view('admin.pppk.index', compact('data', 'puskesmas'));
+        return view('puskesmas.pppk.index', compact('data', 'puskesmas'));
     }
 
     public function detailPresensi($id, $bulan, $tahun)
@@ -344,13 +348,13 @@ class PPPKController extends Controller
             return $item;
         });
         //dd($data, LiburNasional::where('tanggal', '2023-05-01')->get());
-        return view('admin.pppk.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
+        return view('puskesmas.pppk.detailpresensi', compact('data', 'bulan', 'tahun', 'id', 'pegawai'));
     }
 
     public function editPresensi($id, $bulan, $tahun, $id_presensi)
     {
         $data = Presensi::find($id_presensi);
-        return view('admin.pppk.editpresensi', compact('data', 'id', 'bulan', 'tahun'));
+        return view('puskesmas.pppk.editpresensi', compact('data', 'id', 'bulan', 'tahun'));
     }
 
     public function updatePresensi(Request $req, $id, $bulan, $tahun, $id_presensi)
@@ -371,7 +375,7 @@ class PPPKController extends Controller
                 'lebih_awal' => 0,
             ]);
             toastr()->error('Tanggal Ini termasuk Libur Nasional');
-            return redirect('/admin/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
+            return redirect('/puskesmas/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
         }
         Presensi::find($id_presensi)->update([
             'jam_masuk' => $dataawal->tanggal . ' ' . $req->jam_masuk,
@@ -503,7 +507,7 @@ class PPPKController extends Controller
         }
 
         toastr()->success('Berhasil Di Ubah');
-        return redirect('/admin/pppk/' . $id . '/presensi/' . $bulan . '/' . $tahun);
+        return redirect('/puskesmas/pppk/' . $id . '/presensi/' . $bulan . '/' . $tahun);
     }
 
     public function generateTanggal($id, $bulan, $tahun)

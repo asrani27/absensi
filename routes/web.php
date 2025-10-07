@@ -28,6 +28,7 @@ use App\Http\Controllers\JenisKeteranganController;
 use App\Http\Controllers\LossController;
 use App\Http\Controllers\ModController;
 use App\Http\Controllers\PPPKController;
+use App\Http\Controllers\PPPKPuskesmasController;
 
 Route::get('/', function () {
     if (Auth::check()) {
@@ -311,6 +312,24 @@ Route::group(['middleware' => ['auth', 'role:puskesmas']], function () {
         Route::get('ringkasan/{id}/delete', [PuskesmasController::class, 'deleteRingkasan']);
         Route::get('ringkasan/{id}/hitung/{bulan}/{tahun}', [PuskesmasController::class, 'hitung']);
         Route::get('laporan/rekap/{bulan}/{tahun}/hitungtotalharikerja', [PuskesmasController::class, 'hitungtotalharikerja']);
+
+        // PPPK Routes for Puskesmas
+        Route::get('pppk', [PPPKPuskesmasController::class, 'index']);
+        Route::get('pppk/create', [PPPKPuskesmasController::class, 'create']);
+        Route::post('pppk', [PPPKPuskesmasController::class, 'store']);
+        Route::get('pppk/{id}/edit', [PPPKPuskesmasController::class, 'edit']);
+        Route::put('pppk/{id}', [PPPKPuskesmasController::class, 'update']);
+        Route::delete('pppk/{id}', [PPPKPuskesmasController::class, 'destroy']);
+        Route::get('pppk/{id}/jenispresensi', [PPPKPuskesmasController::class, 'jenispresensi']);
+        Route::post('pppk/{id}/jenispresensi', [PPPKPuskesmasController::class, 'simpanjenispresensi']);
+        Route::get('pppk/{id}/presensi', [PPPKPuskesmasController::class, 'presensi']);
+        Route::get('pppk/{id}/presensi/generate/{bulan}/{tahun}', [PPPKPuskesmasController::class, 'generateTanggal']);
+        Route::get('pppk/{id}/presensi/{bulan}/{tahun}', [PPPKPuskesmasController::class, 'detailPresensi']);
+        Route::get('pppk/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PPPKPuskesmasController::class, 'editPresensi']);
+        Route::post('pppk/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PPPKPuskesmasController::class, 'updatePresensi']);
+        Route::get('pppk/{id}/resetpass', [PPPKPuskesmasController::class, 'resetpass']);
+        Route::get('pppk/{id}/createuser', [PPPKPuskesmasController::class, 'createUserSingle']);
+        Route::get('pppk/search', [PPPKPuskesmasController::class, 'search']);
     });
 });
 

@@ -16,6 +16,14 @@
                 </p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="/puskesmas/pppk" class="nav-link {{Request::is('puskesmas/pppk') ? 'active' : ''}}">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                    PPPK
+                </p>
+            </a>
+        </li>
 
         <li class="nav-item">
             <a href="/puskesmas/cuti" class="nav-link {{Request::is('puskesmas/cuti') ? 'active' : ''}}">

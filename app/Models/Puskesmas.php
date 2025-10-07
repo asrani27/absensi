@@ -14,6 +14,11 @@ class Puskesmas extends Model
 
     public $timestamps = false;
 
+    public function skpd()
+    {
+        return $this->belongsTo(Skpd::class, 'skpd_id');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
