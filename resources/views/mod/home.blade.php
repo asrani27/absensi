@@ -3,9 +3,9 @@
 @push('css')
 
 
-  <!-- Select2 -->
-  <link rel="stylesheet" href="/theme/plugins/select2/css/select2.min.css">
-  <link rel="stylesheet" href="/theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="/theme/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 @endpush
 @section('title')
 <strong>PRESENSI</strong>
@@ -24,41 +24,55 @@
         </div>
       </div>
       <div class="card-footer bg-white p-0">
-        
+
       </div>
     </div>
   </div>
 </div>
 <div class="row">
-  <form method="post" action="/mod/absensi">
-  @csrf
-  <div class="col-12 col-md-12">
-    <div class="form-group">
-      <label>Cari Nama</label>
-      <select class="form-control select2" name="nip" required>
-        <option value="">-search-</option>
-        @foreach ($pegawai as $item)
-        <option value="{{$item->nip}}" {{old('nip') == $item->nip ? 'selected':''}}>{{$item->nip}} - {{$item->nama}}</option>
-        @endforeach
-      </select>
-    </div>
-    <div class="form-group">
-      <label>Tanggal</label>
-      <input type="date" class="form-control" name='tanggal' value="{{old('tanggal')}}" required>
-    </div>
-    <div class="form-group">
-      <div class="row">
-        <div class="col-6">
-        <button type="submit" class="btn btn-primary btn-block" name="button" value="masuk">MASUK</button>
-        </div>
-        <div class="col-6">
-        <button type="submit" class="btn btn-danger btn-block" name="button" value="pulang">PULANG</button>
+  <div class="col-lg-12 col-md-12">
+    <form method="post" action="/mod/absensi">
+      @csrf
+      <div class="form-group">
+        <label>Cari Nama</label>
+        <select class="form-control select2-pegawai" name="nip" required>
+          <option value="">-search-</option>
+          @php
+            $selectedNip = old('nip');
+            $selectedPegawai = null;
+            if($selectedNip) {
+              $selectedPegawai = \App\Models\Pegawai::where('nip', $selectedNip)->first();
+            }
+          @endphp
+          @if($selectedPegawai)
+          <option value="{{$selectedPegawai->nip}}" selected>{{$selectedPegawai->nip}} - {{$selectedPegawai->nama}}</option>
+          @endif
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tanggal</label>
+        <input type="date" class="form-control" name='tanggal' value="{{old('tanggal')}}" required>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-6">
+            <button type="submit" class="btn btn-primary btn-block" name="button" value="masuk">MASUK</button>
+          </div>
+          <div class="col-6">
+            <button type="submit" class="btn btn-danger btn-block" name="button" value="pulang">PULANG</button>
+          </div>
         </div>
       </div>
-    </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-success btn-block" name="button" value="apel">PRESENSI APEL</button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
-  
-  </form>
+
 </div>
 
 @endsection
@@ -79,6 +93,33 @@
     $('.select2bs4').select2({
       theme: 'bootstrap4'
     })
+
+    //Initialize Select2 with AJAX for pegawai search
+    $('.select2-pegawai').select2({
+      theme: 'bootstrap4',
+      minimumInputLength: 2, // Minimum 2 characters to trigger search
+      ajax: {
+        url: '/mod/search-pegawai',
+        dataType: 'json',
+        delay: 250, // Delay in milliseconds to avoid too many requests
+        data: function (params) {
+          return {
+            q: params.term // search term
+          };
+        },
+        processResults: function (data) {
+          return {
+            results: data
+          };
+        },
+        cache: true
+      },
+      placeholder: '-search-',
+      allowClear: true
+    });
+
+    // Trigger change event to ensure Select2 recognizes the selected option
+    $('.select2-pegawai').trigger('change');
   })
 </script>
 @endpush

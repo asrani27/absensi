@@ -70,6 +70,7 @@ Route::get('/reward/spin-data', [HomeController::class, 'spin'])->name('reward.s
 Route::group(['middleware' => ['auth', 'role:mod']], function () {
     Route::get('/home/mod', [ModController::class, 'index']);
     Route::post('/mod/absensi', [ModController::class, 'absensi']);
+    Route::get('/mod/search-pegawai', [ModController::class, 'searchPegawai']);
 });
 Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/presensi/masuk', [PresensiController::class, 'masuk']);
