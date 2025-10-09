@@ -14,7 +14,8 @@ ADMIN
             Pegawai</a>
         <a href="/admin/pegawai/createuser" class="btn btn-sm bg-gradient-green"><i class="fas fa-key"></i> Buat Akun
             Login</a>
-        <a href="/admin/pegawai/verifikator" class="btn btn-sm bg-gradient-primary"><i class="fas fa-user"></i> Verifikator</a>
+        <a href="/admin/pegawai/verifikator" class="btn btn-sm bg-gradient-primary"><i class="fas fa-user"></i>
+            Verifikator</a>
         {{-- <a href="/admin/pegawai/sortir" class="btn btn-sm bg-gradient-info"><i class="fas fa-users"></i> Urutkan
             Pegawai</a> --}}
         <br /><br />
@@ -71,6 +72,7 @@ ADMIN
                             <th>Lokasi Presensi</th>
                             <th>Jenis Presensi</th>
                             <th>Aksi</th>
+                            <th>Status ASN</th>
                         </tr>
                     </thead>
                     @php
@@ -114,6 +116,7 @@ ADMIN
                                 <a href="/admin/pegawai/{{$item->id}}/jenispresensi"
                                     class="btn btn-xs bg-gradient-info"><i class="fas fa-edit"></i></a>
                             </td>
+                            <td>{{$item->status_asn == null ? 'PNS' :$item->status_asn}}</td>
                             <td>
                                 @if ($item->is_aktif == 0)
                                 <strong>STATUS : PENSIUN</strong>
@@ -123,6 +126,8 @@ ADMIN
                                 <a href="/admin/pegawai/{{$item->id}}/createuser"
                                     class="btn btn-xs bg-gradient-success">Buat Akun</a>
                                 @else
+                                <a href="/admin/pegawai/{{$item->id}}/edit"
+                                    class="btn btn-xs bg-gradient-info"><i class="fas fa-edit"></i> Edit</a>
                                 <a href="/admin/pegawai/{{$item->id}}/presensi"
                                     class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
                                 <a href="/admin/pegawai/{{$item->id}}/resetpass"
@@ -168,6 +173,7 @@ ADMIN
                             {{-- <th>Lokasi Presensi</th> --}}
                             <th>Jenis Presensi</th>
                             <th>Aksi</th>
+                            <th>Status ASN</th>
                         </tr>
                     </thead>
                     @php
@@ -223,6 +229,8 @@ ADMIN
                                 {{-- <a href="/admin/pegawai/{{$item->id}}/createuser"
                                     class="btn btn-xs bg-gradient-success">Buat Akun</a> --}}
                                 @else
+                                <a href="/admin/pegawai/{{$item->id}}/edit"
+                                    class="btn btn-xs bg-gradient-info"><i class="fas fa-edit"></i> Edit</a>
                                 <a href="/admin/pegawai/{{$item->id}}/presensi"
                                     class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
                                 <a href="/admin/pegawai/{{$item->id}}/resetpass"
@@ -230,6 +238,7 @@ ADMIN
                                 @endif
                                 @endif
                             </td>
+                            <td>{{$item->status_asn}}</td>
                         </tr>
                         @endforeach
                     </tbody>

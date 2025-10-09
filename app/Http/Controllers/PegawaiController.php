@@ -445,4 +445,43 @@ class PegawaiController extends Controller
         toastr()->success('Presensi Berhasil Di generate');
         return back();
     }
+
+    public function edit($id)
+    {
+        $this->authorize('edit', Pegawai::find($id));
+        
+        $pegawai = Pegawai::find($id);
+        $puskesmas = Puskesmas::get();
+        
+        return view('admin.pegawai.edit', compact('pegawai', 'puskesmas'));
+    }
+
+    public function update(Request $req, $id)
+    {
+        $this->authorize('edit', Pegawai::find($id));
+        
+        $pegawai = Pegawai::find($id);
+        
+        $pegawai->update([
+            'nama' => $req->nama,
+            'nip' => $req->nip,
+            'jabatan' => $req->jabatan,
+            'pangkat' => $req->pangkat,
+            'golongan' => $req->golongan,
+            'tanggal_lahir' => $req->tanggal_lahir,
+            'status_asn' => $req->status_asn,
+            'puskesmas_id' => $req->puskesmas_id,
+        ]);
+        
+        // Update user name if user exists
+        if ($pegawai->user) {
+            $pegawai->user->update([
+                'name' => $req->nama,
+                'username' => $req->nip,
+            ]);
+        }
+        
+        toastr()->success('Data Pegawai Berhasil Di Update');
+        return redirect('/admin/pegawai');
+    }
 }

@@ -144,6 +144,8 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::post('pegawai/sortir', [PegawaiController::class, 'simpanSortir']);
         Route::get('pegawai/{id}/resetpass', [PegawaiController::class, 'resetpass']);
         Route::get('pegawai/{id}/lokasi', [PegawaiController::class, 'lokasi']);
+        Route::get('pegawai/{id}/edit', [PegawaiController::class, 'edit']);
+        Route::put('pegawai/{id}', [PegawaiController::class, 'update']);
         Route::get('pegawai/{id}/jenispresensi', [PegawaiController::class, 'jenispresensi']);
         Route::post('pegawai/{id}/jenispresensi', [PegawaiController::class, 'simpanjenispresensi']);
         Route::get('pegawai/{id}/editlokasi', [PegawaiController::class, 'editlokasi']);
