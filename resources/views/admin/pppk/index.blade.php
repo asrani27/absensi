@@ -67,6 +67,7 @@ ADMIN
                             <th>Dinas/Puskesmas</th>
                             <th>Lokasi Presensi</th>
                             <th>Jenis Presensi</th>
+                            <th>Status ASN</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -90,7 +91,7 @@ ADMIN
                                 @if ($item->is_aktif == 0)
                                 @else
                                 @if ($item->lokasi == null)
-                                <a href="/admin/pppk/{{$item->id}}/lokasi" class="btn btn-xs bg-gradient-primary"><i
+                                <a href="/admin/pppk/{{$item->id}}/editlokasi" class="btn btn-xs bg-gradient-primary"><i
                                         class="fas fa-pen"></i></a>
                                 @else
                                 {{$item->lokasi->nama}}
@@ -111,6 +112,7 @@ ADMIN
                                 <a href="/admin/pppk/{{$item->id}}/jenispresensi" class="btn btn-xs bg-gradient-info"><i
                                         class="fas fa-edit"></i></a>
                             </td>
+                            <td>{{$item->status_asn == null ? 'PPPK' : $item->status_asn}}</td>
                             <td>
                                 @if ($item->is_aktif == 0)
                                 <strong>STATUS : PENSIUN</strong>
@@ -166,6 +168,7 @@ ADMIN
                             <th>Tgl Lahir</th>
                             {{-- <th>Lokasi Presensi</th> --}}
                             <th>Jenis Presensi</th>
+                            <th>Status ASN</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>

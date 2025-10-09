@@ -35,13 +35,15 @@ class PPPKController extends Controller
     public function create()
     {
         $lokasi = Lokasi::where('skpd_id', $this->skpd()->id)->get();
-        return view('admin.pppk.create', compact('lokasi'));
+        $puskesmas = Puskesmas::get();
+        return view('admin.pppk.create', compact('lokasi', 'puskesmas'));
     }
 
     public function edit($id)
     {
         $data = Pegawai::find($id);
-        return view('admin.pppk.edit', compact('data'));
+        $puskesmas = Puskesmas::get();
+        return view('admin.pppk.edit', compact('data', 'puskesmas'));
     }
 
     public function store(Request $request)
@@ -50,8 +52,6 @@ class PPPKController extends Controller
             'nama' => 'required|string|max:255',
             'nip' => 'required|string|regex:/^[0-9]{18}$/|unique:pegawai,nip',
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:L,P',
-            'lokasi_id' => 'nullable|exists:lokasi,id',
         ], [
             'nip.regex' => 'NIP harus 18 digit angka tanpa spasi',
             'nip.size' => 'NIP harus 18 digit',
@@ -61,11 +61,12 @@ class PPPKController extends Controller
             'nama' => $request->nama,
             'nip' => $request->nip,
             'pangkat' => $request->pangkat,
+            'golongan' => $request->golongan,
             'tanggal_lahir' => $request->tanggal_lahir,
-            'jenis_kelamin' => $request->jenis_kelamin,
             'status_asn' => 'PPPK',
             'skpd_id' => $this->skpd()->id,
             'lokasi_id' => $request->lokasi_id,
+            'puskesmas_id' => $request->puskesmas_id,
             'jenis_presensi' => 1, // Default value
             'is_aktif' => 1,
         ]);
@@ -80,7 +81,6 @@ class PPPKController extends Controller
             'nama' => 'required|string|max:255',
             'nip' => 'required|string|regex:/^[0-9]{18}$/|unique:pegawai,nip,' . $id,
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:L,P',
         ], [
             'nip.regex' => 'NIP harus 18 digit angka tanpa spasi',
             'nip.size' => 'NIP harus 18 digit',
@@ -91,9 +91,20 @@ class PPPKController extends Controller
             'nama' => $request->nama,
             'nip' => $request->nip,
             'pangkat' => $request->pangkat,
+            'golongan' => $request->golongan,
             'tanggal_lahir' => $request->tanggal_lahir,
             'jenis_kelamin' => $request->jenis_kelamin,
+            'status_asn' => $request->status_asn,
+            'puskesmas_id' => $request->puskesmas_id,
         ]);
+
+        // Update user name if user exists
+        if ($pegawai->user) {
+            $pegawai->user->update([
+                'name' => $request->nama,
+                'username' => $request->nip,
+            ]);
+        }
 
         toastr()->success('Data PPPK Berhasil Diupdate');
         return redirect('/admin/pppk');

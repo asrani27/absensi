@@ -3,6 +3,9 @@
 @push('css')
 
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="/theme/plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="/theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
 @endpush
 @section('title')
@@ -37,7 +40,7 @@
                             <div class="form-group row">
                             <label class="col-sm-2 col-form-label">Lokasi Presensi</label>
                             <div class="col-sm-10">
-                                <select class="form-control" name="lokasi_id">
+                                <select class="form-control select2" name="lokasi_id" style="width: 100%;">
                                     @foreach ($lokasi as $item)
                                         <option value="{{$item->id}}" {{$data->lokasi_id == $item->id ? 'selected':''}}>{{$item->nama}} - {{$item->alamat}}</option>
                                     @endforeach
@@ -62,5 +65,17 @@
 @endsection
 
 @push('js')
+<!-- Select2 -->
+<script src="/theme/plugins/select2/js/select2.full.min.js"></script>
 
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    $('.select2').select2({
+      theme: 'bootstrap4',
+      placeholder: 'Pilih Lokasi Presensi',
+      allowClear: true
+    })
+  })
+</script>
 @endpush
