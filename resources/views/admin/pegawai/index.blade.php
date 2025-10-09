@@ -71,8 +71,8 @@ ADMIN
                             <th>Dinas/Puskesmas</th>
                             <th>Lokasi Presensi</th>
                             <th>Jenis Presensi</th>
-                            <th>Aksi</th>
                             <th>Status ASN</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     @php
@@ -126,8 +126,8 @@ ADMIN
                                 <a href="/admin/pegawai/{{$item->id}}/createuser"
                                     class="btn btn-xs bg-gradient-success">Buat Akun</a>
                                 @else
-                                <a href="/admin/pegawai/{{$item->id}}/edit"
-                                    class="btn btn-xs bg-gradient-info"><i class="fas fa-edit"></i> Edit</a>
+                                <a href="/admin/pegawai/{{$item->id}}/edit" class="btn btn-xs bg-gradient-info"><i
+                                        class="fas fa-edit"></i> Edit</a>
                                 <a href="/admin/pegawai/{{$item->id}}/presensi"
                                     class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
                                 <a href="/admin/pegawai/{{$item->id}}/resetpass"
@@ -229,8 +229,8 @@ ADMIN
                                 {{-- <a href="/admin/pegawai/{{$item->id}}/createuser"
                                     class="btn btn-xs bg-gradient-success">Buat Akun</a> --}}
                                 @else
-                                <a href="/admin/pegawai/{{$item->id}}/edit"
-                                    class="btn btn-xs bg-gradient-info"><i class="fas fa-edit"></i> Edit</a>
+                                <a href="/admin/pegawai/{{$item->id}}/edit" class="btn btn-xs bg-gradient-info"><i
+                                        class="fas fa-edit"></i> Edit</a>
                                 <a href="/admin/pegawai/{{$item->id}}/presensi"
                                     class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
                                 <a href="/admin/pegawai/{{$item->id}}/resetpass"
