@@ -65,6 +65,7 @@
                             <th rowspan=2>NIP</th>
                             <th rowspan=2>Nama</th>
                             <th rowspan=2>Jabatan</th>
+                            <th rowspan=2>status</th>
                             <th rowspan=2>Jum Hari</th>
                             <th rowspan=2>Jum Jam</th>
                             <th colspan=2 class="text-center">Hadir Di Hari</th>
@@ -105,6 +106,7 @@
                             <td>{{$item->nip}}</td>
                             <td>{{$item->nama}}</td>
                             <td>{{Str::limit($item->jabatan,50)}}</td>
+                            <td>{{$item->status_asn == null ? 'PNS' : $item->status_asn}}</td>
                             <td>{{$item->jumlah_hari}}</td>
                             <td>{{intdiv($item->jumlah_jam, 60)}}:{{$item->jumlah_jam % 60}}</td>
                             <td>{{$item->kerja}}</td>
@@ -130,7 +132,7 @@
                             <td>
                                 <a href="/admin/ringkasan/{{$item->id}}/delete/{{$bulan}}/{{$tahun}}"
                                     onclick="return confirm('Yakin Ingin Dihapus?');"><span
-                                        class="badge badge-danger">Hapus</span></a> 
+                                        class="badge badge-danger">Hapus</span></a>
 
                                 <a href="/admin/ringkasan/{{$item->id}}/nol/{{$bulan}}/{{$tahun}}"><span
                                         class="badge badge-warning"
