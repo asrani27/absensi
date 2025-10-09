@@ -22,18 +22,20 @@
                 <form method="POST" action="/admin/pegawai/{{$pegawai->id}}">
                     @csrf
                     @method('PUT')
-                    
+
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nama">Nama Lengkap</label>
-                                <input type="text" class="form-control" id="nama" name="nama" value="{{old('nama', $pegawai->nama)}}" required>
+                                <input type="text" class="form-control" id="nama" name="nama"
+                                    value="{{old('nama', $pegawai->nama)}}" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nip">NIP</label>
-                                <input type="text" class="form-control" id="nip" name="nip" value="{{old('nip', $pegawai->nip)}}" required>
+                                <input type="text" class="form-control" id="nip" name="nip"
+                                    value="{{old('nip', $pegawai->nip)}}" required>
                             </div>
                         </div>
                     </div>
@@ -42,13 +44,15 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="jabatan">Jabatan</label>
-                                <input type="text" class="form-control" id="jabatan" name="jabatan" value="{{old('jabatan', $pegawai->jabatan)}}" required>
+                                <input type="text" class="form-control" id="jabatan" name="jabatan"
+                                    value="{{old('jabatan', $pegawai->jabatan)}}" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="pangkat">Pangkat</label>
-                                <input type="text" class="form-control" id="pangkat" name="pangkat" value="{{old('pangkat', $pegawai->pangkat)}}" required>
+                                <input type="text" class="form-control" id="pangkat" name="pangkat"
+                                    value="{{old('pangkat', $pegawai->pangkat)}}" required>
                             </div>
                         </div>
                     </div>
@@ -57,13 +61,16 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="golongan">Golongan</label>
-                                <input type="text" class="form-control" id="golongan" name="golongan" value="{{old('golongan', $pegawai->golongan)}}" required>
+                                <input type="text" class="form-control" id="golongan" name="golongan"
+                                    value="{{old('golongan', $pegawai->golongan)}}" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="tanggal_lahir">Tanggal Lahir</label>
-                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{old('tanggal_lahir', \Carbon\Carbon::parse($pegawai->tanggal_lahir)->format('Y-m-d'))}}" required>
+                                <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir"
+                                    value="{{old('tanggal_lahir', \Carbon\Carbon::parse($pegawai->tanggal_lahir)->format('Y-m-d'))}}"
+                                    required>
                             </div>
                         </div>
                     </div>
@@ -74,9 +81,10 @@
                                 <label for="status_asn">Status ASN</label>
                                 <select class="form-control" id="status_asn" name="status_asn">
                                     <option value="">-- Pilih Status --</option>
-                                    <option value="PNS" {{old('status_asn', $pegawai->status_asn) == 'PNS' ? 'selected' : ''}}>PNS</option>
-                                    <option value="PPPK" {{old('status_asn', $pegawai->status_asn) == 'PPPK' ? 'selected' : ''}}>PPPK</option>
-                                    <option value="HONORER" {{old('status_asn', $pegawai->status_asn) == 'HONORER' ? 'selected' : ''}}>HONORER</option>
+                                    <option value="PNS" {{old('status_asn', $pegawai->status_asn) == 'PNS' ? 'selected'
+                                        : ''}}>PNS</option>
+                                    <option value="PPPK" {{old('status_asn', $pegawai->status_asn) == 'PPPK' ?
+                                        'selected' : ''}}>PPPK</option>
                                 </select>
                             </div>
                         </div>
@@ -85,9 +93,9 @@
                                 <label for="puskesmas_id">Puskesmas</label>
                                 <select class="form-control" id="puskesmas_id" name="puskesmas_id">
                                     <option value="">-- Pilih Puskesmas --</option>
-                                    <option value="34" {{old('puskesmas_id', $pegawai->puskesmas_id) == '34' ? 'selected' : ''}}>Dinas Kesehatan</option>
                                     @foreach ($puskesmas as $item)
-                                    <option value="{{$item->id}}" {{old('puskesmas_id', $pegawai->puskesmas_id) == $item->id ? 'selected' : ''}}>{{$item->nama}}</option>
+                                    <option value="{{$item->id}}" {{old('puskesmas_id', $pegawai->puskesmas_id) ==
+                                        $item->id ? 'selected' : ''}}>{{$item->nama}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -117,7 +125,7 @@
 
 @push('js')
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
     // Tambahkan validasi jika diperlukan
     $('form').on('submit', function(e) {
         // Validasi dasar bisa ditambahkan di sini
