@@ -64,10 +64,10 @@ class PegawaiController extends Controller
         $skpd_id = Auth::user()->skpd->id;
         $search = request()->get('search');
 
-        $data   = Pegawai::where('skpd_id', $skpd_id)->where('status_asn', '!=', 'PPPK')
+        $data   = Pegawai::where('skpd_id', $skpd_id)->where('status_asn', null)
             ->where('nama', 'LIKE', '%' . $search . '%')
             ->orWhere(function ($query) use ($search, $skpd_id) {
-                $query->where('status_asn', '!=', 'PPPK')->where('skpd_id', $skpd_id)->where('nip', 'LIKE', '%' . $search . '%');
+                $query->where('status_asn', null)->where('skpd_id', $skpd_id)->where('nip', 'LIKE', '%' . $search . '%');
             })->paginate(10);
 
         $data->appends(['search' => $search])->links();
