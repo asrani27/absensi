@@ -510,9 +510,6 @@ class PegawaiController extends Controller
                 $pegawai->user->delete();
             }
 
-            // Delete related presensi records
-            $pegawai->presensi()->delete();
-
             // Delete the pegawai
             $pegawai->delete();
 
