@@ -118,16 +118,16 @@ class PPPKController extends Controller
     {
         $skpd_id = Auth::user()->skpd->id;
         $search = request()->get('search');
-        $data   = Pegawai::where('skpd_id', $skpd_id)
+        $data   = Pegawai::where('skpd_id', $skpd_id)->where('status_asn', 'PPPK')
             ->where('nama', 'LIKE', '%' . $search . '%')
             ->orWhere(function ($query) use ($search, $skpd_id) {
-                $query->where('skpd_id', $skpd_id)->where('nip', 'LIKE', '%' . $search . '%');
+                $query->where('status_asn', 'PPPK')->where('skpd_id', $skpd_id)->where('nip', 'LIKE', '%' . $search . '%');
             })->paginate(10);
         $data->appends(['search' => $search])->links();
         request()->flash();
 
         $puskesmas = Puskesmas::get();
-        return view('admin.pegawai.index', compact('data', 'puskesmas'))->withInput(request()->all());
+        return view('admin.pppk.index', compact('data', 'puskesmas'))->withInput(request()->all());
     }
 
     public function createuser()

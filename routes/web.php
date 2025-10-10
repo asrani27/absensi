@@ -173,6 +173,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::post('pppk/{id}/presensi/{bulan}/{tahun}/{id_presensi}/edit', [PPPKController::class, 'updatePresensi']);
         Route::get('pppk/{id}/resetpass', [PPPKController::class, 'resetpass']);
         Route::get('pppk/{id}/createuser', [PPPKController::class, 'createUserSingle']);
+        Route::get('pppk/search', [PPPKController::class, 'search']);
 
         Route::resource('pppk', PPPKController::class);
         Route::delete('pegawai/{id}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
