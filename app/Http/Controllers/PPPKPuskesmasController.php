@@ -109,12 +109,13 @@ class PPPKPuskesmasController extends Controller
 
     public function search()
     {
-        $skpd_id = Auth::user()->skpd->id;
+        $puskesmas_id = Auth::user()->puskesmas->id;
+
         $search = request()->get('search');
-        $data   = Pegawai::where('skpd_id', $skpd_id)
+        $data   = Pegawai::where('puskesmas_id', $puskesmas_id)
             ->where('nama', 'LIKE', '%' . $search . '%')
-            ->orWhere(function ($query) use ($search, $skpd_id) {
-                $query->where('skpd_id', $skpd_id)->where('nip', 'LIKE', '%' . $search . '%');
+            ->orWhere(function ($query) use ($search, $puskesmas_id) {
+                $query->where('puskesmas_id', $puskesmas_id)->where('nip', 'LIKE', '%' . $search . '%');
             })->paginate(10);
         $data->appends(['search' => $search])->links();
         request()->flash();
