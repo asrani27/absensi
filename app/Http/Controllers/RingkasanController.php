@@ -189,11 +189,13 @@ class RingkasanController extends Controller
                 $n->skpd_id = $skpd_id;
                 $n->bulan = $bulan;
                 $n->tahun = $tahun;
+                $n->jenis_presensi = $item->jenis_presensi;
                 $n->save();
             } else {
                 $check->update([
                     'jabatan' => $item->jabatan,
                     'skpd_id' => $skpd_id,
+                    'jenis_presensi' => $item->jenis_presensi,
                 ]);
             }
         }
