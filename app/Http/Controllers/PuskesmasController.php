@@ -537,7 +537,7 @@ class PuskesmasController extends Controller
             }
             //dd($kurangi_persen_pulangcepat, $kurangi_persen_terlambat);
             try {
-                if ($hadir == 0) {
+                if ($jumlahhari == 0) {
                     $updatepersen = 0;
                 } else {
                     $persen = round((($hadir / $jumlahhari) * 100), 2) - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
