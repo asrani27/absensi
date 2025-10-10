@@ -63,11 +63,13 @@ class PegawaiController extends Controller
     {
         $skpd_id = Auth::user()->skpd->id;
         $search = request()->get('search');
-        $data   = Pegawai::where('skpd_id', $skpd_id)
+
+        $data   = Pegawai::where('skpd_id', $skpd_id)->where('status_asn', '!=', 'PPPK')
             ->where('nama', 'LIKE', '%' . $search . '%')
             ->orWhere(function ($query) use ($search, $skpd_id) {
-                $query->where('skpd_id', $skpd_id)->where('nip', 'LIKE', '%' . $search . '%');
+                $query->where('status_asn', '!=', 'PPPK')->where('skpd_id', $skpd_id)->where('nip', 'LIKE', '%' . $search . '%');
             })->paginate(10);
+
         $data->appends(['search' => $search])->links();
         request()->flash();
 
@@ -237,10 +239,12 @@ class PegawaiController extends Controller
     {
         $puskesmas = request()->get('puskesmas_id');
 
-        if ($puskesmas == '34') {
-            $data = Pegawai::where('skpd_id', '34')->where('puskesmas_id', null)->orderBy('urutan', 'DESC')->paginate(10);
+
+        if ($puskesmas == 'dinkes') {
+            $data = Pegawai::where('skpd_id', 34)->where('puskesmas_id', null)->orderBy('urutan', 'DESC')->paginate(10);
         } else {
-            $data = Pegawai::where('puskesmas_id', $puskesmas)->orderBy('urutan', 'DESC')->paginate(10);
+
+            $data = Pegawai::where('puskesmas_id', $puskesmas)->where('status_asn', null)->orderBy('urutan', 'DESC')->paginate(10);
         }
         $data->appends(['puskesmas_id' => $puskesmas])->links();
         $puskesmas = Puskesmas::get();
@@ -449,19 +453,19 @@ class PegawaiController extends Controller
     public function edit($id)
     {
         $this->authorize('edit', Pegawai::find($id));
-        
+
         $pegawai = Pegawai::find($id);
         $puskesmas = Puskesmas::get();
-        
+
         return view('admin.pegawai.edit', compact('pegawai', 'puskesmas'));
     }
 
     public function update(Request $req, $id)
     {
         $this->authorize('edit', Pegawai::find($id));
-        
+
         $pegawai = Pegawai::find($id);
-        
+
         $pegawai->update([
             'nama' => $req->nama,
             'nip' => $req->nip,
@@ -472,7 +476,7 @@ class PegawaiController extends Controller
             'status_asn' => $req->status_asn,
             'puskesmas_id' => $req->puskesmas_id,
         ]);
-        
+
         // Update user name if user exists
         if ($pegawai->user) {
             $pegawai->user->update([
@@ -480,8 +484,45 @@ class PegawaiController extends Controller
                 'username' => $req->nip,
             ]);
         }
-        
+
         toastr()->success('Data Pegawai Berhasil Di Update');
         return redirect('/admin/pegawai');
+    }
+
+    public function destroy($id)
+    {
+        $pegawai = Pegawai::find($id);
+
+        if (!$pegawai) {
+            toastr()->error('Data pegawai tidak ditemukan');
+            return back();
+        }
+
+        // Check authorization
+        if (Auth::user()->skpd != null) {
+            $this->authorize('edit', $pegawai);
+        }
+
+        DB::beginTransaction();
+        try {
+            // Delete related user account if exists
+            if ($pegawai->user) {
+                $pegawai->user->delete();
+            }
+
+            // Delete related presensi records
+            $pegawai->presensi()->delete();
+
+            // Delete the pegawai
+            $pegawai->delete();
+
+            DB::commit();
+            toastr()->success('Data pegawai berhasil dihapus');
+            return redirect('/admin/pegawai');
+        } catch (\Exception $e) {
+            DB::rollback();
+            toastr()->error('Gagal menghapus data pegawai: ' . $e->getMessage());
+            return back();
+        }
     }
 }

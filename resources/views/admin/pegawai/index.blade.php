@@ -28,7 +28,8 @@ ADMIN
                     <div class="form-group">
                         <select name="puskesmas_id" class='form-control form-control-sm'>
                             <option value="">-Pilih-</option>
-                            <option value="34" {{old('puskesmas_id')=='34' ? 'selected' :''}}>Dinas Kesehatan</option>
+                            <option value="dinkes" {{old('puskesmas_id')=='dinkes' ? 'selected' :''}}>Dinas Kesehatan
+                            </option>
                             @foreach ($puskesmas as $item)
                             <option value="{{$item->id}}" {{old('puskesmas_id')==$item->id ?
                                 'selected':''}}>{{$item->nama}}</option>
@@ -132,6 +133,13 @@ ADMIN
                                     class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
                                 <a href="/admin/pegawai/{{$item->id}}/resetpass"
                                     class="btn btn-xs bg-gradient-secondary"><i class="fas fa-key"></i> Reset Pass</a>
+                                <form action="/admin/pegawai/{{$item->id}}" method="POST" style="display: inline-block;"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pegawai ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-xs bg-gradient-danger"><i
+                                            class="fas fa-trash"></i> Hapus</button>
+                                </form>
                                 @endif
                                 @endif
                             </td>
@@ -235,6 +243,13 @@ ADMIN
                                     class="btn btn-xs bg-gradient-warning"><i class="fas fa-calendar"></i> Presensi</a>
                                 <a href="/admin/pegawai/{{$item->id}}/resetpass"
                                     class="btn btn-xs bg-gradient-secondary"><i class="fas fa-key"></i> Reset Pass</a>
+                                <form action="/admin/pegawai/{{$item->id}}" method="POST" style="display: inline-block;"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus data pegawai ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-xs bg-gradient-danger"><i
+                                            class="fas fa-trash"></i> Hapus</button>
+                                </form>
                                 @endif
                                 @endif
                             </td>
