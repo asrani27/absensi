@@ -176,7 +176,6 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
         Route::get('pppk/search', [PPPKController::class, 'search']);
 
         Route::resource('pppk', PPPKController::class);
-        Route::delete('pegawai/{id}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
         Route::resource('pegawai', PegawaiController::class);
         Route::get('qrcode/generate', [QrcodeController::class, 'generateQrcode']);
         Route::get('qrcode/tampil/{id}', [QrcodeController::class, 'tampilQr']);
