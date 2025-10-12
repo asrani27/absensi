@@ -28,7 +28,7 @@ class PegawaiController extends Controller
 {
     public function index()
     {
-        $data = Pegawai::where('skpd_id', $this->skpd()->id)->where('status_asn', null)->orderBy('urutan', 'DESC')->paginate(10);
+        $data = Pegawai::where('skpd_id', $this->skpd()->id)->where('status_asn', 'PNS')->orderBy('urutan', 'DESC')->paginate(10);
         $puskesmas = Puskesmas::get();
         return view('admin.pegawai.index', compact('data', 'puskesmas'));
     }
