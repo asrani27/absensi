@@ -19,7 +19,7 @@ class laporan2023 implements FromView, WithEvents
     public function view(): View
     {
         // Ambil semua pegawai yang aktif
-        $pegawai = Pegawai::where('status_asn', null)->get();
+        $pegawai = Pegawai::where('status_asn', 'PNS')->get();
 
         // Ambil data ringkasan yang relevan sekaligus untuk semua pegawai pada tahun 2023 dan seluruh bulan (Januari - Desember)
         $ringkasan = Ringkasan::whereIn('nip', $pegawai->pluck('nip'))
