@@ -47,6 +47,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/support', function () {
+    return view('support');
+});
+
 Route::get('/logout', function () {
     Auth::logout();
     return redirect('/');
