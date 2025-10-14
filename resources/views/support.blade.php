@@ -77,7 +77,7 @@
             <ul>
                 <li><strong>Email:</strong> <a
                         href="mailto:support@banjarmasinkota.go.id">support@banjarmasinkota.go.id</a></li>
-                <li><strong>Phone:</strong> (0511) 1234567</li>
+                <li><strong>Phone:</strong> +62 877 1599 6555</li>
                 <li><strong>Office Hours:</strong> Monday – Friday, 08:00 – 16:00 WITA</li>
                 <li><strong>Address:</strong> Dinas Komunikasi dan Informatika, Pemerintah Kota Banjarmasin, Indonesia
                 </li>
@@ -102,7 +102,8 @@
 
         <section>
             <h2>About This App</h2>
-            <p>The Absensi Banjarmasin app is an internal attendance tracking tool designed exclusively for government
+            <p>The Presensi ASN Banjarmasin app is an internal attendance tracking tool designed exclusively for
+                government
                 employees of the Banjarmasin City Government.
                 It helps improve transparency and efficiency in employee attendance management through location-based
                 check-in and check-out features.</p>
