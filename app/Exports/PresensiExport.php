@@ -60,10 +60,7 @@ class PresensiExport implements FromCollection, WithEvents, WithColumnFormatting
 
             return $item->only(['nomor', 'nama']);
         })->values();
-        // $presensi = Presensi::where('skpd_id', $this->skpd->id)->where('tanggal', $this->tanggal)->orderBy('urutan', 'DESC')->get()->map(function ($item) {
-        //     return $item->only(['id', 'nama']);
-        // });
-        //dd($presensi);
+
         return $data;
     }
     public function columnFormats(): array

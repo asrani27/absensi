@@ -12,6 +12,7 @@ use App\Models\Ringkasan;
 use App\Models\DoubleData;
 use Illuminate\Http\Request;
 use App\Exports\PresensiExport;
+use App\Models\PresensiApel;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -43,43 +44,88 @@ class LaporanAdminController extends Controller
         $jenis = request()->jenis;
         $tanggal = request()->tanggal;
         $skpd = Auth::user()->skpd;
-        if ($jenis == 'excel') {
-            return Excel::download(new PresensiExport($tanggal, $skpd), 'presensi.xlsx');
-        } else {
 
-            $presensi = Presensi::where('tanggal', $tanggal)->get();
+        // Get pegawai data for the current SKPD
+        $datapegawai = Pegawai::where('skpd_id', $skpd->id)
+            ->where('puskesmas_id', null)
+            ->where('jabatan', '!=', null)
+            ->orderBy('urutan', 'DESC')
+            ->get();
 
-            $datapegawai = Pegawai::where('skpd_id', $skpd->id)->where('puskesmas_id', null)->where('jabatan', '!=', null)->orderBy('urutan', 'DESC')->get();
+        // Get all NIPs from pegawai for efficient querying
+        $nipList = $datapegawai->pluck('nip');
 
-            //mapping data
-            $data = $datapegawai->map(function ($item) use ($presensi, $tanggal) {
-                $check = $presensi->where('nip', $item->nip);
-                if (count($check) == 1) {
-                    $item->presensi = $check->first();
-                } elseif (count($check) == 0) {
-                    //Buat Presensi Default
-                    $p = new Presensi;
-                    $p->nip = $item->nip;
-                    $p->nama = $item->nama;
-                    $p->skpd_id = $item->skpd_id;
-                    $p->tanggal = $tanggal;
-                    $p->jam_masuk = $tanggal . ' 00:00:00';
-                    $p->jam_pulang = $tanggal . ' 00:00:00';
-                    $p->save();
-                } else {
-                    //Log Data Double 
-                    $d = new DoubleData;
-                    $d->nip = $item->nip;
-                    $d->tanggal = $tanggal;
-                    $d->save();
-                }
-                return $item;
-            });
+        // Get presensi data only for relevant pegawai
+        $presensiData = Presensi::where('tanggal', $tanggal)
+            ->whereIn('nip', $nipList)
+            ->get()
+            ->groupBy('nip');
 
+        // Get presensi apel data only for relevant pegawai
+        $presensiApelData = PresensiApel::where('tanggal', $tanggal)
+            ->whereIn('nip', $nipList)
+            ->pluck('jam', 'nip');
 
-            $pimpinan = $datapegawai->first();
-            return view('admin.laporan.tanggal', compact('data', 'skpd', 'tanggal', 'pimpinan'));
+        // Prepare data for batch operations
+        $defaultPresensiToInsert = [];
+        $doubleDataToInsert = [];
+
+        // Process data and identify records to create
+        foreach ($datapegawai as $pegawai) {
+            $presensiRecords = $presensiData->get($pegawai->nip, collect());
+
+            if ($presensiRecords->count() == 0) {
+                // Prepare default presensi for batch insert
+                $defaultPresensiToInsert[] = [
+                    'nip' => $pegawai->nip,
+                    'nama' => $pegawai->nama,
+                    'skpd_id' => $pegawai->skpd_id,
+                    'tanggal' => $tanggal,
+                    'jam_masuk' => $tanggal . ' 00:00:00',
+                    'jam_pulang' => $tanggal . ' 00:00:00',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            } elseif ($presensiRecords->count() > 1) {
+                // Prepare double data for batch insert
+                $doubleDataToInsert[] = [
+                    'nip' => $pegawai->nip,
+                    'tanggal' => $tanggal,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
         }
+
+        // Batch insert operations
+        if (!empty($defaultPresensiToInsert)) {
+            Presensi::insert($defaultPresensiToInsert);
+        }
+
+        if (!empty($doubleDataToInsert)) {
+            DoubleData::insert($doubleDataToInsert);
+        }
+
+        // Refresh presensi data after potential inserts
+        if (!empty($defaultPresensiToInsert)) {
+            $presensiData = Presensi::where('tanggal', $tanggal)
+                ->whereIn('nip', $nipList)
+                ->get()
+                ->groupBy('nip');
+        }
+
+        // Map data with optimized lookups
+        $data = $datapegawai->map(function ($pegawai) use ($presensiData, $presensiApelData) {
+            $pegawai->presensi_apel = $presensiApelData->get($pegawai->nip, '-');
+
+            $presensiRecords = $presensiData->get($pegawai->nip, collect());
+            $pegawai->presensi = $presensiRecords->first();
+
+            return $pegawai;
+        });
+
+        $pimpinan = $datapegawai->first();
+        return view('admin.laporan.tanggal', compact('data', 'skpd', 'tanggal', 'pimpinan'));
     }
 
     public function bulan()
