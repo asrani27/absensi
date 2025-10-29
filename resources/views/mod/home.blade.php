@@ -38,14 +38,15 @@
         <select class="form-control select2-pegawai" name="nip" required>
           <option value="">-search-</option>
           @php
-            $selectedNip = old('nip');
-            $selectedPegawai = null;
-            if($selectedNip) {
-              $selectedPegawai = \App\Models\Pegawai::where('nip', $selectedNip)->first();
-            }
+          $selectedNip = old('nip');
+          $selectedPegawai = null;
+          if($selectedNip) {
+          $selectedPegawai = \App\Models\Pegawai::where('nip', $selectedNip)->first();
+          }
           @endphp
           @if($selectedPegawai)
-          <option value="{{$selectedPegawai->nip}}" selected>{{$selectedPegawai->nip}} - {{$selectedPegawai->nama}}</option>
+          <option value="{{$selectedPegawai->nip}}" selected>{{$selectedPegawai->nip}} - {{$selectedPegawai->nama}}
+          </option>
           @endif
         </select>
       </div>
@@ -67,6 +68,14 @@
         <div class="row">
           <div class="col-12">
             <button type="submit" class="btn btn-success btn-block" name="button" value="apel">PRESENSI APEL</button>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-12">
+            <button type="submit" class="btn btn-warning btn-block" name="button" value="haribesar">PRESENSI HARI
+              BESAR</button>
           </div>
         </div>
       </div>

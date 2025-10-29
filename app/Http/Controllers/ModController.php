@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Models\PresensiApel;
+use App\Models\PresensiHariBesar;
 use Illuminate\Http\Request;
 
 class ModController extends Controller
@@ -46,6 +47,31 @@ class ModController extends Controller
                 $pegawai = Pegawai::where('nip', $req->nip)->first();
                 //create new data
                 $new = new PresensiApel();
+                $new->tanggal   = $req->tanggal;
+                $new->nip       = $pegawai->nip;
+                $new->nama      = $pegawai->nama;
+                $new->jam       = '07:' . rand(55, 59) . ':' . rand(1, 60);
+                $new->skpd_id   = $pegawai->skpd_id;
+                $new->lokasi_id = null;
+                $new->save();
+                $req->flash();
+                toastr()->success('Berhasil di simpan');
+                return back();
+            } else {
+                //update data
+                $update      = $absen;
+                $update->jam = '07:' . rand(55, 59) . ':' . rand(1, 60);
+                $update->save();
+                $req->flash();
+                toastr()->success('Berhasil di update');
+                return back();
+            }
+        } elseif ($req->button == 'haribesar') {
+            $absen = PresensiHariBesar::where('tanggal', $req->tanggal)->where('nip', $req->nip)->first();
+            if ($absen == null) {
+                $pegawai = Pegawai::where('nip', $req->nip)->first();
+                //create new data
+                $new = new PresensiHariBesar();
                 $new->tanggal   = $req->tanggal;
                 $new->nip       = $pegawai->nip;
                 $new->nama      = $pegawai->nama;
