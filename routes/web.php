@@ -73,6 +73,9 @@ Route::get('/reward/spin-data', [HomeController::class, 'spin'])->name('reward.s
 
 Route::group(['middleware' => ['auth', 'role:mod']], function () {
     Route::get('/home/mod', [ModController::class, 'index']);
+    Route::get('/home/tpp', [ModController::class, 'tpp']);
+    Route::get('/mod/tpp/delete/{id}', [ModController::class, 'deleteWhitelist']);
+    Route::post('/mod/tpp', [ModController::class, 'tambahWhitelist']);
     Route::post('/mod/absensi', [ModController::class, 'absensi']);
     Route::get('/mod/search-pegawai', [ModController::class, 'searchPegawai']);
 });

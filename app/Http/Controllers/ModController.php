@@ -6,8 +6,9 @@ use Carbon\Carbon;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Models\PresensiApel;
-use App\Models\PresensiHariBesar;
 use Illuminate\Http\Request;
+use App\Models\PresensiHariBesar;
+use Illuminate\Support\Facades\DB;
 
 class ModController extends Controller
 {
@@ -15,7 +16,34 @@ class ModController extends Controller
     {
         return view('mod.home');
     }
+    public function tpp()
+    {
+        $whitelist = DB::connection('mysql_tpp')->table('whitelist_nip')->get()->map(function ($item) {
+            $item->nama = Pegawai::where('nip', $item->nip)->first() == null ? null : Pegawai::where('nip', $item->nip)->first()->nama;
+            return $item;
+        });
 
+        return view('mod.tpp', compact('whitelist'));
+    }
+    public function deleteWhitelist($id)
+    {
+        DB::connection('mysql_tpp')->table('whitelist_nip')->where('id', $id)->delete();
+        toastr()->success('Berhasil di hapus');
+        return back();
+    }
+    public function tambahWhitelist(Request $req)
+    {
+        $check = DB::connection('mysql_tpp')->table('whitelist_nip')->where('nip', $req->nip)->first();
+        if ($check == null) {
+            DB::connection('mysql_tpp')->table('whitelist_nip')->insert([
+                'nip' => $req->nip
+            ]);
+            toastr()->success('Berhasil ditambahkan');
+        } else {
+            toastr()->warning('Data ini sudah ada');
+        }
+        return back();
+    }
     public function searchPegawai(Request $request)
     {
         $search = $request->get('q');
