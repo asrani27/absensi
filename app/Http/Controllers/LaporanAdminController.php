@@ -5,20 +5,41 @@ namespace App\Http\Controllers;
 use Excel;
 use Carbon\Carbon;
 use App\Models\Skpd;
+use App\Models\Kunci;
 use GuzzleHttp\Client;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Models\Ringkasan;
 use App\Models\DoubleData;
+use App\Models\PresensiApel;
 use Illuminate\Http\Request;
 use App\Exports\PresensiExport;
-use App\Models\PresensiApel;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Barryvdh\DomPDF\Facade as PDF;
 
 class LaporanAdminController extends Controller
 {
+    public function validasi($bulan, $tahun)
+    {
+        $check = Kunci::where('skpd_id', Auth::user()->skpd->id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+        if ($check == null) {
+            $n = new Kunci();
+            $n->skpd_id = Auth::user()->skpd->id;
+            $n->bulan = $bulan;
+            $n->tahun = $tahun;
+            $n->validasi_skpd = 1;
+            $n->save();
+            toastr()->success('berhasil di validasi');
+            return back();
+        } else {
+            $check->update([
+                'validasi_skpd' => 1,
+            ]);
+            toastr()->success('berhasil di validasi');
+            return back();
+        }
+    }
     public function index()
     {
         $bulan = Carbon::today()->format('m');

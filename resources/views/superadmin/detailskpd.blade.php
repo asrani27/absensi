@@ -37,6 +37,8 @@
                             <th>#</th>
                             <th>SKPD & Puskesmas</th>
                             <th>Status</th>
+                            <th>Validasi Oleh SKPD</th>
+                            <th>Validasi Oleh BKD</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -60,12 +62,33 @@
                                 @endif
                             </td>
                             <td>
+                                @if (validasiSkpd($item->id,$bulan,$tahun) == null)
+                                <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/skpd/{{$item->id}}/validasiskpd"
+                                    style="color:rgb(245, 4, 4)" onclick="return confirm('Yakin ingin divalidasi?');"><i
+                                        class="fa fa-times"></i></a>
+                                @else
+                                <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/skpd/{{$item->id}}/unlock"><i
+                                        class="fa fa-check" onclick="return confirm('Yakin ingin dibuka?');"></i></a>
+                                @endif
+                            </td>
+                            <td>
+                                @if (validasiBkd($item->id,$bulan,$tahun) == null)
+                                <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/skpd/{{$item->id}}/validasibkd"
+                                    style="color:rgb(245, 4, 4)" onclick="return confirm('Yakin ingin divalidasi?');"><i
+                                        class="fa fa-times"></i></a>
+                                @else
+                                <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/skpd/{{$item->id}}/batalvalidasibkd"
+                                    style="color:rgb(4, 245, 64)"><i class="fa fa-check"
+                                        onclick="return confirm('Yakin ingin dibuka?');"></i></a>
+                                @endif
+                            </td>
+                            <td>
                                 <a href="/superadmin/rekapitulasi/{{$bulan}}/{{$tahun}}/skpd/{{$item->id}}/pdf"
                                     target="_blank" class="btn btn-xs btn-danger"><i class="fas fa-file"></i> Print</a>
                             </td>
                         </tr>
                         @endforeach
-                        @foreach ($puskesmas as $key => $item)
+                        {{-- @foreach ($puskesmas as $key => $item)
                         <tr style="font-size:11px; font-family:Arial, Helvetica, sans-serif">
                             <td>{{$no++}}</td>
                             <td>{{$item->nama}}</td>
@@ -83,7 +106,7 @@
                                     target="_blank" class="btn btn-xs btn-danger"><i class="fas fa-file"></i> Print</a>
                             </td>
                         </tr>
-                        @endforeach
+                        @endforeach --}}
                     </tbody>
                 </table>
             </div>

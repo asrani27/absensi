@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Models\Pegawai;
 use App\Models\Ringkasan;
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -69,6 +70,7 @@ class SyncPegawai implements ShouldQueue
                 'urutan'        => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->kelas_id,
                 'puskesmas_id'  => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->rs_puskesmas_id,
                 'sekolah_id'    => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->sekolah_id,
+                'status_asn'    => 'PNS',
             ]);
             Log::info('save');
         }

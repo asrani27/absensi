@@ -73,6 +73,8 @@
               <th>#</th>
               <th>Bulan</th>
               <th>Tahun</th>
+              <th>Validasi Skpd</th>
+              <th>Validasi Bkd</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -85,6 +87,21 @@
               <td>{{$no++}}</td>
               <td>{{convertBulan($item->bulan)}}</td>
               <td>{{$item->tahun}}</td>
+              <td>
+
+                @if (validasiSkpd(Auth::user()->skpd->id,$item->bulan,$item->tahun) == null)
+                <a href="#" style="color:rgb(245, 4, 4)"><i class="fa fa-times"></i></a>
+                @else
+                <a href="#" style="color:rgb(16, 245, 4)"><i class="fa fa-check"></i></a>
+                @endif
+              </td>
+              <td>
+                @if (validasiBkd(Auth::user()->skpd->id,$item->bulan,$item->tahun) == null)
+                <a href="#" style="color:rgb(245, 4, 4)"><i class="fa fa-times"></i></a>
+                @else
+                <a href="#" style="color:rgb(16, 245, 4)"><i class="fa fa-check"></i></a>
+                @endif
+              </td>
               <td><a href="/admin/laporan/rekap/{{$item->bulan}}/{{$item->tahun}}" class="btn btn-xs btn-success"><i
                     class="fas fa-eye"></i> Detail</a></td>
             </tr>

@@ -112,6 +112,28 @@ class SuperadminController extends Controller
         return back();
     }
 
+    public function validasibkd($bulan, $tahun, $skpd_id)
+    {
+        $check = Kunci::where('skpd_id', $skpd_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+        if ($check == null) {
+            $n = new Kunci();
+            $n->skpd_id = $skpd_id;
+            $n->bulan = $bulan;
+            $n->tahun = $tahun;
+            $n->validasi_skpd = 1;
+            $n->save();
+            toastr()->success('berhasil di validasi');
+            return back();
+        } else {
+            $check->update([
+                'validasi_bkd' => 1,
+            ]);
+            toastr()->success('berhasil di validasi');
+            return back();
+        }
+
+        return back();
+    }
     public function skpdRekapitulasi($bulan, $tahun)
     {
         $skpd = Skpd::get();

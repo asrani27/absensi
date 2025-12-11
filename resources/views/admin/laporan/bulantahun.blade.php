@@ -56,6 +56,17 @@
                 <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/hitungpersentase" class="btn btn-xs btn-primary"
                     onclick="return confirm('Proses ini memakan beberapa waktu, harap di tunggu?');">Hitung
                     Persentase</a>
+                @if (validasiSkpd(Auth::user()->skpd->id, $bulan, $tahun) == null)
+
+                <a href="/admin/laporan/rekap/{{$bulan}}/{{$tahun}}/validasi" class="btn btn-xs btn-danger"
+                    onclick="return confirm('yakin ingin di validasi?');">Kirim & Validasi
+                </a>
+                @else
+
+                <a href="#" class="btn btn-xs btn-success" onclick="return confirm('yakin ingin di validasi?');">sudah
+                    Validasi
+                </a>
+                @endif
                 <br /><br />
                 <table class="table table-hover table-striped table-bordered text-nowrap table-sm  table-responsive">
                     <thead>

@@ -179,6 +179,7 @@ class RingkasanController extends Controller
         $skpd_id = Auth::user()->skpd->id;
         $pegawai = Pegawai::where('skpd_id', $skpd_id)->where('status_asn', 'PNS')->where('puskesmas_id', null)->where('sekolah_id', null)->where('is_aktif', 1)->get();
 
+
         foreach ($pegawai as $item) {
             $check = Ringkasan::where('nip', $item->nip)->where('bulan', $bulan)->where('tahun', $tahun)->first();
             if ($check == null) {

@@ -9,6 +9,7 @@ use Carbon\CarbonPeriod;
 use App\Models\Ringkasan;
 use App\Models\BulanTahun;
 use App\Models\LiburNasional;
+use Illuminate\Support\Facades\Auth;
 
 function bulanTahun()
 {
@@ -65,7 +66,28 @@ function kunciSkpd($skpd_id, $bulan, $tahun)
     }
     return $hasil;
 }
+function validasiSkpd($skpd_id, $bulan, $tahun)
+{
+    $check = Kunci::where('skpd_id', $skpd_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+    if ($check == null) {
+        $hasil = null;
+    } else {
+        $hasil = $check->validasi_skpd;
+    }
 
+    return $hasil;
+}
+function validasiBkd($skpd_id, $bulan, $tahun)
+{
+    $check = Kunci::where('skpd_id', $skpd_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
+    if ($check == null) {
+        $hasil = null;
+    } else {
+        $hasil = $check->validasi_bkd;
+    }
+
+    return $hasil;
+}
 function kunciPuskesmas($puskesmas_id, $bulan, $tahun)
 {
     $check = Kunci::where('puskesmas_id', $puskesmas_id)->where('bulan', $bulan)->where('tahun', $tahun)->first();
@@ -104,16 +126,20 @@ function jumlahHari($bulan, $tahun)
     $array_merge = collect(array_merge($weekends, $tanggalmerah))->unique()->toArray();
 
     $jumlah_hari_kerja = collect($dates)->diff($array_merge);
-    //dd($jumlah_hari_kerja, $start, $end, $bulan);
+
     $jumlah_jam = [];
     foreach ($jumlah_hari_kerja as $item) {
         $jumlah_jam[] = Carbon::parse($item)->format('l') == 'Friday' ? 210 : 510;
     }
 
-    $data['jumlah_hari'] = count($jumlah_hari_kerja);
+    if ($bulan == 12) {
+        $data['jumlah_hari'] = count($jumlah_hari_kerja) / 2;
+    } else {
+        $data['jumlah_hari'] = count($jumlah_hari_kerja);
+    }
     $data['jumlah_jam'] = array_sum($jumlah_jam);
     $data['off'] = count($dates) -  count($jumlah_hari_kerja);
-    //dd($data);
+
     return $data;
 }
 

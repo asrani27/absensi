@@ -57,6 +57,7 @@ class SyncPegawaiAdmin implements ShouldQueue
                 'golongan'       => $this->pegawai->pangkat == null ? null : $this->pegawai->pangkat->golongan,
                 'is_aktif'      => $this->pegawai->is_aktif,
                 'urutan'        => $this->pegawai->jabatan == null ? null : $this->pegawai->jabatan->kelas_id,
+                'status_asn'    => 'PNS',
             ]);
         }
     }

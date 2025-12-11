@@ -196,6 +196,7 @@ Route::group(['middleware' => ['auth', 'role:admin']], function () {
 
         Route::get('laporan', [LaporanAdminController::class, 'index']);
         Route::get('laporan/rekap/{bulan}/{tahun}', [LaporanAdminController::class, 'bulanTahun']);
+        Route::get('laporan/rekap/{bulan}/{tahun}/validasi', [LaporanAdminController::class, 'validasi']);
         Route::get('laporan/rekap/{bulan}/{tahun}/pdf', [LaporanAdminController::class, 'bulanPdf']);
         Route::get('laporan/rekap/{bulan}/{tahun}/tu/sekolah', [LaporanAdminController::class, 'bulanTahunSekolah']);
         Route::get('laporan/tanggal', [LaporanAdminController::class, 'tanggal']);
@@ -276,6 +277,7 @@ Route::group(['middleware' => ['auth', 'role:superadmin']], function () {
         Route::get('cuti', [SuperadminController::class, 'cuti']);
         Route::get('rekapitulasi', [SuperadminController::class, 'rekapitulasi']);
         Route::get('rekapitulasi/{bulan}/{tahun}', [SuperadminController::class, 'detailRekapitulasi']);
+        Route::get('rekapitulasi/{bulan}/{tahun}/skpd/{id}/validasibkd', [SuperadminController::class, 'validasibkd']);
         Route::get('rekapitulasi/{bulan}/{tahun}/skpd', [SuperadminController::class, 'skpdRekapitulasi']);
         Route::get('rekapitulasi/{bulan}/{tahun}/skpd/{id}/pdf', [SuperadminController::class, 'skpdPdf']);
         Route::get('rekapitulasi/{bulan}/{tahun}/puskesmas/{id}/pdf', [SuperadminController::class, 'puskesmasPdf']);
