@@ -175,8 +175,12 @@ function jumlahHari6($bulan, $tahun)
             $jumlah_jam[] = 360;
         }
     }
-
-    $data['jumlah_hari'] = count($jumlah_hari_kerja);
+    if ($bulan == 12) {
+        $data['jumlah_hari'] = count($jumlah_hari_kerja) / 2;
+    } else {
+        $data['jumlah_hari'] = count($jumlah_hari_kerja);
+    }
+    // $data['jumlah_hari'] = count($jumlah_hari_kerja);
     $data['jumlah_jam'] = array_sum($jumlah_jam);
     $data['off'] = count($dates) -  count($jumlah_hari_kerja);
     return $data;
