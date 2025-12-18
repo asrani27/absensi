@@ -536,21 +536,36 @@ class PuskesmasController extends Controller
                 $kurangi_persen_pulangcepat = 0;
             }
             //dd($kurangi_persen_pulangcepat, $kurangi_persen_terlambat);
-            try {
-                if ($jumlahhari == 0) {
-                    $updatepersen = 0;
-                } else {
-                    $persen = round((($hadir / $jumlahhari) * 100), 2) - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
+            if ($hadir == 0) {
+            } else {
+                try {
+                    $persen = round((($hadir / $jumlahhari) * 100), 2);
                     if ($persen < 0) {
                         $updatepersen = 0;
                     } else {
-                        $updatepersen = $persen;
+                        $updatepersen = $persen > 100 ? 100 : $persen;
+                        $updatepersen = $updatepersen - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
                     }
+                    $item->update(['persen_kehadiran' => $updatepersen]);
+                } catch (\Exception $e) {
+                    $item->update(['persen_kehadiran' => 0]);
                 }
-                $item->update(['persen_kehadiran' => $updatepersen]);
-            } catch (\Exception $e) {
-                $item->update(['persen_kehadiran' => 0]);
             }
+            // try {
+            //     if ($jumlahhari == 0) {
+            //         $updatepersen = 0;
+            //     } else {
+            //         $persen = round((($hadir / $jumlahhari) * 100), 2) - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
+            //         if ($persen < 0) {
+            //             $updatepersen = 0;
+            //         } else {
+            //             $updatepersen = $persen;
+            //         }
+            //     }
+            //     $item->update(['persen_kehadiran' => $updatepersen]);
+            // } catch (\Exception $e) {
+            //     $item->update(['persen_kehadiran' => 0]);
+            // }
         }
         toastr()->success('Persentase Selesai');
         return back();
