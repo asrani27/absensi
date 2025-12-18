@@ -98,9 +98,22 @@ function kunciPuskesmas($puskesmas_id, $bulan, $tahun)
     }
     return $hasil;
 }
+
 function telat($nip, $bulan, $tahun)
 {
-    return Presensi::where('nip', $nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
+    if ($bulan == '12') {
+        return Presensi::where('nip', $nip)
+            ->whereBetween('tanggal', [
+                Carbon::create($tahun, 12, 1)->startOfDay(),
+                Carbon::create($tahun, 12, 15)->endOfDay(),
+            ])
+            ->get();
+    } else {
+        return Presensi::where('nip', $nip)
+            ->whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal', $tahun)
+            ->get();
+    }
 }
 
 function persenKehadiran($nip, $bulan, $tahun)
