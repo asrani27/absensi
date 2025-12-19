@@ -539,14 +539,18 @@ class PuskesmasController extends Controller
             if ($hadir == 0) {
             } else {
                 try {
-                    $persen = round((($hadir / $jumlahhari) * 100), 2);
-                    if ($persen < 0) {
-                        $updatepersen = 0;
+                    if ($jumlahhari == 0) {
+                        $item->update(['persen_kehadiran' => 0]);
                     } else {
-                        $updatepersen = $persen > 100 ? 100 : $persen;
-                        $updatepersen = $updatepersen - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
+                        $persen = round((($hadir / $jumlahhari) * 100), 2);
+                        if ($persen < 0) {
+                            $updatepersen = 0;
+                        } else {
+                            $updatepersen = $persen > 100 ? 100 : $persen;
+                            $updatepersen = $updatepersen - $kurangi_persen_terlambat - $kurangi_persen_pulangcepat;
+                        }
+                        $item->update(['persen_kehadiran' => $updatepersen]);
                     }
-                    $item->update(['persen_kehadiran' => $updatepersen]);
                 } catch (\Exception $e) {
                     $item->update(['persen_kehadiran' => 0]);
                 }
