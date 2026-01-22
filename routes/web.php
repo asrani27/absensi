@@ -84,22 +84,22 @@ Route::group(['middleware' => ['auth', 'role:pegawai']], function () {
     Route::get('/pegawai/gantipass', [PresensiController::class, 'gantipassword']);
     Route::post('/pegawai/gantipass', [PresensiController::class, 'updatepassword']);
     Route::post('/pegawai/lokasi', [PresensiController::class, 'storeLokasi']);
-    Route::post('/pegawai/presensi/masuk', [PresensiController::class, 'storeMasuk']);
-    Route::get('/pegawai/presensi/pulang', [PresensiController::class, 'pulang']);
+    // Route::post('/pegawai/presensi/masuk', [PresensiController::class, 'storeMasuk']);
+    // Route::get('/pegawai/presensi/pulang', [PresensiController::class, 'pulang']);
     Route::prefix('pegawai/presensi')->group(function () {
         Route::get('verifikator', [PerbaikanController::class, 'perubahandata']);
         Route::get('verifikator/{id}/setujui', [PerbaikanController::class, 'setujui']);
         Route::get('verifikator/{id}/tolak', [PerbaikanController::class, 'tolak']);
         Route::get('radius', [PresensiController::class, 'radius']);
         Route::get('radiustest', [PresensiController::class, 'radiustest']);
-        Route::post('radius', [PresensiController::class, 'storeRadius']);
+        // Route::post('radius', [PresensiController::class, 'storeRadius']);
         Route::get('barcode', [PresensiController::class, 'barcode']);
         Route::get('barcode/front', [PresensiController::class, 'frontCamera']);
         Route::get('barcode/back', [PresensiController::class, 'backCamera']);
         Route::post('barcode/scan', [PresensiController::class, 'scanBarcode']);
         Route::get('manual ', [PresensiController::class, 'manual']);
         Route::get('testing ', [PresensiController::class, 'testing']);
-        Route::post('manual', [PresensiController::class, 'storeManual']);
+        // Route::post('manual', [PresensiController::class, 'storeManual']);
         Route::get('history', [HistoryController::class, 'index']);
         Route::get('history/search', [HistoryController::class, 'search']);
 
