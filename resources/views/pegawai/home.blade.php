@@ -104,7 +104,7 @@
   </div>
 </div>
 <div class="row">
-  
+
   @if (isVerifikator(Auth::user()->username) == true)
   <div class="col-12 col-sm-6 col-md-3">
     <a href="/pegawai/presensi/verifikator" style="color:black">
@@ -117,12 +117,17 @@
         </div>
       </div>
     </a>
-  </div> 
+  </div>
   @endif
-  
-
-  @if (Auth::user()->pegawai->lokasi == null)
-  <div class="col-12 col-sm-6 col-md-3">
+  <div class="col-12 col-sm-6 col-md-3 text-center">
+    gunakan versi android dan ios untuk presensi lokasi, link ada di bawah ini :<br /><br />
+    <a href="https://play.google.com/store/apps/details?id=com.presensibjm.asrandev&pcampaignid=web_share"><img
+        src="/images/playstore.png" alt="playstore" width="200px"></a><br /><br />
+    <a href="https://apps.apple.com/us/app/presensi-asn-banjarmasin/id6753581571"><img src="/images/appstore.png"
+        alt="appstore" width="200px"></a>
+  </div>
+  {{-- @if (Auth::user()->pegawai->lokasi == null)
+  <div class=" col-12 col-sm-6 col-md-3">
     <div class="alert alert-danger alert-dismissible">
       <h5><i class="icon fas fa-ban"></i> Alert!</h5>
       Silahkan Pilih Lokasi Presensi
@@ -148,10 +153,10 @@
       {{\Carbon\Carbon::parse($cuti->tanggal_selesai)->isoFormat('D MMMM Y')}}
     </div>
   </div>
-  @else
+  @else --}}
 
 
-  @if (Auth::user()->pegawai->jenis_presensi == 3)
+  {{-- @if (Auth::user()->pegawai->jenis_presensi == 3)
 
   <div class="col-12 col-sm-6 col-md-3">
     <a href="/pegawai/presensi/pagi" style="color:black">
@@ -221,13 +226,11 @@
       <!-- /.info-box -->
     </a>
   </div>
-  @endif
+  @endif --}}
   <!-- fix for small devices only -->
-  <div class="clearfix hidden-md-up"></div>
+  {{-- <div class="clearfix hidden-md-up"></div>
 
-  
 
-  <!-- /.col -->
   <div class="col-12 col-sm-6 col-md-3">
     <a href="#" style="color:black">
       <div class="info-box mb-3">
@@ -249,10 +252,10 @@
     </a>
     <!-- /.info-box -->
   </div>
-  
-  @endif
+
+  @endif --}}
   <!-- /.col -->
-  <div class="col-12 col-sm-6 col-md-3">
+  {{-- <div class="col-12 col-sm-6 col-md-3">
     <a href="/pegawai/presensi/history" style="color:black">
       <div class="info-box mb-3">
         <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-chart-bar"></i></span>
@@ -265,14 +268,14 @@
       </div>
     </a>
     <!-- /.info-box -->
-  </div>
+  </div> --}}
 </div>
 {{-- <a href="/pegawai/presensi/testing">Test</a> --}}
-<div class="row">
+{{-- <div class="row">
   <div class="col-lg-12">
     <div id="mapid"></div>
   </div>
-</div>
+</div> --}}
 {{-- <div class="row">
   <div class="col-lg-6 col-6">
     <a href="/pegawai/presensi/masuk">
