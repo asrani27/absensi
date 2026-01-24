@@ -156,7 +156,7 @@
   @else --}}
 
 
-  {{-- @if (Auth::user()->pegawai->jenis_presensi == 3)
+  @if (Auth::user()->pegawai->jenis_presensi == 3)
 
   <div class="col-12 col-sm-6 col-md-3">
     <a href="/pegawai/presensi/pagi" style="color:black">
@@ -210,7 +210,7 @@
   </div>
   @else
 
-  <div class="col-12 col-sm-6 col-md-3">
+  {{-- <div class="col-12 col-sm-6 col-md-3">
     <a href="/pegawai/presensi/radius" style="color:black">
       <div class="info-box">
         <span class="info-box-icon bg-info elevation-1"><i class="fas fa-camera"></i></span>
@@ -225,8 +225,8 @@
       </div>
       <!-- /.info-box -->
     </a>
-  </div>
-  @endif --}}
+  </div> --}}
+  @endif
   <!-- fix for small devices only -->
   {{-- <div class="clearfix hidden-md-up"></div>
 
