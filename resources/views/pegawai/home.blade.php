@@ -119,13 +119,6 @@
     </a>
   </div>
   @endif
-  <div class="col-12 col-sm-6 col-md-3 text-center">
-    gunakan versi android dan ios untuk presensi lokasi, link ada di bawah ini :<br /><br />
-    <a href="https://play.google.com/store/apps/details?id=com.presensibjm.asrandev&pcampaignid=web_share"><img
-        src="/images/playstore.png" alt="playstore" width="200px"></a><br /><br />
-    <a href="https://apps.apple.com/us/app/presensi-asn-banjarmasin/id6753581571"><img src="/images/appstore.png"
-        alt="appstore" width="200px"></a>
-  </div>
   {{-- @if (Auth::user()->pegawai->lokasi == null)
   <div class=" col-12 col-sm-6 col-md-3">
     <div class="alert alert-danger alert-dismissible">
@@ -227,6 +220,14 @@
     </a>
   </div> --}}
   @endif
+
+  <div class="col-12 col-sm-6 col-md-3 text-center">
+    gunakan versi android dan ios untuk presensi lokasi, link ada di bawah ini :<br /><br />
+    <a href="https://play.google.com/store/apps/details?id=com.presensibjm.asrandev&pcampaignid=web_share"><img
+        src="/images/playstore.png" alt="playstore" width="200px"></a><br /><br />
+    <a href="https://apps.apple.com/us/app/presensi-asn-banjarmasin/id6753581571"><img src="/images/appstore.png"
+        alt="appstore" width="200px"></a>
+  </div>
   <!-- fix for small devices only -->
   {{-- <div class="clearfix hidden-md-up"></div>
 
