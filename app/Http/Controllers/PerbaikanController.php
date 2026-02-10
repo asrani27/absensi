@@ -374,7 +374,7 @@ class PerbaikanController extends Controller
             $n->pulang      = $data->jam_pulang;
             $n->p_masuk     = $data->tanggal . ' ' . $req->jam_masuk;
             $n->p_pulang    = $data->tanggal . ' ' . $req->jam_pulang;
-            $n->skpd_id     = $data->skpd_id;
+            $n->skpd_id     = Auth::user()->skpd->id;
             $n->keterangan  = $req->keterangan;
             $n->file        = $filename;
             $n->verifikator = Auth::user()->skpd->kadis;
