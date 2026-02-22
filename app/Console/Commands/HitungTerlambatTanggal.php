@@ -21,7 +21,7 @@ class HitungTerlambatTanggal extends Command
      *
      * @var string
      */
-    protected $signature = 'potongan-terlambat {--tanggal=}';
+    protected $signature = 'potongan-terlambat {--bulan=} {--tahun=}';
 
     /**
      * The console command description.
@@ -300,17 +300,20 @@ class HitungTerlambatTanggal extends Command
      */
     public function handle()
     {
-        if ($this->option('tanggal') != null) {
-            $tanggal = $this->option('tanggal');
+        if ($this->option('bulan') != null && $this->option('tahun') != null) {
+            $bulan = $this->option('bulan');
+            $tahun = $this->option('tahun');
         } else {
-            $tanggal = Carbon::now()->format('Y-m-d');
+            $bulan = Carbon::now()->format('m');
+            $tahun = Carbon::now()->format('Y');
         }
 
-        $data = Presensi::where('tanggal', $tanggal)->get();
+        $data = Presensi::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->get();
         $totalData = $data->count();
         $counter = 0;
 
-        $this->info("Tanggal : " . $tanggal);
+        $this->info("Bulan : " . $bulan);
+        $this->info("Tahun : " . $tahun);
         $this->info("Total Data : " . $totalData);
         $this->info("--eksekusi--");
 
@@ -328,7 +331,7 @@ class HitungTerlambatTanggal extends Command
             if (Pegawai::where('nip', $item->nip)->first() == null) {
                 $er = new ErrorData;
                 $er->nip = $item->nip;
-                $er->keterangan = 'menghitung terlambat tanggal ' . $tanggal;
+                $er->keterangan = 'menghitung terlambat bulan ' . $bulan . ' tahun ' . $tahun;
                 $er->save();
             } else {
                 $checkJenisPresensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;
@@ -386,7 +389,7 @@ class HitungTerlambatTanggal extends Command
                                     $jam = JamRamadhan::where('hari', $hari)->first();
 
                                     $this->hitungTerlambatRamadhan($item, $jam);
-                                    
+
                                     $pegawai = Pegawai::where('nip', $item->nip)->first();
                                     $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : " . $item->denda_terlambat . ", denda_lebih_awal : " . $item->denda_lebih_awal);
                                 } else {
@@ -394,7 +397,7 @@ class HitungTerlambatTanggal extends Command
                                     $jam = Jam::where('hari', $hari)->first();
 
                                     $this->hitungTerlambat($item, $jam);
-                                    
+
                                     $pegawai = Pegawai::where('nip', $item->nip)->first();
                                     $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : " . $item->denda_terlambat . ", denda_lebih_awal : " . $item->denda_lebih_awal);
                                 }
@@ -451,14 +454,14 @@ class HitungTerlambatTanggal extends Command
                                     $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
                                     $jam = Jam6Ramadhan::where('hari', $hari)->first();
                                     $this->hitungTerlambatRamadhan($item, $jam);
-                                    
+
                                     $pegawai = Pegawai::where('nip', $item->nip)->first();
                                     $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : " . $item->denda_terlambat . ", denda_lebih_awal : " . $item->denda_lebih_awal);
                                 } else {
                                     $hari = Carbon::parse($item->tanggal)->translatedFormat('l');
                                     $jam = Jam6::where('hari', $hari)->first();
                                     $this->hitungTerlambat($item, $jam);
-                                    
+
                                     $pegawai = Pegawai::where('nip', $item->nip)->first();
                                     $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : " . $item->denda_terlambat . ", denda_lebih_awal : " . $item->denda_lebih_awal);
                                 }
@@ -475,7 +478,7 @@ class HitungTerlambatTanggal extends Command
                 ]);
             }
         }
-        
+
         $this->info("total selesai di update " . $counter);
         return 0;
     }
