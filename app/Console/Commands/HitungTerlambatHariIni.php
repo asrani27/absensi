@@ -85,6 +85,8 @@ class HitungTerlambatHariIni extends Command
                     $item->update([
                         'terlambat' => 0,
                         'lebih_awal' => 0,
+                        'denda_terlambat' => 0,
+                        'denda_lebih_awal' => 0,
                     ]);
                 } else {
                     //cek dia tanggalnya Libur nasional gak?
@@ -94,6 +96,8 @@ class HitungTerlambatHariIni extends Command
                             'jam_pulang' => $item->tanggal . ' 00:00:00',
                             'terlambat' => 0,
                             'lebih_awal' => 0,
+                            'denda_terlambat' => 0,
+                            'denda_lebih_awal' => 0,
                         ]);
                     } else {
                         //cek dia TL / Cuti Tahunan gak?
@@ -103,6 +107,8 @@ class HitungTerlambatHariIni extends Command
                                 'terlambat' => 0,
                                 'lebih_awal' => 0,
                                 'jenis_keterangan_id' => $item->jenis_keterangan_id,
+                                'denda_terlambat' => 0,
+                                'denda_lebih_awal' => 0,
                             ]);
                         } else {
 
@@ -112,6 +118,8 @@ class HitungTerlambatHariIni extends Command
                                 $item->update([
                                     'terlambat' => 0,
                                     'lebih_awal' => 0,
+                                    'denda_terlambat' => 0,
+                                    'denda_lebih_awal' => 0,
                                 ]);
                             } else {
                                 //check apakah ramadhan
@@ -138,6 +146,8 @@ class HitungTerlambatHariIni extends Command
                     $item->update([
                         'terlambat' => 0,
                         'lebih_awal' => 0,
+                        'denda_terlambat' => 0,
+                        'denda_lebih_awal' => 0,
                     ]);
                 } else {
                     //cek dia tanggalnya Libur nasional gak?
@@ -147,6 +157,8 @@ class HitungTerlambatHariIni extends Command
                             'jam_pulang' => $item->tanggal . ' 00:00:00',
                             'terlambat' => 0,
                             'lebih_awal' => 0,
+                            'denda_terlambat' => 0,
+                            'denda_lebih_awal' => 0,
                         ]);
                     } else {
                         //cek dia TL / Cuti Tahunan gak?
@@ -155,6 +167,8 @@ class HitungTerlambatHariIni extends Command
                             $item->update([
                                 'terlambat' => 0,
                                 'lebih_awal' => 0,
+                                'denda_terlambat' => 0,
+                                'denda_lebih_awal' => 0,
                                 'jenis_keterangan_id' => $item->jenis_keterangan_id,
                             ]);
                         } else {
@@ -164,6 +178,8 @@ class HitungTerlambatHariIni extends Command
                                 $item->update([
                                     'terlambat' => 0,
                                     'lebih_awal' => 0,
+                                    'denda_terlambat' => 0,
+                                    'denda_lebih_awal' => 0,
                                 ]);
                             } else {
                                 //check apakah ramadhan
@@ -185,6 +201,8 @@ class HitungTerlambatHariIni extends Command
                 $item->update([
                     'terlambat' => 0,
                     'lebih_awal' => 0,
+                    'denda_terlambat' => 0,
+                    'denda_lebih_awal' => 0,
                 ]);
             }
         }

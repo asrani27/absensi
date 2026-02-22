@@ -369,35 +369,12 @@ class RingkasanController extends Controller
             $hadir = $item->kerja + $item->sc + $item->tr + $item->d + $item->c;
             //dd($jumlahhari, $hadir, $item->kerja, $item->d);
             //datang lambat
-            if ($item->datang_lambat == 0) {
-                $kurangi_persen_terlambat = 0;
-            } elseif ($item->datang_lambat < 31) {
-                $kurangi_persen_terlambat = 0.5;
-            } elseif ($item->datang_lambat < 61) {
-                $kurangi_persen_terlambat = 1;
-            } elseif ($item->datang_lambat < 91) {
-                $kurangi_persen_terlambat = 1.25;
-            } elseif ($item->datang_lambat >= 91) {
-                $kurangi_persen_terlambat = 1.5;
-            } else {
-                $kurangi_persen_terlambat = 0;
-            }
 
-            //pulang cepat
-            if ($item->pulang_cepat == 0) {
-                $kurangi_persen_pulangcepat = 0;
-            } elseif ($item->pulang_cepat < 31) {
-                $kurangi_persen_pulangcepat = 0.5;
-            } elseif ($item->pulang_cepat < 61) {
-                $kurangi_persen_pulangcepat = 1;
-            } elseif ($item->pulang_cepat < 91) {
-                $kurangi_persen_pulangcepat = 1.25;
-            } elseif ($item->pulang_cepat >= 91) {
-                $kurangi_persen_pulangcepat = 1.55;
-            } else {
-                $kurangi_persen_pulangcepat = 0;
-            }
-            //dd($kurangi_persen_pulangcepat, $kurangi_persen_terlambat, round((($hadir / $jumlahhari) * 100), 2));
+            $kurangi_persen_terlambat = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->sum('denda_terlambat');
+            $kurangi_persen_pulangcepat = Presensi::where('nip', $item->nip)->whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->sum('denda_lebih_awal');
+
+            //dd($kurangi_persen_pulangcepat, $kurangi_persen_terlambat);
+
             //dd((14 / 15)  * 100);
             if ($hadir == 0) {
             } else {

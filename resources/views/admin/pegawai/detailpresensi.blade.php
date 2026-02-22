@@ -47,7 +47,9 @@
                             <th>Jam Pulang</th>
                             <th>Keterangan</th>
                             <th>Telat</th>
+                            <th>Pot Telat %</th>
                             <th>Lebih awal</th>
+                            <th>Pot Lebih Awal %</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -69,14 +71,16 @@
                             <td>{{$item->jam_pulang == null ? '00:00:00':
                                 \Carbon\Carbon::parse($item->jam_pulang)->format('H:i:s')}}</td>
                             <td>
-                                @if ($item->liburnasional == null) 
-                                    {{$item->jenis_keterangan == null ? '': $item->jenis_keterangan->keterangan}}
+                                @if ($item->liburnasional == null)
+                                {{$item->jenis_keterangan == null ? '': $item->jenis_keterangan->keterangan}}
                                 @else
-                                    {{$item->liburnasional}}
+                                {{$item->liburnasional}}
                                 @endif
                             </td>
                             <td>{{$item->terlambat}}</td>
+                            <td>{{$item->denda_terlambat}}</td>
                             <td>{{$item->lebih_awal}}</td>
+                            <td>{{$item->denda_lebih_awal}}</td>
                             <td><a href="/admin/pegawai/{{$id}}/presensi/{{$bulan}}/{{$tahun}}/{{$item->id}}/edit"><i
                                         class="fas fa-edit"></i> Edit</a>
                             </td>
@@ -90,7 +94,9 @@
                             <td></td>
                             <td>Total :</td>
                             <td>{{$data->sum('terlambat')}} menit</td>
+                            <td>{{$data->sum('denda_terlambat')}} %</td>
                             <td>{{$data->sum('lebih_awal')}} menit</td>
+                            <td>{{$data->sum('denda_lebih_awal')}} %</td>
                             <td></td>
                         </tr>
                     </tbody>
