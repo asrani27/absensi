@@ -80,6 +80,7 @@ class PerbaikanController extends Controller
                     if (Carbon::parse($data->tanggal)->isWeekend()) {
                         $data->update([
                             'terlambat' => 0,
+                            'denda_terlambat' => 0,
                         ]);
                     } else {
                         $data->update([
@@ -100,6 +101,7 @@ class PerbaikanController extends Controller
                     if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Minggu') {
                         $data->update([
                             'terlambat' => 0,
+                            'denda_terlambat' => 0,
                         ]);
                     } else {
                         $data->update([
@@ -117,6 +119,7 @@ class PerbaikanController extends Controller
         } else {
             $data->update([
                 'terlambat' => 0,
+                'denda_terlambat' => 0,
             ]);
         }
 
@@ -130,6 +133,7 @@ class PerbaikanController extends Controller
                     if (Carbon::parse($data->tanggal)->isWeekend()) {
                         $data->update([
                             'lebih_awal' => 0,
+                            'denda_lebih_awal' => 0,
                         ]);
                     } else {
                         $data->update([
@@ -150,6 +154,7 @@ class PerbaikanController extends Controller
                     if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Minggu') {
                         $data->update([
                             'lebih_awal' => 0,
+                            'denda_lebih_awal' => 0,
                         ]);
                     } else {
                         $data->update([
@@ -168,6 +173,7 @@ class PerbaikanController extends Controller
         } else {
             $data->update([
                 'lebih_awal' => 0,
+                'denda_lebih_awal' => 0,
             ]);
         }
 
