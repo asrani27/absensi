@@ -45,7 +45,9 @@
                             <th>Jam Pulang</th>
                             <th>Keterangan</th>
                             <th>Telat</th>
+                            <th>Pot Telat %</th>
                             <th>Lebih awal</th>
+                            <th>Pot Lebih Awal %</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -72,7 +74,9 @@
                                 @endif
                             </td>
                             <td>{{$item->terlambat}}</td>
+                            <td>{{$item->denda_terlambat}}</td>
                             <td>{{$item->lebih_awal}}</td>
+                            <td>{{$item->denda_lebih_awal}}</td>
                             <td><a href="/puskesmas/pegawai/{{$id}}/presensi/{{$bulan}}/{{$tahun}}/{{$item->id}}/edit"><i
                                         class="fas fa-edit"></i> Edit</a>
                             </td>
@@ -86,7 +90,9 @@
                             <td></td>
                             <td>Total :</td>
                             <td>{{$data->sum('terlambat')}} menit</td>
+                            <td>{{$data->sum('denda_terlambat')}} %</td>
                             <td>{{$data->sum('lebih_awal')}} menit</td>
+                            <td>{{$data->sum('denda_lebih_awal')}} %</td>
                             <td></td>
                         </tr>
                     </tbody>
