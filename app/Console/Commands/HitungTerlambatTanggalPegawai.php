@@ -21,7 +21,7 @@ class HitungTerlambatTanggalPegawai extends Command
      *
      * @var string
      */
-    protected $signature = 'potongan-terlambat {--bulan=} {--tahun=} {--nip=}';
+    protected $signature = 'potongan-pegawai {--bulan=} {--tahun=} {--nip=}';
 
     /**
      * The console command description.
