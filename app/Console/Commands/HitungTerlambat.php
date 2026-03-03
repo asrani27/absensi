@@ -7,14 +7,13 @@ use App\Models\Jam6;
 use App\Models\Jam6Ramadhan;
 use App\Models\Jam;
 use App\Models\JamRamadhan;
-use App\Models\LiburNasional;
 use App\Models\Pegawai;
 use App\Models\Presensi;
 use App\Models\Ramadhan;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
-class HitungTerlambatTanggalPegawai extends Command
+class HitungTerlambat extends Command
 {
 
     /**
@@ -22,14 +21,14 @@ class HitungTerlambatTanggalPegawai extends Command
      *
      * @var string
      */
-    protected $signature = 'potongan-pegawai {--bulan=} {--tahun=} {--nip=}';
+    protected $signature = 'hitung-terlambat {--tanggal=}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'hitung potongan terlambat berdasarkan bulan tahun dan nip yang dipilih';
+    protected $description = 'hitung potongan terlambat berdasarkan tanggal yang dipilih';
 
     /**
      * Create a new command instance.
@@ -301,22 +300,17 @@ class HitungTerlambatTanggalPegawai extends Command
      */
     public function handle()
     {
-        if ($this->option('bulan') != null && $this->option('tahun') != null) {
-            $bulan = $this->option('bulan');
-            $tahun = $this->option('tahun');
-            $nip = $this->option('nip');
+        if ($this->option('tanggal') != null) {
+            $tanggal = Carbon::parse($this->option('tanggal'));
         } else {
-            $bulan = Carbon::now()->format('m');
-            $tahun = Carbon::now()->format('Y');
-            $nip = $this->option('nip');
+            $tanggal = Carbon::now();
         }
 
-        $data = Presensi::whereMonth('tanggal', $bulan)->whereYear('tanggal', $tahun)->where('nip', $nip)->get();
+        $data = Presensi::whereDate('tanggal', $tanggal)->get();
         $totalData = $data->count();
         $counter = 0;
 
-        $this->info("Bulan : " . $bulan);
-        $this->info("Tahun : " . $tahun);
+        $this->info("Tanggal : " . $tanggal->format('d-m-Y'));
         $this->info("Total Data : " . $totalData);
         $this->info("--eksekusi--");
 
@@ -334,7 +328,7 @@ class HitungTerlambatTanggalPegawai extends Command
             if (Pegawai::where('nip', $item->nip)->first() == null) {
                 $er = new ErrorData;
                 $er->nip = $item->nip;
-                $er->keterangan = 'menghitung terlambat bulan ' . $bulan . ' tahun ' . $tahun;
+                $er->keterangan = 'menghitung terlambat tanggal : ' . $tanggal->format('d-m-Y') . ' dengan nip ' . $item->nip . ' tidak ditemukan di data pegawai';
                 $er->save();
             } else {
                 $checkJenisPresensi = Pegawai::where('nip', $item->nip)->first()->jenis_presensi;

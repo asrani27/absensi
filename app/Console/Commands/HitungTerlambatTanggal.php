@@ -28,7 +28,7 @@ class HitungTerlambatTanggal extends Command
      *
      * @var string
      */
-    protected $description = 'hitung potongan terlambat berdasarkan tanggal yang dipilih';
+    protected $description = 'hitung potongan terlambat berdasarkan bulan dan tahun yang dipilih';
 
     /**
      * Create a new command instance.
