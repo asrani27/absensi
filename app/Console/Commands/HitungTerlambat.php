@@ -346,6 +346,8 @@ class HitungTerlambat extends Command
                         'denda_terlambat' => 0,
                         'denda_lebih_awal' => 0,
                     ]);
+                    $pegawai = Pegawai::where('nip', $item->nip)->first();
+                    $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : 0, denda_lebih_awal : 0 (Weekend)");
                 } else {
                     //cek dia tanggalnya Libur nasional gak?
                     if (LiburNasional::where('tanggal', $item->tanggal)->first() != null) {
@@ -357,6 +359,8 @@ class HitungTerlambat extends Command
                             'denda_terlambat' => 0,
                             'denda_lebih_awal' => 0,
                         ]);
+                        $pegawai = Pegawai::where('nip', $item->nip)->first();
+                        $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : 0, denda_lebih_awal : 0 (Libur Nasional)");
                     } else {
                         //cek dia TL / Cuti Tahunan gak?
                         // if ($item->jenis_keterangan_id == 4 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 9) {
@@ -368,6 +372,8 @@ class HitungTerlambat extends Command
                                 'denda_terlambat' => 0,
                                 'denda_lebih_awal' => 0,
                             ]);
+                            $pegawai = Pegawai::where('nip', $item->nip)->first();
+                            $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : 0, denda_lebih_awal : 0 (Keterangan ID: " . $item->jenis_keterangan_id . ")");
                         } else {
 
                             $masuk = Carbon::parse($item->jam_masuk)->format('H:i');
@@ -379,6 +385,8 @@ class HitungTerlambat extends Command
                                     'denda_terlambat' => 0,
                                     'denda_lebih_awal' => 0,
                                 ]);
+                                $pegawai = Pegawai::where('nip', $item->nip)->first();
+                                $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : 0, denda_lebih_awal : 0 (Tidak ada jam masuk/pulang)");
                             } else {
                                 //check apakah ramadhan
                                 $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
@@ -413,6 +421,8 @@ class HitungTerlambat extends Command
                         'denda_terlambat' => 0,
                         'denda_lebih_awal' => 0,
                     ]);
+                    $pegawai = Pegawai::where('nip', $item->nip)->first();
+                    $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : 0, denda_lebih_awal : 0 (Minggu)");
                 } else {
                     //cek dia tanggalnya Libur nasional gak?
                     if (LiburNasional::where('tanggal', $item->tanggal)->first() != null) {
@@ -424,6 +434,8 @@ class HitungTerlambat extends Command
                             'denda_terlambat' => 0,
                             'denda_lebih_awal' => 0,
                         ]);
+                        $pegawai = Pegawai::where('nip', $item->nip)->first();
+                        $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : 0, denda_lebih_awal : 0 (Libur Nasional)");
                     } else {
                         //cek dia TL / Cuti Tahunan gak?
                         // if ($item->jenis_keterangan_id == 4 || $item->jenis_keterangan_id == 5 || $item->jenis_keterangan_id == 7 || $item->jenis_keterangan_id == 9) {
@@ -435,6 +447,8 @@ class HitungTerlambat extends Command
                                 'denda_lebih_awal' => 0,
                                 'jenis_keterangan_id' => $item->jenis_keterangan_id,
                             ]);
+                            $pegawai = Pegawai::where('nip', $item->nip)->first();
+                            $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : 0, denda_lebih_awal : 0 (Keterangan ID: " . $item->jenis_keterangan_id . ")");
                         } else {
                             $masuk = Carbon::parse($item->jam_masuk)->format('H:i');
                             $pulang = Carbon::parse($item->jam_pulang)->format('H:i');
@@ -445,6 +459,8 @@ class HitungTerlambat extends Command
                                     'denda_terlambat' => 0,
                                     'denda_lebih_awal' => 0,
                                 ]);
+                                $pegawai = Pegawai::where('nip', $item->nip)->first();
+                                $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : 0, denda_lebih_awal : 0 (Tidak ada jam masuk/pulang)");
                             } else {
                                 //check apakah ramadhan
                                 $ramadhan = Ramadhan::where('tanggal', $item->tanggal)->first();
@@ -474,6 +490,8 @@ class HitungTerlambat extends Command
                     'denda_terlambat' => 0,
                     'denda_lebih_awal' => 0,
                 ]);
+                $pegawai = Pegawai::where('nip', $item->nip)->first();
+                $this->info(($index + 1) . ". NIP : " . $item->nip . ", NAMA : " . ($pegawai ? $pegawai->nama : 'N/A') . ", denda_terlambat : 0, denda_lebih_awal : 0 (Tidak ada jenis presensi)");
             }
         }
 
