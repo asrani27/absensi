@@ -317,7 +317,7 @@ class PuskesmasController extends Controller
         $hari = Carbon::parse($tanggalPresensi->tanggal)->translatedFormat('l');
 
         $checkRamadhan = Ramadhan::where('tanggal', $tanggalPresensi->tanggal)->first();
-        if ($checkRamadhan != null) {
+        if ($checkRamadhan == null) {
             $jam = Jam6::where('hari', $hari)->first();
         } else {
             $jam = Jam6Ramadhan::where('hari', $hari)->first();
