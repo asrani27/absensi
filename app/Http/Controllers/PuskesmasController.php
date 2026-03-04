@@ -16,10 +16,12 @@ use App\Models\Puskesmas;
 use App\Models\Ringkasan;
 use App\Models\DetailCuti;
 use App\Jobs\SyncPuskesmas;
+use App\Models\Jam6Ramadhan;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\LiburNasional;
 use App\Models\JenisKeterangan;
+use App\Models\Ramadhan;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -314,7 +316,12 @@ class PuskesmasController extends Controller
 
         $hari = Carbon::parse($tanggalPresensi->tanggal)->translatedFormat('l');
 
-        $jam = Jam6::where('hari', $hari)->first();
+        $checkRamadhan = Ramadhan::where('tanggal', $tanggalPresensi->tanggal)->first();
+        if ($checkRamadhan != null) {
+            $jam = Jam6::where('hari', $hari)->first();
+        } else {
+            $jam = Jam6Ramadhan::where('hari', $hari)->first();
+        }
 
         Presensi::find($id_presensi)->update([
             'jam_masuk' => $dataawal->tanggal . ' ' . $req->jam_masuk,
