@@ -303,6 +303,8 @@ class PuskesmasController extends Controller
                 'jam_pulang' => $dataawal->tanggal . ' 00:00:00',
                 'terlambat' => 0,
                 'lebih_awal' => 0,
+                'denda_terlambat' => 0,
+                'denda_lebih_awal' => 0,
             ]);
             toastr()->error('Tanggal Ini termasuk Libur Nasional');
             return redirect('/puskesmas/pegawai/' . $id . '/presensi/' . $bulan . '/' . $tahun);
@@ -328,31 +330,50 @@ class PuskesmasController extends Controller
             $data->update([
                 'terlambat' => 0,
                 'lebih_awal' => 0,
+                'denda_terlambat' => 0,
+                'denda_lebih_awal' => 0,
             ]);
         } else {
             if ($jm == '00:00:00') {
                 if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
                     $data->update([
                         'terlambat' => 105,
+                        'denda_terlambat' => 1.5,
                     ]);
                 } elseif (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Sabtu') {
                     $data->update([
                         'terlambat' => 180,
+                        'denda_terlambat' => 1.5,
                     ]);
                 } else {
                     $data->update([
                         'terlambat' => 210,
+                        'denda_terlambat' => 1.5,
                     ]);
                 }
             } elseif ($data->jam_masuk > $data->tanggal . ' ' . $jam->jam_masuk) {
 
                 $terlambat = floor(Carbon::parse($data->jam_masuk)->diffInSeconds($data->tanggal . ' ' . $jam->jam_masuk) / 60);
+
+                if ($terlambat >= 1 && $terlambat <= 30) {
+                    $denda_terlambat = 0.5;
+                } elseif ($terlambat >= 31 && $terlambat <= 60) {
+                    $denda_terlambat = 1;
+                } elseif ($terlambat >= 61 && $terlambat <= 90) {
+                    $denda_terlambat = 1.25;
+                } elseif ($terlambat >= 91) {
+                    $denda_terlambat = 1.50;
+                } else {
+                    $denda_terlambat = 0;
+                }
                 $data->update([
                     'terlambat' => $terlambat,
+                    'denda_terlambat' => $denda_terlambat,
                 ]);
             } else {
                 $data->update([
                     'terlambat' => 0,
+                    'denda_terlambat' => 0,
                 ]);
             }
 
@@ -360,26 +381,41 @@ class PuskesmasController extends Controller
                 if (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Jumat') {
                     $data->update([
                         'lebih_awal' => 105,
+                        'denda_lebih_awal' => 1.5,
                     ]);
                 } elseif (Carbon::parse($data->tanggal)->translatedFormat('l') == 'Sabtu') {
                     $data->update([
                         'lebih_awal' => 180,
+                        'denda_lebih_awal' => 1.5,
                     ]);
                 } else {
                     $data->update([
                         'lebih_awal' => 210,
+                        'denda_lebih_awal' => 1.5,
                     ]);
                 }
             } elseif ($data->jam_pulang < $data->tanggal . ' ' . $jam->jam_pulang) {
 
                 $lebih_awal = floor(Carbon::parse($data->jam_pulang)->diffInSeconds($data->tanggal . ' ' . $jam->jam_pulang) / 60);
-
+                if ($lebih_awal >= 1 && $lebih_awal <= 30) {
+                    $denda_lebih_awal = 0.5;
+                } elseif ($lebih_awal >= 31 && $lebih_awal <= 60) {
+                    $denda_lebih_awal = 1;
+                } elseif ($lebih_awal >= 61 && $lebih_awal <= 90) {
+                    $denda_lebih_awal = 1.25;
+                } elseif ($lebih_awal >= 91) {
+                    $denda_lebih_awal = 1.50;
+                } else {
+                    $denda_lebih_awal = 0;
+                }
                 $data->update([
                     'lebih_awal' => $lebih_awal,
+                    'denda_lebih_awal' => $denda_lebih_awal,
                 ]);
             } else {
                 $data->update([
                     'lebih_awal' => 0,
+                    'denda_lebih_awal' => 0,
                 ]);
             }
         }
