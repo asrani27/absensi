@@ -300,31 +300,27 @@ class PresensiController extends Controller
 
         $check = Presensi::where('nip', $pegawai->nip)->where('tanggal', $today)->first();
         if ($check == null) {
-            if ($lokasi->tipe == 'MASUK' || $lokasi->tipe == NULL || $lokasi->tipe == 'MASUK DAN PULANG') {
-                $param['jam_masuk']     = Carbon::now()->format('Y-m-d H:i:s');
-                Presensi::create($param);
-                $data['message_error'] = 200;
-                $data['message']       = 'Berhasil Di Simpan';
-            } else {
-                $data['message_error'] = 200;
-                $data['message']       = 'Lokasi Ini Hanya Bisa Untuk Presensi Masuk';
-            }
+            $param['jam_masuk']     = Carbon::now()->format('Y-m-d H:i:s');
+            Presensi::create($param);
+            $data['message_error'] = 200;
+            $data['message']       = 'Berhasil Di Simpan';
         } else {
+
             if ($check->jam_masuk == null || Carbon::parse($check->jam_masuk)->format('H:i:s') == '00:00:00') {
-                if ($lokasi->tipe == 'MASUK' || $lokasi->tipe == NULL || $lokasi->tipe == 'MASUK DAN PULANG') {
-                    $param['jam_masuk']      = Carbon::now()->format('Y-m-d H:i:s');
-                    $check->update($param);
-                    $data['message_error']   = 200;
-                    $data['message']         = 'Presensi Masuk Berhasil Di Update';
-                } else {
-                    $data['message_error']   = 200;
-                    $data['message']         =  'Lokasi Ini Hanya Bisa Untuk Presensi Masuk';
-                }
-            } else {
-                $param['jam_pulang']     = Carbon::now()->format('Y-m-d H:i:s');
+                $param['jam_masuk']      = Carbon::now()->format('Y-m-d H:i:s');
                 $check->update($param);
                 $data['message_error']   = 200;
-                $data['message']         =  'Presensi Pulang Berhasil Di Update';
+                $data['message']         = 'Presensi Masuk Berhasil Di Update';
+            } else {
+                if ($lokasi->tipe == 'MASUK') {
+                    $data['message_error']   = 200;
+                    $data['message']         =  'Lokasi Ini Hanya Bisa Untuk Presensi Masuk';
+                } else {
+                    $param['jam_pulang']     = Carbon::now()->format('Y-m-d H:i:s');
+                    $check->update($param);
+                    $data['message_error']   = 200;
+                    $data['message']         =  'Presensi Pulang Berhasil Di Update';
+                }
             }
         }
 
