@@ -70,12 +70,17 @@ TAMBAH LOKASI
                                     </select>
                                 </div>
                             </div>
-                            {{-- <div class="form-group row">
-                                <label class="col-sm-2 col-form-label">Radius Jangkauan</label>
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Tipe Presensi</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="radius" placeholder="100" required>
+                                    <select name="jenis" class="form-control">
+                                        <option value="">-pilih-</option>
+                                        <option value="MASUK">MASUK</option>
+                                        <option value="PULANG">PULANG</option>
+                                        <option value="MASUK DAN PULANG">MASUK DAN PULANG</option>
+                                    </select>
                                 </div>
-                            </div> --}}
+                            </div>
 
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label"></label>
