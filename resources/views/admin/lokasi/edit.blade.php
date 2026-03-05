@@ -89,6 +89,20 @@ EDIT LOKASI
                                     </select>
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-2 col-form-label">Tipe Presensi</label>
+                                <div class="col-sm-10">
+                                    <select name="tipe" class="form-control">
+                                        <option value="">-pilih-</option>
+                                        <option value="MASUK" {{$data->tipe == 'MASUK' ? 'selected':''}}>MASUK</option>
+                                        <option value="PULANG" {{$data->tipe == 'PULANG' ? 'selected':''}}>PULANG
+                                        </option>
+                                        <option value="MASUK DAN PULANG" {{$data->tipe == 'MASUK DAN PULANG' ?
+                                            'selected':''}}>MASUK DAN PULANG</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">

@@ -73,7 +73,7 @@ TAMBAH LOKASI
                             <div class="form-group row">
                                 <label class="col-sm-2 col-form-label">Tipe Presensi</label>
                                 <div class="col-sm-10">
-                                    <select name="jenis" class="form-control">
+                                    <select name="tipe" class="form-control">
                                         <option value="">-pilih-</option>
                                         <option value="MASUK">MASUK</option>
                                         <option value="PULANG">PULANG</option>
