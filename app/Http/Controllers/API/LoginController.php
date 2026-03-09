@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
-use Carbon\Carbon;
-use App\Models\User;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Pegawai;
+use App\Models\PPPK;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class LoginController extends Controller
 {
@@ -20,6 +21,12 @@ class LoginController extends Controller
             $item->skpd = $item->skpd == null ? null : $item->skpd->nama;
             return $item;
         });
+        return response()->json($data);
+    }
+    public function pppk_paruh_waktu()
+    {
+        $data['code'] = 200;
+        $data['data'] = PPPK::get();
         return response()->json($data);
     }
     public function gantipass(Request $req)

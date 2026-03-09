@@ -34,3 +34,4 @@ Route::post('/newlogin', [LoginController::class, 'newlogin']);
 Route::get('/testing', [LoginController::class, 'testing']);
 Route::get('/checkversion', [PresensiController::class, 'version']);
 Route::get('/pppk', [LoginController::class, 'pppk']);
+Route::get('/pppk_paruh_waktu', [LoginController::class, 'pppk_paruh_waktu']);
