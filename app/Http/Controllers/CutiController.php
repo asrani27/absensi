@@ -273,6 +273,8 @@ class CutiController extends Controller
                     'jam_masuk' => $d->tanggal . ' 00:00:00',
                     'jam_pulang' => $d->tanggal . ' 00:00:00',
                     'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                    'denda_terlambat' => 0,
+                    'denda_lebih_awal' => 0,
                 ]);
             } else {
             }
@@ -294,6 +296,8 @@ class CutiController extends Controller
                     'jam_masuk' => $d->tanggal . ' 00:00:00',
                     'jam_pulang' => $d->tanggal . ' 00:00:00',
                     'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                    'denda_terlambat' => 0,
+                    'denda_lebih_awal' => 0,
                 ]);
             } else {
             }
@@ -439,6 +443,8 @@ class CutiController extends Controller
                             'jam_masuk' => $d->tanggal . ' 00:00:00',
                             'jam_pulang' => $d->tanggal . ' 00:00:00',
                             'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                            'denda_terlambat' => 0,
+                            'denda_lebih_awal' => 0,
                         ]);
                     } else {
                     }
@@ -453,6 +459,8 @@ class CutiController extends Controller
                             'jam_masuk' => $d->tanggal . ' 00:00:00',
                             'jam_pulang' => $d->tanggal . ' 00:00:00',
                             'jenis_keterangan_id' => null,
+                            'denda_terlambat' => 0,
+                            'denda_lebih_awal' => 0,
                         ]);
                     } else {
                     }
@@ -467,6 +475,8 @@ class CutiController extends Controller
                                 'jam_masuk' =>  $d->tanggal . ' 00:00:00',
                                 'jam_pulang' =>  $d->tanggal . ' 00:00:00',
                                 'jenis_keterangan_id' => null,
+                                'denda_terlambat' => 0,
+                                'denda_lebih_awal' => 0,
                             ]);
                         } else {
                             //check apakah cuti, perjalanan dinas, diklat, covid
@@ -479,6 +489,8 @@ class CutiController extends Controller
                                     'terlambat' => 0,
                                     'lebih_awal' => 0,
                                     'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                                    'denda_terlambat' => 0,
+                                    'denda_lebih_awal' => 0,
                                 ]);
                             } else {
                                 $presensi->update([
@@ -504,6 +516,8 @@ class CutiController extends Controller
                             'jam_masuk' => $d->tanggal . ' 00:00:00',
                             'jam_pulang' => $d->tanggal . ' 00:00:00',
                             'jenis_keterangan_id' => null,
+                            'denda_terlambat' => 0,
+                            'denda_lebih_awal' => 0,
                         ]);
                     } else {
                     }
@@ -517,6 +531,8 @@ class CutiController extends Controller
                                 'jam_masuk' => $d->tanggal . ' 00:00:00',
                                 'jam_pulang' => $d->tanggal . ' 00:00:00',
                                 'jenis_keterangan_id' => null,
+                                'denda_terlambat' => 0,
+                                'denda_lebih_awal' => 0,
                             ]);
                         } else {
                             // if ($d->jenis_keterangan_id == 7 || $d->jenis_keterangan_id == 5 || $d->jenis_keterangan_id == 9 || $d->jenis_keterangan_id == 4) {
@@ -527,6 +543,8 @@ class CutiController extends Controller
                                     'terlambat' => 0,
                                     'lebih_awal' => 0,
                                     'jenis_keterangan_id' => $d->jenis_keterangan_id,
+                                    'denda_terlambat' => 0,
+                                    'denda_lebih_awal' => 0,
                                 ]);
                             } else {
                                 $presensi->update([
